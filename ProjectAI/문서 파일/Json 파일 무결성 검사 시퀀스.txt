@@ -1,0 +1,3 @@
+﻿1. Jobject 값 null 인지 확인 - jsonDataManiger에서 GetJsonObject을 타고 넘어온 Jobject 객체가 데이터 읽기에 실패한 값이면 Null을 리턴하기 때문에!
+
+2. 최상위 json object 값 확인 = null 이라면 각 초기화 함수를 이용하여 초기화

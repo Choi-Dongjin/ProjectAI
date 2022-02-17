@@ -1,0 +1,24 @@
+﻿{
+  "programStartPathOptions": {
+    "string_m_workSpacDataPath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces",
+    "string_m_workSpacDataFilePath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\workspacesdata.Json"
+  },
+
+  "workSpaceNameList": [
+    "Test1",
+    "Test2"
+  ],
+
+  "workSpaceName": {
+    "Test1": {
+      "string_m_workSpacePath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test1",
+      "string_m_workSpaceSize": "0.1G",
+      "string_m_workSpaceVersion": "1"
+    },
+    "Test2": {
+      "string_m_workSpacePath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test2",
+      "string_m_workSpaceSize": "0.1G",
+      "string_m_workSpaceVersion": "1"
+    }
+  }
+}
