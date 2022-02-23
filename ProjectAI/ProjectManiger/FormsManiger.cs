@@ -33,6 +33,9 @@ namespace ProjectAI
         public delegate void StartFormOptionsManagerHandler(); // StartForm, StartFormOptions 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
         public static StartFormOptionsManagerHandler m_startFormOptionsManagerHandler; // StartForm, StartFormOptions 변경시를 관리 Update Handler
 
+        public delegate void MainFormsUIResetHandler(); // MainForms UI 적용된 부분 모두 비활성화 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
+        public static MainFormsUIResetHandler m_mainFormsUIResetHandler; // MainForms UI 적용된 부분 모두 비활성화를 관리 Update Handler
+
         // forms Dark Mode chacker
         public bool m_isDarkMode = true;
         public MetroStyleManager m_StyleManager = new MetroStyleManager();

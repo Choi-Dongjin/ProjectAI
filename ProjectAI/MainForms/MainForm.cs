@@ -96,7 +96,9 @@ namespace ProjectAI.MainForms
         private void MainFormCallUISeting()
         {
             this.panelMWorkSpase.Visible = true; // WorkSpase 판넬 보이기
-            this.panelMWorkSpase.Size = new System.Drawing.Size(400, 0); // WorkSpase 판넬 사이즈 조정
+            this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
+
+            this.panelTrainOptions.Size = new System.Drawing.Size(500, 100); // panel Train Options 판넬 사이즈 조정
 
             this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기 
             foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"])
@@ -337,28 +339,40 @@ namespace ProjectAI.MainForms
             Button button = (Button)sender;
             int workSpaceIndex = button.TabIndex;
             string activeWorkSpaceName = WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"][workSpaceIndex].ToString();
-
-            Console.WriteLine(workSpaceIndex);
-            Console.WriteLine(activeWorkSpaceName);
+            
+            //Console.WriteLine(workSpaceIndex);
+            //Console.WriteLine(activeWorkSpaceName);
 
             foreach (string activeProjectName in WorkSpaceData.m_projectMaingersDictionary.Keys)
             {
                 if (activeProjectName == activeWorkSpaceName)
                 {
                     MetroMessageBox.Show(this, "열려 있는 프로젝트", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName];
+                    WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName]; // 활성화된 프로젝트 적용
+                    FormsManiger.m_mainFormsUIResetHandler(); // 이전 UI 초기화
+                    WorkSpaceData.m_actionProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
+                    // #3 프로젝트가 열리고 데이터를 읽어왔으면 해야되는 일 
+                    // 1. 이미지 리스트 UI 에 뿌려주기
+                    // 2. 프로젝트 선택할수 있는 UI 만들기
+                    // 3. 프로젝트가 선택됬으면 말맞은 UI 뿌려주기
                     return;
                 }
             }
 
             ProjectMainger projectMainger = new ProjectMainger(activeWorkSpaceName);
-            WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger);
+            WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger); // 활성화된 Project 추가
 
-            Console.WriteLine(WorkSpaceData.m_projectMaingersDictionary.Keys.ToString());
-            foreach (string i in WorkSpaceData.m_projectMaingersDictionary.Keys)
-            {
-                Console.WriteLine(i);
-            }
+            WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeWorkSpaceName]; // 활성화된 프로젝트 적용
+            WorkSpaceData.m_actionProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
+            FormsManiger.m_mainFormsUIResetHandler += WorkSpaceData.m_actionProjectMainger.ProjectIdleUIRemove; // UI 초기화 핸들러 등록
+
+
+
+            //Console.WriteLine(WorkSpaceData.m_projectMaingersDictionary.Keys.ToString());
+            //foreach (string i in WorkSpaceData.m_projectMaingersDictionary.Keys)
+            //{
+            //    Console.WriteLine(i);
+            //}
         }
 
         private void BtnMTrainOptionsOpenClick(object sender, EventArgs e)
@@ -393,6 +407,7 @@ namespace ProjectAI.MainForms
         private void TsmProjectWorSpaceTestButtonClick(object sender, EventArgs e)
         {
             panelstatus.Visible = panelstatus.Visible == true ? false : true;
+            WorkSpaceData.m_actionProjectMainger.ProjectIdleUIRemove(); // IdleUI 적용된 부분 삭제
         }
 
         private void TsmProjectWorSpaceDeleteProjectClick(object sender, EventArgs e)
@@ -466,7 +481,7 @@ namespace ProjectAI.MainForms
 
             WorkSpaceEarlyData.m_workSpaceButtons.Add(newWorkSpaceButton);
             newWorkSpaceButton.BtnWorkSpaceOpenClickEvnetHandler += new System.EventHandler(this.WorkSpaceLoadButtonClick);
-            Console.WriteLine(workSpaceIndex);
+            //Console.WriteLine(workSpaceIndex);
         }
         /// <summary>
         /// WorkSpaceButton 만들기 - 데이터 읽어와서 사용

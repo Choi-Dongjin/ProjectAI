@@ -51,19 +51,56 @@ namespace ProjectAI
         /// <summary>
         /// 폴더 생성시 적용가능한 이름인지 확인 가능하면 True, 불가능하면 False 반환
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="folderName"> 확인학 폴더 이름</param>
         /// <returns></returns>
-        public static bool DirChackCreateName(string fileName)
+        public static bool DirChackCreateName(string folderName)
         {
             char[] ignoreCharArray = { ',', '\\', '/', ':', '*', '?', '"','<', '>', '|', '_', '[', ']' };
             foreach (char ignoreCha in ignoreCharArray)
             {
-                if (fileName.Count(f => f == ignoreCha) > 0)
+                if (folderName.Count(f => f == ignoreCha) > 0)
                 {
                     return false;
                 }
             }
             return true;
+        }
+        /// <summary>
+        /// 파일 삭제 성공시 true, 실패시 false
+        /// </summary>
+        /// <param name="fileNanmePath"> 삭제할 파일 경로</param>
+        /// <returns></returns>
+        public static bool FileRemove(string fileNanmePath)
+        {
+            try
+            {
+                if (File.Exists(fileNanmePath))
+                {
+                    File.Delete(fileNanmePath);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// UI 정지하지 않고 딜레이 주기
+        /// </summary>
+        /// <param name="ms"></param>
+        public static void FileIODelay(int ms)
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0, ms);
+            DateTime dateTimeAdd = dateTimeNow.Add(duration);
+            while (dateTimeAdd >= dateTimeNow)
+            {
+                System.Windows.Forms.Application.DoEvents();
+                dateTimeNow = DateTime.Now;
+            }
+            return;
         }
     }
 }

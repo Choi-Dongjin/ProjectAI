@@ -1,6 +1,6 @@
 ﻿namespace ProjectAI.MainForms
 {
-    partial class MainFormWorkspace
+    partial class DeeplearningProjectSelectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // MainFormWorkspace
+            // DeeplearningProjectSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(435, 519);
-            this.Name = "MainFormWorkspace";
-            this.Text = "MainFormWorkspace";
+            this.ClientSize = new System.Drawing.Size(861, 639);
+            this.Name = "DeeplearningProjectSelectForm";
+            this.Text = "DeeplearningProjectSelectForm";
             this.ResumeLayout(false);
 
         }
