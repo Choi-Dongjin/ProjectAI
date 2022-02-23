@@ -111,7 +111,7 @@ namespace ProjectAI
         /// </summary>
         public static Dictionary<string, ProjectMainger> m_projectMaingersDictionary = new Dictionary<string, ProjectMainger>();
 
-        //public static ProjectMainger m_actionProjectMainger;
+        public static ProjectMainger m_actionProjectMainger;
     }
 
     /// <summary>
@@ -158,6 +158,7 @@ namespace ProjectAI
         /// </summary>
         private void ActiveProjectEntry()
         {
+            string[] createWorkspaceFolderArray = { "image", "model", "data\\images" };
             if (CustomIOMainger.DirChackExistsAndCreate(m_pathActiveProject))  // 폴더 생성
             {
                 // 생성된 폴더가 있는 경우
@@ -167,11 +168,11 @@ namespace ProjectAI
                 }
                 else
                 {
-                    // Error
+                    // Error #1
                     MetroMessageBox.Show(formsManiger.mainForm, "프로젝트 데이터 손상 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                string[] createWorkspaceFolderArray = { "image", "model" };
+                
                 foreach (string folderName in createWorkspaceFolderArray)
                 {
                     CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProject, folderName));
@@ -183,12 +184,12 @@ namespace ProjectAI
                 if (!CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProject, "data"))) 
                 {
                     // Project DATA 초기화
+
                 }
                 else
                 {
                     MetroMessageBox.Show(formsManiger.mainForm, "예상하지 못한 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                string[] createWorkspaceFolderArray = { "image", "model" };
                 foreach (string folderName in createWorkspaceFolderArray)
                 {
                     CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProject, folderName));
@@ -196,7 +197,7 @@ namespace ProjectAI
             }
         }
 
-        private void ActiveProjectEntryDataRead()
+        public void ActiveProjectEntryDataRead()
         {
             this.ActiveProjectImageListRead();
         }

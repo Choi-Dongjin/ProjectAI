@@ -37,6 +37,7 @@
             this.btnMWorkSpaseOpen = new MetroFramework.Controls.MetroButton();
             this.panelProjectMain = new System.Windows.Forms.Panel();
             this.splitContainerImageAndImageList = new System.Windows.Forms.SplitContainer();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutImageDataManiger = new System.Windows.Forms.TableLayoutPanel();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.panelImageDataView = new System.Windows.Forms.Panel();
@@ -45,7 +46,11 @@
             this.lblImageListpageMid = new System.Windows.Forms.Label();
             this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.btnMTrainOptionsOpen = new MetroFramework.Controls.MetroButton();
@@ -75,20 +80,15 @@
             this.panelMWorkSpase = new MetroFramework.Controls.MetroPanel();
             this.panelWorkSpaseButton = new System.Windows.Forms.Panel();
             this.cmsImageListToolKit = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imageAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageLabelingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.imageSetTrainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageSetTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageLabelingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
@@ -98,6 +98,7 @@
             this.splitContainerImageAndImageList.Panel1.SuspendLayout();
             this.splitContainerImageAndImageList.Panel2.SuspendLayout();
             this.splitContainerImageAndImageList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutImageDataManiger.SuspendLayout();
             this.tableLayoutDataReview.SuspendLayout();
             this.panelMTrainOptions.SuspendLayout();
@@ -108,7 +109,6 @@
             this.panelstatus.SuspendLayout();
             this.panelMWorkSpase.SuspendLayout();
             this.cmsImageListToolKit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // styleManagerMainForm
@@ -198,6 +198,16 @@
             this.splitContainerImageAndImageList.Size = new System.Drawing.Size(413, 518);
             this.splitContainerImageAndImageList.SplitterDistance = 168;
             this.splitContainerImageAndImageList.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(168, 518);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // tableLayoutImageDataManiger
             // 
@@ -322,6 +332,39 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(260, 518);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(195, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(65, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(130, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(65, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(65, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(65, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -331,6 +374,17 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(260, 443);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(65, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -665,60 +719,6 @@
             this.cmsImageListToolKit.Name = "contextMenuStrip1";
             this.cmsImageListToolKit.Size = new System.Drawing.Size(171, 160);
             // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(195, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(65, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(130, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(65, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(65, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(65, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(65, 75);
-            this.iclTotal.TabIndex = 11;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(168, 518);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // imageAddToolStripMenuItem
             // 
             this.imageAddToolStripMenuItem.Name = "imageAddToolStripMenuItem";
@@ -731,11 +731,21 @@
             this.imageFolderAddToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.imageFolderAddToolStripMenuItem.Text = "Image Folder Add";
             // 
-            // imageDeleteToolStripMenuItem
+            // toolStripSeparator3
             // 
-            this.imageDeleteToolStripMenuItem.Name = "imageDeleteToolStripMenuItem";
-            this.imageDeleteToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageDeleteToolStripMenuItem.Text = "Image Delete";
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(167, 6);
+            // 
+            // imageLabelingToolStripMenuItem
+            // 
+            this.imageLabelingToolStripMenuItem.Name = "imageLabelingToolStripMenuItem";
+            this.imageLabelingToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.imageLabelingToolStripMenuItem.Text = "Image Labeling";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
             // 
             // imageSetTrainToolStripMenuItem
             // 
@@ -749,26 +759,16 @@
             this.imageSetTestToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.imageSetTestToolStripMenuItem.Text = "Image Set Test";
             // 
-            // imageLabelingToolStripMenuItem
-            // 
-            this.imageLabelingToolStripMenuItem.Name = "imageLabelingToolStripMenuItem";
-            this.imageLabelingToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageLabelingToolStripMenuItem.Text = "Image Labeling";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(167, 6);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(167, 6);
+            // 
+            // imageDeleteToolStripMenuItem
+            // 
+            this.imageDeleteToolStripMenuItem.Name = "imageDeleteToolStripMenuItem";
+            this.imageDeleteToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.imageDeleteToolStripMenuItem.Text = "Image Delete";
             // 
             // toolStripSeparator6
             // 
@@ -799,6 +799,7 @@
             this.splitContainerImageAndImageList.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerImageAndImageList)).EndInit();
             this.splitContainerImageAndImageList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutImageDataManiger.ResumeLayout(false);
             this.tableLayoutImageDataManiger.PerformLayout();
             this.tableLayoutDataReview.ResumeLayout(false);
@@ -812,7 +813,6 @@
             this.panelstatus.PerformLayout();
             this.panelMWorkSpase.ResumeLayout(false);
             this.cmsImageListToolKit.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

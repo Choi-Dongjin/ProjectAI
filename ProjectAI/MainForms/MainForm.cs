@@ -225,6 +225,7 @@ namespace ProjectAI.MainForms
                             if (workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName] != null) 
                             {
                                 JObject workSpaceNameOptions = (JObject)workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName]; //  programEntryPointOptions 객체 있음을 확인 
+                                
 
                                 if (workSpaceNameOptions["string_m_workSpacePath"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_programSpace", Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
@@ -333,7 +334,31 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void WorkSpaceLoadButtonClick(object sender, EventArgs e)
         {
+            Button button = (Button)sender;
+            int workSpaceIndex = button.TabIndex;
+            string activeWorkSpaceName = WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"][workSpaceIndex].ToString();
 
+            Console.WriteLine(workSpaceIndex);
+            Console.WriteLine(activeWorkSpaceName);
+
+            foreach (string activeProjectName in WorkSpaceData.m_projectMaingersDictionary.Keys)
+            {
+                if (activeProjectName == activeWorkSpaceName)
+                {
+                    MetroMessageBox.Show(this, "열려 있는 프로젝트", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName];
+                    return;
+                }
+            }
+
+            ProjectMainger projectMainger = new ProjectMainger(activeWorkSpaceName);
+            WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger);
+
+            Console.WriteLine(WorkSpaceData.m_projectMaingersDictionary.Keys.ToString());
+            foreach (string i in WorkSpaceData.m_projectMaingersDictionary.Keys)
+            {
+                Console.WriteLine(i);
+            }
         }
 
         private void BtnMTrainOptionsOpenClick(object sender, EventArgs e)
@@ -408,7 +433,7 @@ namespace ProjectAI.MainForms
                 string CreatWorkSpaceName = makeWorkSpaceForm.GetWorkSpaceName(); // 검증 완료됨 WorkSpace 이름 가져오기
                 CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
             }
-            // #001
+            // #2
             // 생성된 WorkSpace가 기존에 데이터가 존제한다면 
         }
 
