@@ -68,6 +68,18 @@
     <Compile Include="CustomComponent\CircularButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomComponent\ImageCountLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomComponent\ImageCountLabel.Designer.cs">
+      <DependentUpon>ImageCountLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageTool\ImageTollTestForms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageTool\ImageTollTestForms.Designer.cs">
+      <DependentUpon>ImageTollTestForms.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForms\MainFormWorkspace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +91,12 @@
     </Compile>
     <Compile Include="CustomComponent\WorkSpaceButton.Designer.cs">
       <DependentUpon>WorkSpaceButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\MakeWorkSpaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\MakeWorkSpaceForm.Designer.cs">
+      <DependentUpon>MakeWorkSpaceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProjectManiger\CustomIOMainger.cs" />
     <Compile Include="ProjectManiger\ProjectMainger.cs" />
@@ -109,6 +127,12 @@
     <Compile Include="StartForms\StartFormOptions.Designer.cs">
       <DependentUpon>StartFormOptions.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CustomComponent\ImageCountLabel.resx">
+      <DependentUpon>ImageCountLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageTool\ImageTollTestForms.resx">
+      <DependentUpon>ImageTollTestForms.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomComponent\WorkSpaceButton.resx">
       <DependentUpon>WorkSpaceButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\MakeWorkSpaceForm.resx">
+      <DependentUpon>MakeWorkSpaceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartForms\StartForm.ko.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
@@ -163,6 +190,9 @@
     <None Include="Resources\adv_warn_icon.bmp" />
     <None Include="Resources\logoB X2.png" />
     <None Include="Resources\logoW X2.png" />
+    <None Include="Resources\imageBackground.bmp" />
+    <None Include="Resources\imageBackground.png" />
+    <None Include="Resources\imageBackground2.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

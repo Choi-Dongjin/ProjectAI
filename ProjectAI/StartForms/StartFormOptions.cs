@@ -20,14 +20,13 @@ namespace ProjectAI.StartForms
 {
     public partial class StartFormOptions : MetroForm
     {
-        JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
+        private readonly JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
 
         public StartFormOptions()
         {
             InitializeComponent();
 
             this.StyleManager = styleManagerStartFormOptions;
-
             // Forms Calss formStyleManagerHandler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
         }

@@ -122,6 +122,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutStartOptionMain);
             this.Name = "StartFormOptions";
             this.Resizable = false;

@@ -107,8 +107,6 @@ namespace ProjectAI.MainForms
                 this.btnWorkSpaceOpen.TabIndex = value;
             }
         }
-
-
         #endregion
     }
 }

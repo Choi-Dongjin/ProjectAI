@@ -21,7 +21,7 @@ namespace ProjectAI.MainForms
 {
     public partial class MainForm : Form
     {
-        private List<WorkSpaceButton> m_workSpaceButtons = new List<WorkSpaceButton>();
+        // private List<WorkSpaceButton> m_workSpaceButtons = new List<WorkSpaceButton>();
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
 
         public MainForm()
@@ -81,12 +81,12 @@ namespace ProjectAI.MainForms
 
             // 값 반영
             WorkSpaceEarlyData.workSpaceEarlyDataJobject = workSpacData; // Jobject 반영
-            for (int i = 0; i < workSpacData["workSpaceNameList"].Count(); i++)
-            {
-                Console.WriteLine(workSpacData["workSpaceNameList"][i].ToString());
-                WorkSpaceEarlyData.m_workSpaceNameList.Add(workSpacData["workSpaceNameList"][i].ToString());
-            }
-           
+            //JArray workSpaceNameList = (JArray)workSpacData["workSpaceNameList"];
+            //for (int i = 0; i < workSpaceNameList.Count(); i++)
+            //{
+            //    //Console.WriteLine(workSpaceNameList[i].ToString());
+            //    WorkSpaceEarlyData.m_workSpaceNameList.Add(workSpaceNameList[i].ToString());
+            //}
             #endregion
         }
 
@@ -99,8 +99,7 @@ namespace ProjectAI.MainForms
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 0); // WorkSpase 판넬 사이즈 조정
 
             this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기 
-
-            foreach(string workSpaceName in WorkSpaceEarlyData.m_workSpaceNameList)
+            foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"])
             {
                 CreateWorkSpaceButton(workSpaceName,
                     WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["string_m_workSpaceSize"].ToString(),
@@ -108,7 +107,6 @@ namespace ProjectAI.MainForms
                     Convert.ToInt32(WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["int_m_workSpacIndex"])
                     );
             }
-            
         }
 
         /// <summary>
@@ -162,20 +160,20 @@ namespace ProjectAI.MainForms
             {
                 string iworkSpeaceName = workSpaceNameList["workSpaceNameList"][i].ToString();
                 System.IO.FileInfo fileInfo = new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName));
-                string fileSize = "";
+                long fileSize = 0;
                 try
                 {
-                    fileSize = fileInfo.Length.ToString();
+                    fileSize = fileInfo.Length;
                 }
                 catch
                 {
-                    fileSize = "0";
+                    fileSize = 0;
                 }
 
                 object workSpaceNameOptions = new
                 {
                     string_m_workSpacePath = System.IO.Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName),
-                    string_m_workSpaceSize = (fileSize + " Bytes"),
+                    string_m_workSpaceSize = (CustomIOMainger.FormatBytes(fileSize)),
                     string_m_workSpaceVersion = "1",
                     string_m_workSpaceIndex = i.ToString()
                 };
@@ -231,25 +229,28 @@ namespace ProjectAI.MainForms
                                 if (workSpaceNameOptions["string_m_workSpacePath"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_programSpace", Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
                                 if (workSpaceName[iworkSpeaceName]["string_m_workSpaceSize"] == null)
-                                    workSpaceNameOptions.Add(new JProperty("string_m_workSpaceSize", new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)).Length + " Bytes"));
+                                    workSpaceNameOptions.Add(new JProperty("string_m_workSpaceSize", CustomIOMainger.FormatBytes(new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)).Length)));
                                 if (workSpaceName[iworkSpeaceName]["string_m_workSpaceVersion"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_workSpaceVersion", "1"));
                                 if (workSpaceName[iworkSpeaceName]["int_m_workSpacIndex"] == null)
-                                    workSpaceNameOptions.Add(new JProperty("int_m_workSpacIndex", i)); 
+                                    workSpaceNameOptions.Add(new JProperty("int_m_workSpacIndex", i));
+                                else //Name List와 같아야됨
+                                    workSpaceName[iworkSpeaceName]["int_m_workSpacIndex"] = i;
+                                   
                             }
                             // workSpaceName의 workSpaceName Options 이 없음을 확인
                             else
                             {
                                 // workSpaceName의 workSpaceName Options 내용 체우기
                                 System.IO.FileInfo fileInfo = new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName));
-                                string fileSize = "";
-                                try{ fileSize = fileInfo.Length.ToString();}
-                                catch{ fileSize = "0";}
+                                long fileSize = 0;
+                                try{ fileSize = fileInfo.Length;}
+                                catch{ fileSize = 0;}
 
                                 object workSpaceNameOptions = new
                                 {
                                     string_m_workSpacePath = System.IO.Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName),
-                                    string_m_workSpaceSize = (fileSize + " Bytes"),
+                                    string_m_workSpaceSize = (CustomIOMainger.FormatBytes(fileSize)),
                                     string_m_workSpaceVersion = "1",
                                     int_m_workSpacIndex = i
                                 };
@@ -273,20 +274,20 @@ namespace ProjectAI.MainForms
                         {
                             string iworkSpeaceName = workSpaceEarlyDataSetJObject["workSpaceNameList"][i].ToString();
                             System.IO.FileInfo fileInfo = new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName));
-                            string fileSize = "";
+                            long fileSize = 0;
                             try
                             {
-                                 fileSize = fileInfo.Length.ToString();
+                                 fileSize = fileInfo.Length;
                             }
                             catch
                             {
-                                fileSize = "0";
+                                fileSize = 0;
                             }
 
                             object workSpaceNameOptions = new
                             {
                                 string_m_workSpacePath = System.IO.Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName),
-                                string_m_workSpaceSize = (fileSize + " Bytes"),
+                                string_m_workSpaceSize = (CustomIOMainger.FormatBytes(fileSize)),
                                 string_m_workSpaceVersion = "1",
                                 int_m_workSpacIndex = i
                             };
@@ -332,12 +333,8 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void WorkSpaceLoadButtonClick(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            Console.WriteLine(button.TabIndex);
 
-            int workSpaceIndex = button.TabIndex;
         }
-
 
         private void BtnMTrainOptionsOpenClick(object sender, EventArgs e)
         {
@@ -346,7 +343,7 @@ namespace ProjectAI.MainForms
 
         private void BtnMDataReviewOpenClick(object sender, EventArgs e)
         {
-            panelDataReview.Visible = panelDataReview.Visible == true ? false : true;
+            tableLayoutDataReview.Visible = tableLayoutDataReview.Visible == true ? false : true;
         }
 
         private void BtnMWorkSpaseOpenClick(object sender, EventArgs e)
@@ -365,13 +362,24 @@ namespace ProjectAI.MainForms
         
         private void TsmProjectWorSpaceNewProjectClick(object sender, EventArgs e)
         {
+            this.WorkSpaceCreatSequence();
+        }
+
+        private void TsmProjectWorSpaceTestButtonClick(object sender, EventArgs e)
+        {
             panelstatus.Visible = panelstatus.Visible == true ? false : true;
+        }
+
+        private void TsmProjectWorSpaceDeleteProjectClick(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>
         /// Programs 종료 시퀀스
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="
+        /// sender"></param>
         /// <param name="e"></param>
         private void TsmProjectWorSpaceProgramExitClick(object sender, EventArgs e)
         {
@@ -379,13 +387,29 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// 
+        /// WorkSpace 생성 버튼 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnMnewWorkSpaceClick(object sender, EventArgs e)
+        private void BtnMnewWorkSpaceClick(object senders, EventArgs e)
         {
+            this.WorkSpaceCreatSequence();
+        }
 
+        /// <summary>
+        /// NEW WorkSpace 생성 시춴스
+        /// </summary>
+        private void WorkSpaceCreatSequence()
+        {
+            MakeWorkSpaceForm makeWorkSpaceForm = new MakeWorkSpaceForm(); // WorkSpace Button Form 가져오기
+            DialogResult dialogResult = makeWorkSpaceForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                string CreatWorkSpaceName = makeWorkSpaceForm.GetWorkSpaceName(); // 검증 완료됨 WorkSpace 이름 가져오기
+                CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
+            }
+            // #001
+            // 생성된 WorkSpace가 기존에 데이터가 존제한다면 
         }
 
         /// <summary>
@@ -399,6 +423,7 @@ namespace ProjectAI.MainForms
         {
             MainForms.WorkSpaceButton newWorkSpaceButton = new MainForms.WorkSpaceButton();
             this.panelWorkSpaseButton.Controls.Add(newWorkSpaceButton);
+            this.styleExtenderMainForm.SetApplyMetroTheme(newWorkSpaceButton, true);
             newWorkSpaceButton.BackColor = System.Drawing.Color.Transparent;
             newWorkSpaceButton.Dock = System.Windows.Forms.DockStyle.Top;
             newWorkSpaceButton.Location = new System.Drawing.Point(2, 2);
@@ -430,16 +455,33 @@ namespace ProjectAI.MainForms
             CreateWorkSpaceButtonCore(workSpaceName, workSpaceSize, workSpaceVersion, workSpaceIndex);
         }
         /// <summary>
-        /// WorkSpaceButton 만들기 - 처음 만드는 경우
+        /// WorkSpaceButton 만들기 - 처음 만드는 경우, 
         /// </summary>
         /// <param name="workSpaceName"></param>
         private void CreateWorkSpaceButton(string workSpaceName)
         {
+            JArray workSpaceNameListJArray = (JArray)WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"];
+            int workSpaceIndex = workSpaceNameListJArray.Count(); // workSpaceIndex 초기화
+            string workSpaceVersion = "1"; // 버전 초기화
 
+            // 파일 사이즈 가져오기
+            System.IO.FileInfo fileInfo = new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, workSpaceName));
+            long workSpaceSize = 0;
+            try
+            {
+                workSpaceSize = fileInfo.Length;
+            }
+            catch
+            {
+                workSpaceSize = 0;
+            }
 
-            CreateWorkSpaceButtonCore(workSpaceName, workSpaceSize, workSpaceVersion, workSpaceIndex);
+            // WorkSpaceButton 생성
+            CreateWorkSpaceButtonCore(workSpaceName, CustomIOMainger.FormatBytes(workSpaceSize), workSpaceVersion, workSpaceIndex);
+            workSpaceNameListJArray.Add(workSpaceName); // 추가된 workSpaceName workSpaceNameListJobject에 추가 
+            WorkSpaceEarlyDataSetIntegrityCheck(WorkSpaceEarlyData.workSpaceEarlyDataJobject); // 무결성 검사 이용하여 생성된 workSpaceEarlyData 초기 대이터 생성.
+            jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장 
         }
-
 
         /// <summary>
         /// Programs 종료 시퀀스
