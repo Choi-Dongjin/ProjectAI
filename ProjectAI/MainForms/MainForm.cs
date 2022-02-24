@@ -96,6 +96,8 @@ namespace ProjectAI.MainForms
         private void MainFormCallUISeting()
         {
             this.panelMWorkSpase.Visible = true; // WorkSpase 판넬 보이기
+            this.metroButton3.Visible = false; // 프로젝트 생성 버튼 안보이기
+
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
 
             this.panelTrainOptions.Size = new System.Drawing.Size(500, 100); // panel Train Options 판넬 사이즈 조정
@@ -339,9 +341,10 @@ namespace ProjectAI.MainForms
             Button button = (Button)sender;
             int workSpaceIndex = button.TabIndex;
             string activeWorkSpaceName = WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"][workSpaceIndex].ToString();
-            
+
             //Console.WriteLine(workSpaceIndex);
             //Console.WriteLine(activeWorkSpaceName);
+            this.metroButton3.Visible = true; // 프로젝트 생성 버튼 보이기
 
             foreach (string activeProjectName in WorkSpaceData.m_projectMaingersDictionary.Keys)
             {
@@ -408,6 +411,11 @@ namespace ProjectAI.MainForms
         {
             panelstatus.Visible = panelstatus.Visible == true ? false : true;
             WorkSpaceData.m_actionProjectMainger.ProjectIdleUIRemove(); // IdleUI 적용된 부분 삭제
+        }
+
+        private void TestButtonClick(object sender, EventArgs e)
+        {
+            WorkSpaceData.m_actionProjectMainger.deeplearningProjectSelectForm.Show();
         }
 
         private void TsmProjectWorSpaceDeleteProjectClick(object sender, EventArgs e)

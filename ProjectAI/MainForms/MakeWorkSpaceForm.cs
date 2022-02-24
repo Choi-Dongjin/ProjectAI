@@ -25,6 +25,11 @@ namespace ProjectAI.MainForms
         public MakeWorkSpaceForm()
         {
             InitializeComponent();
+
+            this.StyleManager = styleManagerMakeWorkSpaceForm;
+            // FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+            FormsManiger formsManiger = FormsManiger.GetInstance();
+            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
         }
 
         ~MakeWorkSpaceForm()

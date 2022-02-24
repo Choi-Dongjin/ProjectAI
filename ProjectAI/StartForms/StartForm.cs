@@ -26,6 +26,7 @@ namespace ProjectAI
         public StartForm()
         {
             InitializeComponent();
+
             //this.StyleManager = styleManagerStartForm; // Form StyleManager 설정 -> MetroForm으로 사용시 적용
             this.Icon = Properties.Resources.synapseimaging2; // 아이콘 설정
 

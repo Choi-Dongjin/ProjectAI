@@ -68,22 +68,22 @@
     <Compile Include="CustomComponent\CircularButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\Classification\TrainOptions.cs">
+    <Compile Include="MainForms\UserContral\Classification\TrainOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\Classification\TrainOptions.Designer.cs">
+    <Compile Include="MainForms\UserContral\Classification\TrainOptions.Designer.cs">
       <DependentUpon>TrainOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\Idle\TrainOptions.cs">
+    <Compile Include="MainForms\UserContral\Idle\TrainOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\Idle\TrainOptions.Designer.cs">
+    <Compile Include="MainForms\UserContral\Idle\TrainOptions.Designer.cs">
       <DependentUpon>TrainOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\ImageCountLabel.cs">
+    <Compile Include="MainForms\UserContral\ImageCountLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\ImageCountLabel.Designer.cs">
+    <Compile Include="MainForms\UserContral\ImageCountLabel.Designer.cs">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageTool\ImageTollTestForms.cs">
@@ -92,10 +92,22 @@
     <Compile Include="ImageTool\ImageTollTestForms.Designer.cs">
       <DependentUpon>ImageTollTestForms.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\WorkSpaceButton.cs">
+    <Compile Include="MainForms\UserContral\ProjectSelect\Classification.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomComponent\MainForms\WorkSpaceButton.Designer.cs">
+    <Compile Include="MainForms\UserContral\ProjectSelect\Classification.Designer.cs">
+      <DependentUpon>Classification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ProjectSelect\ImputDataTypeButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ProjectSelect\ImputDataTypeButton.Designer.cs">
+      <DependentUpon>ImputDataTypeButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\WorkSpaceButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\WorkSpaceButton.Designer.cs">
       <DependentUpon>WorkSpaceButton.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\DeeplearningProjectSelectForm.cs">
@@ -139,13 +151,13 @@
     <Compile Include="StartForms\StartFormOptions.Designer.cs">
       <DependentUpon>StartFormOptions.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CustomComponent\MainForms\Classification\TrainOptions.resx">
+    <EmbeddedResource Include="MainForms\UserContral\Classification\TrainOptions.resx">
       <DependentUpon>TrainOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomComponent\MainForms\Idle\TrainOptions.resx">
+    <EmbeddedResource Include="MainForms\UserContral\Idle\TrainOptions.resx">
       <DependentUpon>TrainOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomComponent\MainForms\ImageCountLabel.resx">
+    <EmbeddedResource Include="MainForms\UserContral\ImageCountLabel.resx">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageTool\ImageTollTestForms.resx">
@@ -157,7 +169,13 @@
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomComponent\MainForms\WorkSpaceButton.resx">
+    <EmbeddedResource Include="MainForms\UserContral\ProjectSelect\Classification.resx">
+      <DependentUpon>Classification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ProjectSelect\ImputDataTypeButton.resx">
+      <DependentUpon>ImputDataTypeButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\WorkSpaceButton.resx">
       <DependentUpon>WorkSpaceButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\MakeWorkSpaceForm.resx">
@@ -211,11 +229,17 @@
     <None Include="Resources\imageBackground.bmp" />
     <None Include="Resources\imageBackground.png" />
     <None Include="Resources\imageBackground2.png" />
+    <None Include="Resources\classification .png" />
+    <None Include="Resources\objectdetection.png" />
+    <None Include="Resources\segmentation.png" />
+    <None Include="Resources\classification200.png" />
+    <None Include="Resources\objectdetection200.png" />
+    <None Include="Resources\segmentation200.png" />
+    <None Include="Resources\classification150 .png" />
+    <None Include="Resources\objectdetection150.png" />
+    <None Include="Resources\segmentation150.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MainForms\ClassificationForms\" />
-    <Folder Include="MainForms\idelUserControl\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

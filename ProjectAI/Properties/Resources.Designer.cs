@@ -63,6 +63,26 @@ namespace ProjectAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap classification150 {
+            get {
+                object obj = ResourceManager.GetObject("classification150", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap classification200 {
+            get {
+                object obj = ResourceManager.GetObject("classification200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap iconlogoB {
             get {
                 object obj = ResourceManager.GetObject("iconlogoB", resourceCulture);
@@ -126,6 +146,46 @@ namespace ProjectAI.Properties {
         internal static System.Drawing.Bitmap imageBackground2 {
             get {
                 object obj = ResourceManager.GetObject("imageBackground2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap objectdetection150 {
+            get {
+                object obj = ResourceManager.GetObject("objectdetection150", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap objectdetection200 {
+            get {
+                object obj = ResourceManager.GetObject("objectdetection200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap segmentation150 {
+            get {
+                object obj = ResourceManager.GetObject("segmentation150", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap segmentation200 {
+            get {
+                object obj = ResourceManager.GetObject("segmentation200", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

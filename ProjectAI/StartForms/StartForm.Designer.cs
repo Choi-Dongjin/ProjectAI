@@ -84,6 +84,7 @@
             // metroButton4
             // 
             resources.ApplyResources(this.metroButton4, "metroButton4");
+            this.metroButton4.Highlight = true;
             this.metroButton4.Name = "metroButton4";
             this.metroButton4.UseSelectable = true;
             this.metroButton4.Click += new System.EventHandler(this.ButtonExitClick);
@@ -91,6 +92,7 @@
             // buttonStart
             // 
             resources.ApplyResources(this.buttonStart, "buttonStart");
+            this.buttonStart.Highlight = true;
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.UseSelectable = true;
             this.buttonStart.Click += new System.EventHandler(this.ButtonStartClick);
@@ -98,6 +100,7 @@
             // buttonStyleChange
             // 
             resources.ApplyResources(this.buttonStyleChange, "buttonStyleChange");
+            this.buttonStyleChange.Highlight = true;
             this.buttonStyleChange.Name = "buttonStyleChange";
             this.buttonStyleChange.UseSelectable = true;
             this.buttonStyleChange.Click += new System.EventHandler(this.ButtonStyleChangeClick);
@@ -105,6 +108,7 @@
             // buttonStartOption
             // 
             resources.ApplyResources(this.buttonStartOption, "buttonStartOption");
+            this.buttonStartOption.Highlight = true;
             this.buttonStartOption.Name = "buttonStartOption";
             this.buttonStartOption.UseSelectable = true;
             this.buttonStartOption.Click += new System.EventHandler(this.ButtonStartOptionClick);
@@ -121,6 +125,8 @@
             // 
             resources.ApplyResources(this.labMprogramWorkSpacePath, "labMprogramWorkSpacePath");
             this.labMprogramWorkSpacePath.BackColor = System.Drawing.Color.Transparent;
+            this.labMprogramWorkSpacePath.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.labMprogramWorkSpacePath.FontWeight = MetroFramework.MetroLabelWeight.Bold;
             this.labMprogramWorkSpacePath.Name = "labMprogramWorkSpacePath";
             // 
             // btnMprogramWorkSpaceChange

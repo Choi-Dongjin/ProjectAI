@@ -127,7 +127,7 @@ namespace ProjectAI
         public MainForms.DeeplearningProjectSelectForm deeplearningProjectSelectForm = new MainForms.DeeplearningProjectSelectForm();
 
         #endregion ProjectMainger에 종속된 Forms 정의
-
+        //=== === === === === === === === === === === === === === === 
         #region ProjectMainger에 종속된 UserContral 정의
 
         /// <summary>

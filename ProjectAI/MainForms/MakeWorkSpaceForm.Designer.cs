@@ -43,7 +43,7 @@
             // 
             // styleManagerMakeWorkSpaceForm
             // 
-            this.styleManagerMakeWorkSpaceForm.Owner = null;
+            this.styleManagerMakeWorkSpaceForm.Owner = this;
             // 
             // tableLayoutStartOptionMain
             // 
@@ -112,6 +112,7 @@
             this.txtMworkSpaceName.CustomButton.UseSelectable = true;
             this.txtMworkSpaceName.CustomButton.Visible = false;
             this.txtMworkSpaceName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMworkSpaceName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.txtMworkSpaceName.Lines = new string[0];
             this.txtMworkSpaceName.Location = new System.Drawing.Point(178, 38);
             this.txtMworkSpaceName.MaxLength = 32767;
