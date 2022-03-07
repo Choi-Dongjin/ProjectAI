@@ -39,6 +39,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnMCancel = new MetroFramework.Controls.MetroButton();
             this.btnMOK = new MetroFramework.Controls.MetroButton();
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerDeeplearningProjectSelectForm)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -76,6 +77,7 @@
             this.btnMSegmentation.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;
             this.btnMSegmentation.UseSelectable = true;
             this.btnMSegmentation.UseTileImage = true;
+            this.btnMSegmentation.Click += new System.EventHandler(this.btnMSegmentation_Click);
             // 
             // btnMObjectDetection
             // 
@@ -92,6 +94,7 @@
             this.btnMObjectDetection.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;
             this.btnMObjectDetection.UseSelectable = true;
             this.btnMObjectDetection.UseTileImage = true;
+            this.btnMObjectDetection.Click += new System.EventHandler(this.btnMObjectDetection_Click);
             // 
             // btnMnull
             // 
@@ -233,5 +236,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private MetroFramework.Controls.MetroButton btnMOK;
         private MetroFramework.Controls.MetroButton btnMCancel;
+        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
     }
 }

@@ -42,6 +42,8 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         [Description("None Button"), Category("Custom Button")]
         public event EventHandler BtnNoneClickEvnetHandler;
 
+        FormsManiger formsManiger = FormsManiger.GetInstance();
+
         public Classification()
         {
             InitializeComponent();
@@ -58,6 +60,18 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
 
             //// btnNone Click에 이벤트 등록
             //this.btnNone.Click += BtnNoneClickEvent;
+            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+        }
+
+        /// <summary>
+        /// delegate UpdataFormStyleManager
+        /// </summary>
+        /// <param styleManager="MetroStyleManager"></param>
+        public void UpdataFormStyleManager(MetroFramework.Components.MetroStyleManager styleManager)
+        {
+            this.metroStyleManagerClassification.Style = styleManager.Style;
+            this.metroStyleManagerClassification.Theme = styleManager.Theme;
         }
 
         /// <summary>

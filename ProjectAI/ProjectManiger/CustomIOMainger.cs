@@ -5,10 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+using System.Drawing;
+
 namespace ProjectAI
 {
-    static class CustomIOMainger
+    public static class CustomIOMainger
     {
+        /// <summary>
+        /// 이미지 검색 확장자 필터 설정
+        /// </summary>
+        private readonly static string[] imageExts = new[] { ".jpg", ".bmp", ".png" }; // 검색할 확장자 필터
+
         /// <summary>
         /// 바이트로 되어있는 것을 KB, MB, GB 형식으로 변환 해주는 것
         /// </summary>
@@ -65,6 +72,31 @@ namespace ProjectAI
             }
             return true;
         }
+
+        /// <summary>
+        /// 폴더 사이즈 계산
+        /// </summary>
+        /// <param name="forderName"> 확인 경로 </param>
+        /// <returns></returns>
+        public static long DirSize(string forderName)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(forderName);
+            long size = 0;
+            // Add file sizes.
+            FileInfo[] fis = directoryInfo.GetFiles();
+            foreach (FileInfo fi in fis)
+            {
+                size += fi.Length;
+            }
+            // Add subdirectory sizes.
+            DirectoryInfo[] dis = directoryInfo.GetDirectories();
+            foreach (DirectoryInfo di in dis)
+            {
+                size += DirSize(di.FullName);
+            }
+            return size;
+        }
+
         /// <summary>
         /// 파일 삭제 성공시 true, 실패시 false
         /// </summary>
@@ -101,6 +133,177 @@ namespace ProjectAI
                 dateTimeNow = DateTime.Now;
             }
             return;
+        }
+
+        /// <summary>
+        /// 임의의 파일 이름 만들기 기본 10 자리 이름
+        /// </summary>
+        /// <param name="number"> 자릿수 </param>
+        /// <returns> 랜덤 이름 </returns>
+        public static string RandomFileName(int number = 10)
+        {
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var Charsarr = new char[number];
+            var random = new Random();
+
+            for (int i = 0; i < Charsarr.Length; i++)
+            {
+                Charsarr[i] = characters[random.Next(characters.Length)];
+            }
+
+            var resultString = new String(Charsarr);
+            Console.WriteLine(resultString);
+            return resultString;
+        }
+        /// <summary>
+        /// 기존 이름 비교해서 새로운 이름 만들기
+        /// </summary>
+        /// <param name="names"> 기존 이름 array </param>
+        /// <param name="number"> 자릿수 </param>
+        /// <returns></returns>
+        public static string RandomFileName(string[] names, int number = 10)
+        {
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var Charsarr = new char[number];
+            var random = new Random();
+
+            for (int i = 0; i < Charsarr.Length; i++)
+            {
+                Charsarr[i] = characters[random.Next(characters.Length)];
+               
+            }
+
+            var resultString = new String(Charsarr);
+            Console.WriteLine(resultString);
+
+            foreach ( string name in names)
+            {
+                if (name == resultString)
+                {
+                    resultString = RandomFileName(names, number);
+                }
+            }
+         
+            return resultString;
+        }
+
+        /// <summary>
+        /// 이미지 파일 검색
+        /// </summary>
+        /// <param name="path"> 폴더 경로 </param>
+        /// <param name="getFileFullPath"> 파일 전체 경로 출력 여부, true: 전체 경로 출력 - false: 파일 이름 출력</param>
+        /// <returns></returns>
+        public static List<string> ImageFileFileSearch(string path, bool getFileFullPath)
+        {
+            List<string> filesList = new List<string>();
+            string[] files;
+            try
+            {
+                string[] exts = imageExts; // 검색할 확장자 필터
+
+                string[] dirs = Directory.GetDirectories(path);
+                files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly).Where(s => exts.Contains(Path.GetExtension(s), StringComparer.OrdinalIgnoreCase)).ToArray();
+
+                if (getFileFullPath)
+                    foreach (string fullFileName in files)
+                        filesList.Add(fullFileName);
+                else
+                    foreach (string fullFileName in files)
+                        filesList.Add(Path.GetFileName(fullFileName));
+            }
+            catch (Exception ex)
+            {
+                files = null;
+                Console.WriteLine(ex);
+            }
+            return filesList;
+        }
+        /// <summary>
+        /// 이미지 파일 검색
+        /// </summary>
+        /// <param name="path"> 폴더 경로</param>
+        /// <param name="getFileFullPath"> 파일 전체 경로 출력 여부</param>
+        /// <param name="subfoldersSearch"> 하위 폴더 검색 여부</param>
+        /// <returns></returns>
+        public static List<string> ImageFileFileSearch(string path, bool getFileFullPath, bool subfoldersSearch)
+        {
+            List<string> filesList = new List<string>();
+            try
+            {
+                string[] exts = imageExts; // 검색할 확장자 필터
+
+                string[] dirs = Directory.GetDirectories(path);
+                string[] files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly).Where(s => exts.Contains(Path.GetExtension(s), StringComparer.OrdinalIgnoreCase)).ToArray();
+
+                foreach (string FullFileName in files)
+                {
+                    // 이 곳에 해당 파일을 찾아서 처리할 코드를 삽입하면 된다.
+                    // Console.WriteLine($"[{count++}] path - {FullFileName}");
+
+                    // Delete a file by using File class static method...
+                    if (System.IO.File.Exists(FullFileName))
+                    {
+                        // Use a try block to catch IOExceptions, to
+                        // handle the case of the file already being
+                        // opened by another process.
+                        if (getFileFullPath)
+                            foreach (string fullFileName in files)
+                                filesList.Add(fullFileName);
+                        else
+                            foreach (string fullFileName in files)
+                                filesList.Add(Path.GetFileName(fullFileName));
+                    }
+                }
+
+                //하위 폴더가지 확인 재귀 함수를 이용한 구현
+                if (dirs.Length > 0 && subfoldersSearch)
+                {
+                    foreach (string dir in dirs)
+                    {
+                        filesList.AddRange(ImageFileFileSearch(dir, true));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return filesList;
+        }
+
+        /// <summary>
+        /// FileCopyList 동작 방법 선택
+        /// </summary>
+        public sealed class FileCopyListSet
+        {
+            /// <summary>
+            /// 파일 설정퇸 폴터에 복사
+            /// "예) 설정된 폴더명이 C:\Data -> C:\Data\파일명"
+            /// </summary>
+            public static int PathToPath { get { return 1; } }
+            /// <summary>
+            /// 학습을 위한 데이터 이동
+            /// </summary>
+            public static int TrainSet { get { return 2; } }
+        }
+
+        public static void FileCopyList(List<string> files, string setPath, CustomIOMainger.FileCopyListSet fileCopyListSet)
+        {
+            switch (Convert.ToInt32(fileCopyListSet))
+            {
+                case 1:
+                    foreach (string file in files)
+                    {
+                        string fileName = Path.GetFileName(file);
+                        string setFilePath = Path.Combine(setPath, fileName);
+
+
+                    }
+
+                    break;
+                case 2:
+                    break;
+            }
         }
     }
 }

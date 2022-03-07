@@ -29,23 +29,24 @@
         private void InitializeComponent()
         {
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.txtMworkSpaceName = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroPanel1
             // 
             this.metroPanel1.AutoScroll = true;
-            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(470, 818);
-            this.metroPanel1.Controls.Add(this.metroTextBox1);
+            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(460, 818);
+            this.metroPanel1.Controls.Add(this.txtMworkSpaceName);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbar = true;
-            this.metroPanel1.HorizontalScrollbarBarColor = true;
+            this.metroPanel1.HorizontalScrollbarBarColor = false;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(20, 20);
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
+            this.metroPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.metroPanel1.Size = new System.Drawing.Size(470, 818);
             this.metroPanel1.TabIndex = 1;
             this.metroPanel1.VerticalScrollbar = true;
@@ -53,40 +54,41 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // metroTextBox1
+            // txtMworkSpaceName
             // 
             // 
             // 
             // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(53, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.metroTextBox1.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.PromptText = "Idle";
-            this.metroTextBox1.ReadOnly = true;
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(460, 818);
-            this.metroTextBox1.TabIndex = 2;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMark = "Idle";
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMworkSpaceName.CustomButton.Image = null;
+            this.txtMworkSpaceName.CustomButton.Location = new System.Drawing.Point(-356, 2);
+            this.txtMworkSpaceName.CustomButton.Name = "";
+            this.txtMworkSpaceName.CustomButton.Size = new System.Drawing.Size(813, 813);
+            this.txtMworkSpaceName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtMworkSpaceName.CustomButton.TabIndex = 1;
+            this.txtMworkSpaceName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtMworkSpaceName.CustomButton.UseSelectable = true;
+            this.txtMworkSpaceName.CustomButton.Visible = false;
+            this.txtMworkSpaceName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMworkSpaceName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtMworkSpaceName.Lines = new string[0];
+            this.txtMworkSpaceName.Location = new System.Drawing.Point(0, 0);
+            this.txtMworkSpaceName.MaxLength = 32767;
+            this.txtMworkSpaceName.Multiline = true;
+            this.txtMworkSpaceName.Name = "txtMworkSpaceName";
+            this.txtMworkSpaceName.PasswordChar = '\0';
+            this.txtMworkSpaceName.PromptText = "Work Space Name";
+            this.txtMworkSpaceName.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtMworkSpaceName.SelectedText = "";
+            this.txtMworkSpaceName.SelectionLength = 0;
+            this.txtMworkSpaceName.SelectionStart = 0;
+            this.txtMworkSpaceName.ShortcutsEnabled = true;
+            this.txtMworkSpaceName.Size = new System.Drawing.Size(460, 818);
+            this.txtMworkSpaceName.TabIndex = 2;
+            this.txtMworkSpaceName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtMworkSpaceName.UseSelectable = true;
+            this.txtMworkSpaceName.WaterMark = "Work Space Name";
+            this.txtMworkSpaceName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtMworkSpaceName.WaterMarkFont = new System.Drawing.Font("Segoe UI Semibold", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
             // TrainOptions
             // 
@@ -104,6 +106,6 @@
 
         #endregion
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroTextBox txtMworkSpaceName;
     }
 }

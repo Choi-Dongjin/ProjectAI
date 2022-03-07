@@ -30,7 +30,7 @@ namespace ProjectAI
             //this.StyleManager = styleManagerStartForm; // Form StyleManager 설정 -> MetroForm으로 사용시 적용
             this.Icon = Properties.Resources.synapseimaging2; // 아이콘 설정
 
-            formsManiger.startForm = this; // formsManiger를 호출하면 startForm을 먼저 등록 해야함. 아니면 다른 처리가 필요. 안하면 // Handler 등록에 문제 발생
+            formsManiger.StartForm = this; // formsManiger를 호출하면 startForm을 먼저 등록 해야함. 아니면 다른 처리가 필요. 안하면 // Handler 등록에 문제 발생
 
             // 각 Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
@@ -252,7 +252,7 @@ namespace ProjectAI
 
         private void ButtonStartClick(object sender, EventArgs e)
         {
-            formsManiger.mainForm.Show();
+            formsManiger.MainForm.Show();
             //Hiding the window, because closing it makes the window unaccessible.
             //this.Hide();
             //this.Parent = null;
@@ -302,7 +302,7 @@ namespace ProjectAI
 
         private void ButtonStartOptionClick(object sender, EventArgs e)
         {
-            formsManiger.startFormOptions.Show();
+            formsManiger.StartFormOptions.Show();
         }
 
         private void BtnMprogramWorkSpaceChangeClick(object sender, EventArgs e)

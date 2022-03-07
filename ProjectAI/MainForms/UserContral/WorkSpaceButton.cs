@@ -22,12 +22,28 @@ namespace ProjectAI.MainForms
         [Description("WorkSpaceOpen Click Evnet"), Category("WorkSpace")]
         public event EventHandler BtnWorkSpaceOpenClickEvnetHandler;
 
+        FormsManiger formsManiger = FormsManiger.GetInstance();
+
         public WorkSpaceButton()
         {
             InitializeComponent();
-
+            
             // btnWorkSpaceOpen Click에 이벤트 등록
             this.btnWorkSpaceOpen.Click += BtnWorkSpaceOpenClickEvent;
+
+            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+
+            this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
+        }
+
+        /// <summary>
+        /// delegate UpdataFormStyleManager
+        /// </summary>
+        /// <param styleManager="MetroStyleManager"></param>
+        public void UpdataFormStyleManager(MetroFramework.Components.MetroStyleManager styleManager)
+        {
+            this.metroStyleManager1.Style = styleManager.Style;
+            this.metroStyleManager1.Theme = styleManager.Theme;
         }
 
         /// <summary>
@@ -108,5 +124,10 @@ namespace ProjectAI.MainForms
             }
         }
         #endregion
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

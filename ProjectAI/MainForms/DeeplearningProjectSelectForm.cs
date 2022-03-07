@@ -25,6 +25,11 @@ namespace ProjectAI.MainForms
         private ProjectAI.MainForms.UserContral.ProjectSelect.Classification classificationUserContral;
 
         /// <summary>
+        /// jsonDataManiger
+        /// </summary>
+        JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
+
+        /// <summary>
         /// 폼 메니저
         /// </summary>
         private FormsManiger formsManiger = FormsManiger.GetInstance();
@@ -96,6 +101,9 @@ namespace ProjectAI.MainForms
             this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
 
             #region Classification 컨트롤 설정
+
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+
             this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
             this.classificationUserContral.Margin = new System.Windows.Forms.Padding(0);
@@ -167,11 +175,49 @@ namespace ProjectAI.MainForms
         {
             if (selectProjectInputDataType != null)
             {
-                WorkSpaceData.m_actionProjectMainger.m_ActiveProjectInnerProjectInfoJObject["selectProject"] = selectProject;
-                WorkSpaceData.m_actionProjectMainger.m_ActiveProjectInnerProjectInfoJObject["selectProjectInputDataType"] = selectProjectInputDataType;
+                //WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["selectProject"] = selectProject;
+                //WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["selectProjectInputDataType"] = selectProjectInputDataType;
+
+                string mkInnerProjectName = CustomIOMainger.RandomFileName(WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["array_string_projectList"].Select(jv => (string)jv).ToArray(), 10); // 이름 랜덤 생성
+                JArray jArray = (JArray)WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["array_string_projectList"];
+                jArray.Add(mkInnerProjectName);
+
+                Int32.TryParse(WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["int_projectListNumber"].ToString(), out int number);
+                number++;
+                WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["int_projectListNumber"] = number;
+
+                object newInnerProjectInfo = new
+                {
+                    int_X = number,
+                    int_Y = 0,
+                    string_selectProject = selectProject,
+                    string_selectProjectInputDataType = selectProjectInputDataType,
+                    int_imageLabeledNumber = 0,
+                    int_imageTrainNumber = 0,
+                    int_imageTestNumber = 0,
+                    bool_traininggorNot = false
+                };
+                JObject jObject2 = new JObject();
+                jObject2[mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
+                JObject array_string_projectList = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"];
+                array_string_projectList.Merge(jObject2);
+
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject);
 
                 Console.WriteLine($"Select Project: {selectProject}"); // Log
                 Console.WriteLine($"Input DataType: {selectProjectInputDataType}"); // Log
+
+                MetroFramework.MetroColorStyle style;
+                if (selectProject == "Classification")
+                    style = MetroColorStyle.Green;
+                else if (selectProject == "Segmentation")
+                    style = MetroColorStyle.Red;
+                else if (selectProject == "ObjectDetection")
+                    style = MetroColorStyle.Blue;
+                else
+                    style = MetroColorStyle.Yellow;
+
+                WorkSpaceData.m_activeProjectMainger.UISetActiveProjectInnerProjectButton(mkInnerProjectName, selectProject, style); // 버튼 프로젝트에 추가
 
                 this.Close();
             }
@@ -184,6 +230,16 @@ namespace ProjectAI.MainForms
         private void BtnMCancelClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnMObjectDetection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMSegmentation_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -20,5 +20,30 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             InitializeComponent();
         }
+
+        private void metroTextBox15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroTextBox16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroTextBox19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroTextBox20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TrainOptions_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

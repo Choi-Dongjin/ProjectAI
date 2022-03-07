@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,6 +69,24 @@
     <Compile Include="CustomComponent\CircularButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MainForms\ClassEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\ClassEdit.Designer.cs">
+      <DependentUpon>ClassEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\ClassEditClassButtonEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\ClassEditClassButtonEdit.Designer.cs">
+      <DependentUpon>ClassEditClassButtonEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ClassEdit\ClassButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ClassEdit\ClassButton.Designer.cs">
+      <DependentUpon>ClassButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForms\UserContral\Classification\TrainOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +110,18 @@
     </Compile>
     <Compile Include="ImageTool\ImageTollTestForms.Designer.cs">
       <DependentUpon>ImageTollTestForms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\InnerProjectInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\InnerProjectInfo.Designer.cs">
+      <DependentUpon>InnerProjectInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\LabelAddIncreaseButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\LabelAddIncreaseButton.Designer.cs">
+      <DependentUpon>LabelAddIncreaseButton.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\UserContral\ProjectSelect\Classification.cs">
       <SubType>UserControl</SubType>
@@ -151,6 +182,15 @@
     <Compile Include="StartForms\StartFormOptions.Designer.cs">
       <DependentUpon>StartFormOptions.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="MainForms\ClassEdit.resx">
+      <DependentUpon>ClassEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\ClassEditClassButtonEdit.resx">
+      <DependentUpon>ClassEditClassButtonEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ClassEdit\ClassButton.resx">
+      <DependentUpon>ClassButton.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\Classification\TrainOptions.resx">
       <DependentUpon>TrainOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\InnerProjectInfo.resx">
+      <DependentUpon>InnerProjectInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\LabelAddIncreaseButton.resx">
+      <DependentUpon>LabelAddIncreaseButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ProjectSelect\Classification.resx">
       <DependentUpon>Classification.cs</DependentUpon>
@@ -238,8 +284,12 @@
     <None Include="Resources\classification150 .png" />
     <None Include="Resources\objectdetection150.png" />
     <None Include="Resources\segmentation150.png" />
+    <None Include="Resources\minus.png" />
+    <None Include="Resources\plus.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FileIoMeniger\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

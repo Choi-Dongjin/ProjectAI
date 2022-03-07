@@ -19,9 +19,9 @@ namespace ProjectAI
         private static FormsManiger formsManiger; // 싱글톤 패턴 구현을 위한 FormsManiger
 
         // 각 Form Class 정의
-        public StartForm startForm { get; set; }
-        public StartForms.StartFormOptions startFormOptions { get; }
-        public MainForms.MainForm mainForm { get; }
+        public StartForm StartForm { get; set; }
+        public StartForms.StartFormOptions StartFormOptions { get; }
+        public MainForms.MainForm MainForm { get; }
 
         public delegate void FormStyleManagerHandler(MetroStyleManager FormStyleManager); // Form Style 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
         public static FormStyleManagerHandler m_formStyleManagerHandler; // Form Style 관리 Update Handler
@@ -42,8 +42,8 @@ namespace ProjectAI
 
         private FormsManiger()
         {
-            this.startFormOptions = new StartForms.StartFormOptions();
-            this.mainForm = new MainForms.MainForm();
+            this.StartFormOptions = new StartForms.StartFormOptions();
+            this.MainForm = new MainForms.MainForm();
         }
         
         /// <summary>
@@ -65,10 +65,10 @@ namespace ProjectAI
         public void FormStyleManagerHandlerEnrollment()
         {
             // 각 해당 Class 에서 관리 하도록 수정
-            //if (startForm != null)
-            //    FormsManiger.m_formStyleManagerHandler += this.startForm.UpdataFormStyleManager;
-            //FormsManiger.m_formStyleManagerHandler += this.startFormOptions.UpdataFormStyleManager;
-            //FormsManiger.m_formStyleManagerHandler += this.mainForm.UpdataFormStyleManager;
+            //if (StartForm != null)
+            //    FormsManiger.m_formStyleManagerHandler += this.StartForm.UpdataFormStyleManager;
+            //FormsManiger.m_formStyleManagerHandler += this.StartFormOptions.UpdataFormStyleManager;
+            //FormsManiger.m_formStyleManagerHandler += this.MainForm.UpdataFormStyleManager;
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace ProjectAI
         public void StartFormOptionsManagerHandlerEnrollment()
         {
             // 각 해당 Class 에서 관리 하도록 수정
-            //if (startForm != null)
-            //    FormsManiger.m_startFormOptionsManagerHandler += this.startForm.IfStartOptionsChange;
+            //if (StartForm != null)
+            //    FormsManiger.m_startFormOptionsManagerHandler += this.StartForm.IfStartOptionsChange;
             //FormsManiger.m_startFormOptionsManagerHandler += Program.IfProgramEntryPointOptionsChange;
             //FormsManiger.m_startFormOptionsManagerHandler += WorkSpaceEarlyData.ProgramVariablesChange;
         }

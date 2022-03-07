@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Classification));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtTitle = new MetroFramework.Controls.MetroTextBox();
@@ -39,9 +40,11 @@
             this.imputDataTypeButton1 = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.metroPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -239,6 +242,10 @@
             this.btnSingleImage.TabIndex = 7;
             this.btnSingleImage.Title = "Single Image";
             // 
+            // metroStyleManagerClassification
+            // 
+            this.metroStyleManagerClassification.Owner = this;
+            // 
             // Classification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -251,6 +258,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -266,5 +274,6 @@
         public ImputDataTypeButton btnSingleImage;
         public ImputDataTypeButton btnMultiImage;
         public ImputDataTypeButton imputDataTypeButton1;
+        private MetroFramework.Components.MetroStyleManager metroStyleManagerClassification;
     }
 }

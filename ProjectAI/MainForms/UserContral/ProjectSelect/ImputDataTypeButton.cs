@@ -49,7 +49,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.ButtonSetting(); // 초기 버튼 셋팅
         }
 
-        public void ControlReset()
+        private void ControlReset()
         {
             ButtonSetting();
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;

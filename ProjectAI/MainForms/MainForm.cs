@@ -81,12 +81,6 @@ namespace ProjectAI.MainForms
 
             // 값 반영
             WorkSpaceEarlyData.workSpaceEarlyDataJobject = workSpacData; // Jobject 반영
-            //JArray workSpaceNameList = (JArray)workSpacData["workSpaceNameList"];
-            //for (int i = 0; i < workSpaceNameList.Count(); i++)
-            //{
-            //    //Console.WriteLine(workSpaceNameList[i].ToString());
-            //    WorkSpaceEarlyData.m_workSpaceNameList.Add(workSpaceNameList[i].ToString());
-            //}
             #endregion
         }
 
@@ -96,7 +90,9 @@ namespace ProjectAI.MainForms
         private void MainFormCallUISeting()
         {
             this.panelMWorkSpase.Visible = true; // WorkSpase 판넬 보이기
-            this.metroButton3.Visible = false; // 프로젝트 생성 버튼 안보이기
+
+            this.panelTrainOptions.Visible = false; // TrainO ptions 폼 안보이기
+            this.tableLayoutDataReview.Visible = false; // Data Review 폼 안보이기
 
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
 
@@ -234,14 +230,16 @@ namespace ProjectAI.MainForms
                                 if (workSpaceNameOptions["string_m_workSpacePath"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_programSpace", Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
                                 if (workSpaceName[iworkSpeaceName]["string_m_workSpaceSize"] == null)
-                                    workSpaceNameOptions.Add(new JProperty("string_m_workSpaceSize", CustomIOMainger.FormatBytes(new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)).Length)));
+                                    workSpaceNameOptions.Add(new JProperty("string_m_workSpaceSize", CustomIOMainger.FormatBytes(CustomIOMainger.DirSize(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)))));
                                 if (workSpaceName[iworkSpeaceName]["string_m_workSpaceVersion"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_workSpaceVersion", "1"));
                                 if (workSpaceName[iworkSpeaceName]["int_m_workSpacIndex"] == null)
                                     workSpaceNameOptions.Add(new JProperty("int_m_workSpacIndex", i));
                                 else //Name List와 같아야됨
                                     workSpaceName[iworkSpeaceName]["int_m_workSpacIndex"] = i;
-                                   
+
+                                workSpaceNameOptions["string_m_workSpaceSize"] = CustomIOMainger.FormatBytes(CustomIOMainger.DirSize(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
+
                             }
                             // workSpaceName의 workSpaceName Options 이 없음을 확인
                             else
@@ -332,7 +330,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// WorkSpace 열기 버튼 클릭시 동작 Button Event 형식
+        /// WorkSpace 열기 버튼 클릭시 동작 Button Event 형식 = Start
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -344,16 +342,16 @@ namespace ProjectAI.MainForms
 
             //Console.WriteLine(workSpaceIndex);
             //Console.WriteLine(activeWorkSpaceName);
-            this.metroButton3.Visible = true; // 프로젝트 생성 버튼 보이기
 
             foreach (string activeProjectName in WorkSpaceData.m_projectMaingersDictionary.Keys)
             {
                 if (activeProjectName == activeWorkSpaceName)
                 {
                     MetroMessageBox.Show(this, "열려 있는 프로젝트", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName]; // 활성화된 프로젝트 적용
+                    WorkSpaceData.m_activeProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName]; // 활성화된 프로젝트 적용
                     FormsManiger.m_mainFormsUIResetHandler(); // 이전 UI 초기화
-                    WorkSpaceData.m_actionProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
+                    WorkSpaceData.m_activeProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
+                    panelMWorkSpase.Visible = false;
                     // #3 프로젝트가 열리고 데이터를 읽어왔으면 해야되는 일 
                     // 1. 이미지 리스트 UI 에 뿌려주기
                     // 2. 프로젝트 선택할수 있는 UI 만들기
@@ -364,12 +362,13 @@ namespace ProjectAI.MainForms
 
             ProjectMainger projectMainger = new ProjectMainger(activeWorkSpaceName);
             WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger); // 활성화된 Project 추가
+            WorkSpaceEarlyData.m_workSpaceButtons[workSpaceIndex].WorkSpaceStatus = Color.Lime; // 활성화된 버튼 상태 색색상 적용
 
-            WorkSpaceData.m_actionProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeWorkSpaceName]; // 활성화된 프로젝트 적용
-            WorkSpaceData.m_actionProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
-            FormsManiger.m_mainFormsUIResetHandler += WorkSpaceData.m_actionProjectMainger.ProjectIdleUIRemove; // UI 초기화 핸들러 등록
-
-
+            WorkSpaceData.m_activeProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeWorkSpaceName]; // 활성화된 프로젝트 적용
+            FormsManiger.m_mainFormsUIResetHandler?.Invoke();  // 이전 UI 초기화
+            WorkSpaceData.m_activeProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
+            FormsManiger.m_mainFormsUIResetHandler += WorkSpaceData.m_activeProjectMainger.ProjectUIRemove; // UI 초기화 핸들러 등록
+            panelMWorkSpase.Visible = false;
 
             //Console.WriteLine(WorkSpaceData.m_projectMaingersDictionary.Keys.ToString());
             //foreach (string i in WorkSpaceData.m_projectMaingersDictionary.Keys)
@@ -402,20 +401,20 @@ namespace ProjectAI.MainForms
         {
         }
         
-        private void TsmProjectWorSpaceNewProjectClick(object sender, EventArgs e)
+        private void TsmProjectWorkSpaceNewProjectClick(object sender, EventArgs e)
         {
             this.WorkSpaceCreatSequence();
         }
 
-        private void TsmProjectWorSpaceTestButtonClick(object sender, EventArgs e)
+        private void TsmProjectWorkSpaceTestButtonClick(object sender, EventArgs e)
         {
             panelstatus.Visible = panelstatus.Visible == true ? false : true;
-            WorkSpaceData.m_actionProjectMainger.ProjectIdleUIRemove(); // IdleUI 적용된 부분 삭제
+            Console.WriteLine();
         }
 
-        private void TestButtonClick(object sender, EventArgs e)
+        private void toolStripMenuItem1Click(object sender, EventArgs e)
         {
-            WorkSpaceData.m_actionProjectMainger.deeplearningProjectSelectForm.Show();
+
         }
 
         private void TsmProjectWorSpaceDeleteProjectClick(object sender, EventArgs e)
@@ -551,6 +550,60 @@ namespace ProjectAI.MainForms
                 Environment.Exit(1);
             }
             this.Close();
+        }
+
+        private void BtnMimagePageNextClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext().ToString();
+        }
+
+        private void BtnMimagePageReverseClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse().ToString();
+        }
+
+        private void ClassToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog(); // Class Edit 실행 
+        }
+
+        private void TrainToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void GridImageListSelectionChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+
+            // dgvData_Model에서 모델 이름 불러오기
+            try
+            {
+                DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+
+                if (data != null)
+                    pictureBox1.Image = Image.FromFile(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
+            }
+            catch
+            {
+                pictureBox1.Image = null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImageFilesAddToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                WorkSpaceData.m_activeProjectMainger.ImageAdding();
         }
     }
 }
