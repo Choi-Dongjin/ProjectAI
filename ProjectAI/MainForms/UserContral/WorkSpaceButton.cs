@@ -22,6 +22,9 @@ namespace ProjectAI.MainForms
         [Description("WorkSpaceOpen Click Evnet"), Category("WorkSpace")]
         public event EventHandler BtnWorkSpaceOpenClickEvnetHandler;
 
+        /// <summary>
+        /// Forms 관리 Class
+        /// </summary>
         FormsManiger formsManiger = FormsManiger.GetInstance();
 
         public WorkSpaceButton()

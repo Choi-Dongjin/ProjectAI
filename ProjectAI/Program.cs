@@ -28,6 +28,7 @@ namespace ProjectAI
             #region StartForm, StartFormOptions 변경시를 관리 Update Handler 등록
             FormsManiger.m_startFormOptionsManagerHandler += Program.IfProgramEntryPointOptionsChange;
             FormsManiger.m_startFormOptionsManagerHandler += WorkSpaceEarlyData.ProgramVariablesChange;
+
             #endregion
 
             if (jsonDataManiger.JsonChackFileAndCreate(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath)) // 프로그램 실행 옵션 설정 Json 파일 확인, 파일이 없다면 생성.
@@ -66,7 +67,7 @@ namespace ProjectAI
             // 프로그램 시작
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+            Application.Run(StartForm.GetInstance());
         }
 
         /// <summary>

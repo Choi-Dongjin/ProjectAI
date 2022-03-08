@@ -20,6 +20,24 @@ namespace ProjectAI.StartForms
 {
     public partial class StartFormOptions : MetroForm
     {
+        /// <summary>
+        /// 싱글톤 패턴 구현
+        /// </summary>
+        private static StartFormOptions startFormOptions;
+
+        /// <summary>
+        /// 싱글톤 패턴 Class 호출에 사용
+        /// </summary>
+        /// <returns></returns>
+        public static StartFormOptions GetInstance()
+        {
+            if (StartFormOptions.startFormOptions == null)
+            {
+                StartFormOptions.startFormOptions = new StartFormOptions();
+            }
+            return StartFormOptions.startFormOptions;
+        }
+
         private readonly JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
 
         public StartFormOptions()
@@ -87,6 +105,15 @@ namespace ProjectAI.StartForms
         private void BtnMoptionResetClick(object sender, EventArgs e)
         {
             ProgramVariables.m_programWokrSpacePath = ProgramVariables.ProgramWokrSpacePath_Defalt;
+        }
+
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            //FormsManiger formsManiger = FormsManiger.GetInstance();
+            //for (int i=0; i<3; i++)
+            //{
+            //    formsManiger.CustomIOManigerFoem.CreateFileCopyList(i);
+            //}
         }
     }
 }

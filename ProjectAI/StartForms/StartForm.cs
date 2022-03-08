@@ -20,6 +20,34 @@ namespace ProjectAI
 {
     public partial class StartForm : Form
     {
+        /// <summary>
+        /// 싱글톤 패턴 구현
+        /// </summary>
+        private static StartForm startForm;
+
+        /// <summary>
+        /// MainForm 호출
+        /// </summary>
+        private ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
+
+        /// <summary>
+        /// StartFormOptions 호출
+        /// </summary>
+        private ProjectAI.StartForms.StartFormOptions StartFormOptions = ProjectAI.StartForms.StartFormOptions.GetInstance();
+
+        /// <summary>
+        /// 싱글톤 패턴 Class 호출에 사용
+        /// </summary>
+        /// <returns></returns>
+        public static StartForm GetInstance()
+        {
+            if (StartForm.startForm == null)
+            {
+                StartForm.startForm = new StartForm();
+            }
+            return StartForm.startForm;
+        }
+
         private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
 
@@ -30,7 +58,7 @@ namespace ProjectAI
             //this.StyleManager = styleManagerStartForm; // Form StyleManager 설정 -> MetroForm으로 사용시 적용
             this.Icon = Properties.Resources.synapseimaging2; // 아이콘 설정
 
-            formsManiger.StartForm = this; // formsManiger를 호출하면 startForm을 먼저 등록 해야함. 아니면 다른 처리가 필요. 안하면 // Handler 등록에 문제 발생
+            //FormsManiger.StartForm = this; // formsManiger를 호출하면 startForm을 먼저 등록 해야함. 아니면 다른 처리가 필요. 안하면 // Handler 등록에 문제 발생
 
             // 각 Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
@@ -252,7 +280,7 @@ namespace ProjectAI
 
         private void ButtonStartClick(object sender, EventArgs e)
         {
-            formsManiger.MainForm.Show();
+            this.MainForm.Show();
             //Hiding the window, because closing it makes the window unaccessible.
             //this.Hide();
             //this.Parent = null;
@@ -302,7 +330,7 @@ namespace ProjectAI
 
         private void ButtonStartOptionClick(object sender, EventArgs e)
         {
-            formsManiger.StartFormOptions.Show();
+            this.StartFormOptions.Show();
         }
 
         private void BtnMprogramWorkSpaceChangeClick(object sender, EventArgs e)

@@ -21,8 +21,122 @@ namespace ProjectAI.MainForms
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 싱글톤 패턴 구현
+        /// </summary>
+        private static MainForm mainForm;
+
+        /// <summary>
+        /// 싱글톤 패턴 Class 호출에 사용
+        /// </summary>
+        /// <returns></returns>
+        public static MainForm GetInstance()
+        {
+            if (MainForm.mainForm == null)
+            {
+                MainForm.mainForm = new MainForm();
+            }
+            return MainForm.mainForm;
+        }
+
         // private List<WorkSpaceButton> m_workSpaceButtons = new List<WorkSpaceButton>();
+        /// <summary>
+        /// Json File 관리 Class
+        /// </summary>
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
+
+        /// <summary>
+        /// Forms 관리 Class
+        /// </summary>
+        private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
+
+        /// <summary>
+        /// Label TextBox 안전 접근 
+        /// </summary>
+        /// <param name="textBox"> </param>
+        /// <param name="text"></param>
+        public delegate void SafeCallLabelText(System.Object textBoxObject, string text);
+
+        /// <summary>
+        /// Label TextBox 안전 접근 쓰기 함수
+        /// </summary>
+        /// <param name="labelObject"> TextBox Object </param>
+        /// <param name="text"> 출력할 텍스트 </param>
+        public void SafeWriteLabelText(Object labelObject, string text)
+        {
+            if (labelObject.GetType() == typeof(MetroFramework.Controls.MetroLabel))
+            {
+                MetroFramework.Controls.MetroLabel label = (MetroFramework.Controls.MetroLabel)labelObject;
+                if (label.InvokeRequired)
+                {
+                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    Invoke(d, new object[] { label, text });
+                }
+                else
+                {
+                    label.Text = text;
+                }
+            }
+            else if (labelObject.GetType() == typeof(System.Windows.Forms.Label))
+            {
+                System.Windows.Forms.Label label = (System.Windows.Forms.Label)labelObject;
+                if (label.InvokeRequired)
+                {
+                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    Invoke(d, new object[] { label, text });
+                }
+                else
+                {
+                    label.Text = text;
+                }
+            }
+        }
+
+        /// <summary>
+        /// ProgressBar 안전 접근 
+        /// </summary>
+        /// <param name="progressBarObject"> ProgressBar Object </param>
+        /// <param name="maximum"> 최대값 </param>
+        /// <param name="value"> 현재값 </param>
+        public delegate void SafeCallProgressBar(System.Object progressBarObject, int maximum, int value);
+
+        /// <summary>
+        /// ProgressBar 안전 접근 함수
+        /// </summary>
+        /// <param name="progressBarObject"> ProgressBar Object </param>
+        /// <param name="maximum"> 최대값 </param>
+        /// <param name="value"> 현재값 </param>
+        public void SafeWriteProgressBar(Object progressBarObject, int maximum, int value)
+        {
+            if (progressBarObject.GetType() == typeof(MetroFramework.Controls.MetroProgressBar))
+            {
+                MetroFramework.Controls.MetroProgressBar progressBar = (MetroFramework.Controls.MetroProgressBar)progressBarObject;
+                if (progressBar.InvokeRequired)
+                {
+                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    Invoke(d, new object[] { progressBar, maximum, value });
+                }
+                else
+                {
+                    progressBar.Maximum = maximum;
+                    progressBar.Value = value;
+                }
+            }
+            else if (progressBarObject.GetType() == typeof(System.Windows.Forms.ProgressBar))
+            {
+                System.Windows.Forms.ProgressBar progressBar = (System.Windows.Forms.ProgressBar)progressBarObject;
+                if (progressBar.InvokeRequired)
+                {
+                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    Invoke(d, new object[] { progressBar, maximum, value });
+                }
+                else
+                {
+                    progressBar.Maximum = maximum;
+                    progressBar.Value = value;
+                }
+            }
+        }
 
         public MainForm()
         {
@@ -44,10 +158,9 @@ namespace ProjectAI.MainForms
         /// <param styleManager="MetroStyleManager"></param>
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
         {
-            FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
             this.styleManagerMainForm.Style = styleManager.Style;
             this.styleManagerMainForm.Theme = styleManager.Theme;
-            this.BackColor = formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+            this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
         }
 
         /// <summary>

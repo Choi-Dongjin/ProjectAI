@@ -154,6 +154,12 @@
       <DependentUpon>MakeWorkSpaceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProjectManiger\CustomIOMainger.cs" />
+    <Compile Include="ProjectManiger\CustomIOManigerFoem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectManiger\CustomIOManigerFoem.Designer.cs">
+      <DependentUpon>CustomIOManigerFoem.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectManiger\ProjectMainger.cs" />
     <Compile Include="ProjectManiger\JsonDataManiger.cs" />
     <Compile Include="ProjectManiger\FormsManiger.cs" />
@@ -227,6 +233,9 @@
     <EmbeddedResource Include="MainForms\MakeWorkSpaceForm.resx">
       <DependentUpon>MakeWorkSpaceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProjectManiger\CustomIOManigerFoem.resx">
+      <DependentUpon>CustomIOManigerFoem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StartForms\StartForm.ko.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,8 +297,6 @@
     <None Include="Resources\plus.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FileIoMeniger\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

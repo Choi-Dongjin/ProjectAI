@@ -150,6 +150,8 @@ namespace ProjectAI
 
         #endregion ProjectMainger에 종속된 UserContral 정의
 
+        private readonly ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
+
         /// <summary>
         /// Json File 관리 Class
         /// </summary>
@@ -321,19 +323,6 @@ namespace ProjectAI
             this.ActiveProjectEntryDataRead();
         }
 
-        ///// <summary>
-        ///// Json 데이터 파일 읽어오기
-        ///// </summary>
-        //private void AvtiveProjectJsonDataReadAll()
-        //{
-        //    //Json 파일 데이터 가져오기
-        //    this.m_activeProjectImageListJObject = jsonDataManiger.GetJsonObject(m_pathActiveProjectDataImageList);
-        //    this.m_activeProjectDataImageListDataJObject = jsonDataManiger.GetJsonObject(m_pathActiveProjectDataImageListData);
-        //    this.m_activeProjectModelInfoJObject = jsonDataManiger.GetJsonObject(m_pathActiveProjectModelInfo);
-        //    this.m_calssInfoJObject = jsonDataManiger.GetJsonObject(m_pathCalssInfo);
-        //    this.m_activeProjectInfoJObject = jsonDataManiger.GetJsonObject(m_pathActiveProjectInfo);
-        //}
-
         /// <summary>
         /// 프로젝트 폴더 확인, 문제가 없다면 기존의 데이터 읽어오기
         /// </summary>
@@ -349,7 +338,7 @@ namespace ProjectAI
                 else 
                 {
                     // Error #1
-                    MetroMessageBox.Show(formsManiger.MainForm, "프로젝트 데이터 손상 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this.MainForm, "프로젝트 데이터 손상 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.ActiveProjectReset(); // 프로젝트 초기화 데이터 읽어오기
                 } // Data 폴더가 없는 경우
 
@@ -399,7 +388,7 @@ namespace ProjectAI
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(formsManiger.MainForm, "m_pathActiveProjectDataImageList.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this.MainForm, "m_pathActiveProjectDataImageList.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CustomIOMainger.FileRemove(this.m_pathActiveProjectDataImageList); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
@@ -411,7 +400,7 @@ namespace ProjectAI
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(formsManiger.MainForm, "m_pathActiveProjectDataImageList.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "m_pathActiveProjectDataImageList.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectDataImageList); // 파일 초기화
 
@@ -461,6 +450,9 @@ namespace ProjectAI
             }
             imageListJObject["imageList"] = iJObject;
 
+            if (ImageListnumber == 0)
+                ImageListnumber++;
+
             object newObject = new
             {
                 int_imageTotalNumber = imageList.Count,
@@ -488,7 +480,7 @@ namespace ProjectAI
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(formsManiger.MainForm, "m_pathActiveProjectDataImageListData.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this.MainForm, "m_pathActiveProjectDataImageListData.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CustomIOMainger.FileRemove(this.m_pathActiveProjectDataImageListData); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
@@ -500,7 +492,7 @@ namespace ProjectAI
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(formsManiger.MainForm, "m_pathActiveProjectDataImageListData.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "m_pathActiveProjectDataImageListData.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectDataImageListData); // 파일 초기화
                 JObject jObject = this.ActiveProjectImageDataReset();
@@ -523,22 +515,24 @@ namespace ProjectAI
             {
                 JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][i.ToString()];
 
-                
-                foreach (string imageFile in imageFiles)
+                if (imageFiles != null)
                 {
-                    object imageInfo = new
+                    foreach (string imageFile in imageFiles)
                     {
-                        int_ImageNumber = totalNumber,
-                        string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, imageFile)
-                    };
+                        object imageInfo = new
+                        {
+                            int_ImageNumber = totalNumber,
+                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, imageFile)
+                        };
 
-                    JObject imageInfoJObject = new JObject
-                    {
-                        { imageFile, JObject.FromObject(imageInfo)}
-                    };
+                        JObject imageInfoJObject = new JObject
+                        {
+                            { imageFile, JObject.FromObject(imageInfo)}
+                        };
 
-                    jObject.Merge(imageInfoJObject);
-                    totalNumber++;
+                        jObject.Merge(imageInfoJObject);
+                        totalNumber++;
+                    }
                 }
             }
             return jObject;
@@ -559,7 +553,7 @@ namespace ProjectAI
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(formsManiger.MainForm, "m_activeProjectModelInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(ProjectAI.MainForms.MainForm.GetInstance(), "m_activeProjectModelInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CustomIOMainger.FileRemove(this.m_pathActiveProjectModelInfo); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
@@ -571,7 +565,7 @@ namespace ProjectAI
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(formsManiger.MainForm, "m_activeProjectModelInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "m_activeProjectModelInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectModelInfo); // 파일 초기화
                 JObject jObject = new JObject() { };
@@ -596,7 +590,7 @@ namespace ProjectAI
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(formsManiger.MainForm, "ActiveProjectInfo.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this.MainForm, "ActiveProjectInfo.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CustomIOMainger.FileRemove(this.m_pathActiveProjectInfo); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
@@ -608,7 +602,7 @@ namespace ProjectAI
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(formsManiger.MainForm, "ActiveProjectInfo.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "ActiveProjectInfo.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectInfo); // 파일 초기화
                 JObject jObject = ActiveProjectInfoReset();
@@ -651,7 +645,7 @@ namespace ProjectAI
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(formsManiger.MainForm, "m_calssInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this.MainForm, "m_calssInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CustomIOMainger.FileRemove(this.m_pathCalssInfo); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
@@ -663,7 +657,7 @@ namespace ProjectAI
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(formsManiger.MainForm, "m_calssInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "m_calssInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathCalssInfo); // 파일 초기화
                 JObject jObject = new JObject() { };
@@ -679,7 +673,7 @@ namespace ProjectAI
         private void ActiveProjectIdleContralsSetting()
         {
             #region TrainOption 설정
-            formsManiger.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_idleTrainOption, true);
+            this.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_idleTrainOption, true);
             this.m_idleTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_idleTrainOption.Location = new System.Drawing.Point(0, 0);
             this.m_idleTrainOption.Margin = new System.Windows.Forms.Padding(0);
@@ -693,7 +687,7 @@ namespace ProjectAI
         /// </summary>
         private void ActiveProjectClassificationContralsSetting()
         {
-            formsManiger.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_classificationTrainOption, true);
+            this.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_classificationTrainOption, true);
             this.m_classificationTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_classificationTrainOption.Location = new System.Drawing.Point(0, 0);
             this.m_classificationTrainOption.Margin = new System.Windows.Forms.Padding(0);
@@ -705,7 +699,7 @@ namespace ProjectAI
         /// </summary>
         public void ProjectIdleUISet()
         {
-            formsManiger.MainForm.panelTrainOptions.Controls.Add(this.m_idleTrainOption); // panelTrainOptions 패널에 m_idleTrainOption 창 적용
+            this.MainForm.panelTrainOptions.Controls.Add(this.m_idleTrainOption); // panelTrainOptions 패널에 m_idleTrainOption 창 적용
 
             this.UISetImageNumberInfo(); // 이미지 갯수 정보 UI 적용
             this.UISetImageListInfo(); // 이미지 리스트 정보 UI 적용
@@ -726,14 +720,14 @@ namespace ProjectAI
         /// </summary>
         public void ProjectIdleUIRemove()
         {
-            formsManiger.MainForm.panelTrainOptions.Controls.Clear();
+            this.MainForm.panelTrainOptions.Controls.Clear();
         }
         /// <summary>
         /// InnerProjectUI 적용된 부분 삭제
         /// </summary>
         public void InnerProjectUIRemove()
         {
-            formsManiger.MainForm.panelProjectInfo.Controls.Clear();
+            this.MainForm.panelProjectInfo.Controls.Clear();
         }
 
 
@@ -743,16 +737,16 @@ namespace ProjectAI
         public void UISetImageNumberInfo()
         {
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
-            this.formsManiger.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
-            this.formsManiger.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
+            this.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
+            this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
             // 선택된 프로젝트가 있으면
             if (this.m_activeInnerProjectName != null && this.m_activeInnerProjectName != "AddProject")
             {
                 // 선택된 프로젝트 정보 확인
                 // 정보 UI에 적용
-                this.formsManiger.MainForm.iclLabeled.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageLabeledNumber"].ToString();
-                this.formsManiger.MainForm.iclTrain.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageTrainNumber"].ToString();
-                this.formsManiger.MainForm.iclTest.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageTrainNumber"].ToString();
+                this.MainForm.iclLabeled.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageLabeledNumber"].ToString();
+                this.MainForm.iclTrain.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageTrainNumber"].ToString();
+                this.MainForm.iclTest.ImageCount = this.m_activeProjectInfoJObject["string_projectListInfo"][m_activeInnerProjectName]["int_imageTrainNumber"].ToString();
             }
         }
 
@@ -762,17 +756,17 @@ namespace ProjectAI
         private void UISetImageListInfo()
         {
             #region gridImageList 값 적용 초기화
-            this.formsManiger.MainForm.gridImageList.DataSource = null;
-            this.formsManiger.MainForm.gridImageList.Columns.Clear();
-            this.formsManiger.MainForm.gridImageList.Rows.Clear();
-            this.formsManiger.MainForm.gridImageList.Refresh();
+            this.MainForm.gridImageList.DataSource = null;
+            this.MainForm.gridImageList.Columns.Clear();
+            this.MainForm.gridImageList.Rows.Clear();
+            this.MainForm.gridImageList.Refresh();
 
-            this.formsManiger.MainForm.gridImageList.ColumnCount = 5;
-            this.formsManiger.MainForm.gridImageList.Columns[0].Name = "NO";
-            this.formsManiger.MainForm.gridImageList.Columns[1].Name = "Files Name";
-            this.formsManiger.MainForm.gridImageList.Columns[2].Name = "Set"; //Train Test
-            this.formsManiger.MainForm.gridImageList.Columns[3].Name = "Class";
-            this.formsManiger.MainForm.gridImageList.Columns[4].Name = "확률";
+            this.MainForm.gridImageList.ColumnCount = 5;
+            this.MainForm.gridImageList.Columns[0].Name = "NO";
+            this.MainForm.gridImageList.Columns[1].Name = "Files Name";
+            this.MainForm.gridImageList.Columns[2].Name = "Set"; //Train Test
+            this.MainForm.gridImageList.Columns[3].Name = "Class";
+            this.MainForm.gridImageList.Columns[4].Name = "확률";
             
 
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
@@ -781,36 +775,40 @@ namespace ProjectAI
             this.UISetImageList(this.imageListPage);
             #endregion gridImageList 값 적용 초기화
 
-           
-            this.formsManiger.MainForm.lblImageListpage.Text = "1";
-            this.formsManiger.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
+
+            this.MainForm.lblImageListpage.Text = "1";
+            this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
         }
         /// <summary>
         /// 이미지 리스트 페이지 적용 - Data Grid view 타입
         /// </summary>
         private void UISetImageList(int page)
         {
-            this.formsManiger.MainForm.gridImageList.Rows.Clear();
+            this.MainForm.gridImageList.Rows.Clear();
             JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
-            foreach (string imageFile in imageFiles)
+            if (imageFiles != null)
             {
-                if (imageFile != null && imageFile != "")
+                foreach (string imageFile in imageFiles)
                 {
-                    int imageNumber = Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[imageFile]["int_ImageNumber"]);
-                    string set = null;
-                    string activeClass = null;
-                    double threshold = 0.0;
+                    if (imageFile != null && imageFile != "")
+                    {
+                        int imageNumber = Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[imageFile]["int_ImageNumber"]);
+                        string set = null;
+                        string activeClass = null;
+                        double threshold = 0.0;
 
-                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"] != null)
-                        set = this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"].ToString();
-                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"] != null)
-                        activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"].ToString();
-                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"] != null)
-                        threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"]);
+                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"] != null)
+                            set = this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"].ToString();
+                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"] != null)
+                            activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"].ToString();
+                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"] != null)
+                            threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"]);
 
-                    this.formsManiger.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, threshold);
+                        this.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, threshold);
+                    }
                 }
             }
+            
         }
         /// <summary>
         /// 이미지 페이지 이동 Forward
@@ -884,7 +882,7 @@ namespace ProjectAI
             metroTile.UseStyleColors = true;
             metroTile.Click += new System.EventHandler(this.UISetActiveProjecttInnerProject);
 
-            formsManiger.MainForm.panelProjectInfo.Controls.Add(metroTile);
+            this.MainForm.panelProjectInfo.Controls.Add(metroTile);
         }
         /// <summary>
         /// 버튼 활성화시 실행 함수 - 프로젝트 UI 뿌려주기
@@ -903,7 +901,7 @@ namespace ProjectAI
             else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
             {
                 this.ProjectIdleUIRemove(); // IdleUI 삭제
-                formsManiger.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOption); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
+                this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOption); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                 this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
             }
             else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
@@ -943,13 +941,15 @@ namespace ProjectAI
                     JArray imageList = (JArray)imageListJObject[(imageListNumber - 1).ToString()];
 
                     List<string> imageListList = new List<string>();
-                    foreach (string data in imageList)
+                    if (imageList != null)
                     {
-                        imageListList.Add(data);
+                        foreach (string data in imageList)
+                        {
+                            imageListList.Add(data);
+                        } 
                     }
 
                     imageListList.AddRange(files.ToList());
-
                     int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageeListSetNumber));
 
                     // image List 값 반영

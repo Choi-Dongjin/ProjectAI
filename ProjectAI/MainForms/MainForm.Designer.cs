@@ -184,7 +184,7 @@
             this.btnMWorkSpaseOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMWorkSpaseOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMWorkSpaseOpen.Location = new System.Drawing.Point(0, 0);
-            this.btnMWorkSpaseOpen.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.btnMWorkSpaseOpen.Margin = new System.Windows.Forms.Padding(1);
             this.btnMWorkSpaseOpen.Name = "btnMWorkSpaseOpen";
             this.btnMWorkSpaseOpen.Size = new System.Drawing.Size(27, 21);
             this.btnMWorkSpaseOpen.TabIndex = 5;
@@ -587,7 +587,7 @@
             this.btnMTrainOptionsOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMTrainOptionsOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMTrainOptionsOpen.Location = new System.Drawing.Point(0, 0);
-            this.btnMTrainOptionsOpen.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.btnMTrainOptionsOpen.Margin = new System.Windows.Forms.Padding(1);
             this.btnMTrainOptionsOpen.Name = "btnMTrainOptionsOpen";
             this.btnMTrainOptionsOpen.Size = new System.Drawing.Size(25, 21);
             this.btnMTrainOptionsOpen.TabIndex = 6;
@@ -616,7 +616,7 @@
             this.btnMDataReviewOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMDataReviewOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMDataReviewOpen.Location = new System.Drawing.Point(0, 0);
-            this.btnMDataReviewOpen.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.btnMDataReviewOpen.Margin = new System.Windows.Forms.Padding(1);
             this.btnMDataReviewOpen.Name = "btnMDataReviewOpen";
             this.btnMDataReviewOpen.Size = new System.Drawing.Size(25, 21);
             this.btnMDataReviewOpen.TabIndex = 6;
@@ -632,7 +632,7 @@
             this.panelProjectInfo.Location = new System.Drawing.Point(27, 0);
             this.panelProjectInfo.Margin = new System.Windows.Forms.Padding(0);
             this.panelProjectInfo.Name = "panelProjectInfo";
-            this.panelProjectInfo.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.panelProjectInfo.Padding = new System.Windows.Forms.Padding(10);
             this.panelProjectInfo.Size = new System.Drawing.Size(1011, 106);
             this.panelProjectInfo.TabIndex = 6;
             this.panelProjectInfo.VerticalScrollbarBarColor = true;
@@ -767,7 +767,7 @@
             this.btnMWorkSpaseClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMWorkSpaseClose.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMWorkSpaseClose.Location = new System.Drawing.Point(0, 0);
-            this.btnMWorkSpaseClose.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.btnMWorkSpaseClose.Margin = new System.Windows.Forms.Padding(1);
             this.btnMWorkSpaseClose.Name = "btnMWorkSpaseClose";
             this.btnMWorkSpaseClose.Size = new System.Drawing.Size(25, 21);
             this.btnMWorkSpaseClose.TabIndex = 7;
@@ -812,7 +812,7 @@
             this.metroButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.metroButton4.Dock = System.Windows.Forms.DockStyle.Right;
             this.metroButton4.Location = new System.Drawing.Point(109, 0);
-            this.metroButton4.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.metroButton4.Margin = new System.Windows.Forms.Padding(1);
             this.metroButton4.Name = "metroButton4";
             this.metroButton4.Size = new System.Drawing.Size(32, 32);
             this.metroButton4.TabIndex = 1;
@@ -824,7 +824,7 @@
             this.btnMnewWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMnewWorkSpace.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnMnewWorkSpace.Location = new System.Drawing.Point(141, 0);
-            this.btnMnewWorkSpace.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.btnMnewWorkSpace.Margin = new System.Windows.Forms.Padding(1);
             this.btnMnewWorkSpace.Name = "btnMnewWorkSpace";
             this.btnMnewWorkSpace.Size = new System.Drawing.Size(32, 32);
             this.btnMnewWorkSpace.TabIndex = 0;
@@ -842,7 +842,7 @@
             this.panelstatus.Location = new System.Drawing.Point(0, 691);
             this.panelstatus.Margin = new System.Windows.Forms.Padding(0);
             this.panelstatus.Name = "panelstatus";
-            this.panelstatus.Padding = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panelstatus.Padding = new System.Windows.Forms.Padding(1);
             this.panelstatus.Size = new System.Drawing.Size(1038, 19);
             this.panelstatus.TabIndex = 4;
             // 
@@ -902,7 +902,7 @@
             // 
             this.metroProgressBar1.Dock = System.Windows.Forms.DockStyle.Left;
             this.metroProgressBar1.Location = new System.Drawing.Point(1, 1);
-            this.metroProgressBar1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.metroProgressBar1.Margin = new System.Windows.Forms.Padding(1);
             this.metroProgressBar1.Name = "metroProgressBar1";
             this.metroProgressBar1.Size = new System.Drawing.Size(300, 17);
             this.metroProgressBar1.TabIndex = 0;
@@ -933,7 +933,7 @@
             this.panelWorkSpaseButton.Location = new System.Drawing.Point(0, 32);
             this.panelWorkSpaseButton.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseButton.Name = "panelWorkSpaseButton";
-            this.panelWorkSpaseButton.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelWorkSpaseButton.Padding = new System.Windows.Forms.Padding(2);
             this.panelWorkSpaseButton.Size = new System.Drawing.Size(173, 635);
             this.panelWorkSpaseButton.TabIndex = 4;
             // 

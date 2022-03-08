@@ -40,6 +40,7 @@
             this.btnMstartOptionsOK = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsCancel = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsApply = new MetroFramework.Controls.MetroButton();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerStartFormOptions)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutStartOptionMain.SuspendLayout();
@@ -58,6 +59,7 @@
             this.tableLayoutPanel1.Controls.Add(this.lblMoptionReset, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnMoptionReset, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbMoptionLanguage, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.metroButton1, 2, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // lblMoptionLanguage
@@ -118,6 +120,14 @@
             this.btnMstartOptionsApply.UseSelectable = true;
             this.btnMstartOptionsApply.Click += new System.EventHandler(this.BtnMstartOptionsApplyClick);
             // 
+            // metroButton1
+            // 
+            this.metroButton1.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.metroButton1, "metroButton1");
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            // 
             // StartFormOptions
             // 
             resources.ApplyResources(this, "$this");
@@ -148,5 +158,6 @@
         private MetroFramework.Controls.MetroButton btnMstartOptionsOK;
         private MetroFramework.Controls.MetroButton btnMstartOptionsCancel;
         private MetroFramework.Controls.MetroButton btnMstartOptionsApply;
+        private MetroFramework.Controls.MetroButton metroButton1;
     }
 }

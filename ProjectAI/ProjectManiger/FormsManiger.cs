@@ -16,12 +16,10 @@ namespace ProjectAI
     /// </summary>
     public class FormsManiger
     {
-        private static FormsManiger formsManiger; // 싱글톤 패턴 구현을 위한 FormsManiger
-
-        // 각 Form Class 정의
-        public StartForm StartForm { get; set; }
-        public StartForms.StartFormOptions StartFormOptions { get; }
-        public MainForms.MainForm MainForm { get; }
+        /// <summary>
+        /// 싱글톤 패턴 구현을 위한 FormsManiger
+        /// </summary>
+        private static FormsManiger formsManiger;
 
         public delegate void FormStyleManagerHandler(MetroStyleManager FormStyleManager); // Form Style 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
         public static FormStyleManagerHandler m_formStyleManagerHandler; // Form Style 관리 Update Handler
@@ -42,8 +40,7 @@ namespace ProjectAI
 
         private FormsManiger()
         {
-            this.StartFormOptions = new StartForms.StartFormOptions();
-            this.MainForm = new MainForms.MainForm();
+
         }
         
         /// <summary>
@@ -52,11 +49,11 @@ namespace ProjectAI
         /// <returns></returns>
         public static FormsManiger GetInstance()
         {
-            if (formsManiger == null)
+            if (FormsManiger.formsManiger == null)
             {
                 FormsManiger.formsManiger = new FormsManiger();
             }
-            return formsManiger;
+            return FormsManiger.formsManiger;
         }
 
         /// <summary>
@@ -64,11 +61,7 @@ namespace ProjectAI
         /// </summary>
         public void FormStyleManagerHandlerEnrollment()
         {
-            // 각 해당 Class 에서 관리 하도록 수정
-            //if (StartForm != null)
-            //    FormsManiger.m_formStyleManagerHandler += this.StartForm.UpdataFormStyleManager;
-            //FormsManiger.m_formStyleManagerHandler += this.StartFormOptions.UpdataFormStyleManager;
-            //FormsManiger.m_formStyleManagerHandler += this.MainForm.UpdataFormStyleManager;
+
         }
 
         /// <summary>
