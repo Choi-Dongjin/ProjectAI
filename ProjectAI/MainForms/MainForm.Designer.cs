@@ -40,7 +40,9 @@
             this.btnMWorkSpaseOpen = new MetroFramework.Controls.MetroButton();
             this.panelProjectMain = new System.Windows.Forms.Panel();
             this.splitContainerImageAndImageList = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelImageDataView = new System.Windows.Forms.Panel();
             this.gridImageList = new MetroFramework.Controls.MetroGrid();
             this.cmsMImageListToolKit = new MetroFramework.Controls.MetroContextMenu(this.components);
@@ -94,11 +96,12 @@
             this.metroButton4 = new MetroFramework.Controls.MetroButton();
             this.btnMnewWorkSpace = new MetroFramework.Controls.MetroButton();
             this.panelstatus = new System.Windows.Forms.Panel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
+            this.lblMworkInFileName = new MetroFramework.Controls.MetroLabel();
+            this.lblMIOStatus = new MetroFramework.Controls.MetroLabel();
+            this.lblMtotalNumber = new MetroFramework.Controls.MetroLabel();
+            this.lblStatus = new MetroFramework.Controls.MetroLabel();
+            this.lblMwaorkInNumber = new MetroFramework.Controls.MetroLabel();
+            this.pgbMfileIOstatus = new MetroFramework.Controls.MetroProgressBar();
             this.panelMWorkSpase = new MetroFramework.Controls.MetroPanel();
             this.panelWorkSpaseButton = new System.Windows.Forms.Panel();
             this.cmsImageListToolKit = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -121,7 +124,12 @@
             this.splitContainerImageAndImageList.Panel1.SuspendLayout();
             this.splitContainerImageAndImageList.Panel2.SuspendLayout();
             this.splitContainerImageAndImageList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelImageDataView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).BeginInit();
             this.cmsMImageListToolKit.SuspendLayout();
@@ -215,8 +223,7 @@
             // 
             // splitContainerImageAndImageList.Panel1
             // 
-            this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
-            this.splitContainerImageAndImageList.Panel1.Controls.Add(this.pictureBox1);
+            this.splitContainerImageAndImageList.Panel1.Controls.Add(this.splitContainer1);
             // 
             // splitContainerImageAndImageList.Panel2
             // 
@@ -226,6 +233,24 @@
             this.splitContainerImageAndImageList.SplitterDistance = 334;
             this.splitContainerImageAndImageList.TabIndex = 0;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
+            this.splitContainer1.Size = new System.Drawing.Size(334, 580);
+            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.TabIndex = 4;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
@@ -233,10 +258,22 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(334, 580);
+            this.pictureBox1.Size = new System.Drawing.Size(25, 580);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(305, 580);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
             // 
             // panelImageDataView
             // 
@@ -323,7 +360,6 @@
             this.cmsMImageListToolKit.Size = new System.Drawing.Size(171, 166);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.cmsMImageListToolKit.UseStyleColors = true;
             // 
             // toolStripSeparator11
             // 
@@ -353,6 +389,7 @@
             this.imageLabelingToolStripMenuItem1.Name = "imageLabelingToolStripMenuItem1";
             this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
             this.imageLabelingToolStripMenuItem1.Text = "Image Labeling";
+            this.imageLabelingToolStripMenuItem1.Click += new System.EventHandler(this.ImageLabelingToolStripMenuItem1Click);
             // 
             // toolStripSeparator8
             // 
@@ -381,6 +418,7 @@
             this.imageDeleteToolStripMenuItem1.Name = "imageDeleteToolStripMenuItem1";
             this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
             this.imageDeleteToolStripMenuItem1.Text = "Image Delete";
+            this.imageDeleteToolStripMenuItem1.Click += new System.EventHandler(this.ImageDeleteToolStripMenuItem1Click);
             // 
             // toolStripSeparator10
             // 
@@ -730,7 +768,7 @@
             // classToolStripMenuItem
             // 
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
             // 
@@ -833,11 +871,12 @@
             // 
             // panelstatus
             // 
-            this.panelstatus.Controls.Add(this.metroLabel4);
-            this.panelstatus.Controls.Add(this.metroLabel3);
-            this.panelstatus.Controls.Add(this.metroLabel2);
-            this.panelstatus.Controls.Add(this.metroLabel1);
-            this.panelstatus.Controls.Add(this.metroProgressBar1);
+            this.panelstatus.Controls.Add(this.lblMworkInFileName);
+            this.panelstatus.Controls.Add(this.lblMIOStatus);
+            this.panelstatus.Controls.Add(this.lblMtotalNumber);
+            this.panelstatus.Controls.Add(this.lblStatus);
+            this.panelstatus.Controls.Add(this.lblMwaorkInNumber);
+            this.panelstatus.Controls.Add(this.pgbMfileIOstatus);
             this.panelstatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelstatus.Location = new System.Drawing.Point(0, 691);
             this.panelstatus.Margin = new System.Windows.Forms.Padding(0);
@@ -846,67 +885,80 @@
             this.panelstatus.Size = new System.Drawing.Size(1038, 19);
             this.panelstatus.TabIndex = 4;
             // 
-            // metroLabel4
+            // lblMworkInFileName
             // 
-            this.metroLabel4.AutoSize = true;
-            this.metroLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.metroLabel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel4.Location = new System.Drawing.Point(650, 1);
-            this.metroLabel4.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(97, 19);
-            this.metroLabel4.TabIndex = 4;
-            this.metroLabel4.Text = "처리중인 파일";
-            this.metroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMworkInFileName.AutoSize = true;
+            this.lblMworkInFileName.BackColor = System.Drawing.Color.Transparent;
+            this.lblMworkInFileName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblMworkInFileName.Location = new System.Drawing.Point(664, 1);
+            this.lblMworkInFileName.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.lblMworkInFileName.Name = "lblMworkInFileName";
+            this.lblMworkInFileName.Size = new System.Drawing.Size(97, 19);
+            this.lblMworkInFileName.TabIndex = 11;
+            this.lblMworkInFileName.Text = "처리중인 파일";
+            this.lblMworkInFileName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroLabel3
+            // lblMIOStatus
             // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.metroLabel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel3.Location = new System.Drawing.Point(581, 1);
-            this.metroLabel3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(69, 19);
-            this.metroLabel3.TabIndex = 3;
-            this.metroLabel3.Text = "동작 상태";
-            this.metroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMIOStatus.AutoSize = true;
+            this.lblMIOStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblMIOStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblMIOStatus.Location = new System.Drawing.Point(595, 1);
+            this.lblMIOStatus.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.lblMIOStatus.Name = "lblMIOStatus";
+            this.lblMIOStatus.Size = new System.Drawing.Size(69, 19);
+            this.lblMIOStatus.TabIndex = 10;
+            this.lblMIOStatus.Text = "동작 상태";
+            this.lblMIOStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroLabel2
+            // lblMtotalNumber
             // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.metroLabel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel2.Location = new System.Drawing.Point(416, 1);
-            this.metroLabel2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(165, 19);
-            this.metroLabel2.TabIndex = 2;
-            this.metroLabel2.Text = "총 처리해야 하는 파일 수";
-            this.metroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMtotalNumber.AutoSize = true;
+            this.lblMtotalNumber.BackColor = System.Drawing.Color.Transparent;
+            this.lblMtotalNumber.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblMtotalNumber.Location = new System.Drawing.Point(430, 1);
+            this.lblMtotalNumber.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.lblMtotalNumber.Name = "lblMtotalNumber";
+            this.lblMtotalNumber.Size = new System.Drawing.Size(165, 19);
+            this.lblMtotalNumber.TabIndex = 9;
+            this.lblMtotalNumber.Text = "총 처리해야 하는 파일 수";
+            this.lblMtotalNumber.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroLabel1
+            // lblStatus
             // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.metroLabel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel1.Location = new System.Drawing.Point(301, 1);
-            this.metroLabel1.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(115, 19);
-            this.metroLabel1.TabIndex = 1;
-            this.metroLabel1.Text = "처리충인 파일 수";
-            this.metroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblStatus.Location = new System.Drawing.Point(416, 1);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(14, 19);
+            this.lblStatus.TabIndex = 5;
+            this.lblStatus.Text = "/";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // metroProgressBar1
+            // lblMwaorkInNumber
             // 
-            this.metroProgressBar1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroProgressBar1.Location = new System.Drawing.Point(1, 1);
-            this.metroProgressBar1.Margin = new System.Windows.Forms.Padding(1);
-            this.metroProgressBar1.Name = "metroProgressBar1";
-            this.metroProgressBar1.Size = new System.Drawing.Size(300, 17);
-            this.metroProgressBar1.TabIndex = 0;
-            this.metroProgressBar1.Value = 50;
+            this.lblMwaorkInNumber.AutoSize = true;
+            this.lblMwaorkInNumber.BackColor = System.Drawing.Color.Transparent;
+            this.lblMwaorkInNumber.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblMwaorkInNumber.Location = new System.Drawing.Point(301, 1);
+            this.lblMwaorkInNumber.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.lblMwaorkInNumber.Name = "lblMwaorkInNumber";
+            this.lblMwaorkInNumber.Size = new System.Drawing.Size(115, 19);
+            this.lblMwaorkInNumber.TabIndex = 1;
+            this.lblMwaorkInNumber.Text = "처리충인 파일 수";
+            this.lblMwaorkInNumber.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pgbMfileIOstatus
+            // 
+            this.pgbMfileIOstatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pgbMfileIOstatus.Location = new System.Drawing.Point(1, 1);
+            this.pgbMfileIOstatus.Margin = new System.Windows.Forms.Padding(1);
+            this.pgbMfileIOstatus.Name = "pgbMfileIOstatus";
+            this.pgbMfileIOstatus.Size = new System.Drawing.Size(300, 17);
+            this.pgbMfileIOstatus.TabIndex = 0;
+            this.pgbMfileIOstatus.Value = 50;
             // 
             // panelMWorkSpase
             // 
@@ -1029,6 +1081,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
@@ -1040,7 +1093,12 @@
             this.splitContainerImageAndImageList.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerImageAndImageList)).EndInit();
             this.splitContainerImageAndImageList.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelImageDataView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).EndInit();
             this.cmsMImageListToolKit.ResumeLayout(false);
@@ -1066,7 +1124,6 @@
 
         private MetroFramework.Components.MetroStyleManager styleManagerMainForm;
         private System.Windows.Forms.TableLayoutPanel tableLayoutMainForm;
-        private System.Windows.Forms.Panel panelstatus;
         private System.Windows.Forms.SplitContainer splitContainerImageAndImageList;
         private MetroFramework.Controls.MetroPanel panelMDataReviewIcon;
         private MetroFramework.Controls.MetroPanel panelMWorkSpase;
@@ -1077,10 +1134,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpace;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceNewProject;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceSaveProject;
-        private MetroFramework.Controls.MetroProgressBar metroProgressBar1;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
         private System.Windows.Forms.Panel panelWorkSpaseIconIN;
         private MetroFramework.Controls.MetroButton btnMWorkSpaseClose;
         private System.Windows.Forms.Panel panelWorkSpaseButtonIcon;
@@ -1142,7 +1195,15 @@
         private System.Windows.Forms.ToolStripMenuItem classToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem;
+        public System.Windows.Forms.Panel panelstatus;
+        public MetroFramework.Controls.MetroProgressBar pgbMfileIOstatus;
+        public MetroFramework.Controls.MetroLabel lblMwaorkInNumber;
+        public MetroFramework.Controls.MetroLabel lblMworkInFileName;
+        public MetroFramework.Controls.MetroLabel lblMIOStatus;
+        public MetroFramework.Controls.MetroLabel lblMtotalNumber;
+        public MetroFramework.Controls.MetroLabel lblStatus;
+        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private MetroFramework.Controls.MetroLabel metroLabel4;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

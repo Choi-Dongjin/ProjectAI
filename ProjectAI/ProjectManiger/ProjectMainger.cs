@@ -113,15 +113,15 @@ namespace ProjectAI
         /// <summary>
         /// 실행중인 project 관리 Dictionary
         /// </summary>
-        public static Dictionary<string, ProjectMainger> m_projectMaingersDictionary = new Dictionary<string, ProjectMainger>();
+        public static Dictionary<string, ProjectContral> m_projectMaingersDictionary = new Dictionary<string, ProjectContral>();
 
-        public static ProjectMainger m_activeProjectMainger;
+        public static ProjectContral m_activeProjectMainger;
     }
 
     /// <summary>
     /// WorkSpace 가 호출되면 호출되는 Class,각 WorkSpace의 데이터 관리
     /// </summary>
-    public class ProjectMainger
+    public class ProjectContral
     {
         #region ProjectMainger에 종속된 Forms 정의
 
@@ -150,6 +150,9 @@ namespace ProjectAI
 
         #endregion ProjectMainger에 종속된 UserContral 정의
 
+        /// <summary>
+        /// MainForma 가져오기
+        /// </summary>
         private readonly ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
 
         /// <summary>
@@ -160,6 +163,10 @@ namespace ProjectAI
         /// 각 폼의 변수 관리
         /// </summary>
         private readonly FormsManiger formsManiger = FormsManiger.GetInstance();
+        /// <summary>
+        /// File IO 등록 Forms
+        /// </summary>
+        ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
 
         /// <summary>
         /// 활성화된 네임스페이스 이름
@@ -229,18 +236,18 @@ namespace ProjectAI
         /// <summary>
         /// 활성화된 네임스페이스 Class 정보 관리 자료 경로 
         /// </summary>
-        public string m_pathCalssInfo;
+        public string m_pathActiveProjectCalssInfo;
         /// <summary>
         /// 활성화된 네임스페이스 Class 프로젝트 정보 관리 자료 자료
         /// </summary>
-        public JObject m_calssInfoJObject;
+        public JObject m_activeProjectCalssInfoJObject;
 
         /*
          * m_activeProjectImageListJObject;
          * m_activeProjectDataImageListDataJObject;
          * m_activeProjectModelInfoJObject;
          * m_activeProjectInfoJObject;
-         * m_calssInfoJObject;
+         * m_activeProjectCalssInfoJObject;
         */
 
         /// <summary>
@@ -255,7 +262,7 @@ namespace ProjectAI
         /// <summary>
         /// 이미지 리스트 내의 이미지 갯수 기본값 - Test로 5로 정함 이미 프로젝트에서 정한 값은 몰?루
         /// </summary>
-        private readonly int m_imageeListSetnumber = 5;
+        private readonly int m_imageeListSetnumber = 10;
 
         /// <summary>
         /// 현제 이미지 페이지
@@ -266,7 +273,7 @@ namespace ProjectAI
         /// 프로젝트 #Class 처음 진입시
         /// </summary>
         /// <param name="workSpaceName"> 워크 스페이스 이름</param>
-        public ProjectMainger(string workSpaceName)
+        public ProjectContral(string workSpaceName)
         {
             this.m_activeProjectName = workSpaceName;
             Console.WriteLine(workSpaceName);
@@ -297,7 +304,7 @@ namespace ProjectAI
 
             this.m_pathActiveProjectInfo = Path.Combine(this.m_pathActiveProject, "data", "ActiveProjectInfo.Json");
 
-            this.m_pathCalssInfo = Path.Combine(this.m_pathActiveProject, "data", "ClassInfo.Json");
+            this.m_pathActiveProjectCalssInfo = Path.Combine(this.m_pathActiveProject, "data", "ClassInfo.Json");
 
             
             this.m_projectFolderList.Add(this.m_pathActiveProjectData);
@@ -310,6 +317,31 @@ namespace ProjectAI
             this.m_jsonFileList.Add(this.m_pathActiveProjectInfo);
         }
 
+        /// <summary>
+        /// 활성화된 워크 스페이스 Json 데이터 저장,
+        /// 각 데이터 저장 한번에 처리 하도록 예) 이미지 관련 Json 파일 묶어서 처리
+        /// </summary>
+        /// <param name="saveCase"> 0: Project 기존 정보 저장 처리 관련, 1: ImageData 관련 저장, 2: Class Info 관련 저장 처리 </param>
+        public void JsonDataSave(int saveCase)
+        {
+            switch (saveCase)
+            {
+                case 0:
+                    jsonDataManiger.PushJsonObject(this.m_pathActiveProjectInfo, this.m_activeProjectInfoJObject);
+                    break;
+
+                case 1:
+                    jsonDataManiger.PushJsonObject(this.m_pathActiveProjectDataImageList, this.m_activeProjectImageListJObject);
+                    jsonDataManiger.PushJsonObject(this.m_pathActiveProjectDataImageListData, this.m_activeProjectDataImageListDataJObject);
+                    break;
+
+                case 2:
+                    jsonDataManiger.PushJsonObject(this.m_pathActiveProjectCalssInfo, this.m_activeProjectCalssInfoJObject);
+                    break;
+            }
+        }
+
+        #region 각 설정 초기화
         /// <summary>
         /// // 프로젝트 초기화, 데이터 읽어오기
         /// </summary>
@@ -384,7 +416,6 @@ namespace ProjectAI
                         this.jsonDataManiger.PushJsonObject(this.m_pathActiveProjectDataImageList, jObject);
                         this.m_activeProjectImageListJObject = jObject; // 값 적용
                     }
-                       
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
@@ -433,20 +464,7 @@ namespace ProjectAI
                 {
                     iImageList = imageList.GetRange(i * this.m_imageeListSetnumber, imageList.Count - i * this.m_imageeListSetnumber);
                 }
-
-                //object imageListdata = new
-                //{
-                //    array_string_imageList = iImageList,
-                //    int_number = i
-                //};
-
-                //iJObject[i.ToString()] = JObject.FromObject(imageListdata);
                 iJObject[i.ToString()] = JArray.FromObject(iImageList.ToArray());
-
-                var fje = JArray.FromObject(iImageList.ToArray()).ToArray();
-
-                //var array = ;
-
             }
             imageListJObject["imageList"] = iJObject;
 
@@ -585,7 +603,7 @@ namespace ProjectAI
             {
                 if ((this.m_activeProjectInfoJObject = jsonDataManiger.GetJsonObject(this.m_pathActiveProjectInfo)) != null) // Json 파일을 읽을수 있는지 확인
                 {
-                    // this.m_calssInfoJObject 
+                    // this.m_activeProjectCalssInfoJObject 
                     // 읽어온 데이터 처리 가 필요하면 작성
                 }
                 else // Json 데이터 파일 읽어오기 오류
@@ -636,36 +654,90 @@ namespace ProjectAI
         {
             #region m_calssInfoJObject File 읽기
 
-            if (this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathCalssInfo)) // CalssInfo Json 데이터 파일이 있는지 확인
+            if (this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectCalssInfo)) // CalssInfo Json 데이터 파일이 있는지 확인
             {
-                if ((this.m_calssInfoJObject = jsonDataManiger.GetJsonObject(this.m_pathCalssInfo)) != null) // Json 파일을 읽을수 있는지 확인
+                if ((this.m_activeProjectCalssInfoJObject = jsonDataManiger.GetJsonObject(this.m_pathActiveProjectCalssInfo)) != null) // Json 파일을 읽을수 있는지 확인
                 {
-                    // this.m_calssInfoJObject 
+                    // this.m_activeProjectCalssInfoJObject 
                     // 읽어온 데이터 처리 가 필요하면 작성
                 }
                 else // Json 데이터 파일 읽어오기 오류
                 {
-                    MetroMessageBox.Show(this.MainForm, "m_calssInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    CustomIOMainger.FileRemove(this.m_pathCalssInfo); // 오류난 파일 삭제
+                    MetroMessageBox.Show(this.MainForm, "m_activeProjectCalssInfoJObject.Json 데이터 읽어오기 오류", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CustomIOMainger.FileRemove(this.m_pathActiveProjectCalssInfo); // 오류난 파일 삭제
                     CustomIOMainger.FileIODelay(100); // 딜레이
 
-                    this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathCalssInfo); // 파일 초기화
+                    this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectCalssInfo); // 파일 초기화
                     JObject jObject = new JObject() { };
-                    this.jsonDataManiger.PushJsonObject(this.m_pathCalssInfo, jObject);
-                    this.m_calssInfoJObject = jObject; //값 적용
+                    this.jsonDataManiger.PushJsonObject(this.m_pathActiveProjectCalssInfo, jObject);
+                    this.m_activeProjectCalssInfoJObject = jObject; //값 적용
                 }
             }
             else // Json 데이터 파일이 없음. 
             {
-                MetroMessageBox.Show(this.MainForm, "m_calssInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this.MainForm, "m_activeProjectCalssInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathCalssInfo); // 파일 초기화
+                this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectCalssInfo); // 파일 초기화
                 JObject jObject = new JObject() { };
-                this.jsonDataManiger.PushJsonObject(this.m_pathCalssInfo, jObject);
-                this.m_calssInfoJObject = jObject; //값 적용
+                this.jsonDataManiger.PushJsonObject(this.m_pathActiveProjectCalssInfo, jObject);
+                this.m_activeProjectCalssInfoJObject = jObject; //값 적용
             }
             #endregion
         }
+
+        /// <summary>
+        /// Image List 설정된 값에 따라서 Reset 하기
+        /// </summary>
+        public void ResetImageList()
+        {
+            List<string> imageFileNames = new List<string>();
+
+            // 이미지 이름 모두 가져와서 List 화
+            for (int i = 0; i < this.m_activeProjectImageListJObject["imageList"].Count(); i++)
+            {
+                foreach (string imageName in this.m_activeProjectImageListJObject["imageList"][i.ToString()])
+                {
+                    if (imageName != null)
+                        imageFileNames.Add(imageName);
+                }
+            }
+
+            // List화 된 이미지 Image List Json 에 잘라서 적용
+            int imageListNumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageFileNames.Count) / this.m_imageeListSetnumber));
+            if (imageListNumber == 0)
+                imageListNumber++;
+
+            JObject iJObject = new JObject() { };
+
+            for (int i = 0; i < imageListNumber; i++)
+            {
+                List<string> iImageList = new List<string>();
+                try
+                {
+                    iImageList = imageFileNames.GetRange(i * this.m_imageeListSetnumber, this.m_imageeListSetnumber);
+                }
+
+                catch
+                {
+                    iImageList = imageFileNames.GetRange(i * this.m_imageeListSetnumber, imageFileNames.Count - i * this.m_imageeListSetnumber);
+                }
+                iJObject[i.ToString()] = JArray.FromObject(iImageList.ToArray());
+            }
+            this.m_activeProjectImageListJObject["imageList"] = iJObject;
+
+            // Image List Data Number 다시 쓰기
+            int number = 1;
+            foreach (string imageFileName in imageFileNames)
+            {
+                this.m_activeProjectDataImageListDataJObject[imageFileName]["int_ImageNumber"] = number++;
+            }
+
+            // 이미지 정보 데이터 적용
+            this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageFileNames.Count;
+            this.m_activeProjectImageListJObject["int_ImageListnumber"] = imageListNumber;
+            this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = this.m_imageeListSetnumber;
+        }
+        #endregion 각 설정 초기화 
 
         /// <summary>
         /// Idle UI Consrals 셋업, 컴포넌트 정의 과정
@@ -705,6 +777,9 @@ namespace ProjectAI
             this.UISetImageListInfo(); // 이미지 리스트 정보 UI 적용
 
             this.UISetActiveProjectInnerProjectInfo(); // 프로젝트 내부 딥 러닝 프로젝트 버튼 셋업
+
+            //Test
+            this.ResetImageList();
         }
 
         /// <summary>
@@ -785,6 +860,7 @@ namespace ProjectAI
         private void UISetImageList(int page)
         {
             this.MainForm.gridImageList.Rows.Clear();
+
             JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
             if (imageFiles != null)
             {
@@ -808,8 +884,8 @@ namespace ProjectAI
                     }
                 }
             }
-            
         }
+
         /// <summary>
         /// 이미지 페이지 이동 Forward
         /// </summary>
@@ -884,6 +960,7 @@ namespace ProjectAI
 
             this.MainForm.panelProjectInfo.Controls.Add(metroTile);
         }
+
         /// <summary>
         /// 버튼 활성화시 실행 함수 - 프로젝트 UI 뿌려주기
         /// </summary>
@@ -932,11 +1009,34 @@ namespace ProjectAI
                     string[] files = openFileDialog.SafeFileNames;
                     string[] filesPath = openFileDialog.FileNames;
 
-                    int imageTotalNumber = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_imageTotalNumber"]);
-                    int imageListNumber = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_ImageListnumber"]);
-                    int imageeListSetNumber = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
+                    int countNumber = files.Length;
+                    List<int> delIndexs = new List<int>();
+                    for (int i = 0; i < countNumber; i++)
+                    {
+                        if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()] != null)
+                        {
+                            //MetroMessageBox.Show(this.MainForm, "존제하는 이미지 데이터", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            delIndexs.Add(i);
+                        }
+                    }
+                    delIndexs.Reverse(); // List 뒤에서 부터 삭제 => 뒤에서 부터 삭제 해야 인덱스 불일치가 안뜸. 
+                    // 동일한 이름 데이터 삭제
+                    foreach (int delIndex in delIndexs)
+                    {
+                        files = files.Where(condition => condition != files[delIndex]).ToArray();
+                        filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
+                    }
 
-                    JObject imageListJObject = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["imageList"];
+                    if (files.Length == 0) // 파일이 없으면 
+                        return;
+
+                    //this.MainForm.panelstatus.Visible = true;
+
+                    int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
+                    int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
+                    int imageeListSetNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
+
+                    JObject imageListJObject = (JObject)this.m_activeProjectImageListJObject["imageList"];
 
                     JArray imageList = (JArray)imageListJObject[(imageListNumber - 1).ToString()];
 
@@ -952,6 +1052,19 @@ namespace ProjectAI
                     imageListList.AddRange(files.ToList());
                     int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageeListSetNumber));
 
+                    
+                    // Image List Data 값 반영
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        imageTotalNumber++;
+                        object imageData = new
+                        {
+                            int_ImageNumber = imageTotalNumber,
+                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i])
+                        };
+                        this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
+                    }
+
                     // image List 값 반영
                     for (int i = 0; i < totalImageListnumber; i++)
                     {
@@ -966,47 +1079,157 @@ namespace ProjectAI
                             iImageList = imageListList.GetRange(i * imageeListSetNumber, imageListList.Count - i * imageeListSetNumber);
                         }
 
-                        WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["imageList"][(i + imageListNumber - 1).ToString()] = JArray.FromObject(iImageList.ToArray());
+                        this.m_activeProjectImageListJObject["imageList"][(i + imageListNumber - 1).ToString()] = JArray.FromObject(iImageList.ToArray());
                     }
-                    // Image List Data 값 반영
-                    for (int i = 0; i < files.Length; i++)
-                    {
-                        imageTotalNumber++;
-                        object imageData = new
-                        {
-                            int_ImageNumber = imageTotalNumber,
-                            string_ImagePath = filesPath[i].ToString()
-                        };
-                        WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                    }
+
+                    // File IO Task 등록
+                    customIOManigerFoem.CreateFileCopyList(filesPath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+                                                            MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
 
                     // 변경된 값 반영
-                    WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
-                    WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageeListSetNumber;
-                    WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
+                    this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
+                    this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageeListSetNumber;
+                    this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
 
-                    Console.WriteLine(WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject.ToString());
-                    Console.WriteLine(WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject.ToString());
+                    Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
+                    Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
 
                     //UI 적용 
-                    WorkSpaceData.m_activeProjectMainger.UISetImageNumberInfo(); // 이미지 숫자 적용
+                    this.UISetImageNumberInfo(); // 이미지 숫자 적용
+                    this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+
+                    // Json 파일 저장
+                    this.JsonDataSave(1);
                 }
             }
         }
-
-
-
-        /*
-        * m_activeProjectImageListJObject;
-        * m_activeProjectDataImageListDataJObject;
-        * m_activeProjectModelInfoJObject;
-        * m_activeProjectInfoJObject;
-        * m_calssInfoJObject;
-        */
-
-        public void Test1()
+        public void ImageDel(MetroFramework.Controls.MetroGrid metroGrid)
         {
+            List<int> delIndexs = new List<int>();
+            List<string> delFileNames = new List<string>();
+            List<string> delfilePaths = new List<string>();
 
+            for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
+            {
+                if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+                {
+                    string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
+
+                    delIndexs.Add(metroGrid.SelectedRows[i].Index);
+                    delFileNames.Add(fileName);
+                    delfilePaths.Add(Path.Combine(this.m_pathActiveProjectImage, fileName));
+                }
+            }
+
+            delIndexs.Sort();
+            delIndexs.Reverse();
+
+            foreach (int delIndex in delIndexs)
+            {
+                metroGrid.Rows.Remove(metroGrid.Rows[delIndex]);
+            }
+            // 삭제할 이미지 데이터 추출
+
+            // 삭제할 이미지 List Number 추출
+            List<int> delImageNumbers = new List<int>();
+            foreach (string delFileName in delFileNames)
+            {
+                delImageNumbers.Add(Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[delFileName]["int_ImageNumber"]));
+                // ImageListDataJObject 에서 데이터 삭제
+                //this.m_activeProjectDataImageListDataJObject[delFileName].Remove();
+                this.m_activeProjectDataImageListDataJObject.Remove(delFileName);
+            }
+
+            // ImageListJObject에서 데이터 삭제
+            int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
+            int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
+            int imageeListSetNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
+
+            delImageNumbers.Sort();
+            delImageNumbers.Reverse();
+
+            foreach (int delImageNumber in delImageNumbers)
+            {
+                int delImageListNumber = Convert.ToInt32(System.Math.Truncate(Convert.ToDouble(delImageNumber - 1) / Convert.ToDouble(imageeListSetNumber)));
+                Console.WriteLine(this.m_activeProjectImageListJObject["imageList"][delImageListNumber.ToString()][(delImageNumber - 1) % imageeListSetNumber]);
+                this.m_activeProjectImageListJObject["imageList"][delImageListNumber.ToString()][(delImageNumber - 1) % imageeListSetNumber].Remove();
+            }
+            // 삭제된 이미지에 맞춰서 ImageList Json 파일 다시 만들기
+            this.ResetImageList();
+
+            // File IO Task 등록
+            customIOManigerFoem.CreateFileDelList(delfilePaths, MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
+
+            // UI 적용
+            this.UISetImageNumberInfo(); // 이미지 숫자 정보 적용
+            this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+
+            // Json 파일 저장
+            this.JsonDataSave(1);
+        }
+        public void ImageDel(System.Windows.Forms.DataGridView metroGrid)
+        {
+            List<int> delIndexs = new List<int>();
+            List<string> delFileNames = new List<string>();
+            List<string> delfilePaths = new List<string>();
+
+            for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
+            {
+                if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+                {
+                    string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
+
+                    delIndexs.Add(metroGrid.SelectedRows[i].Index);
+                    delFileNames.Add(fileName);
+                    delfilePaths.Add(Path.Combine(this.m_pathActiveProjectImage, fileName));
+                }
+            }
+
+            delIndexs.Sort();
+            delIndexs.Reverse();
+
+            foreach (int delIndex in delIndexs)
+            {
+                metroGrid.Rows.Remove(metroGrid.Rows[delIndex]);
+            }
+            // 삭제할 이미지 데이터 추출
+
+            // 삭제할 이미지 List Number 추출
+            List<int> delImageNumbers = new List<int>();
+            foreach (string delFileName in delFileNames)
+            {
+                delImageNumbers.Add(Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[delFileName]["int_ImageNumber"]));
+                // ImageListDataJObject 에서 데이터 삭제
+                //this.m_activeProjectDataImageListDataJObject[delFileName].Remove();
+                this.m_activeProjectDataImageListDataJObject.Remove(delFileName);
+            }
+
+            // ImageListJObject에서 데이터 삭제
+            int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
+            int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
+            int imageeListSetNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
+
+            delImageNumbers.Sort();
+            delImageNumbers.Reverse();
+
+            foreach (int delImageNumber in delImageNumbers)
+            {
+                int delImageListNumber = Convert.ToInt32(System.Math.Truncate(Convert.ToDouble(delImageNumber - 1) / Convert.ToDouble(imageeListSetNumber)));
+                Console.WriteLine(this.m_activeProjectImageListJObject["imageList"][delImageListNumber.ToString()][(delImageNumber - 1) % imageeListSetNumber]);
+                this.m_activeProjectImageListJObject["imageList"][delImageListNumber.ToString()][(delImageNumber - 1) % imageeListSetNumber].Remove();
+            }
+            // 삭제된 이미지에 맞춰서 ImageList Json 파일 다시 만들기
+            this.ResetImageList();
+
+            // File IO Task 등록
+            customIOManigerFoem.CreateFileDelList(delfilePaths, MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
+
+            // UI 적용
+            this.UISetImageNumberInfo(); // 이미지 숫자 정보 적용
+            this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+
+            // Json 파일 저장
+            this.JsonDataSave(1);
         }
     }
 }

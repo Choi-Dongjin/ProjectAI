@@ -128,7 +128,7 @@
     <value>7, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 265</value>
+    <value>600, 305</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableLayoutStartOptionMain.ColumnCount" type="System.Int32, mscorlib">
@@ -294,6 +294,30 @@
   <data name="&gt;&gt;metroButton1.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="metroButton2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>461, 143</value>
+  </data>
+  <data name="metroButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 29</value>
+  </data>
+  <data name="metroButton2.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="metroButton2.Text" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="&gt;&gt;metroButton2.Name" xml:space="preserve">
+    <value>metroButton2</value>
+  </data>
+  <data name="&gt;&gt;metroButton2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroButton2.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;metroButton2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -307,7 +331,7 @@
     <value>6</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 150</value>
+    <value>560, 190</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -325,13 +349,13 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblMoptionLanguage" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblMoptionReset" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btnMoptionReset" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cmbMoptionLanguage" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="metroButton1" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,22,Absolute,102" /&gt;&lt;Rows Styles="Absolute,35,Absolute,35,Absolute,35,Absolute,35,Absolute,35,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblMoptionLanguage" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblMoptionReset" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btnMoptionReset" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cmbMoptionLanguage" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="metroButton1" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="metroButton2" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,22,Absolute,102" /&gt;&lt;Rows Styles="Absolute,35,Absolute,35,Absolute,35,Absolute,35,Absolute,35,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="btnMstartOptionsOK.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 153</value>
+    <value>257, 193</value>
   </data>
   <data name="btnMstartOptionsOK.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -358,7 +382,7 @@
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 153</value>
+    <value>359, 193</value>
   </data>
   <data name="btnMstartOptionsCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -385,7 +409,7 @@
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsApply.Location" type="System.Drawing.Point, System.Drawing">
-    <value>461, 153</value>
+    <value>461, 193</value>
   </data>
   <data name="btnMstartOptionsApply.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -421,7 +445,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutStartOptionMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 185</value>
+    <value>560, 225</value>
   </data>
   <data name="tableLayoutStartOptionMain.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

@@ -26,16 +26,6 @@ namespace ProjectAI
         private static StartForm startForm;
 
         /// <summary>
-        /// MainForm 호출
-        /// </summary>
-        private ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
-
-        /// <summary>
-        /// StartFormOptions 호출
-        /// </summary>
-        private ProjectAI.StartForms.StartFormOptions StartFormOptions = ProjectAI.StartForms.StartFormOptions.GetInstance();
-
-        /// <summary>
         /// 싱글톤 패턴 Class 호출에 사용
         /// </summary>
         /// <returns></returns>
@@ -47,6 +37,16 @@ namespace ProjectAI
             }
             return StartForm.startForm;
         }
+
+        /// <summary>
+        /// MainForm 호출
+        /// </summary>
+        private ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
+
+        /// <summary>
+        /// StartFormOptions 호출
+        /// </summary>
+        private ProjectAI.StartForms.StartFormOptions StartFormOptions = ProjectAI.StartForms.StartFormOptions.GetInstance();
 
         private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class

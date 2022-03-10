@@ -41,6 +41,7 @@
             this.btnMstartOptionsCancel = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsApply = new MetroFramework.Controls.MetroButton();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerStartFormOptions)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutStartOptionMain.SuspendLayout();
@@ -60,6 +61,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnMoptionReset, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbMoptionLanguage, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.metroButton1, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.metroButton2, 2, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // lblMoptionLanguage
@@ -128,6 +130,14 @@
             this.metroButton1.UseSelectable = true;
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
+            // metroButton2
+            // 
+            this.metroButton2.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.metroButton2, "metroButton2");
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.UseSelectable = true;
+            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
+            // 
             // StartFormOptions
             // 
             resources.ApplyResources(this, "$this");
@@ -159,5 +169,6 @@
         private MetroFramework.Controls.MetroButton btnMstartOptionsCancel;
         private MetroFramework.Controls.MetroButton btnMstartOptionsApply;
         private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton metroButton2;
     }
 }

@@ -60,7 +60,6 @@ namespace ProjectAI.MainForms
                 BtnWorkSpaceOpenClickEvnetHandler(sender, e);
         }
 
-
         #region WorkSpace 속성 추가
         [Category("WorkSpace"), Description("Work Space Name")]
         public string WorkSpaceName

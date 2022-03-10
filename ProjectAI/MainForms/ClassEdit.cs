@@ -116,18 +116,18 @@ namespace ProjectAI.MainForms
                     string activeInnerProjectName = WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName; // 활성화된 내부 프로젝트 이름 가져오기
 
                     // 활성화된 내부 프로젝트 Class 정보 있는지 확인
-                    if (WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName] != null)
+                    if (WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] != null)
                     {
                         // 활성화된 내부 프로젝트 Class List 정보가 있는지 확인
-                        if (WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName]["string_array_classList"] != null)
+                        if (WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"] != null)
                         {
                             try
                             {
-                                foreach (string className in WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName]["string_array_classList"])
+                                foreach (string className in WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"])
                                 {
                                     if (className != "" || className != null)
                                     {
-                                        string classColor = WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName][className]["string_classColor"].ToString();
+                                        string classColor = WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName][className]["string_classColor"].ToString();
                                         if (classColor == null || classColor == "")
                                             classColor = "FF808080";
 
@@ -202,13 +202,13 @@ namespace ProjectAI.MainForms
                         string activeInnerProjectName = WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName; // 활성화된 내부 프로젝트 이름 가져오기
 
                         // 활성화된 내부 프로젝트 Class 정보 있는지 확인
-                        if (WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName] != null)
+                        if (WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] != null)
                         {
 
                             // 활성화된 내부 프로젝트 Class List 정보가 있는지 확인
-                            if (WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName]["string_array_classList"] != null)
+                            if (WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"] != null)
                             {
-                                foreach (string classname in WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName]["string_array_classList"])
+                                foreach (string classname in WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"])
                                 {
                                     if (this.txtMClassName.Text == classname)
                                     {
@@ -217,7 +217,7 @@ namespace ProjectAI.MainForms
                                     }
                                 }
 
-                                JArray classList = (JArray)WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName]["string_array_classList"];
+                                JArray classList = (JArray)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"];
                                 classList.Add(this.txtMClassName.Text);
                                 
                                 object data = new
@@ -228,24 +228,24 @@ namespace ProjectAI.MainForms
                                 };
                                 JObject calssInfoJObject = JObject.FromObject(data);
 
-                                JObject classData = (JObject)WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName];
+                                JObject classData = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName];
                                 
                                 classData[this.txtMClassName.Text] = calssInfoJObject; // 생성된 값 적용
-                                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathCalssInfo, WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject); // 파일 저장
+                                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                                 this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
                             }
                             else
                             {
-                                WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
-                                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathCalssInfo, WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject); // 파일 저장
+                                WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
+                                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                                 this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
                             }
                         }
                         // 활성화된 내부 프로젝트 Class 정보 없음
                         else
                         {
-                            WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
-                            this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathCalssInfo, WorkSpaceData.m_activeProjectMainger.m_calssInfoJObject); // 파일 저장
+                            WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
+                            this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                             this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
                         }
                     }
@@ -322,7 +322,6 @@ namespace ProjectAI.MainForms
 
         private void BtnMOKClick(object sender, EventArgs e)
         {
-
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

@@ -109,11 +109,20 @@ namespace ProjectAI.StartForms
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            //FormsManiger formsManiger = FormsManiger.GetInstance();
-            //for (int i=0; i<3; i++)
-            //{
-            //    formsManiger.CustomIOManigerFoem.CreateFileCopyList(i);
-            //}
+            ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
+
+            MainForms.MainForm mainForm = MainForms.MainForm.GetInstance();
+            mainForm.panelstatus.Visible = true;
+
+            for (int i = 0; i < 3; i++)
+            {
+                //customIOManigerFoem.CreateFileCopyList(i, mainForm.pgbMfileIOstatus);
+            }
+        }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

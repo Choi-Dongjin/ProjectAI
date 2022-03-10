@@ -270,52 +270,5 @@ namespace ProjectAI
             }
             return filesList;
         }
-
-        /// <summary>
-        /// FileCopyList 동작 방법 선택
-        /// </summary>
-        public sealed class FileCopyListSet
-        {
-            /// <summary>
-            /// 파일 설정퇸 폴터에 복사
-            /// "예) 설정된 폴더명이 C:\Data -> C:\Data\파일명"
-            /// </summary>
-            public static int PathToPath { get { return 1; } }
-            /// <summary>
-            /// 학습을 위한 데이터 이동
-            /// </summary>
-            public static int TrainSet { get { return 2; } }
-        }
-
-        /// <summary>
-        /// 파일 Copy 함수
-        /// 
-        /// </summary>
-        /// <param name="files"> 대상 파일 리스트 or array </param>
-        /// <param name="setPath"> 목표 몰더 경로 </param>
-        /// <param name="fileCopyListSet"> 파일 Copy 방법 결정 </param>
-        public static void FileCopyList(List<string> files, string setPath,CustomIOMainger.FileCopyListSet fileCopyListSet)
-        {
-
-            switch (Convert.ToInt32(fileCopyListSet))
-            {
-                case 1:
-                    foreach (string file in files)
-                    {
-                        string fileName = Path.GetFileName(file);
-                        string setFilePath = Path.Combine(setPath, fileName);
-                    }
-
-                    break;
-                case 2:
-                    break;
-            }
-        }
-
-        public static void Test1(int number)
-        {
-            FileIODelay(10000);
-            Console.WriteLine($"End: {number}");
-        }
     }
 }

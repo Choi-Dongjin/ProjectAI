@@ -50,12 +50,15 @@ namespace ProjectAI.MainForms
         /// </summary>
         private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
 
+        private ProjectManiger.CustomIOManigerFoem CustomIOManigerFoem = ProjectManiger.CustomIOManigerFoem.GetInstance();
+
+
         /// <summary>
         /// Label TextBox 안전 접근 
         /// </summary>
         /// <param name="textBox"> </param>
         /// <param name="text"></param>
-        public delegate void SafeCallLabelText(System.Object textBoxObject, string text);
+        private delegate void SafeCallLabelText(System.Object textBoxObject, string text);
 
         /// <summary>
         /// Label TextBox 안전 접근 쓰기 함수
@@ -98,7 +101,7 @@ namespace ProjectAI.MainForms
         /// <param name="progressBarObject"> ProgressBar Object </param>
         /// <param name="maximum"> 최대값 </param>
         /// <param name="value"> 현재값 </param>
-        public delegate void SafeCallProgressBar(System.Object progressBarObject, int maximum, int value);
+        private delegate void SafeCallProgressBar(System.Object progressBarObject, int maximum, int value);
 
         /// <summary>
         /// ProgressBar 안전 접근 함수
@@ -113,7 +116,7 @@ namespace ProjectAI.MainForms
                 MetroFramework.Controls.MetroProgressBar progressBar = (MetroFramework.Controls.MetroProgressBar)progressBarObject;
                 if (progressBar.InvokeRequired)
                 {
-                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    var d = new SafeCallProgressBar(SafeWriteProgressBar);
                     Invoke(d, new object[] { progressBar, maximum, value });
                 }
                 else
@@ -127,13 +130,94 @@ namespace ProjectAI.MainForms
                 System.Windows.Forms.ProgressBar progressBar = (System.Windows.Forms.ProgressBar)progressBarObject;
                 if (progressBar.InvokeRequired)
                 {
-                    var d = new SafeCallLabelText(SafeWriteLabelText);
+                    var d = new SafeCallProgressBar(SafeWriteProgressBar);
                     Invoke(d, new object[] { progressBar, maximum, value });
                 }
                 else
                 {
                     progressBar.Maximum = maximum;
                     progressBar.Value = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 안전 접근 Panel Visible 상태 확인용 
+        /// </summary>
+        /// <param name="panelObject"> 확인할 Panel </param>
+        /// <returns></returns>
+        private delegate bool SafeCallPanelVisibleStatus(Object panelObject);
+        /// <summary>
+        /// 안전 접근 Panel Visible 값 변경용
+        /// </summary>
+        /// <param name="panelObject"> 확인할 Panel </param>
+        /// <param name="visible"> 적용할 값 </param>
+        private delegate void SafeCallPanelVisible(Object panelObject, bool visible);
+        /// <summary>
+        /// Panel Visible 상태 확인 안전 접근 함수
+        /// </summary>
+        /// <param name="panelObject"></param>
+        public bool SafeVisiblePanel(Object panelObject)
+        {
+            if (panelObject.GetType() == typeof(System.Windows.Forms.Panel))
+            {
+                System.Windows.Forms.Panel panel = (System.Windows.Forms.Panel)panelObject;
+                if (panel.InvokeRequired)
+                {
+                    var d = new SafeCallPanelVisibleStatus(SafeVisiblePanel);
+                    Invoke(d, new object[] { panel });
+                }
+                else
+                {
+                    return panel.Visible;
+                }
+            }
+            else if (panelObject.GetType() == typeof(MetroFramework.Controls.MetroPanel))
+            {
+                MetroFramework.Controls.MetroPanel panel = (MetroFramework.Controls.MetroPanel)panelObject;
+                if (panel.InvokeRequired)
+                {
+                    var d = new SafeCallPanelVisibleStatus(SafeVisiblePanel);
+                    Invoke(d, new object[] { panel });
+                }
+                else
+                {
+                    return panel.Visible;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Panel Visible 값 적용 안전 접근 함수
+        /// </summary>
+        /// <param name="panelObject"> 접근할 Panel </param>
+        /// <param name="visible"> 적용할 값 </param>
+        public void SafeVisiblePanel(Object panelObject, bool visible)
+        {
+            if (panelObject.GetType() == typeof(System.Windows.Forms.Panel))
+            {
+                System.Windows.Forms.Panel panel = (System.Windows.Forms.Panel)panelObject;
+                if (panel.InvokeRequired)
+                {
+                    var d = new SafeCallPanelVisible(SafeVisiblePanel);
+                    Invoke(d, new object[] { panel, visible });
+                }
+                else
+                {
+                    panel.Visible = visible;
+                }
+            }
+            else if (panelObject.GetType() == typeof(MetroFramework.Controls.MetroPanel))
+            {
+                MetroFramework.Controls.MetroPanel panel = (MetroFramework.Controls.MetroPanel)panelObject;
+                if (panel.InvokeRequired)
+                {
+                    var d = new SafeCallPanelVisible(SafeVisiblePanel);
+                    Invoke(d, new object[] { panel, visible });
+                }
+                else
+                {
+                    panel.Visible = visible;
                 }
             }
         }
@@ -473,7 +557,7 @@ namespace ProjectAI.MainForms
                 }
             }
 
-            ProjectMainger projectMainger = new ProjectMainger(activeWorkSpaceName);
+            ProjectContral projectMainger = new ProjectContral(activeWorkSpaceName);
             WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger); // 활성화된 Project 추가
             WorkSpaceEarlyData.m_workSpaceButtons[workSpaceIndex].WorkSpaceStatus = Color.Lime; // 활성화된 버튼 상태 색색상 적용
 
@@ -521,8 +605,12 @@ namespace ProjectAI.MainForms
 
         private void TsmProjectWorkSpaceTestButtonClick(object sender, EventArgs e)
         {
-            panelstatus.Visible = panelstatus.Visible == true ? false : true;
-            Console.WriteLine();
+            //panelstatus.Visible = panelstatus.Visible == true ? false : true;
+            //Console.WriteLine();
+            splitContainer1.Panel2Collapsed = splitContainer1.Panel2Collapsed ? false : true;
+            Console.WriteLine($"splitContainer1.Panel2Collapsed: {splitContainer1.Panel2Collapsed}");
+            pictureBox2.Visible = splitContainer1.Panel2Collapsed ? false : true;
+            Console.WriteLine($"pictureBox2.Visible: {pictureBox2.Visible}");
         }
 
         private void toolStripMenuItem1Click(object sender, EventArgs e)
@@ -691,9 +779,8 @@ namespace ProjectAI.MainForms
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
         {
-            pictureBox1.Image = null;
-
-            // dgvData_Model에서 모델 이름 불러오기
+            if(pictureBox1.Image != null)
+                pictureBox1.Image = null;
             try
             {
                 DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
@@ -704,7 +791,8 @@ namespace ProjectAI.MainForms
             }
             catch
             {
-                pictureBox1.Image = null;
+                if (pictureBox1.Image != null)
+                    pictureBox1.Image = null;
             }
         }
 
@@ -717,6 +805,22 @@ namespace ProjectAI.MainForms
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 WorkSpaceData.m_activeProjectMainger.ImageAdding();
+        }
+
+        private void ImageDeleteToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            this.pictureBox1.Image = null;
+            this.pictureBox2.Image = null;
+
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                WorkSpaceData.m_activeProjectMainger.ImageDel(this.gridImageList);
+        }
+
+        private void ImageLabelingToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog(); // Class Edit 실행 
         }
     }
 }
