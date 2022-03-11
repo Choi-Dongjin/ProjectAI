@@ -807,6 +807,11 @@ namespace ProjectAI.MainForms
                 WorkSpaceData.m_activeProjectMainger.ImageAdding();
         }
 
+        private void imageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void ImageDeleteToolStripMenuItem1Click(object sender, EventArgs e)
         {
             this.pictureBox1.Image = null;
@@ -821,11 +826,22 @@ namespace ProjectAI.MainForms
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
-                    if (WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog() == DialogResult.OK) // Class Edit 실행 
-                    {
-
-                    }
+                    WorkSpaceData.m_activeProjectMainger.ImageLabeling(this.gridImageList);
                 }
+        }
+
+        private void ImageSetTrainToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    //WorkSpaceData.m_activeProjectMainger.ImageLabeling(this.gridImageList);
+                }
+        }
+
+        private void ImageSetTestToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -540,7 +540,8 @@ namespace ProjectAI
                         object imageInfo = new
                         {
                             int_ImageNumber = totalNumber,
-                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, imageFile)
+                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, imageFile),
+                            Labeled = new JObject() { }
                         };
 
                         JObject imageInfoJObject = new JObject
@@ -807,7 +808,7 @@ namespace ProjectAI
 
 
         /// <summary>
-        /// 이미지 갯수 정보 UI 적용
+        /// 이미지 개수 정보 UI 적용
         /// </summary>
         public void UISetImageNumberInfo()
         {
@@ -873,13 +874,34 @@ namespace ProjectAI
                         string activeClass = null;
                         double threshold = 0.0;
 
-                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"] != null)
-                            set = this.m_activeProjectDataImageListDataJObject[imageFile]["string_DataSet"].ToString();
-                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"] != null)
-                            activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["string_classificationCalss"].ToString();
-                        if (this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"] != null)
-                            threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile]["double_threshold"]);
+                        if (this.m_activeInnerProjectName != null)
+                        {
+                            if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName] != null)
+                            {
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"]))
+                                        set = "Train";
 
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
+                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"]))
+                                        if (set != null)
+                                            set += ", Test";
+                                        else
+                                            set = "Test";
+
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
+                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"]))
+                                        if (set != null)
+                                            set += ", Validation";
+                                        else
+                                            set = "Validation";
+
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null)
+                                    activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString();
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["double_threshold"] != null)
+                                    threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile][this.m_activeInnerProjectName]["Labeled"]["double_threshold"]);
+                            }
+                        }
                         this.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, threshold);
                     }
                 }
@@ -960,7 +982,6 @@ namespace ProjectAI
 
             this.MainForm.panelProjectInfo.Controls.Add(metroTile);
         }
-
         /// <summary>
         /// 버튼 활성화시 실행 함수 - 프로젝트 UI 뿌려주기
         /// </summary>
@@ -977,24 +998,29 @@ namespace ProjectAI
             }
             else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
             {
+                this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+
                 this.ProjectIdleUIRemove(); // IdleUI 삭제
                 this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOption); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
-                this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+                this.UISetImageNumberInfo();
+                this.UISetImageList(this.imageListPage);
             }
             else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
             {
-                this.ProjectIdleUIRemove(); // IdleUI 삭제
                 this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+
+                this.ProjectIdleUIRemove(); // IdleUI 삭제
             }
             else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
             {
-                this.ProjectIdleUIRemove(); // IdleUI 삭제
                 this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+
+                this.ProjectIdleUIRemove(); // IdleUI 삭제
             }
         }
 
         /// <summary>
-        /// 이미지 추가
+        /// 활성화된 워크스페이스 이미지 추가
         /// </summary>
         public void ImageAdding()
         {
@@ -1103,6 +1129,11 @@ namespace ProjectAI
                 }
             }
         }
+
+        /// <summary>
+        /// 활성화된 워크스페이스 이미지 제거, MetroGrid 타입
+        /// </summary>
+        /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
         public void ImageDel(MetroFramework.Controls.MetroGrid metroGrid)
         {
             List<int> delIndexs = new List<int>();
@@ -1168,6 +1199,10 @@ namespace ProjectAI
             // Json 파일 저장
             this.JsonDataSave(1);
         }
+        /// <summary>
+        /// 활성화된 워크스페이스 이미지 제거, DataGridView 타입
+        /// </summary>
+        /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
         public void ImageDel(System.Windows.Forms.DataGridView metroGrid)
         {
             List<int> delIndexs = new List<int>();
@@ -1233,33 +1268,214 @@ namespace ProjectAI
             this.JsonDataSave(1);
         }
 
+        /// <summary>
+        /// 이미지 라벨링을 위한 함수, MetroGrid 타입 
+        /// </summary>
+        /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
         public void ImageLabeling(MetroFramework.Controls.MetroGrid metroGrid)
         {
-            List<int> labelIndexs = new List<int>();
-            List<string> labelNames = new List<string>();
+            this.classEdit.ShowDialog(); // Class Edit 창 띄우기
+            DialogResult dialogResult = WorkSpaceData.m_activeProjectMainger.classEdit.selectDialogResult; // 버튼 클릭 결과 가져오기
+            if (dialogResult == DialogResult.OK)
+            {
+                /* #5
+                 * 1. 선택된 이미지 정보 가져오기
+                 * 2. 선택한 라벨링 정보 가져오기
+                 * 3. 이미지 데이터에 라벨링 정보 적용하기 ImageListData
+                 * 4. Class 정보 수정 적용하기 ClassInfo
+                 * 5. 라벨링 정보 수정 적용하기 ActiveProjectInfo
+                 * 6. 변경된 UI 적용
+                 * 7. 저장 버튼 활성화
+                 */
 
-            /* #5
+                // 1. 선택된 이미지 정보 가져오기 
+                List<int> labelImageIndexs = new List<int>(); // 선택된 이미지 데이터 index
+                List<string> labelImageNames = new List<string>(); // 선택된 이미지 데이터 이름
+
+                if (metroGrid.SelectedRows.Count == 0) // 선택된 이미지 데이터가 없으면
+                    return; // 함수 종료
+                for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
+                {
+                    if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+                    {
+                        string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
+
+                        labelImageIndexs.Add(metroGrid.SelectedRows[i].Index);
+                        labelImageNames.Add(fileName);
+                    }
+                }
+
+                // 2. 선택한 라벨링 정보 가져오기
+                if (this.classEdit.selectClassName == null || this.classEdit.selectClassColor == null) // 선택된 값이 없으면 
+                    return; // 함수 종료
+
+                string modifyClassName = this.classEdit.selectClassName;  // 변경되는 Class 이름
+                string modifyClassColor = this.classEdit.selectClassColor; // 변경되는 Class 색
+                int labeledImageNumber = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTotalNumber"]); // 총 이미지 데이터 수, 기존 데이터 가져오기
+                int trainImageNumber = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTrainNumber"]); // 학습 이미지 데이터 수, 기존 데이터 가져오기
+                int testImageNumber = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTestNumber"]); // 테스트 이미지 데이터 수, 기존 데이터 가져오기
+                int validationImageNumber = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageValidationNumber"]); // 검증 이미지 데이터 수, 기존 데이터 가져오기
+
+                // 3. 이미지 데이터에 라벨링 정보 적용하기 ImageListData
+                if (this.m_activeInnerProjectName == null) // 선택된 내부 프로젝트가 없으면
+                    return; // 함수 종료
+
+                // 4. Class 정보 수정 적용하기 ClassInfo
+                foreach (string labelImageName in labelImageNames) // 선택된 파일수 만큼 실행
+                {
+                    //JObject labelImageDataJObject = (JObject)this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]; // 이미지 데이터 정보
+                    
+                    if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName] != null) // 활성화된 내부 프로젝트 데이터가 있는지 확인
+                    {
+                        if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null) // 확성화된 내부 프로젝트 데이터 안에 기존의 Label 데이터가 있는지 확인
+                        {
+                            string previousClassName = this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString(); // 기존의 라밸링된 데이터 이름 확인
+                            if (previousClassName != modifyClassName) // 기존데이터화 변경되는 데이터가 같은지 비교, 같으면 Pass, 다르면 기존의 데이터 수정 
+                            {
+                                this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"] = modifyClassName; // Class Label 변경
+
+                                // 이전 Class Total Number 감소 
+                                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTotalNumber"] = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTotalNumber"]) - 1;
+                                labeledImageNumber++; // 라벨링 되는 이미지 개수 추가
+                                if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"].ToString(), out bool parseConfirm))
+                                        if (parseConfirm)
+                                        {
+                                            // 이전 Class Train Number 감소
+                                            this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTrainNumber"] = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTrainNumber"]) -1;
+                                            trainImageNumber++; // 변경된 Class 학습 이미지 수 증가
+                                        }
+                                if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
+                                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"].ToString(), out bool parseConfirm))
+                                        if (parseConfirm)
+                                    {
+                                        // 이전 Class Test Number 감소
+                                        this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTestNumber"] = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageTestNumber"]) - 1;
+                                        testImageNumber++; // 변경된 Class 테스트 이미지 수 증가
+                                    }
+                                if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
+                                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"].ToString(), out bool parseConfirm))
+                                        if (parseConfirm)
+                                    {
+                                        // 이전 Class Validation Number 감소
+                                        this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageValidationNumber"] = Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][previousClassName]["int_classImageValidationNumber"]) - 1;
+                                        validationImageNumber++; // 변경된 Class 검증 이미지 수 증가
+                                    }
+                            }// 기존데이터화 변경되는 데이터가 같은지 비교, 같으면 Pass, 다르면 기존의 데이터 수정 
+                            else // 기존데이터와 같으면 그냥 넘어가기
+                            {
+
+                            }// 기존데이터와 같으면 그냥 넘어가기
+                        }
+                        else // 기존의 데이터 없음
+                        {
+                            JObject labeledDatainnerProjectLabelName = new JObject
+                            {
+                                {"string_Label", modifyClassName}
+                            }; // Label Data 생성
+                            JObject labeledDatainnerProject = (JObject)this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName];
+                            labeledDatainnerProject.Merge(labeledDatainnerProjectLabelName); // 생성된 Label Data 기존 데이터에 병합
+
+                            labeledImageNumber++; // 라벨링 되는 이미지 개수 추가
+                            if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"].ToString(), out bool parseConfirm))
+                                    if (parseConfirm)
+                                        trainImageNumber++; // 학습 이미지 수 
+                            if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"].ToString(), out bool parseConfirm))
+                                    if (parseConfirm)
+                                        testImageNumber++; // 테스트 이미지 수 
+                            if (this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"].ToString(), out bool parseConfirm))
+                                    if (parseConfirm)
+                                        validationImageNumber++; // 검증 이미지 수 
+                        }// 기존의 데이터 없음
+                    }
+                    else // 활성화된 프로젝트 데이터 없음. 
+                    {
+                        JObject labeledDatainnerProjectLabelName = new JObject
+                        {
+                             { "string_Label", modifyClassName }
+                        };
+                        JObject labeledDatainnerProject = new JObject
+                        {
+                            { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+                        };
+
+                        JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[labelImageName]["Labeled"];
+                        labeledData.Merge(labeledDatainnerProject);
+
+                        labeledImageNumber++; // 라벨링 되는 이미지 개수 추가
+                    }
+                } // foreach (string labelImageName in labelImageNames)
+
+                // 5. 라벨링 정보 수정 적용하기 ActiveProjectInfo
+                #region 라벨링 정보 수정 적용하기 ActiveProjectInfo
+                // Class Info 정보 변경
+                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTotalNumber"] = labeledImageNumber;
+                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTrainNumber"] = trainImageNumber;
+                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageTestNumber"] = testImageNumber;
+                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][modifyClassName]["int_classImageValidationNumber"] = validationImageNumber;
+
+                int activeProjectInfoImageLabeledNumber = 0;
+
+                // Active Project Info 변경 
+                foreach (string className in this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName]["string_array_classList"])
+                    if (className != null || className == "")
+                        activeProjectInfoImageLabeledNumber += Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][className]["int_classImageTotalNumber"]);
+
+                // 데이터 activeProjectInfo에 적용
+                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber;
+                #endregion 라벨링 정보 수정 적용하기 ActiveProjectInfo
+
+                // 6. 변경된 UI 적용
+                this.UISetImageNumberInfo(); // 이미지 개수 정보 업데이트
+                this.UISetImageList(this.imageListPage);
+
+                this.JsonDataSave(0); // Json 데이터 저장
+                this.JsonDataSave(1); // Json 데이터 저장
+                this.JsonDataSave(2); // Json 데이터 저장
+                
+            } // if (dialogResult == DialogResult.OK)
+            else if (dialogResult == DialogResult.Cancel)
+            {
+            } // else if (dialogResult == DialogResult.Cancel)
+        }
+
+
+        /// <summary>
+        /// 이미지 Train Data Set으로 적용, MetroGrid 타입
+        /// </summary>
+        /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
+        public void ImageTrainSet(MetroFramework.Controls.MetroGrid metroGrid)
+        {
+            /* #6
              * 1. 선택된 이미지 정보 가져오기
-             * 2. 선택한 라벨링 정보 가져오기
-             * 3. 이미지 데이터에 라벨링 정보 적용하기 ImageListData
-             * 4. Class 정보 수정 적용하기 ClassInfo
+             * 2. 선택한 이미지 데이터 Train Status 정보 가져오기 
+             * 3. Train Status 이미지 데이터에 적용 imageListData
              * 5. 라벨링 정보 수정 적용하기 ActiveProjectInfo
-             * 6. 저장 버튼 활성화
+             * 6. 변경된 UI 적용
+             * 7. 저장 버튼 활성화
              */
 
-            // 선택된 이미지 정보 가져오기 
-            for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
-            {
-                if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+            // 1. 선택된 이미지 정보 가져오기 
+            List<int> labelImageIndexs = new List<int>(); // 선택된 이미지 데이터 index
+                List<string> labelImageNames = new List<string>(); // 선택된 이미지 데이터 이름
+
+                if (metroGrid.SelectedRows.Count == 0) // 선택된 이미지 데이터가 없으면
+                    return; // 함수 종료
+                for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
                 {
-                    string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
+                    if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+                    {
+                        string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
 
-                    labelIndexs.Add(metroGrid.SelectedRows[i].Index);
-                    labelNames.Add(fileName);
+                        labelImageIndexs.Add(metroGrid.SelectedRows[i].Index);
+                        labelImageNames.Add(fileName);
+                    }
                 }
-            }
-
-
         }
+
+
     }
 }

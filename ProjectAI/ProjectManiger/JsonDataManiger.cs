@@ -67,6 +67,10 @@ namespace ProjectAI
                 {
                     jObject = null;
                 }
+                catch
+                {
+                    jObject = null;
+                }
             }
 
             return jObject;

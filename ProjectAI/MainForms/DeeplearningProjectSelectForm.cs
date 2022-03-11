@@ -195,6 +195,7 @@ namespace ProjectAI.MainForms
                     int_imageLabeledNumber = 0,
                     int_imageTrainNumber = 0,
                     int_imageTestNumber = 0,
+                    int_imageValidationNumber = 0,
                     bool_traininggorNot = false
                 };
                 JObject jObject2 = new JObject();

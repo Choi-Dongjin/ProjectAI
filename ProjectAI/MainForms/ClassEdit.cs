@@ -48,7 +48,12 @@ namespace ProjectAI.MainForms
         /// 선택한 ClassName, ColorTranslator.ToHtml, ColorTranslator.ToHtml, ColorTranslator.FromHtml
         /// </summary>
         public string selectClassColor;
-        
+
+        /// <summary>
+        /// 결과 가져오기
+        /// </summary>
+        public DialogResult selectDialogResult = DialogResult.None;
+
         /// <summary>
         /// 생성된 Class Button
         /// </summary>
@@ -83,11 +88,8 @@ namespace ProjectAI.MainForms
         {
             // 초기화
             this.txtMClassName.Clear();
-            this.selectClassName = null;
-            this.selectClassColor = null;
             this.m_color = "#FF808080";
             this.classButtons = new Dictionary<string, UserContral.ClassEdit.ClassButton>();
-
             this.panelMClassButton.Controls.Clear(); // 버튼 초기화
             //Hiding the window, because closing it makes the window unaccessible.
             this.Hide();
@@ -145,19 +147,29 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
+        /// 초기 데이터 생성
+        /// </summary>
+        /// <returns></returns>
+        private object ClassInfoObjectInit()
+        {
+            object data = new
+            {
+                string_classColor = this.m_color,
+                int_classImageTotalNumber = 0,
+                int_classImageTrainNumber = 0,
+                int_classImageTestNumber = 0,
+                int_classImageValidationNumber = 0
+            };
+            return data;
+        }
+        /// <summary>
         /// Class 정보 초기화
         /// </summary>
         /// <param name="className"></param>
         /// <returns></returns>
         private JObject ClassInfoReset(string className)
         {
-            object data = new
-            {
-                string_classColor = this.m_color,
-                int_classImageTotal = 0,
-                int_classImagetrain = 0
-            };
-            JObject calssInfoJObject = JObject.FromObject(data);
+            JObject calssInfoJObject = JObject.FromObject(this.ClassInfoObjectInit());
 
             JArray classList = new JArray() { };
             classList.Add(className);
@@ -218,14 +230,8 @@ namespace ProjectAI.MainForms
 
                                 JArray classList = (JArray)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"];
                                 classList.Add(this.txtMClassName.Text);
-                                
-                                object data = new
-                                {
-                                    string_classColor = this.m_color,
-                                    int_classImageTotal = 0,
-                                    int_classImagetrain = 0
-                                };
-                                JObject calssInfoJObject = JObject.FromObject(data);
+
+                                JObject calssInfoJObject = JObject.FromObject(this.ClassInfoObjectInit());
 
                                 JObject classData = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName];
                                 
@@ -408,7 +414,7 @@ namespace ProjectAI.MainForms
             this.selectClassName = this.classButtons[classButton.Name].TileText;
             this.selectClassColor = ColorTranslator.ToHtml(this.classButtons[classButton.Name].TileBackColor);
 
-            Console.WriteLine($"classButton.Name: {classButton.Name}, selectClassName: {this.selectClassName}, selectClassColor: {this.selectClassColor}");
+            //Console.WriteLine($"classButton.Name: {classButton.Name}, selectClassName: {this.selectClassName}, selectClassColor: {this.selectClassColor}");
         }
 
         private void BtnMOKClick(object sender, EventArgs e)
@@ -417,12 +423,18 @@ namespace ProjectAI.MainForms
              * this.selectClassName, this.selectClassColor 가져가서 선택된 데이터에 쓰기
              */
             this.DialogResult = DialogResult.OK;
+            this.selectDialogResult = DialogResult.OK;
+
             this.Close();
         }
 
         private void BtnMCancelClick(object sender, EventArgs e)
         {
+            this.selectClassName = null;
+            this.selectClassColor = null;
             this.DialogResult = DialogResult.Cancel;
+            this.selectDialogResult = DialogResult.Cancel;
+
             this.Close();
         }
     }
