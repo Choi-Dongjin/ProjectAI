@@ -820,7 +820,12 @@ namespace ProjectAI.MainForms
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                    WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog(); // Class Edit 실행 
+                {
+                    if (WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog() == DialogResult.OK) // Class Edit 실행 
+                    {
+
+                    }
+                }
         }
     }
 }

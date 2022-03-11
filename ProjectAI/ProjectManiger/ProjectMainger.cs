@@ -909,7 +909,7 @@ namespace ProjectAI
         }
 
         /// <summary>
-        /// 프로젝트 내부 딥 러닝 프로젝트 버튼 셋업
+        /// 프로젝트 내부 딥 러닝 프로젝트 버튼 만들기
         /// </summary>
         public void UISetActiveProjectInnerProjectInfo()
         {
@@ -933,7 +933,7 @@ namespace ProjectAI
             }
         }
         /// <summary>
-        /// 버튼 셋업
+        /// 내부 딥러닝 프로젝트 버튼 설정 함수
         /// </summary>
         /// <param name="name"> 컴포넌트 이름 </param>
         /// <param name="text"> 출력 Text </param>
@@ -1109,6 +1109,7 @@ namespace ProjectAI
             List<string> delFileNames = new List<string>();
             List<string> delfilePaths = new List<string>();
 
+            // 선택된 이미지 정보 가져오기 
             for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
             {
                 if (metroGrid.SelectedRows[i].Cells[1].Value != null)
@@ -1230,6 +1231,35 @@ namespace ProjectAI
 
             // Json 파일 저장
             this.JsonDataSave(1);
+        }
+
+        public void ImageLabeling(MetroFramework.Controls.MetroGrid metroGrid)
+        {
+            List<int> labelIndexs = new List<int>();
+            List<string> labelNames = new List<string>();
+
+            /* #5
+             * 1. 선택된 이미지 정보 가져오기
+             * 2. 선택한 라벨링 정보 가져오기
+             * 3. 이미지 데이터에 라벨링 정보 적용하기 ImageListData
+             * 4. Class 정보 수정 적용하기 ClassInfo
+             * 5. 라벨링 정보 수정 적용하기 ActiveProjectInfo
+             * 6. 저장 버튼 활성화
+             */
+
+            // 선택된 이미지 정보 가져오기 
+            for (int i = 0; i < metroGrid.SelectedRows.Count; i++)
+            {
+                if (metroGrid.SelectedRows[i].Cells[1].Value != null)
+                {
+                    string fileName = metroGrid.SelectedRows[i].Cells[1].Value.ToString();
+
+                    labelIndexs.Add(metroGrid.SelectedRows[i].Index);
+                    labelNames.Add(fileName);
+                }
+            }
+
+
         }
     }
 }

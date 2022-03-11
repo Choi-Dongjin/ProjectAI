@@ -292,7 +292,7 @@ namespace ProjectAI.MainForms
         private void BtnCeditClick(object sender, EventArgs e)
         {
             MetroFramework.Controls.MetroButton controls = (MetroFramework.Controls.MetroButton)sender;
-
+            
             var classButton = controls.Parent;
             classButton = (ProjectAI.MainForms.UserContral.ClassEdit.ClassButton)classButton.Parent;
 
@@ -309,21 +309,50 @@ namespace ProjectAI.MainForms
                  * #4
                  * 1. 수정한 Class 값 가져오기 
                  * 2. 이전 Class 데이터 가져오기
-                 * 3. 이전 Class 적용된 데이터 스켄하기
+                 * 3. 이전 Class 적용된 이미지 데이터 스켄하기
                  * 4. 이전 Clsdd 적용된 이미지 데이터 변경된 데이터로 수정 하기
                  * 5. 수정된 Class 값 이전 Class 값 적용하기
-                 * 6. 수정된 데이터 파일 저장하기
+                 * 6. 수정된 값 이용하여 UI에 적용 - 이미지 Class List 정보, Class UI 정보
+                 * 7. 수정된 데이터 파일 저장하기
                  */
 
+                // 수정한 Class 값 가져오기
+                // string modifyClassName = 수정된 Class 이름
+                // string modifyClassColor = 수정된 Class Color
+                #region 1. 수정한 class 값 가져오기
+                UserContral.ClassEdit.ClassButton activateClassButton = this.classButtons[classButton.Name];
+                string modifyClassName = activateClassButton.TileText;
+                string modifyClassColor = ColorTranslator.ToHtml(activateClassButton.TileBackColor);
+                #endregion 1. 수정한 class 값 가져오기
 
-                object newInnerProjectInfo = new
-                {
-                    string_classColor = number,
-                    int_classImageTotal = 0,
-                    int_classImagetrain = 0,
-                };
+                // 이전 Class 데이터 가져오기
+                // string previousClassName 이전 Class 이름
+                // JObject previousCalssInfoJObject 이전 Class JObject 정보
+                #region 2. 이전 Class 데이터 가져오기
+                int i = Array.IndexOf(this.classButtons.Keys.ToArray(), classButton.Name); // 수정할 Class 번호 가져오기
+                string previousClassName = WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_array_classList"][i].ToString(); // ClassList 에서 Class 이름 수정
+                JObject previousCalssInfoJObject = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]; // activeProjectCalssInfoJObject JObject 가져오기
+                //previousCalssInfoJObject.Remove(classButton.Name); // activeProjectCalssInfoJObject classButton.Name 삭제 하기
+                #endregion 2. 이전 Class 데이터 가져오기
 
-                WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName][mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
+
+
+
+
+                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
+
+
+                //WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName];
+
+
+                //object newInnerProjectInfo = new
+                //{
+                //    string_classColor = number,
+                //    int_classImageTotal = 0,
+                //    int_classImagetrain = 0,
+                //};
+
+                //WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName][mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
 
 
                 //JObject jObject
@@ -353,12 +382,12 @@ namespace ProjectAI.MainForms
 
             string activeInnerProjectName = WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName;
 
-            int i = Array.IndexOf(this.classButtons.Keys.ToArray(), classButton.Name);
-
+            #region Class 정보 Json 파일 삭제
+            int i = Array.IndexOf(this.classButtons.Keys.ToArray(), classButton.Name); // 삭제할 Class 번호 가져오기
             WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"][i].Remove(); // classList 삭제 하기
-            
             JObject activeProjectCalssInfoJObject = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]; // activeProjectCalssInfoJObject JObject 가져오기
             activeProjectCalssInfoJObject.Remove(classButton.Name); // activeProjectCalssInfoJObject classButton.Name 삭제 하기
+            #endregion Class 정보 Json 파일 삭제
 
             this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
 
@@ -384,6 +413,9 @@ namespace ProjectAI.MainForms
 
         private void BtnMOKClick(object sender, EventArgs e)
         {
+            /*
+             * this.selectClassName, this.selectClassColor 가져가서 선택된 데이터에 쓰기
+             */
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
