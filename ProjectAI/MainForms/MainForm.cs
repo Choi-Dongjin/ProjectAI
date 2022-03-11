@@ -835,7 +835,7 @@ namespace ProjectAI.MainForms
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
-                    //WorkSpaceData.m_activeProjectMainger.ImageLabeling(this.gridImageList);
+                    WorkSpaceData.m_activeProjectMainger.ImageTrainSet(this.gridImageList);
                 }
         }
 

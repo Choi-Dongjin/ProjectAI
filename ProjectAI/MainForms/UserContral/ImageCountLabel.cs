@@ -47,32 +47,32 @@ namespace ProjectAI.MainForms
                     if (number / 1000000 >= 1)
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("8.25F");
+                        //Console.WriteLine("8.25F");
                     }
                     else if (number / 100000 >= 1)
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("9.75F");
+                        //Console.WriteLine("9.75F");
                     }
                     else if (number / 10000 >= 1)
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("12F");
+                        //Console.WriteLine("12F");
                     }
                     else if (number / 1000 >= 1)
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("15.75F");
+                        //Console.WriteLine("15.75F");
                     }
                     else if (number / 100 >= 1)
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("17.25F");
+                        //Console.WriteLine("17.25F");
                     }
                     else
                     {
                         lblimageCount.Font = new Font(lblimageCountName.Font.Name, 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-                        Console.WriteLine("24F");
+                        //Console.WriteLine("24F");
                     }
 
                     this.lblimageCount.Text = value;
