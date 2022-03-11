@@ -100,7 +100,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
         {
             get
             {
-                return this.m_tileBackColor;
+                return this.tileMClass.BackColor;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
         {
             get
             {
-                return this.m_tileForeColor;
+                return this.tileMClass.ForeColor;
             }
             set
             {

@@ -45,15 +45,14 @@ namespace ProjectAI.MainForms
         public string selectClassName;
 
         /// <summary>
-        /// 선택한 ClassName 
+        /// 선택한 ClassName, ColorTranslator.ToHtml, ColorTranslator.ToHtml, ColorTranslator.FromHtml
         /// </summary>
         public string selectClassColor;
-
+        
         /// <summary>
         /// 생성된 Class Button
         /// </summary>
         private Dictionary<string, ProjectAI.MainForms.UserContral.ClassEdit.ClassButton> classButtons = new Dictionary<string, UserContral.ClassEdit.ClassButton>();
-
 
         public ClassEdit()
         {
@@ -231,6 +230,7 @@ namespace ProjectAI.MainForms
                                 JObject classData = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName];
                                 
                                 classData[this.txtMClassName.Text] = calssInfoJObject; // 생성된 값 적용
+
                                 this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                                 this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
                             }
@@ -296,10 +296,48 @@ namespace ProjectAI.MainForms
             var classButton = controls.Parent;
             classButton = (ProjectAI.MainForms.UserContral.ClassEdit.ClassButton)classButton.Parent;
 
-            Console.WriteLine(classButton.Name);
+            //Console.WriteLine(classButton.Name);
 
             ProjectAI.MainForms.ClassEditClassButtonEdit classEditClassButtonEdit = new ClassEditClassButtonEdit((ProjectAI.MainForms.UserContral.ClassEdit.ClassButton)classButton);
-            classEditClassButtonEdit.ShowDialog();
+            DialogResult dialogResult = classEditClassButtonEdit.ShowDialog();
+
+            /* class Info 수정했을떼 값 변경하고 Json 파일 저장 */
+
+            if (dialogResult == DialogResult.OK)
+            {
+                /*
+                 * #4
+                 * 1. 수정한 Class 값 가져오기 
+                 * 2. 이전 Class 데이터 가져오기
+                 * 3. 이전 Class 적용된 데이터 스켄하기
+                 * 4. 이전 Clsdd 적용된 이미지 데이터 변경된 데이터로 수정 하기
+                 * 5. 수정된 Class 값 이전 Class 값 적용하기
+                 * 6. 수정된 데이터 파일 저장하기
+                 */
+
+
+                object newInnerProjectInfo = new
+                {
+                    string_classColor = number,
+                    int_classImageTotal = 0,
+                    int_classImagetrain = 0,
+                };
+
+                WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName][mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
+
+
+                //JObject jObject
+
+                //WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]
+
+                //this.selectClassName = this.classButtons[classButton.Name].TileText;
+
+                this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
+            }
+            else if (dialogResult == DialogResult.Cancel)
+            {
+
+            }
         }
         /// <summary>
         /// Class Button 클릭 이벤트 - delete
@@ -308,7 +346,24 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void BtnCdeleteClick(object sender, EventArgs e)
         {
+            MetroFramework.Controls.MetroButton controls = (MetroFramework.Controls.MetroButton)sender;
+            var classButton = controls.Parent;
+            classButton = (ProjectAI.MainForms.UserContral.ClassEdit.ClassButton)classButton.Parent;
+            //Console.WriteLine(classButton.Name); // 이름
 
+            string activeInnerProjectName = WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName;
+
+            int i = Array.IndexOf(this.classButtons.Keys.ToArray(), classButton.Name);
+
+            WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]["string_array_classList"][i].Remove(); // classList 삭제 하기
+            
+            JObject activeProjectCalssInfoJObject = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName]; // activeProjectCalssInfoJObject JObject 가져오기
+            activeProjectCalssInfoJObject.Remove(classButton.Name); // activeProjectCalssInfoJObject classButton.Name 삭제 하기
+
+            this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
+
+            this.panelMClassButton.Controls.Remove(classButton); // 컨트롤 삭제
+            this.classButtons.Remove(classButton.Name); // 버튼 Class 삭제
         }
         /// <summary>
         /// Class Button 클릭 이벤트 - tile
@@ -317,7 +372,14 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void BtnCtileClick(object sender, EventArgs e)
         {
+            MetroFramework.Controls.MetroTile controls = (MetroFramework.Controls.MetroTile)sender;
+            var classButton = controls.Parent;
+            classButton = (ProjectAI.MainForms.UserContral.ClassEdit.ClassButton)classButton.Parent;
 
+            this.selectClassName = this.classButtons[classButton.Name].TileText;
+            this.selectClassColor = ColorTranslator.ToHtml(this.classButtons[classButton.Name].TileBackColor);
+
+            Console.WriteLine($"classButton.Name: {classButton.Name}, selectClassName: {this.selectClassName}, selectClassColor: {this.selectClassColor}");
         }
 
         private void BtnMOKClick(object sender, EventArgs e)
