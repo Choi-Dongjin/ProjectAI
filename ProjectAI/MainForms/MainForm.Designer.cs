@@ -58,6 +58,7 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.imageDeleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageLabelInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutImageDataManiger = new System.Windows.Forms.TableLayoutPanel();
             this.btnimagePageReverse = new System.Windows.Forms.Button();
             this.btnimagePageNext = new System.Windows.Forms.Button();
@@ -65,7 +66,11 @@
             this.lblImageListpageMid = new System.Windows.Forms.Label();
             this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -120,10 +125,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -383,78 +384,86 @@
             this.imageSetTestToolStripMenuItem1,
             this.toolStripSeparator9,
             this.imageDeleteToolStripMenuItem1,
-            this.toolStripSeparator10});
+            this.toolStripSeparator10,
+            this.imageLabelInfoResetToolStripMenuItem});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(171, 166);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(197, 188);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(193, 6);
             // 
             // imageFilesAddToolStripMenuItem1
             // 
             this.imageFilesAddToolStripMenuItem1.Name = "imageFilesAddToolStripMenuItem1";
-            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageFilesAddToolStripMenuItem1.Text = "Image File Add";
             this.imageFilesAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFilesAddToolStripMenuItem1Click);
             // 
             // imageFolderAddToolStripMenuItem1
             // 
             this.imageFolderAddToolStripMenuItem1.Name = "imageFolderAddToolStripMenuItem1";
-            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageFolderAddToolStripMenuItem1.Text = "Image Folder Add";
             this.imageFolderAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFolderAddToolStripMenuItem1Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(193, 6);
             // 
             // imageLabelingToolStripMenuItem1
             // 
             this.imageLabelingToolStripMenuItem1.Name = "imageLabelingToolStripMenuItem1";
-            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageLabelingToolStripMenuItem1.Text = "Image Labeling";
             this.imageLabelingToolStripMenuItem1.Click += new System.EventHandler(this.ImageLabelingToolStripMenuItem1Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(193, 6);
             // 
             // imageSetTrainToolStripMenuItem1
             // 
             this.imageSetTrainToolStripMenuItem1.Name = "imageSetTrainToolStripMenuItem1";
-            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageSetTrainToolStripMenuItem1.Text = "Image Set Train";
             this.imageSetTrainToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTrainToolStripMenuItem1Click);
             // 
             // imageSetTestToolStripMenuItem1
             // 
             this.imageSetTestToolStripMenuItem1.Name = "imageSetTestToolStripMenuItem1";
-            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageSetTestToolStripMenuItem1.Text = "Image Set Test";
             this.imageSetTestToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTestToolStripMenuItem1Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(193, 6);
             // 
             // imageDeleteToolStripMenuItem1
             // 
             this.imageDeleteToolStripMenuItem1.Name = "imageDeleteToolStripMenuItem1";
-            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.imageDeleteToolStripMenuItem1.Text = "Image Delete";
             this.imageDeleteToolStripMenuItem1.Click += new System.EventHandler(this.ImageDeleteToolStripMenuItem1Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(193, 6);
+            // 
+            // imageLabelInfoResetToolStripMenuItem
+            // 
+            this.imageLabelInfoResetToolStripMenuItem.Name = "imageLabelInfoResetToolStripMenuItem";
+            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.imageLabelInfoResetToolStripMenuItem.Text = "Image Label Info Reset";
+            this.imageLabelInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageLabelInfoResetToolStripMenuItemClick);
             // 
             // tableLayoutImageDataManiger
             // 
@@ -573,6 +582,39 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(260, 580);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(195, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(65, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(130, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(65, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(65, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(65, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -582,6 +624,17 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(260, 505);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(65, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -1153,50 +1206,6 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
             // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(195, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(65, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(130, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(65, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(65, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(65, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(65, 75);
-            this.iclTotal.TabIndex = 11;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1344,5 +1353,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroButton metroButton4;
+        private System.Windows.Forms.ToolStripMenuItem imageLabelInfoResetToolStripMenuItem;
     }
 }

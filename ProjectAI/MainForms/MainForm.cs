@@ -970,6 +970,15 @@ namespace ProjectAI.MainForms
                     WorkSpaceData.m_activeProjectMainger.ImageTestSet(this.gridImageList);
                 }
         }
+
+        private void ImageLabelInfoResetToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageLabelInfoReset(this.gridImageList);
+                }
+        }
     }
 }
 
