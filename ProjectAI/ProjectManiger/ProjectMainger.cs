@@ -93,7 +93,7 @@ namespace ProjectAI
         /// <summary>
         /// WorkSpaceButton List 관리
         /// </summary>
-        public static List<MainForms.WorkSpaceButton> m_workSpaceButtons = new List<MainForms.WorkSpaceButton>();
+        public static Dictionary<string, MainForms.WorkSpaceButton> m_workSpaceButtons = new Dictionary<string, MainForms.WorkSpaceButton>();
 
         /// <summary>
         /// workSpace 이름 내부 정보를 읽어오기 위애서 사용
@@ -111,11 +111,20 @@ namespace ProjectAI
     public struct WorkSpaceData
     {
         /// <summary>
-        /// 실행중인 project 관리 Dictionary
+        /// 실행중인 WorkSpace 관리 Dictionary
         /// </summary>
         public static Dictionary<string, ProjectContral> m_projectMaingersDictionary = new Dictionary<string, ProjectContral>();
 
+        /// <summary>
+        /// 실행중인 WorkSpace
+        /// </summary>
         public static ProjectContral m_activeProjectMainger;
+
+        /// <summary>
+        /// 실행중진 WorkSpace 저장 유무
+        /// </summary>
+        public static bool m_workSpaceSave = false;
+
     }
 
     /// <summary>
@@ -145,8 +154,9 @@ namespace ProjectAI
 
         /// <summary>
         /// 프로젝트 아이들 상태 유저 컨트롤
-        /// </summary>
-        public ProjectAI.CustomComponent.MainForms.Classification.TrainOptions m_classificationTrainOption = new ProjectAI.CustomComponent.MainForms.Classification.TrainOptions();
+        /// </summary> 
+        public Dictionary<string, ProjectAI.CustomComponent.MainForms.Classification.TrainOptions> 
+            m_classificationTrainOptionDictionary = new Dictionary<string, CustomComponent.MainForms.Classification.TrainOptions>();
 
         #endregion ProjectMainger에 종속된 UserContral 정의
 
@@ -267,7 +277,12 @@ namespace ProjectAI
         /// <summary>
         /// 현제 이미지 페이지
         /// </summary>
-        private int imageListPage = 0;
+        private int imageListPage = 1;
+
+        /// <summary>
+        /// 활성화된 WorkSpace 저장 유무
+        /// </summary>
+        public bool saveWorkSpace = false;
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -279,7 +294,8 @@ namespace ProjectAI
             Console.WriteLine(workSpaceName);
 
             this.ActiveProjectIdleContralsSetting(); // Idle UI Consrals 셋업
-            this.ActiveProjectClassificationContralsSetting(); // Classification UI Consrals 셋업
+
+            this.SaveButoonChacked(); // Save Button 확인
 
             this.ActiveProjectPathDataInitialization(); // 활성화된 Project 경로 변수 초기화
             this.ActiveProjectEntry(); // 프로젝트 폴더 확인, 문제가 없다면 기존의 데이터 읽어오기
@@ -338,7 +354,35 @@ namespace ProjectAI
                 case 2:
                     jsonDataManiger.PushJsonObject(this.m_pathActiveProjectCalssInfo, this.m_activeProjectCalssInfoJObject);
                     break;
+                case 3:
+                    jsonDataManiger.PushJsonObject(this.m_pathActiveProjectModelInfo, this.m_activeProjectModelInfoJObject);
+                    break;
             }
+        }
+
+        /// <summary>
+        /// 저장 상태 확인
+        /// </summary>
+        public void SaveButoonChacked()
+        {
+            if (WorkSpaceData.m_workSpaceSave)
+                MainForm.tsmProjectAllWorkSpaceSave.Enabled = WorkSpaceData.m_workSpaceSave;
+            else
+                MainForm.tsmProjectAllWorkSpaceSave.Enabled = WorkSpaceData.m_workSpaceSave;
+
+            if (this.saveWorkSpace)
+                MainForm.tsmProjectWorkSpaceSave.Enabled = WorkSpaceData.m_workSpaceSave;
+            else
+                MainForm.tsmProjectWorkSpaceSave.Enabled = WorkSpaceData.m_workSpaceSave;
+        }
+
+        /// <summary>
+        /// 저장 활성화
+        /// </summary>
+        public void SaveEnabled()
+        {
+            this.saveWorkSpace = true;
+            WorkSpaceData.m_workSpaceSave = true;
         }
 
         #region 각 설정 초기화
@@ -758,13 +802,14 @@ namespace ProjectAI
         /// <summary>
         /// Classification UI Consrals 셋업, 컴포넌트 정의 과정, Auto scroll 정상 동작함.Dock
         /// </summary>
-        private void ActiveProjectClassificationContralsSetting()
+        private ProjectAI.CustomComponent.MainForms.Classification.TrainOptions ActiveProjectClassificationContralsSetting(ProjectAI.CustomComponent.MainForms.Classification.TrainOptions m_classificationTrainOption)
         {
-            this.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_classificationTrainOption, true);
-            this.m_classificationTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_classificationTrainOption.Location = new System.Drawing.Point(0, 0);
-            this.m_classificationTrainOption.Margin = new System.Windows.Forms.Padding(0);
-            this.m_classificationTrainOption.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
+            this.MainForm.styleExtenderMainForm.SetApplyMetroTheme(m_classificationTrainOption, true);
+            m_classificationTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
+            m_classificationTrainOption.Location = new System.Drawing.Point(0, 0);
+            m_classificationTrainOption.Margin = new System.Windows.Forms.Padding(0);
+            m_classificationTrainOption.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
+            return m_classificationTrainOption;
         }
 
         /// <summary>
@@ -815,6 +860,7 @@ namespace ProjectAI
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             this.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
             this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
+            this.MainForm.lblImageListpage.Text = this.imageListPage.ToString();
             // 선택된 프로젝트가 있으면
             if (this.m_activeInnerProjectName != null && this.m_activeInnerProjectName != "AddProject")
             {
@@ -848,7 +894,7 @@ namespace ProjectAI
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             //this.m_activeProjectImageListJObject["imageList"];
 
-            this.UISetImageList(this.imageListPage);
+            this.UISetImageListDataGridview(this.imageListPage);
             #endregion gridImageList 값 적용 초기화
 
 
@@ -856,11 +902,13 @@ namespace ProjectAI
             this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
         }
         /// <summary>
-        /// 이미지 리스트 페이지 적용 - Data Grid view 타입
+        /// 이미지 리스트 페이지 적용 - DataGridview 타입
         /// </summary>
-        private void UISetImageList(int page)
+        private void UISetImageListDataGridview(int page)
         {
             this.MainForm.gridImageList.Rows.Clear();
+
+            page = page - 1;
 
             JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
             if (imageFiles != null)
@@ -915,9 +963,9 @@ namespace ProjectAI
         public int ImageListPageNext()
         {
             int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
-            if (this.imageListPage < imageListnumber-1)
-                this.UISetImageList(++this.imageListPage);
-            return imageListPage + 1;
+            if (this.imageListPage < imageListnumber)
+                this.UISetImageListDataGridview(++this.imageListPage);
+            return imageListPage;
         }
         /// <summary>
         /// 이미지 페이지 이동 Backward
@@ -925,9 +973,9 @@ namespace ProjectAI
         /// <returns></returns>
         public int ImageListPageReverse()
         {
-            if (this.imageListPage > 0)
-                this.UISetImageList(--this.imageListPage);
-            return imageListPage + 1;
+            if (this.imageListPage > 1)
+                this.UISetImageListDataGridview(--this.imageListPage);
+            return imageListPage;
         }
 
         /// <summary>
@@ -992,30 +1040,44 @@ namespace ProjectAI
             MetroFramework.Controls.MetroTile button = (MetroFramework.Controls.MetroTile)sender;
             Console.WriteLine(button.Name);
 
-            if (button.Name == "AddProject")
+            if (this.m_activeInnerProjectName != button.Name) // 기존에 열려있는 프로젝트와 이름이 같은지 확인
             {
-                this.deeplearningProjectSelectForm.ShowDialog(); // 프로젝트 추가
-            }
-            else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
-            {
-                this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+                if (button.Name == "AddProject")
+                {
+                    this.deeplearningProjectSelectForm.ShowDialog(); // 프로젝트 추가
+                }
+                else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
+                {
+                    this.m_activeInnerProjectName = button.Name; // 활성화된 프로젝트 등록
+                    bool alreadyOpenedProject = false; // 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    foreach (string activeInnerProjectName in this.m_classificationTrainOptionDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                        if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                            if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                                alreadyOpenedProject = true; // 실행되어 있다면 확인용 편부 True로 변경
+                    if (!alreadyOpenedProject) // 처음 실행된 내부 프로젝트 라면
+                    {
+                        ProjectAI.CustomComponent.MainForms.Classification.TrainOptions m_classificationTrainOptionl =
+                            new CustomComponent.MainForms.Classification.TrainOptions(); // Classification TrainOption 생성
+                        m_classificationTrainOptionl = this.ActiveProjectClassificationContralsSetting(m_classificationTrainOptionl); // 생성된 Classification TrainOption 셋업
+                        this.m_classificationTrainOptionDictionary.Add(this.m_activeInnerProjectName, m_classificationTrainOptionl); // 관리 Dictionary에 추가
+                    }
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
+                    this.UISetImageNumberInfo(); // 이미지 번호 정보 초기화
+                    this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
+                }
+                else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
+                {
+                    this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
 
-                this.ProjectIdleUIRemove(); // IdleUI 삭제
-                this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOption); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
-                this.UISetImageNumberInfo();
-                this.UISetImageList(this.imageListPage);
-            }
-            else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
-            {
-                this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제
+                }
+                else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
+                {
+                    this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
 
-                this.ProjectIdleUIRemove(); // IdleUI 삭제
-            }
-            else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
-            {
-                this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
-
-                this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제
+                }
             }
         }
 
@@ -1086,11 +1148,12 @@ namespace ProjectAI
                         object imageData = new
                         {
                             int_ImageNumber = imageTotalNumber,
-                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i])
+                            string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
+                            Labeled = new JObject() { }
                         };
                         this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
                     }
-
+                    
                     // image List 값 반영
                     for (int i = 0; i < totalImageListnumber; i++)
                     {
@@ -1122,7 +1185,7 @@ namespace ProjectAI
 
                     //UI 적용 
                     this.UISetImageNumberInfo(); // 이미지 숫자 적용
-                    this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+                    this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
 
                     // Json 파일 저장
                     this.JsonDataSave(1);
@@ -1252,7 +1315,7 @@ namespace ProjectAI
 
             // UI 적용
             this.UISetImageNumberInfo(); // 이미지 숫자 정보 적용
-            this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
 
             // Json 파일 저장
             this.JsonDataSave(0);
@@ -1322,7 +1385,7 @@ namespace ProjectAI
 
             // UI 적용
             this.UISetImageNumberInfo(); // 이미지 숫자 정보 적용
-            this.UISetImageList(this.imageListPage); // 이미지 Data Grid View UI적용
+            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
 
             // Json 파일 저장
             this.JsonDataSave(1);
@@ -1490,12 +1553,16 @@ namespace ProjectAI
 
                 // 6. 변경된 UI 적용
                 this.UISetImageNumberInfo(); // 이미지 개수 정보 업데이트
-                this.UISetImageList(this.imageListPage);
+                this.UISetImageListDataGridview(this.imageListPage);
 
-                this.JsonDataSave(0); // Json 데이터 저장
-                this.JsonDataSave(1); // Json 데이터 저장
-                this.JsonDataSave(2); // Json 데이터 저장
-                
+                //this.JsonDataSave(0); // Json 데이터 저장
+                //this.JsonDataSave(1); // Json 데이터 저장
+                //this.JsonDataSave(2); // Json 데이터 저장
+
+                // 7. 저장 버튼 활성화
+                this.SaveEnabled(); // 저장 활성화
+                this.SaveButoonChacked(); // 저장 버튼 확인
+
             } // if (dialogResult == DialogResult.OK)
             else if (dialogResult == DialogResult.Cancel)
             {
@@ -1596,13 +1663,16 @@ namespace ProjectAI
             this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"] = imageTrainNumber; // imageTestNumber 값 적용
 
             // 5. 변경된 UI 적용
-            // 6. 변경된 UI 적용
             this.UISetImageNumberInfo(); // 이미지 개수 정보 업데이트
-            this.UISetImageList(this.imageListPage);
+            this.UISetImageListDataGridview(this.imageListPage);
 
-            this.JsonDataSave(0); // Json 데이터 저장
-            this.JsonDataSave(1); // Json 데이터 저장
-            this.JsonDataSave(2); // Json 데이터 저장
+            //this.JsonDataSave(0); // Json 데이터 저장
+            //this.JsonDataSave(1); // Json 데이터 저장
+            //this.JsonDataSave(2); // Json 데이터 저장
+
+            // 6. 저장 버튼 활성화
+            this.SaveEnabled(); // 저장 활성화
+            this.SaveButoonChacked(); // 저장 버튼 확인
         }
 
         /// <summary>
@@ -1613,8 +1683,8 @@ namespace ProjectAI
         {
             /* #6
              * 1. 선택된 이미지 정보 가져오기
-             * 2. 선택한 이미지 데이터 Train Status 정보 가져오기 
-             * 3. Train Status 이미지 데이터에 적용 imageListData
+             * 2. 선택한 이미지 데이터 Test Status 정보 가져오기 
+             * 3. Test Status 이미지 데이터에 적용 imageListData
              * 4. 라벨링 정보 수정 적용하기 ActiveProjectInfo
              * 5. 변경된 UI 적용
              * 6. 저장 버튼 활성화
@@ -1637,10 +1707,10 @@ namespace ProjectAI
                 }
             }
 
-            // 2. 선택한 이미지 데이터 Train Status 정보 가져오기 
+            // 2. 선택한 이미지 데이터 Test Status 정보 가져오기 
             int imageTestNumber = Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"]); // imageTestNumber 값 가져오기
 
-            // 3. Train Status 이미지 데이터에 적용 imageListData
+            // 3. Test Status 이미지 데이터에 적용 imageListData
             foreach (string imageName in imageNames)
             {
                 if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName] != null) // 프로젝트 이름 데이터 정보가 있는지 확인
@@ -1698,13 +1768,29 @@ namespace ProjectAI
             this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"] = imageTestNumber; // imageTestNumber 값 적용
 
             // 5. 변경된 UI 적용
-            // 6. 변경된 UI 적용
             this.UISetImageNumberInfo(); // 이미지 개수 정보 업데이트
-            this.UISetImageList(this.imageListPage);
+            this.UISetImageListDataGridview(this.imageListPage);
 
-            this.JsonDataSave(0); // Json 데이터 저장
-            this.JsonDataSave(1); // Json 데이터 저장
-            this.JsonDataSave(2); // Json 데이터 저장
+            //this.JsonDataSave(0); // Json 데이터 저장
+            //this.JsonDataSave(1); // Json 데이터 저장
+            //this.JsonDataSave(2); // Json 데이터 저장
+
+            // 6. 저장 버튼 활성화
+            this.SaveEnabled(); // 저장 활성화
+            this.SaveButoonChacked(); // 저장 버튼 확인
+        }
+
+        public void ImageLabelDel(MetroFramework.Controls.MetroGrid metroGrid)
+        {
+            /* #7
+             * 1. 선택된 이미지 정보 가져오기
+             * 2. 선택한 라벨링 정보 가져오기
+             * 3. 이미지 데이터에 라벨링 정보 적용하기 ImageListData
+             * 4. Class 정보 수정 적용하기 ClassInfo
+             * 5. 라벨링 정보 수정 적용하기 ActiveProjectInfo
+             * 6. 변경된 UI 적용
+             * 7. 저장 버튼 활성화
+             */
         }
 
     }

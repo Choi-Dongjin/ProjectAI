@@ -83,18 +83,49 @@ namespace ProjectAI
             DirectoryInfo directoryInfo = new DirectoryInfo(forderName);
             long size = 0;
             // Add file sizes.
-            FileInfo[] fis = directoryInfo.GetFiles();
-            foreach (FileInfo fi in fis)
+            if (directoryInfo.Exists)
             {
-                size += fi.Length;
-            }
-            // Add subdirectory sizes.
-            DirectoryInfo[] dis = directoryInfo.GetDirectories();
-            foreach (DirectoryInfo di in dis)
-            {
-                size += DirSize(di.FullName);
+                FileInfo[] fis = directoryInfo.GetFiles();
+                foreach (FileInfo fi in fis)
+                {
+                    size += fi.Length;
+                }
+                // Add subdirectory sizes.
+                DirectoryInfo[] dis = directoryInfo.GetDirectories();
+                foreach (DirectoryInfo di in dis)
+                {
+                    size += DirSize(di.FullName);
+                }
             }
             return size;
+        }
+
+        /// <summary>
+        /// 폴더 삭제
+        /// </summary>
+        /// <param name="DeleteDirPath"></param>
+        /// <returns></returns>
+        public static bool DirDelete(string DeleteDirPath)
+        {
+            // Directory 파일 삭제 
+            try
+            {
+                DirectoryInfo directory = new DirectoryInfo(DeleteDirPath);
+                foreach (FileInfo file in directory.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo subDirectory in directory.EnumerateDirectories())
+                {
+                    subDirectory.Delete(true);
+                }
+                directory.Delete();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -156,7 +187,7 @@ namespace ProjectAI
             return resultString;
         }
         /// <summary>
-        /// 기존 이름 비교해서 새로운 이름 만들기
+        /// 기존 이름들과 비교해서 새로운 이름 만들기
         /// </summary>
         /// <param name="names"> 기존 이름 array </param>
         /// <param name="number"> 자릿수 </param>

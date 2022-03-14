@@ -80,7 +80,6 @@ namespace ProjectAI.ProjectManiger
             public static int TrainSet { get { return 2; } }
         }
 
-
         /// <summary>
         /// Main 으로 모니터링 하는 File IO 를 사용하는 Task
         /// </summary>
@@ -230,6 +229,20 @@ namespace ProjectAI.ProjectManiger
                 taskFileIO = Task.Run(() => this.FoleDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName));
             }
         }
-
+        /// <summary>
+        /// 폴더 삭제 Task 등록 함수
+        /// </summary>
+        /// <param name="Path"></param>
+        public void DeleteDictionary(string Path)
+        {
+            if (this.taskFileIO != null)
+            {
+                this.taskFileIO.ContinueWith((tesk) => CustomIOMainger.DirDelete(Path), TaskContinuationOptions.ExecuteSynchronously);
+            }
+            else
+            {
+                this.taskFileIO = Task.Run(() => CustomIOMainger.DirDelete(Path));
+            }
+        }
     }
 }

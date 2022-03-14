@@ -89,12 +89,13 @@
             // 
             this.lblMworkSpaceName.AutoSize = true;
             this.lblMworkSpaceName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMworkSpaceName.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.lblMworkSpaceName.Location = new System.Drawing.Point(3, 38);
             this.lblMworkSpaceName.Margin = new System.Windows.Forms.Padding(3);
             this.lblMworkSpaceName.Name = "lblMworkSpaceName";
             this.lblMworkSpaceName.Size = new System.Drawing.Size(169, 29);
             this.lblMworkSpaceName.TabIndex = 0;
-            this.lblMworkSpaceName.Text = "metroLabel1";
+            this.lblMworkSpaceName.Text = "Work Space Name";
             this.lblMworkSpaceName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtMworkSpaceName

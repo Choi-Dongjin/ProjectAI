@@ -166,4 +166,43 @@
   <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DatabaseInfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DatabaseInfo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DatabaseInfoW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DatabaseInfoW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrainParameter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainParameter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrainParameterW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainParameterW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Workspace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Workspace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WorkspaceW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WorkspaceW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowLeft1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowLeft1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowLeft2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowLeft2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowLeft3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowLeft3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowRight1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowRight1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowRight2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowRight2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logoBX2DeepLearningStudio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logoBX2Deep LearningStudio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logoBX2DeepLearningStudioW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logoBX2Deep LearningStudioW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

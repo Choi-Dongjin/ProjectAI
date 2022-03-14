@@ -228,11 +228,16 @@ namespace ProjectAI.MainForms
 
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+            btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
         }
 
         private void MainFormLoad(object sender, EventArgs e)
         {
             WorkSpaceEarlyDataSet();
+        }
+
+        private void MainFormShown(object sender, EventArgs e)
+        {
             MainFormCallUISeting();
         }
 
@@ -242,9 +247,34 @@ namespace ProjectAI.MainForms
         /// <param styleManager="MetroStyleManager"></param>
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
         {
-            this.styleManagerMainForm.Style = styleManager.Style;
-            this.styleManagerMainForm.Theme = styleManager.Theme;
-            this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+            if (this.formsManiger.m_isDarkMode) // Dark로 변경시 진입
+            {
+                // Metro Style, Theme 변경
+                this.styleManagerMainForm.Style = styleManager.Style;
+                this.styleManagerMainForm.Theme = styleManager.Theme;
+                // 배경 색 변경, Forms에 Metro Forms 적용하지 않은 경우
+                this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+                // Image 색에 맞게 수정
+                this.panelMWorkSpaceString1.BackgroundImage = global::ProjectAI.Properties.Resources.Workspace;
+                this.panelMWorkSpaceString2.BackgroundImage = global::ProjectAI.Properties.Resources.Workspace;
+                this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameter;
+                this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
+                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+            }
+            else // Light로 변경시 진입
+            {
+                // Metro Style, Theme 변경
+                this.styleManagerMainForm.Style = styleManager.Style;
+                this.styleManagerMainForm.Theme = styleManager.Theme;
+                // 배경 색 변경, Forms에 Metro Forms 적용하지 않은 경우
+                this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+                // Image 색에 맞게 수정
+                this.panelMWorkSpaceString1.BackgroundImage = global::ProjectAI.Properties.Resources.WorkspaceW;
+                this.panelMWorkSpaceString2.BackgroundImage = global::ProjectAI.Properties.Resources.WorkspaceW;
+                this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameterW;
+                this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfoW;
+                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
+            }
         }
 
         /// <summary>
@@ -296,7 +326,7 @@ namespace ProjectAI.MainForms
             this.panelTrainOptions.Size = new System.Drawing.Size(500, 100); // panel Train Options 판넬 사이즈 조정
 
             this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기 
-            foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"])
+            foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"]) // 버튼 생성
             {
                 CreateWorkSpaceButton(workSpaceName,
                     WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["string_m_workSpaceSize"].ToString(),
@@ -558,8 +588,8 @@ namespace ProjectAI.MainForms
             }
 
             ProjectContral projectMainger = new ProjectContral(activeWorkSpaceName);
-            WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger); // 활성화된 Project 추가
-            WorkSpaceEarlyData.m_workSpaceButtons[workSpaceIndex].WorkSpaceStatus = Color.Lime; // 활성화된 버튼 상태 색색상 적용
+            WorkSpaceData.m_projectMaingersDictionary.Add(activeWorkSpaceName, projectMainger); // 활성화된 워크스페이스 추가
+            WorkSpaceEarlyData.m_workSpaceButtons[activeWorkSpaceName].WorkSpaceStatus = Color.Lime; // 활성화된 버튼 상태 색색상 적용
 
             WorkSpaceData.m_activeProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeWorkSpaceName]; // 활성화된 프로젝트 적용
             FormsManiger.m_mainFormsUIResetHandler?.Invoke();  // 이전 UI 초기화
@@ -577,11 +607,20 @@ namespace ProjectAI.MainForms
         private void BtnMTrainOptionsOpenClick(object sender, EventArgs e)
         {
             panelTrainOptions.Visible = panelTrainOptions.Visible == true ? false : true;
+            if (panelTrainOptions.Visible)
+                btnMTrainOptionsOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
+            else
+                btnMTrainOptionsOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
+            
         }
 
         private void BtnMDataReviewOpenClick(object sender, EventArgs e)
         {
             tableLayoutDataReview.Visible = tableLayoutDataReview.Visible == true ? false : true;
+            if (tableLayoutDataReview.Visible)
+                btnMDataReviewOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
+            else
+                btnMDataReviewOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
         }
 
         private void BtnMWorkSpaseOpenClick(object sender, EventArgs e)
@@ -618,9 +657,93 @@ namespace ProjectAI.MainForms
 
         }
 
-        private void TsmProjectWorSpaceDeleteProjectClick(object sender, EventArgs e)
+        private void TsmProjectAllWorkSpaceSaveClick(object sender, EventArgs e)
         {
+            foreach (string workSpaceName in WorkSpaceData.m_projectMaingersDictionary.Keys)
+            {
+                if (WorkSpaceData.m_projectMaingersDictionary[workSpaceName].saveWorkSpace)
+                {
+                    jsonDataManiger.PushJsonObject(WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_pathActiveProjectInfo, WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_activeProjectInfoJObject);
+                    jsonDataManiger.PushJsonObject(WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_pathActiveProjectDataImageList, WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_activeProjectImageListJObject);
+                    jsonDataManiger.PushJsonObject(WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_pathActiveProjectDataImageListData, WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_activeProjectDataImageListDataJObject);
+                    jsonDataManiger.PushJsonObject(WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_pathActiveProjectCalssInfo, WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_activeProjectCalssInfoJObject);
+                    jsonDataManiger.PushJsonObject(WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_pathActiveProjectModelInfo, WorkSpaceData.m_projectMaingersDictionary[workSpaceName].m_activeProjectModelInfoJObject);
 
+                    WorkSpaceData.m_projectMaingersDictionary[workSpaceName].saveWorkSpace = false;
+                }
+            }
+            WorkSpaceData.m_workSpaceSave = false;
+            this.tsmProjectWorkSpaceSave.Enabled = false;
+            this.tsmProjectAllWorkSpaceSave.Enabled = false;
+        }
+
+        private void TsmProjectWorSpaceSaveProjectClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+            {
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject);
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectDataImageList, WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject);
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectDataImageListData, WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject);
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject);
+                jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModelInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject);
+
+                WorkSpaceData.m_activeProjectMainger.saveWorkSpace = false;
+                this.tsmProjectWorkSpaceSave.Enabled = false;
+            }
+        }
+
+        private void TsmDeleteWorkSpaceClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
+        }
+
+        private void TsmProjectDeleteClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
+        }
+
+        private void DeletWorkSpace(string deleteWorkSpaceName)
+        {
+            if (deleteWorkSpaceName == WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()) // 실행중인 Work Space 와 같은 Work Space 삭제하는지 확인
+            {
+                // 적용중인 워크 스페이스 UI, 값 초기화
+                // WorkSpaceEarlyDataSet(); // 초기화
+                FormsManiger.m_mainFormsUIResetHandler?.Invoke();  // 이전 UI 초기화 -> 초기화 안하면 종속성으로 인해서 오류 발생
+            }
+            // UI Set
+            MainForms.WorkSpaceButton deleteWorkSpaceButton = WorkSpaceEarlyData.m_workSpaceButtons[deleteWorkSpaceName]; // 삭제할 WorkSpaceButton 가져오기
+            this.panelWorkSpaseButton.Controls.Remove(deleteWorkSpaceButton); //panelWorkSpaseButton 판넬에서 해당 WorkSpaceButton 삭제
+
+            // 등록된 WorkSpace 데이터 삭제
+            deleteWorkSpaceButton = null; // deleteWorkSpaceButton 초기화
+            WorkSpaceEarlyData.m_workSpaceButtons.Remove(deleteWorkSpaceName); // 해당 WorkSpaceButton 삭제
+            WorkSpaceData.m_projectMaingersDictionary.Remove(deleteWorkSpaceName); // 해당 WorkSpace projectMaingers 삭제
+
+            // 파일 삭제 등록
+            string deleteFolderPath = WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][deleteWorkSpaceName]["string_m_workSpacePath"].ToString(); // 삭제할 폴더 Path 불러오기
+            CustomIOManigerFoem.DeleteDictionary(deleteFolderPath); // 해당 폴더 삭제
+
+            // WorkSpace JObject 데이터 수정
+
+            int deleteWorkSpacIndex = Convert.ToInt32(WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][deleteWorkSpaceName]["int_m_workSpacIndex"]); // 삭제 하는 데이터 int_m_workSpacIndex 가져오기
+            JObject workSpaceNameJToken = (JObject)WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"];
+            workSpaceNameJToken.Remove(deleteWorkSpaceName); // 해당 WorkSpace Data 삭제
+
+            WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"][deleteWorkSpacIndex].Remove(); // workSpaceNameList 데이터 삭제
+
+            foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"]) // Index 다시 맞추기
+            {
+                int workSpacIndex = Convert.ToInt32(WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["int_m_workSpacIndex"]); // 비교하는 데이터 int_m_workSpacIndex
+
+                if (workSpacIndex > deleteWorkSpacIndex) // 삭제된 데이터보다 Index 가 크면 하나씩 줄이기
+                {
+                    WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["int_m_workSpacIndex"] = Convert.ToInt32(WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][workSpaceName]["int_m_workSpacIndex"]) - 1;
+                }
+            }
+            jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장
         }
 
         /// <summary>
@@ -687,7 +810,7 @@ namespace ProjectAI.MainForms
             newWorkSpaceButton.WorkSpaceVersion = workSpaceVersion;
             newWorkSpaceButton.WorkSpaceButtonIndex = workSpaceIndex;
 
-            WorkSpaceEarlyData.m_workSpaceButtons.Add(newWorkSpaceButton);
+            WorkSpaceEarlyData.m_workSpaceButtons.Add(workSpaceName, newWorkSpaceButton);
             newWorkSpaceButton.BtnWorkSpaceOpenClickEvnetHandler += new System.EventHandler(this.WorkSpaceLoadButtonClick);
             //Console.WriteLine(workSpaceIndex);
         }
@@ -753,13 +876,13 @@ namespace ProjectAI.MainForms
             this.Close();
         }
 
-        private void BtnMimagePageNextClick(object sender, EventArgs e)
+        private void BtnimagePageNextClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext().ToString();
         }
 
-        private void BtnMimagePageReverseClick(object sender, EventArgs e)
+        private void BtnimagePageReverseClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse().ToString();
@@ -807,7 +930,7 @@ namespace ProjectAI.MainForms
                 WorkSpaceData.m_activeProjectMainger.ImageAdding();
         }
 
-        private void imageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
+        private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
 
         }
@@ -841,7 +964,11 @@ namespace ProjectAI.MainForms
 
         private void ImageSetTestToolStripMenuItem1Click(object sender, EventArgs e)
         {
-
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageTestSet(this.gridImageList);
+                }
         }
     }
 }

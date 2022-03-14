@@ -295,6 +295,20 @@
     <None Include="Resources\segmentation150.png" />
     <None Include="Resources\minus.png" />
     <None Include="Resources\plus.png" />
+    <None Include="Resources\DatabaseInfo.png" />
+    <None Include="Resources\DatabaseInfoW.png" />
+    <None Include="Resources\TrainParameter.png" />
+    <None Include="Resources\TrainParameterW.png" />
+    <None Include="Resources\Workspace.png" />
+    <None Include="Resources\WorkspaceW.png" />
+    <None Include="Resources\arrowRight1.png" />
+    <None Include="Resources\arrowRight2.png" />
+    <None Include="Resources\arrowLeft1.png" />
+    <None Include="Resources\arrowLeft2.png" />
+    <None Include="Resources\arrowRight100.png" />
+    <None Include="Resources\arrowLeft3.png" />
+    <None Include="Resources\logoBX2Deep LearningStudio.png" />
+    <None Include="Resources\logoBX2Deep LearningStudioW.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

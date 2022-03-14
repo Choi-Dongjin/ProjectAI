@@ -109,7 +109,7 @@ namespace ProjectAI.MainForms
             this.classificationUserContral.Margin = new System.Windows.Forms.Padding(0);
             this.classificationUserContral.Name = "classificationContral";
             this.classificationUserContral.Size = new System.Drawing.Size(845, 260);
-            this.classificationUserContral.TabIndex = 2;
+            //this.classificationUserContral.TabIndex = 2;
 
             // 이벤트 헨들러 설정
             this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
@@ -121,6 +121,71 @@ namespace ProjectAI.MainForms
             #endregion Classification 컨트롤 설정 완료
         }
 
+
+        private void SegmentationUserContralSetting()
+        {
+            this.selectProject = "Segmentation"; // Classification 진입
+            this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+
+            this.metroPanel1.Controls.Clear(); // Controls 제거
+
+            //===================================================== Segmentation User Contral 생성시 해당 컨트롤로 수정 =============================================================
+            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
+            this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+
+            #region Classification 컨트롤 설정
+
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+
+            this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
+            this.classificationUserContral.Margin = new System.Windows.Forms.Padding(0);
+            this.classificationUserContral.Name = "SegmentationContral";
+            this.classificationUserContral.Size = new System.Drawing.Size(845, 260);
+            //this.classificationUserContral.TabIndex = 2;
+
+            // 이벤트 헨들러 설정
+            this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
+            this.classificationUserContral.TxtSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageTextboxClick);
+
+            this.classificationUserContral.BtnMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageButtonClick);
+            this.classificationUserContral.TxtMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageTextboxClick);
+
+            #endregion Classification 컨트롤 설정 완료
+
+        }
+
+        private void ObjectDetectionUserContralSetting()
+        {
+            this.selectProject = "ObjectDetection"; // Classification 진입
+            this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+
+            this.metroPanel1.Controls.Clear(); // Controls 제거
+
+            //===================================================== ObjectDetection User Contral 생성시 해당 컨트롤로 수정 =============================================================
+            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
+            this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+
+            #region Classification 컨트롤 설정
+
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+
+            this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
+            this.classificationUserContral.Margin = new System.Windows.Forms.Padding(0);
+            this.classificationUserContral.Name = "ObjectDetectionContral";
+            this.classificationUserContral.Size = new System.Drawing.Size(845, 260);
+            //this.classificationUserContral.TabIndex = 2;
+
+            // 이벤트 헨들러 설정
+            this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
+            this.classificationUserContral.TxtSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageTextboxClick);
+
+            this.classificationUserContral.BtnMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageButtonClick);
+            this.classificationUserContral.TxtMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageTextboxClick);
+
+            #endregion Classification 컨트롤 설정 완료
+        }
 
         /// <summary>
         /// Classification 싱글 이미지 타입 버튼 클릭시
@@ -167,6 +232,16 @@ namespace ProjectAI.MainForms
         private void BtnMClassificationClick(object sender, EventArgs e)
         {
             this.ClassificationUserContralSetting(); // Classification User Contral 셋업 
+        }
+
+        private void BtnMObjectDetectionClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnMSegmentationClick(object sender, EventArgs e)
+        {
+
         }
         #endregion  Classification Tesk 설정
 
@@ -231,16 +306,6 @@ namespace ProjectAI.MainForms
         private void BtnMCancelClick(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnMObjectDetection_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnMSegmentation_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

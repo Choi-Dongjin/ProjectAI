@@ -77,7 +77,7 @@
             this.btnMSegmentation.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;
             this.btnMSegmentation.UseSelectable = true;
             this.btnMSegmentation.UseTileImage = true;
-            this.btnMSegmentation.Click += new System.EventHandler(this.btnMSegmentation_Click);
+            this.btnMSegmentation.Click += new System.EventHandler(this.BtnMSegmentationClick);
             // 
             // btnMObjectDetection
             // 
@@ -94,7 +94,7 @@
             this.btnMObjectDetection.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;
             this.btnMObjectDetection.UseSelectable = true;
             this.btnMObjectDetection.UseTileImage = true;
-            this.btnMObjectDetection.Click += new System.EventHandler(this.btnMObjectDetection_Click);
+            this.btnMObjectDetection.Click += new System.EventHandler(this.BtnMObjectDetectionClick);
             // 
             // btnMnull
             // 

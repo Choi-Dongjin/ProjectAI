@@ -309,7 +309,7 @@ namespace ProjectAI
 
         private void ButtonStyleChangeClick(object sender, EventArgs e)
         {
-            if (formsManiger.m_isDarkMode)
+            if (formsManiger.m_isDarkMode) // Dark로 변경시 진입
             {
                 formsManiger.m_isDarkMode = false;
                 formsManiger.m_StyleManager.Style = MetroColorStyle.Silver;
@@ -317,7 +317,7 @@ namespace ProjectAI
                 this.BackColor = formsManiger.GetThemeRGBClor("Dark");
 
             }
-            else
+            else // Light로 변경시 진입
             {
                 formsManiger.m_isDarkMode = true;
                 formsManiger.m_StyleManager.Style = MetroColorStyle.Lime;
