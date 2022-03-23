@@ -180,6 +180,7 @@
             this.Name = "StartForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Load += new System.EventHandler(this.StartFormLoad);
+            this.Shown += new System.EventHandler(this.StartFormShown);
             this.tableLayoutProjectAIMain.ResumeLayout(false);
             this.tableLayoutMainIcons.ResumeLayout(false);
             this.tableLayoutMainIconPath.ResumeLayout(false);

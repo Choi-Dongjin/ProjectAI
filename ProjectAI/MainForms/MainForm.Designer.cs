@@ -59,6 +59,7 @@
             this.imageDeleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.imageLabelInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageSetInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutImageDataManiger = new System.Windows.Forms.TableLayoutPanel();
             this.btnimagePageReverse = new System.Windows.Forms.Button();
             this.btnimagePageNext = new System.Windows.Forms.Button();
@@ -70,6 +71,7 @@
             this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
             this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.classViewer1 = new ProjectAI.MainForms.UserContral.Monitoring.ClassViewer();
             this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
@@ -101,7 +103,7 @@
             this.btnMWorkSpaseClose = new MetroFramework.Controls.MetroButton();
             this.panelWorkSpaseButtonIcon = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.metroButton4 = new MetroFramework.Controls.MetroButton();
+            this.btnMDeleteWorkSpace = new MetroFramework.Controls.MetroButton();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.btnMnewWorkSpace = new MetroFramework.Controls.MetroButton();
             this.panelstatus = new System.Windows.Forms.Panel();
@@ -144,6 +146,7 @@
             this.cmsMImageListToolKit.SuspendLayout();
             this.tableLayoutImageDataManiger.SuspendLayout();
             this.tableLayoutDataReview.SuspendLayout();
+            this.panelDataReview.SuspendLayout();
             this.panelMTrainOptions.SuspendLayout();
             this.panelMDataReviewIcon.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -257,8 +260,8 @@
             // 
             this.splitContainerImageAndImageList.Panel2.Controls.Add(this.panelImageDataView);
             this.splitContainerImageAndImageList.Panel2.Controls.Add(this.tableLayoutImageDataManiger);
-            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(525, 580);
-            this.splitContainerImageAndImageList.SplitterDistance = 331;
+            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(485, 580);
+            this.splitContainerImageAndImageList.SplitterDistance = 235;
             this.splitContainerImageAndImageList.TabIndex = 0;
             // 
             // splitContainer1
@@ -276,7 +279,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(331, 580);
+            this.splitContainer1.Size = new System.Drawing.Size(235, 580);
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -287,7 +290,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(331, 580);
+            this.pictureBox1.Size = new System.Drawing.Size(235, 580);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -311,14 +314,13 @@
             this.panelImageDataView.Location = new System.Drawing.Point(0, 35);
             this.panelImageDataView.Margin = new System.Windows.Forms.Padding(0);
             this.panelImageDataView.Name = "panelImageDataView";
-            this.panelImageDataView.Size = new System.Drawing.Size(190, 545);
+            this.panelImageDataView.Size = new System.Drawing.Size(246, 545);
             this.panelImageDataView.TabIndex = 0;
             // 
             // gridImageList
             // 
             this.gridImageList.AllowUserToResizeRows = false;
-            this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridImageList.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gridImageList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridImageList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -361,7 +363,7 @@
             this.gridImageList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gridImageList.RowTemplate.Height = 23;
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridImageList.Size = new System.Drawing.Size(190, 545);
+            this.gridImageList.Size = new System.Drawing.Size(246, 545);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
             this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -385,9 +387,10 @@
             this.toolStripSeparator9,
             this.imageDeleteToolStripMenuItem1,
             this.toolStripSeparator10,
-            this.imageLabelInfoResetToolStripMenuItem});
+            this.imageLabelInfoResetToolStripMenuItem,
+            this.imageSetInfoResetToolStripMenuItem});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(197, 188);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(197, 210);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
@@ -465,6 +468,13 @@
             this.imageLabelInfoResetToolStripMenuItem.Text = "Image Label Info Reset";
             this.imageLabelInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageLabelInfoResetToolStripMenuItemClick);
             // 
+            // imageSetInfoResetToolStripMenuItem
+            // 
+            this.imageSetInfoResetToolStripMenuItem.Name = "imageSetInfoResetToolStripMenuItem";
+            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.imageSetInfoResetToolStripMenuItem.Text = "Image Set Info Reset";
+            this.imageSetInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageSetInfoResetToolStripMenuItemClick);
+            // 
             // tableLayoutImageDataManiger
             // 
             this.tableLayoutImageDataManiger.ColumnCount = 7;
@@ -487,7 +497,7 @@
             this.tableLayoutImageDataManiger.RowCount = 1;
             this.tableLayoutImageDataManiger.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutImageDataManiger.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutImageDataManiger.Size = new System.Drawing.Size(190, 35);
+            this.tableLayoutImageDataManiger.Size = new System.Drawing.Size(246, 35);
             this.tableLayoutImageDataManiger.TabIndex = 0;
             // 
             // btnimagePageReverse
@@ -497,7 +507,7 @@
             this.btnimagePageReverse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnimagePageReverse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnimagePageReverse.FlatAppearance.BorderSize = 0;
-            this.btnimagePageReverse.Location = new System.Drawing.Point(30, 0);
+            this.btnimagePageReverse.Location = new System.Drawing.Point(58, 0);
             this.btnimagePageReverse.Margin = new System.Windows.Forms.Padding(0);
             this.btnimagePageReverse.Name = "btnimagePageReverse";
             this.btnimagePageReverse.Size = new System.Drawing.Size(35, 35);
@@ -512,7 +522,7 @@
             this.btnimagePageNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnimagePageNext.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnimagePageNext.FlatAppearance.BorderSize = 0;
-            this.btnimagePageNext.Location = new System.Drawing.Point(125, 0);
+            this.btnimagePageNext.Location = new System.Drawing.Point(153, 0);
             this.btnimagePageNext.Margin = new System.Windows.Forms.Padding(0);
             this.btnimagePageNext.Name = "btnimagePageNext";
             this.btnimagePageNext.Size = new System.Drawing.Size(35, 35);
@@ -525,7 +535,7 @@
             this.lblImageListpageTotal.AutoSize = true;
             this.lblImageListpageTotal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblImageListpageTotal.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
-            this.lblImageListpageTotal.Location = new System.Drawing.Point(100, 0);
+            this.lblImageListpageTotal.Location = new System.Drawing.Point(128, 0);
             this.lblImageListpageTotal.Margin = new System.Windows.Forms.Padding(0);
             this.lblImageListpageTotal.Name = "lblImageListpageTotal";
             this.lblImageListpageTotal.Size = new System.Drawing.Size(25, 35);
@@ -538,7 +548,7 @@
             this.lblImageListpageMid.AutoSize = true;
             this.lblImageListpageMid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblImageListpageMid.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblImageListpageMid.Location = new System.Drawing.Point(90, 0);
+            this.lblImageListpageMid.Location = new System.Drawing.Point(118, 0);
             this.lblImageListpageMid.Margin = new System.Windows.Forms.Padding(0);
             this.lblImageListpageMid.Name = "lblImageListpageMid";
             this.lblImageListpageMid.Size = new System.Drawing.Size(10, 35);
@@ -552,7 +562,7 @@
             this.lblImageListpage.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblImageListpage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblImageListpage.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
-            this.lblImageListpage.Location = new System.Drawing.Point(65, 0);
+            this.lblImageListpage.Location = new System.Drawing.Point(93, 0);
             this.lblImageListpage.Margin = new System.Windows.Forms.Padding(0);
             this.lblImageListpage.Name = "lblImageListpage";
             this.lblImageListpage.Size = new System.Drawing.Size(25, 35);
@@ -573,13 +583,13 @@
             this.tableLayoutDataReview.Controls.Add(this.panelDataReview, 0, 1);
             this.tableLayoutDataReview.Controls.Add(this.iclTotal, 0, 0);
             this.tableLayoutDataReview.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutDataReview.Location = new System.Drawing.Point(724, 0);
+            this.tableLayoutDataReview.Location = new System.Drawing.Point(684, 0);
             this.tableLayoutDataReview.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutDataReview.Name = "tableLayoutDataReview";
             this.tableLayoutDataReview.RowCount = 2;
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutDataReview.Size = new System.Drawing.Size(260, 580);
+            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 580);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
             // iclTest
@@ -587,10 +597,10 @@
             this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iclTest.ImageCount = "0";
             this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(195, 0);
+            this.iclTest.Location = new System.Drawing.Point(225, 0);
             this.iclTest.Margin = new System.Windows.Forms.Padding(0);
             this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(65, 75);
+            this.iclTest.Size = new System.Drawing.Size(75, 75);
             this.iclTest.TabIndex = 14;
             // 
             // iclTrain
@@ -598,10 +608,10 @@
             this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iclTrain.ImageCount = "0";
             this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(130, 0);
+            this.iclTrain.Location = new System.Drawing.Point(150, 0);
             this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
             this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(65, 75);
+            this.iclTrain.Size = new System.Drawing.Size(75, 75);
             this.iclTrain.TabIndex = 13;
             // 
             // iclLabeled
@@ -609,21 +619,31 @@
             this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iclLabeled.ImageCount = "0";
             this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(65, 0);
+            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
             this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
             this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(65, 75);
+            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
             this.iclLabeled.TabIndex = 12;
             // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
+            this.panelDataReview.Controls.Add(this.classViewer1);
             this.panelDataReview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelDataReview.Location = new System.Drawing.Point(0, 75);
             this.panelDataReview.Margin = new System.Windows.Forms.Padding(0);
             this.panelDataReview.Name = "panelDataReview";
-            this.panelDataReview.Size = new System.Drawing.Size(260, 505);
+            this.panelDataReview.Size = new System.Drawing.Size(300, 505);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // classViewer1
+            // 
+            this.classViewer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classViewer1.Location = new System.Drawing.Point(0, 0);
+            this.classViewer1.Margin = new System.Windows.Forms.Padding(0);
+            this.classViewer1.Name = "classViewer1";
+            this.classViewer1.Size = new System.Drawing.Size(300, 193);
+            this.classViewer1.TabIndex = 0;
             // 
             // iclTotal
             // 
@@ -633,7 +653,7 @@
             this.iclTotal.Location = new System.Drawing.Point(0, 0);
             this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
             this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(65, 75);
+            this.iclTotal.Size = new System.Drawing.Size(75, 75);
             this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
@@ -958,7 +978,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.Controls.Add(this.metroButton4, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnMDeleteWorkSpace, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.metroPanel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnMnewWorkSpace, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -969,16 +989,17 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(241, 32);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // metroButton4
+            // btnMDeleteWorkSpace
             // 
-            this.metroButton4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("metroButton4.BackgroundImage")));
-            this.metroButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.metroButton4.FontWeight = MetroFramework.MetroButtonWeight.Light;
-            this.metroButton4.Location = new System.Drawing.Point(180, 3);
-            this.metroButton4.Name = "metroButton4";
-            this.metroButton4.Size = new System.Drawing.Size(26, 26);
-            this.metroButton4.TabIndex = 1;
-            this.metroButton4.UseSelectable = true;
+            this.btnMDeleteWorkSpace.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMDeleteWorkSpace.BackgroundImage")));
+            this.btnMDeleteWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnMDeleteWorkSpace.FontWeight = MetroFramework.MetroButtonWeight.Light;
+            this.btnMDeleteWorkSpace.Location = new System.Drawing.Point(180, 3);
+            this.btnMDeleteWorkSpace.Name = "btnMDeleteWorkSpace";
+            this.btnMDeleteWorkSpace.Size = new System.Drawing.Size(26, 26);
+            this.btnMDeleteWorkSpace.TabIndex = 1;
+            this.btnMDeleteWorkSpace.UseSelectable = true;
+            this.btnMDeleteWorkSpace.Click += new System.EventHandler(this.BtnMDeleteWorkSpaceClick);
             // 
             // metroPanel1
             // 
@@ -1244,6 +1265,7 @@
             this.tableLayoutImageDataManiger.ResumeLayout(false);
             this.tableLayoutImageDataManiger.PerformLayout();
             this.tableLayoutDataReview.ResumeLayout(false);
+            this.panelDataReview.ResumeLayout(false);
             this.panelMTrainOptions.ResumeLayout(false);
             this.panelMDataReviewIcon.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -1286,7 +1308,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceProgramExit;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceTestButton;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutDataReview;
         private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
         private System.Windows.Forms.Label lblImageListpageMid;
         private System.Windows.Forms.ToolStripMenuItem imageAddToolStripMenuItem;
@@ -1312,13 +1333,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem imageDeleteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        public ImageCountLabel iclTest;
-        public ImageCountLabel iclTrain;
-        public ImageCountLabel iclLabeled;
-        public ImageCountLabel iclTotal;
         public System.Windows.Forms.Label lblImageListpageTotal;
         public System.Windows.Forms.Label lblImageListpage;
-        public System.Windows.Forms.Panel panelDataReview;
         public System.Windows.Forms.Panel panelImageDataView;
         public MetroFramework.Controls.MetroGrid gridImageList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
@@ -1352,7 +1368,15 @@
         private System.Windows.Forms.ToolStripMenuItem deleteWorkSpaceToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroButton metroButton4;
+        private MetroFramework.Controls.MetroButton btnMDeleteWorkSpace;
         private System.Windows.Forms.ToolStripMenuItem imageLabelInfoResetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageSetInfoResetToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutDataReview;
+        public ImageCountLabel iclTest;
+        public ImageCountLabel iclTrain;
+        public ImageCountLabel iclLabeled;
+        public System.Windows.Forms.Panel panelDataReview;
+        public ImageCountLabel iclTotal;
+        private UserContral.Monitoring.ClassViewer classViewer1;
     }
 }

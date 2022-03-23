@@ -16,6 +16,8 @@ using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
 
+using System.Management;
+
 namespace ProjectAI
 {
     public partial class StartForm : Form
@@ -83,6 +85,12 @@ namespace ProjectAI
             FormsManiger.m_formStyleManagerHandler(formsManiger.m_StyleManager);
         }
 
+        private void StartFormShown(object sender, EventArgs e)
+        {
+            HardwareInformation.GetHardwareInformation();
+        }
+
+
         /// <summary>
         /// StartForm 시작전 프로그램 기본 파일, 폴더, 설정 변수 확인, 적용 생성
         /// </summary>
@@ -95,7 +103,7 @@ namespace ProjectAI
             Console.WriteLine($"ProgramVariables.m_programlog: {ProgramVariables.m_programlogPath}");
             Console.WriteLine($"ProgramVariables.m_programgiulogPath: {ProgramVariables.m_programgiulogPath}");
             Console.WriteLine($"ProgramVariables.m_programWokrSpace: {ProgramVariables.m_programWokrSpacePath}");
-            Console.WriteLine($"ProgramVariables.m_programWokrSpace_Defalt: {ProgramVariables.ProgramWokrSpacePath_Defalt}");
+            Console.WriteLine($"ProgramVariables.m_programWokrSpace_Defalt: {ProgramVariables.ProgramWokrSpacePathDefalt}");
             #endregion
 
             CustomIOMainger.DirChackExistsAndCreate(ProgramVariables.m_programSpacePath); // 프로그램 작업 폴더 유무 확인 있으면 true, 없으면 폴더를 만들고 false 반환
@@ -163,12 +171,12 @@ namespace ProjectAI
         {
             object programStartPathOptions = new
             {
-                string_m_programSpace = ProgramVariables.ProgramSpacePath_Defalt,
-                string_m_programOptionsSpace = ProgramVariables.ProgramOptionsSpacePath_Defalt,
-                string_m_programOptionsFileJsonPath = ProgramVariables.ProgramOptionsFileJsonPath_Defalt,
-                string_m_programlog = ProgramVariables.ProgramlogPath_Defalt,
-                string_m_programgiulog = ProgramVariables.ProgramgiulogPath_Defalt,
-                string_m_programWokrSpace = ProgramVariables.ProgramWokrSpacePath_Defalt
+                string_m_programSpace = ProgramVariables.ProgramSpacePathDefalt,
+                string_m_programOptionsSpace = ProgramVariables.ProgramOptionsSpacePathDefalt,
+                string_m_programOptionsFileJsonPath = ProgramVariables.ProgramOptionsFileJsonPathDefalt,
+                string_m_programlog = ProgramVariables.ProgramlogPathDefalt,
+                string_m_programgiulog = ProgramVariables.ProgramgiulogPathDefalt,
+                string_m_programWokrSpace = ProgramVariables.ProgramWokrSpacePathDefalt
             };
 
             JObject programStartPathOptionsJson = JObject.FromObject(programStartPathOptions);
@@ -225,17 +233,17 @@ namespace ProjectAI
                     JObject programStartPathOptions = (JObject)programOptionsJObject["programStartPathOptions"]; //  programEntryPointOptions 객체 있음을 확인 
 
                     if (programStartPathOptions["string_m_programSpace"] == null) //  string_m_programSpace 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programSpace", ProgramVariables.ProgramSpacePath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programSpace", ProgramVariables.ProgramSpacePathDefalt));
                     if (programStartPathOptions["string_m_programOptionsSpace"] == null) //  string_m_programOptionsSpace 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programOptionsSpace", ProgramVariables.ProgramOptionsSpacePath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programOptionsSpace", ProgramVariables.ProgramOptionsSpacePathDefalt));
                     if (programStartPathOptions["string_m_programOptionsFileJsonPath"] == null) //  string_m_programOptionsSpace 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programOptionsFileJsonPath", ProgramVariables.ProgramOptionsFileJsonPath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programOptionsFileJsonPath", ProgramVariables.ProgramOptionsFileJsonPathDefalt));
                     if (programStartPathOptions["string_m_programlog"] == null) //  string_m_programlog 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programlog", ProgramVariables.ProgramlogPath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programlog", ProgramVariables.ProgramlogPathDefalt));
                     if (programStartPathOptions["string_m_programgiulog"] == null) //  string_m_programgiulog 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programgiulog", ProgramVariables.ProgramgiulogPath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programgiulog", ProgramVariables.ProgramgiulogPathDefalt));
                     if (programStartPathOptions["string_m_programWokrSpace"] == null) //  string_m_programWokrSpace 객체 없음을 확인 
-                        programStartPathOptions.Add(new JProperty("string_m_programWokrSpace", ProgramVariables.ProgramWokrSpacePath_Defalt));
+                        programStartPathOptions.Add(new JProperty("string_m_programWokrSpace", ProgramVariables.ProgramWokrSpacePathDefalt));
                 }
                 else
                 {

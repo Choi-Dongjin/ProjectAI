@@ -42,6 +42,7 @@ namespace ProjectAI
 
                 // 데이터 처리
                 ProgramEntryPointVariables.m_language = programEntryPointOptionsJson["string_m_language"].ToString();
+                ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptionsJson["string_m_classificationPath"].ToString();
             }
             else
             {
@@ -79,7 +80,8 @@ namespace ProjectAI
 
             object programEntryPointOptions = new
             {
-                string_m_language = CultureInfo.CurrentCulture.Name // 시스템 기본 언어 설정 가져오기
+                string_m_language = CultureInfo.CurrentCulture.Name, // 시스템 기본 언어 설정 가져오기
+                string_m_classificationPath = ProgramEntryPointVariables.ProhramClassificationCorePathDefalt
             };
 
             JObject programEntryPointOptionsJson = JObject.FromObject(programEntryPointOptions);
@@ -101,9 +103,9 @@ namespace ProjectAI
 
             // 값 반영
             programEntryPointOptions["string_m_language"] = ProgramEntryPointVariables.m_language;
+            programEntryPointOptions["string_m_classificationPath"] = ProgramEntryPointVariables.m_prohramClassificationCorePath;
 
             // 옵션 추가시 작성
-
             jsonDataManiger.PushJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, programEntryPoint); // Json 파일 저장
         }
 
@@ -116,7 +118,7 @@ namespace ProjectAI
         {
             if (programEntryPoint != null) // jsonDataManiger에서 GetJsonObject을 타고 넘어온 programEntryPoint 객체가 데이터 읽기에 실패 하였는지 확인
             {
-                Console.WriteLine(programEntryPoint.ToString());
+                //Console.WriteLine(programEntryPoint.ToString());
                 #region programEntryPointOptions 관리
                 if (programEntryPoint["programEntryPointOptions"] != null) // programEntryPointOptions 객체 확인
                 {
@@ -130,15 +132,24 @@ namespace ProjectAI
                         string string_m_language = programEntryPointOptions["string_m_language"].ToString();
                         bool chack = (string_m_language == "ko-KR" || string_m_language == "en-US");
                         if (!chack) //  string_m_language 객체가 선택된 범위내에 값인지 확인
+                        {
                             programEntryPointOptions["string_m_language"] = CultureInfo.CurrentCulture.Name; //  string_m_language 객체가 선택된 범위내에 값이 아니라면 값을 기본값으로 초기화
+                            string_m_language = CultureInfo.CurrentCulture.Name;
+                        }
+                    }
+
+                    if (programEntryPointOptions["string_m_classificationPath"] == null)
+                        programEntryPointOptions.Add(new JProperty("string_m_classificationPath", $"{ProgramEntryPointVariables.ProhramClassificationCorePathDefalt}"));
+                    else
+                    {
+                        ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptions["string_m_classificationPath"].ToString();
                     }
                 }
                 else // programEntryPointOptions 객체가 없음을 확인 
                     programEntryPoint = ProgramEntryPointOptionsDefaltSetting(); // 데이터 초기값으로 생성.
-
                 #endregion
 
-                Console.WriteLine(programEntryPoint.ToString());
+                //Console.WriteLine(programEntryPoint.ToString());
                 // 데이터 무결성 검사 완료
             }
             else

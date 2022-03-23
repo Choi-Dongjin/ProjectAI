@@ -35,8 +35,8 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.components = new System.ComponentModel.Container();
             this.lblMtitle = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
@@ -70,6 +70,10 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.tableLayoutPanel1.Size = new System.Drawing.Size(160, 184);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = this;
+            // 
             // metroPanel1
             // 
             this.metroPanel1.BackColor = System.Drawing.SystemColors.Control;
@@ -87,10 +91,6 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
-            // 
-            // metroStyleManager1
-            // 
-            this.metroStyleManager1.Owner = this;
             // 
             // ImputDataTypeButton
             // 
@@ -111,7 +111,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
 
         private MetroFramework.Controls.MetroLabel lblMtitle;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroStyleManager metroStyleManager1;
+        private MetroFramework.Controls.MetroPanel metroPanel1;
     }
 }

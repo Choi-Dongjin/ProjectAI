@@ -44,13 +44,18 @@ namespace ProjectAI.MainForms
         /// Json File 관리 Class
         /// </summary>
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
-
         /// <summary>
         /// Forms 관리 Class
         /// </summary>
         private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
-
+        /// <summary>
+        /// CustomIOManigerFoem 관리 Class
+        /// </summary>
         private ProjectManiger.CustomIOManigerFoem CustomIOManigerFoem = ProjectManiger.CustomIOManigerFoem.GetInstance();
+        /// <summary>
+        /// TrainForm 호출
+        /// </summary>
+        private ProjectAI.TrainForms.TrainForm TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
 
 
         /// <summary>
@@ -59,7 +64,6 @@ namespace ProjectAI.MainForms
         /// <param name="textBox"> </param>
         /// <param name="text"></param>
         private delegate void SafeCallLabelText(System.Object textBoxObject, string text);
-
         /// <summary>
         /// Label TextBox 안전 접근 쓰기 함수
         /// </summary>
@@ -102,7 +106,6 @@ namespace ProjectAI.MainForms
         /// <param name="maximum"> 최대값 </param>
         /// <param name="value"> 현재값 </param>
         private delegate void SafeCallProgressBar(System.Object progressBarObject, int maximum, int value);
-
         /// <summary>
         /// ProgressBar 안전 접근 함수
         /// </summary>
@@ -153,6 +156,7 @@ namespace ProjectAI.MainForms
         /// <param name="panelObject"> 확인할 Panel </param>
         /// <param name="visible"> 적용할 값 </param>
         private delegate void SafeCallPanelVisible(Object panelObject, bool visible);
+
         /// <summary>
         /// Panel Visible 상태 확인 안전 접근 함수
         /// </summary>
@@ -228,6 +232,7 @@ namespace ProjectAI.MainForms
 
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+
             btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
         }
 
@@ -247,7 +252,7 @@ namespace ProjectAI.MainForms
         /// <param styleManager="MetroStyleManager"></param>
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
         {
-            if (this.formsManiger.m_isDarkMode) // Dark로 변경시 진입
+            if (this.formsManiger.m_isDarkMode) // Light로 변경시 진입
             {
                 // Metro Style, Theme 변경
                 this.styleManagerMainForm.Style = styleManager.Style;
@@ -261,7 +266,7 @@ namespace ProjectAI.MainForms
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
                 this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
             }
-            else // Light로 변경시 진입
+            else // Dark로 변경시 진입
             {
                 // Metro Style, Theme 변경
                 this.styleManagerMainForm.Style = styleManager.Style;
@@ -324,6 +329,8 @@ namespace ProjectAI.MainForms
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
 
             this.panelTrainOptions.Size = new System.Drawing.Size(500, 100); // panel Train Options 판넬 사이즈 조정
+
+            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 100); // panel Data Review 판넬 사이즈 조정
 
             this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기 
             foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"]) // 버튼 생성
@@ -569,6 +576,10 @@ namespace ProjectAI.MainForms
 
             //Console.WriteLine(workSpaceIndex);
             //Console.WriteLine(activeWorkSpaceName);
+            if (WorkSpaceData.m_activeProjectMainger != null)
+            {
+                WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName = null;
+            }
 
             foreach (string activeProjectName in WorkSpaceData.m_projectMaingersDictionary.Keys)
             {
@@ -646,15 +657,23 @@ namespace ProjectAI.MainForms
         {
             //panelstatus.Visible = panelstatus.Visible == true ? false : true;
             //Console.WriteLine();
-            splitContainer1.Panel2Collapsed = splitContainer1.Panel2Collapsed ? false : true;
-            Console.WriteLine($"splitContainer1.Panel2Collapsed: {splitContainer1.Panel2Collapsed}");
-            pictureBox2.Visible = splitContainer1.Panel2Collapsed ? false : true;
-            Console.WriteLine($"pictureBox2.Visible: {pictureBox2.Visible}");
+            //splitContainer1.Panel2Collapsed = splitContainer1.Panel2Collapsed ? false : true;
+            //Console.WriteLine($"splitContainer1.Panel2Collapsed: {splitContainer1.Panel2Collapsed}");
+            //pictureBox2.Visible = splitContainer1.Panel2Collapsed ? false : true;
+            //Console.WriteLine($"pictureBox2.Visible: {pictureBox2.Visible}");
+
+            this.TrainForm.Show();
         }
 
         private void toolStripMenuItem1Click(object sender, EventArgs e)
         {
-
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    JObject jObject = new JObject();
+                    WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].GetTrainOptions(jObject);
+                    jsonDataManiger.PushJsonObject(@"C:\Users\USER\AppData\Roaming\SynapseNet\SynapseNet 0.1\workspaces\Test.Json", jObject);
+                }
         }
 
         private void TsmProjectAllWorkSpaceSaveClick(object sender, EventArgs e)
@@ -695,14 +714,15 @@ namespace ProjectAI.MainForms
         private void TsmDeleteWorkSpaceClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
+                if (MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                    this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
 
         private void TsmProjectDeleteClick(object sender, EventArgs e)
         {
-            if (WorkSpaceData.m_activeProjectMainger != null)
-                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                    this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
+            //if (WorkSpaceData.m_activeProjectMainger != null)
+            //    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    //this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
 
         private void DeletWorkSpace(string deleteWorkSpaceName)
@@ -718,8 +738,11 @@ namespace ProjectAI.MainForms
             this.panelWorkSpaseButton.Controls.Remove(deleteWorkSpaceButton); //panelWorkSpaseButton 판넬에서 해당 WorkSpaceButton 삭제
 
             // 등록된 WorkSpace 데이터 삭제
-            deleteWorkSpaceButton = null; // deleteWorkSpaceButton 초기화
             WorkSpaceEarlyData.m_workSpaceButtons.Remove(deleteWorkSpaceName); // 해당 WorkSpaceButton 삭제
+            deleteWorkSpaceButton.Dispose(); // deleteWorkSpaceButton 초기화
+            ProjectContral deleteProjectContral = WorkSpaceData.m_projectMaingersDictionary[deleteWorkSpaceName];
+            WorkSpaceData.m_activeProjectMainger = null; // 활성화된 Project 초기화 
+            deleteProjectContral.Dispose(); // 변수 매모리에서 해제
             WorkSpaceData.m_projectMaingersDictionary.Remove(deleteWorkSpaceName); // 해당 WorkSpace projectMaingers 삭제
 
             // 파일 삭제 등록
@@ -727,7 +750,6 @@ namespace ProjectAI.MainForms
             CustomIOManigerFoem.DeleteDictionary(deleteFolderPath); // 해당 폴더 삭제
 
             // WorkSpace JObject 데이터 수정
-
             int deleteWorkSpacIndex = Convert.ToInt32(WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"][deleteWorkSpaceName]["int_m_workSpacIndex"]); // 삭제 하는 데이터 int_m_workSpacIndex 가져오기
             JObject workSpaceNameJToken = (JObject)WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceName"];
             workSpaceNameJToken.Remove(deleteWorkSpaceName); // 해당 WorkSpace Data 삭제
@@ -897,7 +919,7 @@ namespace ProjectAI.MainForms
 
         private void TrainToolStripMenuItemClick(object sender, EventArgs e)
         {
-            
+
         }
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
@@ -910,7 +932,10 @@ namespace ProjectAI.MainForms
                 string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
 
                 if (data != null)
-                    pictureBox1.Image = Image.FromFile(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
+                    using (Image image = Image.FromFile(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data)))
+                    {
+                        pictureBox1.Image = (Image)image.Clone();
+                    }
             }
             catch
             {
@@ -978,6 +1003,22 @@ namespace ProjectAI.MainForms
                 {
                     WorkSpaceData.m_activeProjectMainger.ImageLabelInfoReset(this.gridImageList);
                 }
+        }
+
+        private void ImageSetInfoResetToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageDataSetInfoReset(this.gridImageList);
+                }
+        }
+
+        private void BtnMDeleteWorkSpaceClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if( MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                    this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
     }
 }

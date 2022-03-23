@@ -102,7 +102,7 @@ namespace ProjectAI.MainForms
 
             #region Classification 컨트롤 설정
 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
 
             this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
@@ -112,11 +112,17 @@ namespace ProjectAI.MainForms
             //this.classificationUserContral.TabIndex = 2;
 
             // 이벤트 헨들러 설정
+            // 싱글 이미지 이벤트 헨들러
             this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
             this.classificationUserContral.TxtSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageTextboxClick);
 
+            // 멀티 이미지 이벤트 헨들러
             this.classificationUserContral.BtnMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageButtonClick);
             this.classificationUserContral.TxtMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageTextboxClick);
+
+            // None 이미지 이벤트 헨들러
+            this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
+            this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
             #endregion Classification 컨트롤 설정 완료
         }
@@ -135,7 +141,7 @@ namespace ProjectAI.MainForms
 
             #region Classification 컨트롤 설정
 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
 
             this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
@@ -145,11 +151,17 @@ namespace ProjectAI.MainForms
             //this.classificationUserContral.TabIndex = 2;
 
             // 이벤트 헨들러 설정
+            // 싱글 이미지 이벤트 헨들러
             this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
             this.classificationUserContral.TxtSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageTextboxClick);
 
+            // 멀티 이미지 이벤트 헨들러
             this.classificationUserContral.BtnMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageButtonClick);
             this.classificationUserContral.TxtMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageTextboxClick);
+
+            // None 이미지 이벤트 헨들러
+            this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
+            this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
             #endregion Classification 컨트롤 설정 완료
 
@@ -168,7 +180,7 @@ namespace ProjectAI.MainForms
 
             #region Classification 컨트롤 설정
 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true);
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
 
             this.classificationUserContral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.classificationUserContral.Location = new System.Drawing.Point(0, 0);
@@ -178,11 +190,17 @@ namespace ProjectAI.MainForms
             //this.classificationUserContral.TabIndex = 2;
 
             // 이벤트 헨들러 설정
+            // 싱글 이미지 이벤트 헨들러
             this.classificationUserContral.BtnSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageButtonClick);
             this.classificationUserContral.TxtSingleImageClickEvnetHandler += new System.EventHandler(this.ClassificationSingleImageTextboxClick);
 
+            // 멀티 이미지 이벤트 헨들러
             this.classificationUserContral.BtnMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageButtonClick);
             this.classificationUserContral.TxtMultiImageClickEvnetHandler += new System.EventHandler(this.ClassificationMultiImageTextboxClick);
+
+            // None 이미지 이벤트 헨들러
+            this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
+            this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
             #endregion Classification 컨트롤 설정 완료
         }
@@ -225,6 +243,28 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
+        /// Classification None 이미지 타입 버튼 클릭시 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClassificationNoneImageButtonClick(object sender, EventArgs e)
+        {
+            this.selectProjectInputDataType = this.classificationUserContral.btnNoneImage.ButtonClickRetrun;
+        }
+        /// <summary>
+        /// Classification None 이미지 타입 텍스트박스 클릭시
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClassificationNoneImageTextboxClick(object sender, EventArgs e)
+        {
+            this.selectProjectInputDataType = null;
+        }
+
+
+
+
+        /// <summary>
         /// Classification 선택
         /// </summary>
         /// <param name="sender"></param>
@@ -234,14 +274,14 @@ namespace ProjectAI.MainForms
             this.ClassificationUserContralSetting(); // Classification User Contral 셋업 
         }
 
-        private void BtnMObjectDetectionClick(object sender, EventArgs e)
-        {
-
-        }
-
         private void BtnMSegmentationClick(object sender, EventArgs e)
         {
+            this.SegmentationUserContralSetting(); // Segmentation User Contral 셋업 
+        }
 
+        private void BtnMObjectDetectionClick(object sender, EventArgs e)
+        {
+            this.ObjectDetectionUserContralSetting(); // ObjectDetection User Contral 셋업 
         }
         #endregion  Classification Tesk 설정
 
@@ -275,8 +315,8 @@ namespace ProjectAI.MainForms
                 };
                 JObject jObject2 = new JObject();
                 jObject2[mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
-                JObject array_string_projectList = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"];
-                array_string_projectList.Merge(jObject2);
+                JObject arraystringprojectList = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"];
+                arraystringprojectList.Merge(jObject2);
 
                 jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject);
 

@@ -239,12 +239,14 @@ namespace ProjectAI.MainForms
 
                                 this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                                 this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
+                                WorkSpaceData.m_activeProjectMainger.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
                             }
                             else
                             {
                                 WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
                                 this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                                 this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
+                                WorkSpaceData.m_activeProjectMainger.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
                             }
                         }
                         // 활성화된 내부 프로젝트 Class 정보 없음
@@ -253,6 +255,7 @@ namespace ProjectAI.MainForms
                             WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[activeInnerProjectName] = ClassInfoReset(this.txtMClassName.Text); // 초기 데이터 적용
                             this.jsonDataManiger.PushJsonObject(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectCalssInfo, WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject); // 파일 저장
                             this.ClassButtonSetting(this.m_color, ColorTranslator.ToHtml(Color.Wheat), this.txtMClassName.Text); // Class Button 생성
+                            WorkSpaceData.m_activeProjectMainger.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
                         }
                     }
                 }
@@ -399,6 +402,7 @@ namespace ProjectAI.MainForms
 
             this.panelMClassButton.Controls.Remove(classButton); // 컨트롤 삭제
             this.classButtons.Remove(classButton.Name); // 버튼 Class 삭제
+            WorkSpaceData.m_activeProjectMainger.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
         }
         /// <summary>
         /// Class Button 클릭 이벤트 - tile

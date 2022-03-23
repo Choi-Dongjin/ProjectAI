@@ -1,6 +1,6 @@
 ﻿namespace ProjectAI.CustomComponent.MainForms.Idle
 {
-    partial class TrainOptions
+    partial class IdelTrainOptions
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -36,7 +36,7 @@
             // metroPanel1
             // 
             this.metroPanel1.AutoScroll = true;
-            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(460, 818);
+            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(460, 810);
             this.metroPanel1.Controls.Add(this.txtMworkSpaceName);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbar = true;
@@ -47,7 +47,7 @@
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.metroPanel1.Size = new System.Drawing.Size(470, 818);
+            this.metroPanel1.Size = new System.Drawing.Size(470, 810);
             this.metroPanel1.TabIndex = 1;
             this.metroPanel1.VerticalScrollbar = true;
             this.metroPanel1.VerticalScrollbarBarColor = true;
@@ -60,9 +60,9 @@
             // 
             // 
             this.txtMworkSpaceName.CustomButton.Image = null;
-            this.txtMworkSpaceName.CustomButton.Location = new System.Drawing.Point(-356, 2);
+            this.txtMworkSpaceName.CustomButton.Location = new System.Drawing.Point(-348, 2);
             this.txtMworkSpaceName.CustomButton.Name = "";
-            this.txtMworkSpaceName.CustomButton.Size = new System.Drawing.Size(813, 813);
+            this.txtMworkSpaceName.CustomButton.Size = new System.Drawing.Size(805, 805);
             this.txtMworkSpaceName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtMworkSpaceName.CustomButton.TabIndex = 1;
             this.txtMworkSpaceName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -76,29 +76,30 @@
             this.txtMworkSpaceName.Multiline = true;
             this.txtMworkSpaceName.Name = "txtMworkSpaceName";
             this.txtMworkSpaceName.PasswordChar = '\0';
-            this.txtMworkSpaceName.PromptText = "Work Space Name";
+            this.txtMworkSpaceName.PromptText = "Check Project";
+            this.txtMworkSpaceName.ReadOnly = true;
             this.txtMworkSpaceName.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.txtMworkSpaceName.SelectedText = "";
             this.txtMworkSpaceName.SelectionLength = 0;
             this.txtMworkSpaceName.SelectionStart = 0;
             this.txtMworkSpaceName.ShortcutsEnabled = true;
-            this.txtMworkSpaceName.Size = new System.Drawing.Size(460, 818);
+            this.txtMworkSpaceName.Size = new System.Drawing.Size(460, 810);
             this.txtMworkSpaceName.TabIndex = 2;
             this.txtMworkSpaceName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMworkSpaceName.UseSelectable = true;
-            this.txtMworkSpaceName.WaterMark = "Work Space Name";
+            this.txtMworkSpaceName.WaterMark = "Check Project";
             this.txtMworkSpaceName.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtMworkSpaceName.WaterMarkFont = new System.Drawing.Font("Segoe UI Semibold", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
-            // TrainOptions
+            // IdelTrainOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.metroPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "TrainOptions";
+            this.Name = "IdelTrainOptions";
             this.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
-            this.Size = new System.Drawing.Size(500, 858);
+            this.Size = new System.Drawing.Size(500, 850);
             this.metroPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

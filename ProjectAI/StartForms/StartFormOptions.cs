@@ -104,7 +104,7 @@ namespace ProjectAI.StartForms
 
         private void BtnMoptionResetClick(object sender, EventArgs e)
         {
-            ProgramVariables.m_programWokrSpacePath = ProgramVariables.ProgramWokrSpacePath_Defalt;
+            ProgramVariables.m_programWokrSpacePath = ProgramVariables.ProgramWokrSpacePathDefalt;
         }
 
         private void metroButton1_Click(object sender, EventArgs e)

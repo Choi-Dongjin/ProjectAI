@@ -8,11 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProjectAI.MainForms.UserContral
+using MetroFramework;
+using MetroFramework.Components;
+using MetroFramework.Forms;
+
+namespace ProjectAI.CustomComponent.MainForms.Idle
 {
-    public partial class LabelAddIncreaseButton : UserControl
+    public partial class IdelTrainOptions : UserControl
     {
-        public LabelAddIncreaseButton()
+        public IdelTrainOptions()
         {
             InitializeComponent();
         }

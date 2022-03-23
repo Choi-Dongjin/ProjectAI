@@ -146,7 +146,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         private void LabelSetting()
         {
             this.metroPanel1.Controls.Clear();
-            this.Size = new System.Drawing.Size(350, 184);
+            this.Size = new System.Drawing.Size(240, 160);
 
             this.metroTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel1.Controls.Add(this.metroTextBox);
@@ -180,7 +180,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.metroTextBox.SelectionStart = 0;
             this.metroTextBox.ShortcutsEnabled = true;
             this.metroTextBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.metroTextBox.Size = new System.Drawing.Size(350, 160);
+            this.metroTextBox.Size = new System.Drawing.Size(240, 160);
             this.metroTextBox.TabIndex = 2;
             this.metroTextBox.Text = saveSettingText;
             this.metroTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

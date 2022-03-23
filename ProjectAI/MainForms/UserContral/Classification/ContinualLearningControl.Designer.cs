@@ -1,6 +1,6 @@
-﻿namespace ProjectAI.MainForms.UserContral
+﻿namespace ProjectAI.MainForms.UserContral.Classification
 {
-    partial class LabelAddIncreaseButton
+    partial class ContinualLearningControl
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -28,18 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
+            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
-            // LabelAddIncreaseButton
+            // metroStyleManager1
             // 
+            this.metroStyleManager1.Owner = this;
+            // 
+            // ContinualLearningControl
+            // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this, true);
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "LabelAddIncreaseButton";
-            this.Size = new System.Drawing.Size(100, 25);
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "ContinualLearningControl";
+            this.Size = new System.Drawing.Size(460, 150);
+            this.Load += new System.EventHandler(this.ContinualLearningControlLoad);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
+        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
     }
 }

@@ -54,7 +54,12 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.CodeDom, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CodeDom.6.0.0\lib\net461\System.CodeDom.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomComponent\CircularButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomComponent\RoundLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomComponent\RoundMetroTile.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MainForms\ClassEdit.cs">
@@ -87,17 +98,35 @@
     <Compile Include="MainForms\UserContral\ClassEdit\ClassButton.Designer.cs">
       <DependentUpon>ClassButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForms\UserContral\Classification\TrainOptions.cs">
+    <Compile Include="MainForms\UserContral\Classification\ClassWeightControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainForms\UserContral\Classification\TrainOptions.Designer.cs">
-      <DependentUpon>TrainOptions.cs</DependentUpon>
+    <Compile Include="MainForms\UserContral\Classification\ClassWeightControl.Designer.cs">
+      <DependentUpon>ClassWeightControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForms\UserContral\Idle\TrainOptions.cs">
+    <Compile Include="MainForms\UserContral\Classification\ClassificationTrainOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainForms\UserContral\Idle\TrainOptions.Designer.cs">
-      <DependentUpon>TrainOptions.cs</DependentUpon>
+    <Compile Include="MainForms\UserContral\Classification\ClassificationTrainOptions.Designer.cs">
+      <DependentUpon>ClassificationTrainOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Classification\ContinualLearningControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Classification\ContinualLearningControl.Designer.cs">
+      <DependentUpon>ContinualLearningControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Classification\ContinualLearningInnerModelSelecter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Classification\ContinualLearningInnerModelSelecter.Designer.cs">
+      <DependentUpon>ContinualLearningInnerModelSelecter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Idle\IdleTrainOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\Idle\IdleTrainOptions.Designer.cs">
+      <DependentUpon>IdleTrainOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\UserContral\ImageCountLabel.cs">
       <SubType>UserControl</SubType>
@@ -111,17 +140,11 @@
     <Compile Include="ImageTool\ImageTollTestForms.Designer.cs">
       <DependentUpon>ImageTollTestForms.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForms\UserContral\InnerProjectInfo.cs">
+    <Compile Include="MainForms\UserContral\Monitoring\ClassViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainForms\UserContral\InnerProjectInfo.Designer.cs">
-      <DependentUpon>InnerProjectInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForms\UserContral\LabelAddIncreaseButton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainForms\UserContral\LabelAddIncreaseButton.Designer.cs">
-      <DependentUpon>LabelAddIncreaseButton.cs</DependentUpon>
+    <Compile Include="MainForms\UserContral\Monitoring\ClassViewer.Designer.cs">
+      <DependentUpon>ClassViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\UserContral\ProjectSelect\Classification.cs">
       <SubType>UserControl</SubType>
@@ -188,6 +211,12 @@
     <Compile Include="StartForms\StartFormOptions.Designer.cs">
       <DependentUpon>StartFormOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrainForms\TrainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainForms\TrainForm.Designer.cs">
+      <DependentUpon>TrainForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForms\ClassEdit.resx">
       <DependentUpon>ClassEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,11 +226,20 @@
     <EmbeddedResource Include="MainForms\UserContral\ClassEdit\ClassButton.resx">
       <DependentUpon>ClassButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForms\UserContral\Classification\TrainOptions.resx">
-      <DependentUpon>TrainOptions.cs</DependentUpon>
+    <EmbeddedResource Include="MainForms\UserContral\Classification\ClassWeightControl.resx">
+      <DependentUpon>ClassWeightControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForms\UserContral\Idle\TrainOptions.resx">
-      <DependentUpon>TrainOptions.cs</DependentUpon>
+    <EmbeddedResource Include="MainForms\UserContral\Classification\ClassificationTrainOptions.resx">
+      <DependentUpon>ClassificationTrainOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\Classification\ContinualLearningControl.resx">
+      <DependentUpon>ContinualLearningControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\Classification\ContinualLearningInnerModelSelecter.resx">
+      <DependentUpon>ContinualLearningInnerModelSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\Idle\IdleTrainOptions.resx">
+      <DependentUpon>IdleTrainOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageCountLabel.resx">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
@@ -215,11 +253,8 @@
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForms\UserContral\InnerProjectInfo.resx">
-      <DependentUpon>InnerProjectInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForms\UserContral\LabelAddIncreaseButton.resx">
-      <DependentUpon>LabelAddIncreaseButton.cs</DependentUpon>
+    <EmbeddedResource Include="MainForms\UserContral\Monitoring\ClassViewer.resx">
+      <DependentUpon>ClassViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ProjectSelect\Classification.resx">
       <DependentUpon>Classification.cs</DependentUpon>
@@ -253,6 +288,9 @@
     <EmbeddedResource Include="StartForms\StartFormOptions.resx">
       <DependentUpon>StartFormOptions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TrainForms\TrainForm.resx">
+      <DependentUpon>TrainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -264,6 +302,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="문서 파일\WorkSpaceEarlyData_참고용.Json" />
+    <None Include="문서 파일\정리.cfg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -309,8 +348,14 @@
     <None Include="Resources\arrowLeft3.png" />
     <None Include="Resources\logoBX2Deep LearningStudio.png" />
     <None Include="Resources\logoBX2Deep LearningStudioW.png" />
+    <None Include="Resources\border1.png" />
+    <None Include="Resources\border1W.png" />
+    <None Include="Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif" />
+    <None Include="Resources\question1.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TrainForms\UserContral\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

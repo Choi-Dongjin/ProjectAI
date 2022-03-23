@@ -35,24 +35,24 @@
             this.lblClassificationINFO = new System.Windows.Forms.Label();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.lblInputDataType = new System.Windows.Forms.Label();
-            this.imputDataTypeButton1 = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
-            this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
-            this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
+            this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.btnNoneImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
-            this.metroPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).BeginInit();
+            this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 362F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 560F));
             this.tableLayoutPanel1.Controls.Add(this.txtTitle, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblClassificationINFO, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.metroPanel1, 0, 2);
@@ -129,7 +129,7 @@
             this.metroPanel1.Location = new System.Drawing.Point(0, 65);
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(362, 190);
+            this.metroPanel1.Size = new System.Drawing.Size(285, 190);
             this.metroPanel1.TabIndex = 7;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
@@ -141,7 +141,7 @@
             // 
             // 
             this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(174, 2);
+            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(97, 2);
             this.metroTextBox1.CustomButton.Name = "";
             this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(185, 185);
             this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -164,55 +164,45 @@
             this.metroTextBox1.SelectionLength = 0;
             this.metroTextBox1.SelectionStart = 0;
             this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(362, 190);
+            this.metroTextBox1.Size = new System.Drawing.Size(285, 190);
             this.metroTextBox1.TabIndex = 6;
             this.metroTextBox1.Text = resources.GetString("metroTextBox1.Text");
             this.metroTextBox1.UseSelectable = true;
             this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // metroPanel2
-            // 
-            this.metroPanel2.Controls.Add(this.imputDataTypeButton1);
-            this.metroPanel2.Controls.Add(this.btnMultiImage);
-            this.metroPanel2.Controls.Add(this.btnSingleImage);
-            this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroPanel2.HorizontalScrollbarBarColor = true;
-            this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(362, 65);
-            this.metroPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(483, 190);
-            this.metroPanel2.TabIndex = 8;
-            this.metroPanel2.VerticalScrollbarBarColor = true;
-            this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel2.VerticalScrollbarSize = 10;
-            // 
             // lblInputDataType
             // 
             this.lblInputDataType.AutoSize = true;
             this.lblInputDataType.Font = new System.Drawing.Font("Noto Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInputDataType.Location = new System.Drawing.Point(365, 43);
+            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
             this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
             this.lblInputDataType.Name = "lblInputDataType";
             this.lblInputDataType.Size = new System.Drawing.Size(131, 19);
             this.lblInputDataType.TabIndex = 2;
             this.lblInputDataType.Text = "Input Data Type";
             // 
-            // imputDataTypeButton1
+            // metroStyleManagerClassification
             // 
-            this.imputDataTypeButton1.BackColor = System.Drawing.Color.Transparent;
-            this.imputDataTypeButton1.ButtonClickRetrun = "MultiImage";
-            this.imputDataTypeButton1.CustomButtonName = "Multi Image";
-            this.imputDataTypeButton1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.imputDataTypeButton1.InputLabelText = "Multi Image 설명";
-            this.imputDataTypeButton1.Location = new System.Drawing.Point(320, 0);
-            this.imputDataTypeButton1.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
-            this.imputDataTypeButton1.Name = "imputDataTypeButton1";
-            this.imputDataTypeButton1.Size = new System.Drawing.Size(160, 190);
-            this.imputDataTypeButton1.TabIndex = 21;
-            this.imputDataTypeButton1.Title = "Multi Image";
+            this.metroStyleManagerClassification.Owner = this;
+            // 
+            // metroPanel2
+            // 
+            this.metroPanel2.Controls.Add(this.btnNoneImage);
+            this.metroPanel2.Controls.Add(this.btnMultiImage);
+            this.metroPanel2.Controls.Add(this.btnSingleImage);
+            this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroPanel2.HorizontalScrollbarBarColor = true;
+            this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.HorizontalScrollbarSize = 10;
+            this.metroPanel2.Location = new System.Drawing.Point(285, 65);
+            this.metroPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.metroPanel2.Name = "metroPanel2";
+            this.metroPanel2.Size = new System.Drawing.Size(560, 190);
+            this.metroPanel2.TabIndex = 8;
+            this.metroPanel2.VerticalScrollbarBarColor = true;
+            this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.VerticalScrollbarSize = 10;
             // 
             // btnMultiImage
             // 
@@ -225,8 +215,22 @@
             this.btnMultiImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
             this.btnMultiImage.Name = "btnMultiImage";
             this.btnMultiImage.Size = new System.Drawing.Size(160, 190);
-            this.btnMultiImage.TabIndex = 20;
+            this.btnMultiImage.TabIndex = 101;
             this.btnMultiImage.Title = "Multi Image";
+            // 
+            // btnNoneImage
+            // 
+            this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
+            this.btnNoneImage.ButtonClickRetrun = "";
+            this.btnNoneImage.CustomButtonName = "None Image";
+            this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNoneImage.InputLabelText = "None Image 설명";
+            this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
+            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
+            this.btnNoneImage.Name = "btnNoneImage";
+            this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
+            this.btnNoneImage.TabIndex = 102;
+            this.btnNoneImage.Title = "None Image";
             // 
             // btnSingleImage
             // 
@@ -239,12 +243,8 @@
             this.btnSingleImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
             this.btnSingleImage.Name = "btnSingleImage";
             this.btnSingleImage.Size = new System.Drawing.Size(160, 190);
-            this.btnSingleImage.TabIndex = 7;
+            this.btnSingleImage.TabIndex = 100;
             this.btnSingleImage.Title = "Single Image";
-            // 
-            // metroStyleManagerClassification
-            // 
-            this.metroStyleManagerClassification.Owner = this;
             // 
             // Classification
             // 
@@ -257,8 +257,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
-            this.metroPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).EndInit();
+            this.metroPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -270,10 +270,10 @@
         private MetroFramework.Controls.MetroTextBox txtTitle;
         private MetroFramework.Controls.MetroTextBox metroTextBox1;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroPanel metroPanel2;
-        public ImputDataTypeButton btnSingleImage;
-        public ImputDataTypeButton btnMultiImage;
-        public ImputDataTypeButton imputDataTypeButton1;
         private MetroFramework.Components.MetroStyleManager metroStyleManagerClassification;
+        public ImputDataTypeButton btnNoneImage;
+        public ImputDataTypeButton btnMultiImage;
+        public ImputDataTypeButton btnSingleImage;
+        private MetroFramework.Controls.MetroPanel metroPanel2;
     }
 }
