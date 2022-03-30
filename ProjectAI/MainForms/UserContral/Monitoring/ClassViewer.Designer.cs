@@ -60,6 +60,7 @@
             // 
             // dgvMClassInfo
             // 
+            this.dgvMClassInfo.AllowUserToAddRows = false;
             this.dgvMClassInfo.AllowUserToResizeRows = false;
             this.dgvMClassInfo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dgvMClassInfo.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;

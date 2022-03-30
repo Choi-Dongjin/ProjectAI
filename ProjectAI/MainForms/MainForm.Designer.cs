@@ -96,6 +96,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trainToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelWorkSpaseIconIN = new System.Windows.Forms.Panel();
@@ -179,7 +180,7 @@
             this.tableLayoutMainForm.RowCount = 2;
             this.tableLayoutMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 106F));
             this.tableLayoutMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutMainForm.Size = new System.Drawing.Size(1038, 686);
+            this.tableLayoutMainForm.Size = new System.Drawing.Size(1038, 771);
             this.tableLayoutMainForm.TabIndex = 3;
             // 
             // panelWorkSpaseIconOUT
@@ -194,7 +195,7 @@
             this.panelWorkSpaseIconOUT.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseIconOUT.Name = "panelWorkSpaseIconOUT";
             this.tableLayoutMainForm.SetRowSpan(this.panelWorkSpaseIconOUT, 2);
-            this.panelWorkSpaseIconOUT.Size = new System.Drawing.Size(27, 686);
+            this.panelWorkSpaseIconOUT.Size = new System.Drawing.Size(27, 771);
             this.panelWorkSpaseIconOUT.TabIndex = 4;
             this.panelWorkSpaseIconOUT.VerticalScrollbarBarColor = true;
             this.panelWorkSpaseIconOUT.VerticalScrollbarHighlightOnWheel = false;
@@ -242,7 +243,7 @@
             this.panelProjectMain.Location = new System.Drawing.Point(27, 106);
             this.panelProjectMain.Margin = new System.Windows.Forms.Padding(0);
             this.panelProjectMain.Name = "panelProjectMain";
-            this.panelProjectMain.Size = new System.Drawing.Size(1011, 580);
+            this.panelProjectMain.Size = new System.Drawing.Size(1011, 665);
             this.panelProjectMain.TabIndex = 5;
             // 
             // splitContainerImageAndImageList
@@ -260,7 +261,7 @@
             // 
             this.splitContainerImageAndImageList.Panel2.Controls.Add(this.panelImageDataView);
             this.splitContainerImageAndImageList.Panel2.Controls.Add(this.tableLayoutImageDataManiger);
-            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(485, 580);
+            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(485, 665);
             this.splitContainerImageAndImageList.SplitterDistance = 235;
             this.splitContainerImageAndImageList.TabIndex = 0;
             // 
@@ -279,7 +280,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(235, 580);
+            this.splitContainer1.Size = new System.Drawing.Size(235, 665);
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -290,7 +291,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(235, 580);
+            this.pictureBox1.Size = new System.Drawing.Size(235, 665);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -314,11 +315,12 @@
             this.panelImageDataView.Location = new System.Drawing.Point(0, 35);
             this.panelImageDataView.Margin = new System.Windows.Forms.Padding(0);
             this.panelImageDataView.Name = "panelImageDataView";
-            this.panelImageDataView.Size = new System.Drawing.Size(246, 545);
+            this.panelImageDataView.Size = new System.Drawing.Size(246, 630);
             this.panelImageDataView.TabIndex = 0;
             // 
             // gridImageList
             // 
+            this.gridImageList.AllowUserToAddRows = false;
             this.gridImageList.AllowUserToResizeRows = false;
             this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -363,7 +365,7 @@
             this.gridImageList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gridImageList.RowTemplate.Height = 23;
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridImageList.Size = new System.Drawing.Size(246, 545);
+            this.gridImageList.Size = new System.Drawing.Size(246, 630);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
             this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -589,7 +591,7 @@
             this.tableLayoutDataReview.RowCount = 2;
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 580);
+            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
             // iclTest
@@ -633,7 +635,7 @@
             this.panelDataReview.Location = new System.Drawing.Point(0, 75);
             this.panelDataReview.Margin = new System.Windows.Forms.Padding(0);
             this.panelDataReview.Name = "panelDataReview";
-            this.panelDataReview.Size = new System.Drawing.Size(300, 505);
+            this.panelDataReview.Size = new System.Drawing.Size(300, 590);
             this.panelDataReview.TabIndex = 10;
             // 
             // classViewer1
@@ -664,7 +666,7 @@
             this.panelTrainOptions.Location = new System.Drawing.Point(27, 0);
             this.panelTrainOptions.Margin = new System.Windows.Forms.Padding(0);
             this.panelTrainOptions.Name = "panelTrainOptions";
-            this.panelTrainOptions.Size = new System.Drawing.Size(172, 580);
+            this.panelTrainOptions.Size = new System.Drawing.Size(172, 665);
             this.panelTrainOptions.TabIndex = 7;
             // 
             // panelMTrainOptions
@@ -678,7 +680,7 @@
             this.panelMTrainOptions.Location = new System.Drawing.Point(0, 0);
             this.panelMTrainOptions.Margin = new System.Windows.Forms.Padding(0);
             this.panelMTrainOptions.Name = "panelMTrainOptions";
-            this.panelMTrainOptions.Size = new System.Drawing.Size(27, 580);
+            this.panelMTrainOptions.Size = new System.Drawing.Size(27, 665);
             this.panelMTrainOptions.TabIndex = 3;
             this.panelMTrainOptions.VerticalScrollbarBarColor = true;
             this.panelMTrainOptions.VerticalScrollbarHighlightOnWheel = false;
@@ -725,7 +727,7 @@
             this.panelMDataReviewIcon.Location = new System.Drawing.Point(984, 0);
             this.panelMDataReviewIcon.Margin = new System.Windows.Forms.Padding(0);
             this.panelMDataReviewIcon.Name = "panelMDataReviewIcon";
-            this.panelMDataReviewIcon.Size = new System.Drawing.Size(27, 580);
+            this.panelMDataReviewIcon.Size = new System.Drawing.Size(27, 665);
             this.panelMDataReviewIcon.TabIndex = 2;
             this.panelMDataReviewIcon.VerticalScrollbarBarColor = true;
             this.panelMDataReviewIcon.VerticalScrollbarHighlightOnWheel = false;
@@ -889,7 +891,8 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.classToolStripMenuItem});
+            this.classToolStripMenuItem,
+            this.trainToolStripMenuItem1});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -900,6 +903,13 @@
             this.classToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
+            // 
+            // trainToolStripMenuItem1
+            // 
+            this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
+            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(101, 22);
+            this.trainToolStripMenuItem1.Text = "Train";
+            this.trainToolStripMenuItem1.Click += new System.EventHandler(this.TrainToolStripMenuItem1Click);
             // 
             // toolToolStripMenuItem
             // 
@@ -926,7 +936,7 @@
             this.panelWorkSpaseIconIN.Location = new System.Drawing.Point(241, 0);
             this.panelWorkSpaseIconIN.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseIconIN.Name = "panelWorkSpaseIconIN";
-            this.panelWorkSpaseIconIN.Size = new System.Drawing.Size(27, 667);
+            this.panelWorkSpaseIconIN.Size = new System.Drawing.Size(27, 752);
             this.panelWorkSpaseIconIN.TabIndex = 2;
             // 
             // panelMWorkSpaceString1
@@ -1037,7 +1047,7 @@
             this.panelstatus.Controls.Add(this.lblMwaorkInNumber);
             this.panelstatus.Controls.Add(this.pgbMfileIOstatus);
             this.panelstatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelstatus.Location = new System.Drawing.Point(0, 691);
+            this.panelstatus.Location = new System.Drawing.Point(0, 776);
             this.panelstatus.Margin = new System.Windows.Forms.Padding(0);
             this.panelstatus.Name = "panelstatus";
             this.panelstatus.Padding = new System.Windows.Forms.Padding(1);
@@ -1131,7 +1141,7 @@
             this.panelMWorkSpase.Location = new System.Drawing.Point(0, 24);
             this.panelMWorkSpase.Margin = new System.Windows.Forms.Padding(0);
             this.panelMWorkSpase.Name = "panelMWorkSpase";
-            this.panelMWorkSpase.Size = new System.Drawing.Size(268, 667);
+            this.panelMWorkSpase.Size = new System.Drawing.Size(268, 752);
             this.panelMWorkSpase.TabIndex = 6;
             this.panelMWorkSpase.VerticalScrollbarBarColor = true;
             this.panelMWorkSpase.VerticalScrollbarHighlightOnWheel = false;
@@ -1145,7 +1155,7 @@
             this.panelWorkSpaseButton.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseButton.Name = "panelWorkSpaseButton";
             this.panelWorkSpaseButton.Padding = new System.Windows.Forms.Padding(2);
-            this.panelWorkSpaseButton.Size = new System.Drawing.Size(241, 635);
+            this.panelWorkSpaseButton.Size = new System.Drawing.Size(241, 720);
             this.panelWorkSpaseButton.TabIndex = 4;
             // 
             // cmsImageListToolKit
@@ -1231,7 +1241,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1038, 710);
+            this.ClientSize = new System.Drawing.Size(1038, 795);
             this.Controls.Add(this.panelMWorkSpase);
             this.Controls.Add(this.panelstatus);
             this.Controls.Add(this.tableLayoutMainForm);
@@ -1378,5 +1388,6 @@
         public System.Windows.Forms.Panel panelDataReview;
         public ImageCountLabel iclTotal;
         private UserContral.Monitoring.ClassViewer classViewer1;
+        private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem1;
     }
 }

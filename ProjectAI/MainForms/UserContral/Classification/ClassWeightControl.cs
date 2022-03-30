@@ -78,6 +78,9 @@ namespace ProjectAI.MainForms.UserContral.Classification
                 lblMClassName.ForeColor = value;
             }
         }
+        /// <summary>
+        /// Class Train Weight
+        /// </summary>
         [Category("ClassWeightControl"), Description("Class Train Weight")]
         public int Weight
         {

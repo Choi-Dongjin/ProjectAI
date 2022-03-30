@@ -117,6 +117,7 @@ namespace ProjectAI
                 {
                     // 파일이 있으면 데이터 읽어오기
                     JObject programOptions = jsonDataManiger.GetJsonObject(ProgramVariables.m_programOptionsFileJsonPath, ProgramOptionsDataIntegrityCheck); // programOptions Json 파일 읽고 무결성 검사
+
                     jsonDataManiger.PushJsonObject(ProgramVariables.m_programOptionsFileJsonPath, programOptions); // 설정된 파일 저장
                     var programStartPathOptionsJson = programOptions["programStartPathOptions"];
                     Console.WriteLine(programStartPathOptionsJson.ToString());

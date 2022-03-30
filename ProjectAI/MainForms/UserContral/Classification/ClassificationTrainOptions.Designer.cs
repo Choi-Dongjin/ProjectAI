@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassificationTrainOptions));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -59,6 +59,8 @@
             this.txtTrainRepeat = new System.Windows.Forms.TextBox();
             this.txtValidationRatio = new System.Windows.Forms.TextBox();
             this.txtTrainDataNumber = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tilZoom = new MetroFramework.Controls.MetroTile();
@@ -120,41 +122,39 @@
             this.txtSharpen = new System.Windows.Forms.TextBox();
             this.txtZoomMin = new System.Windows.Forms.TextBox();
             this.txtZoomMax = new System.Windows.Forms.TextBox();
+            this.panelMBlurToolTip = new MetroFramework.Controls.MetroPanel();
             this.tlpContinualLearning = new System.Windows.Forms.TableLayoutPanel();
             this.lblMContinualLearning = new MetroFramework.Controls.MetroLabel();
             this.togMContinualLearning = new MetroFramework.Controls.MetroToggle();
+            this.panelContinualLearning = new System.Windows.Forms.Panel();
+            this.dgvMContinualLearning = new MetroFramework.Controls.MetroGrid();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panelMClassWeight = new MetroFramework.Controls.MetroPanel();
             this.lblMClassWeight = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblMInstantEvaluate = new MetroFramework.Controls.MetroLabel();
             this.togMInstantEvaluate = new MetroFramework.Controls.MetroToggle();
-            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
-            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.panelMBlurToolTip = new MetroFramework.Controls.MetroPanel();
-            this.panelContinualLearning = new System.Windows.Forms.Panel();
-            this.dgvMContinualLearning = new MetroFramework.Controls.MetroGrid();
-            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.panelInstantEvaluate = new System.Windows.Forms.Panel();
             this.tlpInstantEvaluate = new System.Windows.Forms.TableLayoutPanel();
             this.tilMInstantEvaluateTest = new MetroFramework.Controls.MetroTile();
             this.tilMInstantEvaluateTrain = new MetroFramework.Controls.MetroTile();
             this.tilMInstantEvaluateAll = new MetroFramework.Controls.MetroTile();
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
+            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.metroPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tlpContinualLearning.SuspendLayout();
+            this.panelContinualLearning.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMContinualLearning)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
             this.panelMClassWeight.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
-            this.panelContinualLearning.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMContinualLearning)).BeginInit();
             this.panelInstantEvaluate.SuspendLayout();
             this.tlpInstantEvaluate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // metroPanel1
@@ -539,6 +539,32 @@
             this.txtTrainDataNumber.TabIndex = 32;
             this.txtTrainDataNumber.Text = "100";
             this.txtTrainDataNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft1;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(120, 97);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(20, 20);
+            this.button1.TabIndex = 33;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight1;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(200, 97);
+            this.button2.Margin = new System.Windows.Forms.Padding(0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(20, 20);
+            this.button2.TabIndex = 34;
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
@@ -1343,6 +1369,22 @@
             this.txtZoomMax.Text = "1";
             this.txtZoomMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // panelMBlurToolTip
+            // 
+            this.panelMBlurToolTip.BackgroundImage = global::ProjectAI.Properties.Resources.question1;
+            this.panelMBlurToolTip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panelMBlurToolTip.HorizontalScrollbarBarColor = true;
+            this.panelMBlurToolTip.HorizontalScrollbarHighlightOnWheel = false;
+            this.panelMBlurToolTip.HorizontalScrollbarSize = 10;
+            this.panelMBlurToolTip.Location = new System.Drawing.Point(122, 37);
+            this.panelMBlurToolTip.Margin = new System.Windows.Forms.Padding(2);
+            this.panelMBlurToolTip.Name = "panelMBlurToolTip";
+            this.panelMBlurToolTip.Size = new System.Drawing.Size(16, 16);
+            this.panelMBlurToolTip.TabIndex = 74;
+            this.panelMBlurToolTip.VerticalScrollbarBarColor = true;
+            this.panelMBlurToolTip.VerticalScrollbarHighlightOnWheel = false;
+            this.panelMBlurToolTip.VerticalScrollbarSize = 10;
+            // 
             // tlpContinualLearning
             // 
             this.tlpContinualLearning.ColumnCount = 1;
@@ -1383,6 +1425,70 @@
             this.togMContinualLearning.Text = "Off";
             this.togMContinualLearning.UseSelectable = true;
             this.togMContinualLearning.CheckedChanged += new System.EventHandler(this.TogMContinualLearningCheckedChanged);
+            // 
+            // panelContinualLearning
+            // 
+            this.panelContinualLearning.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.panelContinualLearning.Controls.Add(this.dgvMContinualLearning);
+            this.panelContinualLearning.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelContinualLearning.Location = new System.Drawing.Point(0, 432);
+            this.panelContinualLearning.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.panelContinualLearning.Name = "panelContinualLearning";
+            this.panelContinualLearning.Size = new System.Drawing.Size(460, 104);
+            this.panelContinualLearning.TabIndex = 9;
+            this.panelContinualLearning.Visible = false;
+            // 
+            // dgvMContinualLearning
+            // 
+            this.dgvMContinualLearning.AllowUserToResizeRows = false;
+            this.dgvMContinualLearning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvMContinualLearning.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
+            this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.dgvMContinualLearning.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgvMContinualLearning.Location = new System.Drawing.Point(0, 0);
+            this.dgvMContinualLearning.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvMContinualLearning.Name = "dgvMContinualLearning";
+            this.dgvMContinualLearning.ReadOnly = true;
+            this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvMContinualLearning.RowHeadersVisible = false;
+            this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvMContinualLearning.RowTemplate.Height = 23;
+            this.dgvMContinualLearning.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMContinualLearning.Size = new System.Drawing.Size(460, 104);
+            this.dgvMContinualLearning.Style = MetroFramework.MetroColorStyle.Silver;
+            this.dgvMContinualLearning.TabIndex = 2;
+            this.dgvMContinualLearning.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.dgvMContinualLearning.UseStyleColors = true;
+            this.dgvMContinualLearning.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMContinualLearningCellMouseDoubleClick);
             // 
             // tableLayoutPanel5
             // 
@@ -1476,135 +1582,6 @@
             this.togMInstantEvaluate.UseSelectable = true;
             this.togMInstantEvaluate.CheckedChanged += new System.EventHandler(this.TogMInstantEvaluateCheckedChanged);
             // 
-            // metroStyleManager1
-            // 
-            this.metroStyleManager1.Owner = this;
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft1;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(120, 97);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(20, 20);
-            this.button1.TabIndex = 33;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight1;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(200, 97);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(20, 20);
-            this.button2.TabIndex = 34;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // panelMBlurToolTip
-            // 
-            this.panelMBlurToolTip.BackgroundImage = global::ProjectAI.Properties.Resources.question1;
-            this.panelMBlurToolTip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panelMBlurToolTip.HorizontalScrollbarBarColor = true;
-            this.panelMBlurToolTip.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelMBlurToolTip.HorizontalScrollbarSize = 10;
-            this.panelMBlurToolTip.Location = new System.Drawing.Point(122, 37);
-            this.panelMBlurToolTip.Margin = new System.Windows.Forms.Padding(2);
-            this.panelMBlurToolTip.Name = "panelMBlurToolTip";
-            this.panelMBlurToolTip.Size = new System.Drawing.Size(16, 16);
-            this.panelMBlurToolTip.TabIndex = 74;
-            this.panelMBlurToolTip.VerticalScrollbarBarColor = true;
-            this.panelMBlurToolTip.VerticalScrollbarHighlightOnWheel = false;
-            this.panelMBlurToolTip.VerticalScrollbarSize = 10;
-            // 
-            // panelContinualLearning
-            // 
-            this.panelContinualLearning.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
-            this.panelContinualLearning.Controls.Add(this.dgvMContinualLearning);
-            this.panelContinualLearning.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelContinualLearning.Location = new System.Drawing.Point(0, 432);
-            this.panelContinualLearning.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.panelContinualLearning.Name = "panelContinualLearning";
-            this.panelContinualLearning.Size = new System.Drawing.Size(460, 104);
-            this.panelContinualLearning.TabIndex = 9;
-            this.panelContinualLearning.Visible = false;
-            // 
-            // dgvMContinualLearning
-            // 
-            this.dgvMContinualLearning.AllowUserToResizeRows = false;
-            this.dgvMContinualLearning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvMContinualLearning.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
-            this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.dgvMContinualLearning.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dgvMContinualLearning.Location = new System.Drawing.Point(0, 0);
-            this.dgvMContinualLearning.Margin = new System.Windows.Forms.Padding(0);
-            this.dgvMContinualLearning.Name = "dgvMContinualLearning";
-            this.dgvMContinualLearning.ReadOnly = true;
-            this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.dgvMContinualLearning.RowHeadersVisible = false;
-            this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvMContinualLearning.RowTemplate.Height = 23;
-            this.dgvMContinualLearning.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMContinualLearning.Size = new System.Drawing.Size(460, 104);
-            this.dgvMContinualLearning.Style = MetroFramework.MetroColorStyle.Silver;
-            this.dgvMContinualLearning.TabIndex = 2;
-            this.dgvMContinualLearning.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.dgvMContinualLearning.UseStyleColors = true;
-            this.dgvMContinualLearning.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMContinualLearningCellMouseDoubleClick);
-            // 
-            // classWeightControl1
-            // 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
-            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
-            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.classWeightControl1.ClassName = "metroLabel2";
-            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
-            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
-            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.classWeightControl1.Name = "classWeightControl1";
-            this.classWeightControl1.Number = 1;
-            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
-            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
-            this.classWeightControl1.TabIndex = 2;
-            this.classWeightControl1.Weight = 100;
-            // 
             // panelInstantEvaluate
             // 
             this.panelInstantEvaluate.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
@@ -1679,6 +1656,29 @@
             this.tilMInstantEvaluateAll.UseSelectable = true;
             this.tilMInstantEvaluateAll.Click += new System.EventHandler(this.TilMInstantEvaluateAllClick);
             // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = this;
+            // 
+            // classWeightControl1
+            // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
+            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
+            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.classWeightControl1.ClassName = "metroLabel2";
+            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
+            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
+            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.classWeightControl1.Name = "classWeightControl1";
+            this.classWeightControl1.Number = 1;
+            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
+            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
+            this.classWeightControl1.TabIndex = 2;
+            this.classWeightControl1.Weight = 100;
+            // 
             // ClassificationTrainOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1697,16 +1697,16 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tlpContinualLearning.ResumeLayout(false);
             this.tlpContinualLearning.PerformLayout();
+            this.panelContinualLearning.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMContinualLearning)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             this.panelMClassWeight.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
-            this.panelContinualLearning.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMContinualLearning)).EndInit();
             this.panelInstantEvaluate.ResumeLayout(false);
             this.tlpInstantEvaluate.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
 
         }

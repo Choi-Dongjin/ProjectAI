@@ -103,6 +103,17 @@ namespace ProjectAI
             return jObject;
         }
 
+        internal JObject GetJsonObjectShare(string filePath)
+        {
+            JObject jObject;
+            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                StreamReader streamReader = new StreamReader(stream, Encoding.UTF8);
+                jObject = JObject.Parse(streamReader.ReadToEnd());
+            }
+            return jObject;
+        }
+
         /// <summary>
         /// Json 파일 저장
         /// </summary>

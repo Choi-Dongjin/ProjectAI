@@ -106,9 +106,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             classWeightControl.Weight = weight;
             #endregion 값 입력
 
-            // panel에 추가
-            this.panelMClassWeight.Controls.Add(classWeightControl);
-
             return classWeightControl;
         }
 
@@ -142,7 +139,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                             for (int i = classNameList.Count - 1; i >= 0; i--)
                             {
                                 Color classColor = ColorTranslator.FromHtml(WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][classNameList[i]]["string_classColor"].ToString());
-                                this.UISetclassWeightControl(i, classNameList[i], classColor);
+                                ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = this.UISetclassWeightControl(i, classNameList[i], classColor); // 설정된 ClassWeightControl 가져오기
+
+                                // 관리 Dictionary에 추가
+                                this.classWeightControls.Add(classNameList[i], classWeightControl);
+                                // panel에 추가
+                                this.panelMClassWeight.Controls.Add(classWeightControl);
+
                             }
                             this.panelMClassWeight.AutoScroll = true;
                             this.panelMClassWeight.MinimumSize = new Size(450, 120);
@@ -251,9 +254,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 // Train Repeat 설정
                 ["int_TrainRepeat"] = txtTrainRepeat.Text,
                 // Mmodel Minimum Selection Epoch (모델 최소 저장 Epoch) 설정
-                ["int_MmodelMinimumSelectionEpoch"] = txtMmodelMinimumSelectionEpoch.Text,
+                ["int_ModelMinimumSelectionEpoch"] = txtMmodelMinimumSelectionEpoch.Text,
                 // Validation Ratio (검증 비율) 설정
-                ["int_Validation Ratio"] = txtValidationRatio.Text,
+                ["int_ValidationRatio"] = txtValidationRatio.Text,
                 // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정 
                 ["int_PatienceEpochs"] = txtPatienceEpochs.Text
             };
@@ -539,7 +542,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             else
             {
                 jObject["bool_CenterChecked"] = ckbMCenter.Checked;
-                jObject["double_Center"] = "0";
+                jObject["double_Center"] = "1";
             }
                 
             
@@ -927,6 +930,20 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         #endregion 이어 학습하기 옵션 설정
 
+        #region Class Weight 설정
+
+        private JObject BringClassWeight(JObject classWeightData)
+        {
+            JObject jObject = new JObject();
+            // class Weigh 정보 가져오기
+            foreach (string className in this.classWeightControls.Keys.ToList())
+            {
+                jObject[className] = this.classWeightControls[className].Weight;
+            }
+            classWeightData["ClassWeight"] = jObject;
+            return classWeightData;
+        }
+        #endregion Class Weight 설정
 
         #region 인스턴스 모델 평가
 
@@ -972,6 +989,34 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         #endregion 인스턴스 모델 평가
 
+        #region 이미지 설정 옵션
+        private JObject BringImageOption(JObject imageOptions)
+        {
+            JObject jObject = new JObject
+            {
+                ["int_imageChannel"] = 3,
+                ["int_imageSize"] = 512
+            };
+
+            // Image Option 정보 가져오기
+            imageOptions["ImageOption"] = jObject;
+            return imageOptions;
+        }
+        #endregion 이미지 설정 옵션
+
+        #region 시스템 설정 옵션
+        private JObject BringTrainSystemOption(JObject trainSystemOption)
+        {
+            JObject jObject = new JObject
+            {
+                ["int_dataLoaderNUmberofWorkers"] = 4
+            };
+
+            // Image Option 정보 가져오기
+            trainSystemOption["TrainSystemOption"] = jObject;
+            return trainSystemOption;
+        }
+        #endregion 
 
         /// <summary>
         /// 학습에 필요한 옵션 가져오기 
@@ -983,11 +1028,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.BringTrainOption(trainOptions);
             this.BringDataAugmentation(trainOptions);
             this.BringContinualLearning(trainOptions);
+            this.BringClassWeight(trainOptions);
             this.BringInstantEvaluate(trainOptions);
+            this.BringImageOption(trainOptions);
+            this.BringTrainSystemOption(trainOptions);
 
             return trainOptions;
         }
-
 
         #region ToolTip 설정
         private void SetToolTip()
@@ -996,11 +1043,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             metroToolTip.Popup += BlurToolTipPopup;
             metroToolTip.Draw += BlurToolTipDraw;
 
-            metroToolTip.SetToolTip(this.panelMBlurToolTip,"sesesesses");
+            metroToolTip.SetToolTip(this.panelMBlurToolTip, "sesesesses");
         }
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = global::ProjectAI.Properties.Resources.iconlogoB_X2;
+            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
             int MARGIN = 3;
 
             int imageWidth = 2 * MARGIN + image.Width;
@@ -1014,11 +1061,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            Image image = global::ProjectAI.Properties.Resources.db6880e751fe53ee4f0365a800a12b2862f8c547;
-            int MARGIN = 3;
 
+            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
+            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
+            
+
             using (StringFormat stringFormat = new StringFormat())
             {
                 stringFormat.Alignment = StringAlignment.Near;
@@ -1030,6 +1079,5 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
 
         #endregion ToolTip 설정
-
     }
 }

@@ -1,0 +1,224 @@
+﻿{
+  "array_string_InnerModelList":[
+    "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_1.synapsenet",
+    "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_6.synapsenet",
+    "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_7.synapsenet",
+    "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_8.synapsenet",
+    "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_10.synapsenet"
+  ],
+  "InnerModelInfo":{
+      "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_1.synapsenet": {
+          "int_locationX" : 1,
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_6.synapsenet": {
+          "int_locationX" : 6,
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_7.synapsenet": {
+          "int_locationX" : 7,
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_8.synapsenet": {
+          "int_locationX" : 8,
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_10.synapsenet": {
+          "int_locationX" : 10,
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      }
+  },
+  "TrainingProgressData" :{
+      "1": {
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.5,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "2":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.6,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.7,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "3":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.96,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "4":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "5":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "6":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "7":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "8":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "9":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      },
+      "10":{
+          "double_TrainLoss" : 6.6e-01,
+          "double_TrainAcc" : 0.68,
+          "int_TrainEscape" : 0,
+          "int_TrainOverKill" : 21,
+          "double_TestLoss" : 6.6e-01,
+          "double_TestAcc" : 0.68,
+          "int_TestEscape" : 0,
+          "int_TestOverKill" : 21
+      }
+  },
+  "ModelLearningInfo" :{
+      "TrainOptionManual": {
+          "string_NetworkModel": "SynapseNet_Classification_34",
+          "int_EpochNumber": "100",
+          "int_TrainRepeat": "100",
+          "int_MmodelMinimumSelectionEpoch": "100",
+          "int_Validation Ratio": "100",
+          "int_PatienceEpochs": "100"
+        },
+        "TrainOptionAuto": {
+          "int_BatchSize": "4",
+          "double_StartLearningrate": "1e-3",
+          "double_LossUpPatienceDeltaRatio": "0.05",
+          "double_Learningrate": "0.1",
+          "double_MinimalLearningRate": "1e-10"
+        },
+        "TrainOptionNotDefine": {
+          "double_Pretrained": "1e-10"
+        },
+        "DataAugmentationManual": {
+          "int_Blur": "0",
+          "int_BrightnessMin": "0",
+          "int_BrightnessMax": "0",
+          "double_Center": "0",
+          "int_Contrast Min": "1",
+          "int_Contrast Max": "1",
+          "double_GaussianNoise": "0",
+          "int_Gradation": "0",
+          "int_GradationRGB": "0 0 255",
+          "bool_HorizontalFlip": false,
+          "bool_Rotation90": false,
+          "bool_Rotation180": false,
+          "bool_Rotation270": false,
+          "double_Sharpen": "0",
+          "bool_VerticalFlip": false,
+          "double_ZoomMin": "1",
+          "double_ZoomMax": "1"
+        },
+        "DataAugmentationNotDefine": {
+          "bool_HorizontalFlipSave": false,
+          "bool_VerticalFlipSave": false
+        },
+        "ContinualLearning": {
+          "string_ContinualLearning": "new"
+        }
+  },
+  "BestModelInfo":{
+      "double_TrainLoss" : 6.6e-01,
+      "double_TrainAcc" : 0.68,
+      "int_TrainEscape" : 0,
+      "int_TrainOverKill" : 21,
+      "double_TestLoss" : 6.6e-01,
+      "double_TestAcc" : 0.68,
+      "int_TestEscape" : 0,
+      "int_TestOverKill" : 21
+  }
+}

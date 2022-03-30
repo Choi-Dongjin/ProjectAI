@@ -101,7 +101,7 @@ namespace ProjectAI
         }
 
         /// <summary>
-        /// 폴더 삭제
+        /// 폴더 삭제 서브 폴더까지
         /// </summary>
         /// <param name="DeleteDirPath"></param>
         /// <returns></returns>
@@ -201,7 +201,6 @@ namespace ProjectAI
             for (int i = 0; i < Charsarr.Length; i++)
             {
                 Charsarr[i] = characters[random.Next(characters.Length)];
-               
             }
 
             var resultString = new String(Charsarr);
@@ -215,6 +214,36 @@ namespace ProjectAI
                 }
             }
          
+            return resultString;
+        }
+        /// <summary>
+        /// 기존 이름들과 비교해서 새로운 이름 만들기
+        /// </summary>
+        /// <param name="names"> 기존 이름 array </param>
+        /// <param name="number"> 자릿수 </param>
+        /// <returns></returns>
+        public static string RandomFileName(List<string> names, int number = 10)
+        {
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var Charsarr = new char[number];
+            var random = new Random();
+
+            for (int i = 0; i < Charsarr.Length; i++)
+            {
+                Charsarr[i] = characters[random.Next(characters.Length)];
+            }
+
+            var resultString = new String(Charsarr);
+            Console.WriteLine(resultString);
+
+            foreach (string name in names)
+            {
+                if (name == resultString)
+                {
+                    resultString = RandomFileName(names, number);
+                }
+            }
+
             return resultString;
         }
 
@@ -300,6 +329,33 @@ namespace ProjectAI
                 Console.WriteLine(ex);
             }
             return filesList;
+        }
+
+        /// <summary>
+        /// 이미지 읽어올시 파일을 안잡고 읽어오기
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Bitmap LoadBitmap(string path)
+        {
+            if (File.Exists(path))
+            {
+                // open file in read only mode
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                // get a binary reader for the file stream
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    // copy the content of the file into a memory stream
+                    var memoryStream = new MemoryStream(reader.ReadBytes((int)stream.Length));
+                    // make a new Bitmap object the owner of the MemoryStream
+                    return new Bitmap(memoryStream);
+                }
+            }
+            else
+            {
+                // MessageBox.Show("Error Loading File.", "Error!", MessageBoxButtons.OK);
+                return null;
+            }
         }
     }
 }

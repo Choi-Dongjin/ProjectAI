@@ -237,7 +237,7 @@ namespace ProjectAI.ProjectManiger
         {
             if (this.taskFileIO != null)
             {
-                this.taskFileIO.ContinueWith((tesk) => CustomIOMainger.DirDelete(Path), TaskContinuationOptions.ExecuteSynchronously);
+                this.taskFileIO.ContinueWith((task) => CustomIOMainger.DirDelete(Path), TaskContinuationOptions.ExecuteSynchronously);
             }
             else
             {

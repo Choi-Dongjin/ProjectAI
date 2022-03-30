@@ -55,7 +55,7 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// TrainForm 호출
         /// </summary>
-        private ProjectAI.TrainForms.TrainForm TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
+        private ProjectAI.TrainForms.TrainForm TrainForm;
 
 
         /// <summary>
@@ -191,6 +191,7 @@ namespace ProjectAI.MainForms
             }
             return false;
         }
+        int a = 1;
         /// <summary>
         /// Panel Visible 값 적용 안전 접근 함수
         /// </summary>
@@ -244,6 +245,7 @@ namespace ProjectAI.MainForms
         private void MainFormShown(object sender, EventArgs e)
         {
             MainFormCallUISeting();
+            this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
         }
 
         /// <summary>
@@ -661,8 +663,13 @@ namespace ProjectAI.MainForms
             //Console.WriteLine($"splitContainer1.Panel2Collapsed: {splitContainer1.Panel2Collapsed}");
             //pictureBox2.Visible = splitContainer1.Panel2Collapsed ? false : true;
             //Console.WriteLine($"pictureBox2.Visible: {pictureBox2.Visible}");
-
-            this.TrainForm.Show();
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    JObject jObject = new JObject();
+                    WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(jObject); 
+                }
+            //this.TrainForm.Show();
         }
 
         private void toolStripMenuItem1Click(object sender, EventArgs e)
@@ -794,12 +801,14 @@ namespace ProjectAI.MainForms
         /// </summary>
         private void WorkSpaceCreatSequence()
         {
-            MakeWorkSpaceForm makeWorkSpaceForm = new MakeWorkSpaceForm(); // WorkSpace Button Form 가져오기
-            DialogResult dialogResult = makeWorkSpaceForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            using (MakeWorkSpaceForm makeWorkSpaceForm = new MakeWorkSpaceForm()) // WorkSpace Button Form 가져오기
             {
-                string CreatWorkSpaceName = makeWorkSpaceForm.GetWorkSpaceName(); // 검증 완료됨 WorkSpace 이름 가져오기
-                CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
+                DialogResult dialogResult = makeWorkSpaceForm.ShowDialog();
+                if (dialogResult == DialogResult.OK)
+                {
+                    string CreatWorkSpaceName = makeWorkSpaceForm.GetWorkSpaceName(); // 검증 완료됨 WorkSpace 이름 가져오기
+                    CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
+                }
             }
             // #2
             // 생성된 WorkSpace가 기존에 데이터가 존제한다면 
@@ -919,7 +928,35 @@ namespace ProjectAI.MainForms
 
         private void TrainToolStripMenuItemClick(object sender, EventArgs e)
         {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    #region 학습 Option Info 가져오기
+                    JObject trainOptions = new JObject();
+                    trainOptions = WorkSpaceData.m_activeProjectMainger.GetTrainInfo(trainOptions);
+                    #endregion 
 
+                    #region 학습 이미지 정보 가져오기
+                    JObject trainImageData = new JObject();
+                    trainImageData = WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(trainImageData);
+                    #endregion
+
+                    #region 학습 정보 넣어주기
+                    this.TrainForm.ClassificationPushTrainData(
+                        (JObject)trainOptions.DeepClone(),
+                        (JObject)trainImageData.DeepClone(),
+                        WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectTask,
+                        "Train",
+                        WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString(),
+                        WorkSpaceData.m_activeProjectMainger.m_activeProjectName,
+                        WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName);
+                    #endregion
+                }
+        }
+
+        private void TrainToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            this.TrainForm.Show();
         }
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
@@ -932,10 +969,9 @@ namespace ProjectAI.MainForms
                 string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
 
                 if (data != null)
-                    using (Image image = Image.FromFile(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data)))
-                    {
-                        pictureBox1.Image = (Image)image.Clone();
-                    }
+                {
+                    pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
+                }
             }
             catch
             {
@@ -1020,6 +1056,8 @@ namespace ProjectAI.MainForms
                 if( MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                     this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
+
+
     }
 }
 

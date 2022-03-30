@@ -49,7 +49,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
             this.UISetContinualLearningInnerModelSelecter(); // Data Grid View setup
             this.UISetModelUpdater(); // Model Info Updataer - 내부 모델 정보 불러오기
             this.UISetChartSetting(); // 선택된 모델 차트 그리기
-
         }
 
 

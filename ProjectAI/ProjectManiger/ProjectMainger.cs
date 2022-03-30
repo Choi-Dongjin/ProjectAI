@@ -22,6 +22,8 @@ namespace ProjectAI
     /// </summary>
     public struct HardwareInformation
     {
+
+
         /// <summary>
         /// Hardware Information 하드웨어 정보 가져오기
         /// </summary>
@@ -207,7 +209,11 @@ namespace ProjectAI
         /// <summary>
         /// workSpaceEarlyData Jobject 관리
         /// </summary>
-        public static JObject workSpaceEarlyDataJobject = new JObject();
+        public static JObject workSpaceEarlyDataJobject;
+        /// <summary>
+        /// Train System Jobject 관리
+        /// </summary>
+        public static JObject m_trainFormJobject;
 
         /// <summary>
         /// Program Wokr Space 경로
@@ -217,6 +223,10 @@ namespace ProjectAI
         /// ProgramWokr Space Optin File 경로
         /// </summary>
         public static string m_workSpacDataFilePath = Path.Combine(ProgramVariables.m_programWokrSpacePath, "workspacesdata.Json");
+        /// <summary>
+        /// Train System Json 파일 관리
+        /// </summary>
+        public static string m_trainFormPath = Path.Combine(ProgramVariables.m_programWokrSpacePath, "TrainSystem.Json");
 
         /// <summary>
         /// ProgramVariables즉 StartForm, StartFormOptions에서 ProgramVariables값에 해당하는 값이 변경되면 호출 
@@ -349,6 +359,11 @@ namespace ProjectAI
         public string m_activeInnerProjectName = null;
 
         /// <summary>
+        /// 활성화된 네임스페이스 내의 활성화된 프로젝트 Task Type 저장 "Classification, Segmentation, ObjectDetection"
+        /// </summary>
+        public string m_activeInnerProjectTask = null;
+
+        /// <summary>
         /// 활성화된 네임스페이스 이미지 리스트 관리 자료 경로
         /// </summary>
         public string m_pathActiveProjectDataImageList;
@@ -401,6 +416,11 @@ namespace ProjectAI
         /// 활성화된 네임스페이스 Class 프로젝트 정보 관리 자료 자료
         /// </summary>
         public JObject m_activeProjectCalssInfoJObject;
+
+        /// <summary>
+        /// 활성화된 네임스페이스 waitingProsecce 폴더 경로
+        /// </summary>
+        public string m_pathActiveProjectWaitingProcess;
 
         /*
          * m_activeProjectImageListJObject;
@@ -547,16 +567,20 @@ namespace ProjectAI
             this.m_pathActiveProjectInfo = Path.Combine(this.m_pathActiveProject, "data", "ActiveProjectInfo.Json");
 
             this.m_pathActiveProjectCalssInfo = Path.Combine(this.m_pathActiveProject, "data", "ClassInfo.Json");
+     
+            this.m_pathActiveProjectWaitingProcess = Path.Combine(this.m_pathActiveProject, "waitingProsecce");
 
             
             this.m_projectFolderList.Add(this.m_pathActiveProjectData);
             this.m_projectFolderList.Add(this.m_pathActiveProjectModel);
             this.m_projectFolderList.Add(this.m_pathActiveProjectImage);
+            this.m_projectFolderList.Add(this.m_pathActiveProjectWaitingProcess);
 
             this.m_jsonFileList.Add(this.m_pathActiveProjectDataImageList);
             this.m_jsonFileList.Add(this.m_pathActiveProjectDataImageListData);
             this.m_jsonFileList.Add(this.m_pathActiveProjectModelInfo);
             this.m_jsonFileList.Add(this.m_pathActiveProjectInfo);
+            this.m_jsonFileList.Add(this.m_pathActiveProjectCalssInfo);
         }
 
         /// <summary>
@@ -1295,6 +1319,7 @@ namespace ProjectAI
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
                 {
                     this.m_activeInnerProjectName = button.Name; // 활성화된 프로젝트 등록
+                    this.m_activeInnerProjectTask = "Classification";
                     bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
                     bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
 
@@ -1348,12 +1373,14 @@ namespace ProjectAI
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
                 {
                     this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+                    this.m_activeInnerProjectTask = "Segmentation";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
                 {
                     this.m_activeInnerProjectName = button.Name; // 활성화된 함수 적용
+                    this.m_activeInnerProjectTask = "ObjectDetection";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
                 }
@@ -2385,6 +2412,74 @@ namespace ProjectAI
             MetroFramework.Controls.MetroTile deleteButton = this.m_activeInnerProjectButton[deleteInnerProjectName]; // 삭제할 버튼 불러오기
             this.m_activeInnerProjectButton.Remove(deleteInnerProjectName); // 삭제할 버튼 관리 변수에서 삭제
             this.MainForm.panelProjectInfo.Controls.Remove(deleteButton); // 삭제할 버튼 Main Fomes에 컨트롤 삭제
+        }
+
+        /// <summary>
+        /// Options 가져오기
+        /// </summary>
+        /// <returns></returns>
+        public JObject GetTrainInfo(JObject trainOptions)
+        {
+            if (this.m_activeInnerProjectTask == "Classification")
+            {
+                trainOptions = this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName].GetTrainOptions(trainOptions); // Train 옵션 값 가져오기
+            }
+            else if (this.m_activeInnerProjectTask == "Segmentation")
+            {
+
+            }
+            else if (this.m_activeInnerProjectTask == "ObjectDetection")
+            {
+
+            }
+            return trainOptions;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="trainData"></param>
+        /// <returns></returns>
+        public JObject GetTrainData(JObject trainData)
+        {
+            if (this.m_activeInnerProjectTask == "Classification")
+            {
+                
+            }
+            else if (this.m_activeInnerProjectTask == "Segmentation")
+            {
+
+            }
+            else if (this.m_activeInnerProjectTask == "ObjectDetection")
+            {
+
+            }
+            return trainData;
+        }
+        /// <summary>
+        /// 학습에 사용할 이미지 데이터 정보 출력 -> Image 이름, 이미지 경로 정보, 이미지 Labeled 정보만 TrainForm에 넘겨주면 TrainForms에서 알맞은 라벨링 정보 색인 하기
+        /// </summary>
+        /// <param name="trainData"></param>
+        /// <returns></returns>
+        public JObject GetTrainDataClassification(JObject trainData)
+        {
+            
+            foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
+            {
+                if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
+                {
+                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
+                    {
+                        JObject jObject = new JObject
+                        {
+                            ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
+                            ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
+                        };
+                        trainData[imageData.Name] = jObject;
+                    }
+                }
+            }
+            return trainData;
         }
     }
 }
