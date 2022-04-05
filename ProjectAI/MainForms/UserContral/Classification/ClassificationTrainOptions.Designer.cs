@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassificationTrainOptions));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -41,7 +41,7 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.lblMnetworkModel = new MetroFramework.Controls.MetroLabel();
-            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+            this.cbbArchitecture = new MetroFramework.Controls.MetroComboBox();
             this.cbbManetworkModel = new MetroFramework.Controls.MetroComboBox();
             this.lblMepochNumber = new MetroFramework.Controls.MetroLabel();
             this.lblMmodelMinimumSelectionEpoch = new MetroFramework.Controls.MetroLabel();
@@ -180,6 +180,7 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel1);
             this.flowLayoutPanel1.Controls.Add(this.tlpContinualLearning);
@@ -213,7 +214,7 @@
             this.tableLayoutPanel2.Controls.Add(this.metroLabel2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.metroLabel3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblMnetworkModel, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.metroComboBox1, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cbbArchitecture, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.cbbManetworkModel, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.lblMepochNumber, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.lblMmodelMinimumSelectionEpoch, 0, 5);
@@ -311,18 +312,18 @@
             this.lblMnetworkModel.Text = "Network Model";
             this.lblMnetworkModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroComboBox1
+            // cbbArchitecture
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.metroComboBox1, 4);
-            this.metroComboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 23;
-            this.metroComboBox1.Location = new System.Drawing.Point(121, 36);
-            this.metroComboBox1.Margin = new System.Windows.Forms.Padding(1);
-            this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(98, 29);
-            this.metroComboBox1.TabIndex = 4;
-            this.metroComboBox1.UseSelectable = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.cbbArchitecture, 4);
+            this.cbbArchitecture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbArchitecture.FormattingEnabled = true;
+            this.cbbArchitecture.ItemHeight = 23;
+            this.cbbArchitecture.Location = new System.Drawing.Point(121, 36);
+            this.cbbArchitecture.Margin = new System.Windows.Forms.Padding(1);
+            this.cbbArchitecture.Name = "cbbArchitecture";
+            this.cbbArchitecture.Size = new System.Drawing.Size(98, 29);
+            this.cbbArchitecture.TabIndex = 4;
+            this.cbbArchitecture.UseSelectable = true;
             // 
             // cbbManetworkModel
             // 
@@ -542,8 +543,8 @@
             // 
             // button1
             // 
-            this.button1.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft1;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(120, 97);
@@ -555,8 +556,8 @@
             // 
             // button2
             // 
-            this.button2.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight1;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Location = new System.Drawing.Point(200, 97);
@@ -882,6 +883,7 @@
             this.tilMBlur.Size = new System.Drawing.Size(18, 18);
             this.tilMBlur.TabIndex = 4;
             this.tilMBlur.UseSelectable = true;
+            this.tilMBlur.Click += new System.EventHandler(this.TilMBlurClick);
             // 
             // metroTile5
             // 
@@ -1440,28 +1442,30 @@
             // 
             // dgvMContinualLearning
             // 
+            this.dgvMContinualLearning.AllowUserToAddRows = false;
+            this.dgvMContinualLearning.AllowUserToDeleteRows = false;
             this.dgvMContinualLearning.AllowUserToResizeRows = false;
             this.dgvMContinualLearning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvMContinualLearning.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
             this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -1471,14 +1475,14 @@
             this.dgvMContinualLearning.Name = "dgvMContinualLearning";
             this.dgvMContinualLearning.ReadOnly = true;
             this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMContinualLearning.RowHeadersVisible = false;
             this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMContinualLearning.RowTemplate.Height = 23;
@@ -1718,15 +1722,12 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroLabel lblMnetworkModel;
-        private MetroFramework.Controls.MetroComboBox metroComboBox1;
-        private MetroFramework.Controls.MetroComboBox cbbManetworkModel;
         private MetroFramework.Controls.MetroLabel lblMepochNumber;
         private MetroFramework.Controls.MetroLabel lblMmodelMinimumSelectionEpoch;
         private MetroFramework.Controls.MetroLabel lblMtrainRepeat;
         private MetroFramework.Controls.MetroLabel lblMvalidationRatio;
         private MetroFramework.Controls.MetroLabel lblMpatienceEpochs;
         private MetroFramework.Controls.MetroLabel lblMTrainDataNumber;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroTile tilZoom;
         private MetroFramework.Controls.MetroTile metroTile28;
         private MetroFramework.Controls.MetroTile tilSharpen;
@@ -1749,34 +1750,16 @@
         private MetroFramework.Controls.MetroTile metroTile5;
         private MetroFramework.Controls.MetroTile metroTile6;
         private MetroFramework.Controls.MetroTile tilMGradation;
-        private MetroFramework.Controls.MetroCheckBox ckbMHorizontalFlip;
-        private MetroFramework.Controls.MetroCheckBox ckbMBlur;
-        private MetroFramework.Controls.MetroCheckBox ckbMContrast;
-        private MetroFramework.Controls.MetroCheckBox ckbBrightness;
-        private MetroFramework.Controls.MetroCheckBox ckbMCenter;
-        private MetroFramework.Controls.MetroCheckBox ckbMGaussianNoise;
-        private MetroFramework.Controls.MetroCheckBox ckbMGradation;
-        private MetroFramework.Controls.MetroCheckBox ckbGradationRGB;
-        private MetroFramework.Controls.MetroCheckBox ckbMRotation90;
-        private MetroFramework.Controls.MetroCheckBox ckbMRotation180;
-        private MetroFramework.Controls.MetroCheckBox ckbMRotation270;
-        private MetroFramework.Controls.MetroCheckBox ckbMSharpen;
-        private MetroFramework.Controls.MetroCheckBox ckbMVerticalFlip;
-        private MetroFramework.Controls.MetroCheckBox ckbMZoom;
         private MetroFramework.Controls.MetroLabel lblMDataAugmentation;
         private System.Windows.Forms.TableLayoutPanel tlpContinualLearning;
         private MetroFramework.Controls.MetroLabel lblMContinualLearning;
-        private MetroFramework.Controls.MetroToggle togMContinualLearning;
         private System.Windows.Forms.Panel panelContinualLearning;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private MetroFramework.Controls.MetroLabel lblMClassWeight;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private MetroFramework.Controls.MetroLabel lblMInstantEvaluate;
-        private MetroFramework.Controls.MetroToggle togMInstantEvaluate;
         private System.Windows.Forms.Panel panelInstantEvaluate;
-        private System.Windows.Forms.TextBox txtMmodelMinimumSelectionEpoch;
         private System.Windows.Forms.Panel panelUnderbar2;
-        private System.Windows.Forms.TextBox txtPatienceEpochs;
         private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private System.Windows.Forms.Panel panelUnderbar5;
@@ -1784,10 +1767,6 @@
         private System.Windows.Forms.Panel panelUnderbar1;
         private System.Windows.Forms.Panel panelUnderbar4;
         private System.Windows.Forms.Panel panelUnderbar6;
-        private System.Windows.Forms.TextBox txtEpochNumber;
-        private System.Windows.Forms.TextBox txtTrainRepeat;
-        private System.Windows.Forms.TextBox txtValidationRatio;
-        private System.Windows.Forms.TextBox txtTrainDataNumber;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel3;
@@ -1801,25 +1780,50 @@
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.TextBox txtBrightnessMin;
-        private System.Windows.Forms.TextBox txtBrightnessMax;
-        private System.Windows.Forms.TextBox txtCenter;
-        private System.Windows.Forms.TextBox txtContrastMin;
-        private System.Windows.Forms.TextBox txtContrastMax;
-        private System.Windows.Forms.TextBox txtGaussianNoise;
-        private System.Windows.Forms.TextBox txtGradation;
-        private System.Windows.Forms.TextBox txtSharpen;
-        private System.Windows.Forms.TextBox txtZoomMin;
-        private System.Windows.Forms.TextBox txtZoomMax;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox txtBlur;
-        private MetroFramework.Controls.MetroPanel panelMClassWeight;
         private ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl1;
         private System.Windows.Forms.TableLayoutPanel tlpInstantEvaluate;
-        private MetroFramework.Controls.MetroTile tilMInstantEvaluateTest;
-        private MetroFramework.Controls.MetroTile tilMInstantEvaluateTrain;
-        private MetroFramework.Controls.MetroTile tilMInstantEvaluateAll;
         private MetroFramework.Controls.MetroPanel panelMBlurToolTip;
-        private MetroFramework.Controls.MetroGrid dgvMContinualLearning;
+        internal System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        internal MetroFramework.Controls.MetroToggle togMContinualLearning;
+        internal MetroFramework.Controls.MetroToggle togMInstantEvaluate;
+        internal System.Windows.Forms.TextBox txtMmodelMinimumSelectionEpoch;
+        internal System.Windows.Forms.TextBox txtPatienceEpochs;
+        internal System.Windows.Forms.TextBox txtEpochNumber;
+        internal System.Windows.Forms.TextBox txtTrainRepeat;
+        internal System.Windows.Forms.TextBox txtValidationRatio;
+        internal System.Windows.Forms.TextBox txtTrainDataNumber;
+        internal System.Windows.Forms.TextBox txtBrightnessMin;
+        internal System.Windows.Forms.TextBox txtBrightnessMax;
+        internal System.Windows.Forms.TextBox txtCenter;
+        internal System.Windows.Forms.TextBox txtContrastMin;
+        internal System.Windows.Forms.TextBox txtContrastMax;
+        internal System.Windows.Forms.TextBox txtGaussianNoise;
+        internal System.Windows.Forms.TextBox txtGradation;
+        internal System.Windows.Forms.TextBox txtSharpen;
+        internal System.Windows.Forms.TextBox txtZoomMin;
+        internal System.Windows.Forms.TextBox txtZoomMax;
+        internal System.Windows.Forms.TextBox txtBlur;
+        internal MetroFramework.Controls.MetroPanel panelMClassWeight;
+        internal MetroFramework.Controls.MetroTile tilMInstantEvaluateTest;
+        internal MetroFramework.Controls.MetroTile tilMInstantEvaluateTrain;
+        internal MetroFramework.Controls.MetroTile tilMInstantEvaluateAll;
+        internal MetroFramework.Controls.MetroGrid dgvMContinualLearning;
+        internal MetroFramework.Controls.MetroComboBox cbbManetworkModel;
+        internal MetroFramework.Controls.MetroComboBox cbbArchitecture;
+        internal MetroFramework.Controls.MetroCheckBox ckbMHorizontalFlip;
+        internal MetroFramework.Controls.MetroCheckBox ckbMBlur;
+        internal MetroFramework.Controls.MetroCheckBox ckbMContrast;
+        internal MetroFramework.Controls.MetroCheckBox ckbBrightness;
+        internal MetroFramework.Controls.MetroCheckBox ckbMCenter;
+        internal MetroFramework.Controls.MetroCheckBox ckbMGaussianNoise;
+        internal MetroFramework.Controls.MetroCheckBox ckbMGradation;
+        internal MetroFramework.Controls.MetroCheckBox ckbGradationRGB;
+        internal MetroFramework.Controls.MetroCheckBox ckbMRotation90;
+        internal MetroFramework.Controls.MetroCheckBox ckbMRotation180;
+        internal MetroFramework.Controls.MetroCheckBox ckbMRotation270;
+        internal MetroFramework.Controls.MetroCheckBox ckbMSharpen;
+        internal MetroFramework.Controls.MetroCheckBox ckbMVerticalFlip;
+        internal MetroFramework.Controls.MetroCheckBox ckbMZoom;
     }
 }

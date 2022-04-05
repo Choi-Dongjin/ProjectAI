@@ -136,6 +136,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
                             classNameList.Reverse();
                             this.panelMClassWeight.Controls.Clear(); // 판넬 컨트롤 초기화(비우기)
+                            this.classWeightControls = new Dictionary<string, ProjectAI.MainForms.UserContral.Classification.ClassWeightControl>();
                             for (int i = classNameList.Count - 1; i >= 0; i--)
                             {
                                 Color classColor = ColorTranslator.FromHtml(WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][classNameList[i]]["string_classColor"].ToString());
@@ -161,6 +162,18 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.panelMClassWeight.Controls.Clear();
         }
 
+        public void UISetupClassWeighContralAddManual(int index, string className, Color classColor)
+        {
+            ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = this.UISetclassWeightControl(index, className, classColor); // 설정된 ClassWeightControl 가져오기
+            // panel에 추가
+            this.panelMClassWeight.Controls.Add(classWeightControl);
+        }
+
+        public void UISetupClassWeighContralResetManual()
+        {
+            this.panelMClassWeight.Controls.Clear(); // 판넬 컨트롤 초기화(비우기)
+        }
+
         /// <summary>
         /// Train Number 업데이터
         /// </summary>
@@ -175,7 +188,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
         }
 
-
         /// <summary>
         /// String { } 으로 감싸주는 함수
         /// </summary>
@@ -185,7 +197,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             return ("{" + data + "}");
         }
-
 
         #region Trian Options 설정
         /// <summary>
@@ -308,7 +319,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                  * 2. Image Size
                  */
                 // Batch Size 설정 
-                ["int_BatchSize"] = "4",
+                ["int_BatchSize"] = "2",
                 // Start Learning rate 설정
                 ["double_StartLearningrate"] = "1e-3",
                 // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
@@ -344,7 +355,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             {
                 // Trian Options 사용 안함 
                 // Pretrained (학습된 데이터 이용하기)
-                ["double_Pretrained"] = "1e-10"
+                ["double_Pretrained"] = ""
             };
 
             // BringTrainOptionNotDefine 옵션 추가
@@ -379,7 +390,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             return TrainOptionData;
         }
         #endregion Trian Options 설정
-
 
         #region Data Augmentation (데이터 증강) 설정
         /// <summary>
@@ -734,9 +744,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         #endregion Data Augmentation (데이터 증강) 설정
 
-
         #region Continual Learning (이어 학습하기 옵션) 설정
-        private string m_continualLearningPath = null;
+        private string m_continualLearningPath = "";
+        private string m_continualLearningModelName = "";
+        private string m_continualLearningModelLoss = "";
+        private string m_continualLearningModelAccuracy = "";
+        private string m_continualLearningModelEscape = "";
+        private string m_continualLearningModelOverKill = "";
         /// <summary>
         /// Data Grid View 설정
         /// </summary>
@@ -803,7 +817,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                         modelList.Add(modelName);
 
                     int version = Convert.ToInt32(this.dgvMContinualLearning.Rows[e.RowIndex].Cells[0].Value.ToString()) - 1; // 호출하는 모델 버전 정보 가져오기
-                    string selectModelName = modelList[version]; // 선탣된 모델 관리 이름
+
+                    string selectModelName = modelList[version]; // 선택된 모델 관리 이름
+
                     using (ProjectAI.MainForms.UserContral.Classification.ContinualLearningInnerModelSelecter continualLearningInnerModelSelecter = new ProjectAI.MainForms.UserContral.Classification.ContinualLearningInnerModelSelecter(selectModelName)) // 내부 모델 선택 폼 호출
                     {
                         // Using으로 호출해서 사용후 삭제 되도록 호출
@@ -819,7 +835,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                         // 1. Inner Model Path 가져오기
                         this.m_continualLearningPath = continualLearningInnerModelSelecter.GetModelPath(); // Inner Model Path 가져오기
                         // 2. Inner Model Name 가져오기
-                        string innerModelName = continualLearningInnerModelSelecter.GetModelName();
+                        this.m_continualLearningModelName = continualLearningInnerModelSelecter.GetModelName();
+                        // 2-1. Inner Model 정보 가져오기
+                        this.m_continualLearningModelLoss = continualLearningInnerModelSelecter.GetModelLoss();
+                        this.m_continualLearningModelAccuracy = continualLearningInnerModelSelecter.GetModelAccuracy();
+                        this.m_continualLearningModelEscape = continualLearningInnerModelSelecter.GetModelEscape();
+                        this.m_continualLearningModelOverKill = continualLearningInnerModelSelecter.GetModelOverKill();
+
                         // 3. Model Learning Info 데이터 가져오기
                         string selectedNetworkModel = WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["ModelLearningInfo"]["TrainOptionManual"]["string_NetworkModel"].ToString();
                         // 4. lblMnetworkModel에 모델 사이즈 적용하기
@@ -828,6 +850,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                             this.cbbManetworkModel.PromptText = "Small";
                             this.cbbManetworkModel.Text = "Small";
                         }  
+
                         else if (selectedNetworkModel == "SynapseNet_Classification_34")
                         {
                             this.cbbManetworkModel.PromptText = "Medium";
@@ -883,9 +906,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             if (togMContinualLearning.Checked) // 활성화 여부 확인
             {
-                if (this.m_continualLearningPath != null || this.m_continualLearningPath.Length == 0)
+                if (this.m_continualLearningPath != null)
                 {
-                    jObject["string_ContinualLearning"] = this.m_continualLearningPath; // DNN file path to Load from and save to ('default'=>autogenaration, 'new'=>file recreation)
+                    jObject["string_ContinualLearning"] = "default";
+                    if (this.m_continualLearningPath.Length == 0)
+                        jObject["string_ContinualLearning"] = this.m_continualLearningPath; // DNN file path to Load from and save to ('default'=>autogenaration, 'new'=>file recreation)
                 }
                 else
                 {
@@ -897,6 +922,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.m_continualLearningPath = null;
                 jObject["string_ContinualLearning"] = "default";
             }
+
+            jObject["string_ContinualLearningModelName"] = this.m_continualLearningModelName; // 
+            jObject["string_ContinualLearningModelLoss"] = this.m_continualLearningModelLoss; // 
+            jObject["string_ContinualLearningModelAccuracy"] = this.m_continualLearningModelAccuracy; // 
+            jObject["string_ContinualLearningModelEscape"] = this.m_continualLearningModelEscape; //
+            jObject["string_ContinualLearningModelOverKill"] = this.m_continualLearningModelOverKill; //
 
             ContinualLearningData["ContinualLearning"] = jObject;
 
@@ -1079,5 +1110,10 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
 
         #endregion ToolTip 설정
+
+        private void TilMBlurClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -12,6 +12,9 @@ using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace ProjectAI.MainForms.UserContral.Monitoring
 {
@@ -71,6 +74,11 @@ namespace ProjectAI.MainForms.UserContral.Monitoring
             this.UISetClassInfoInput(this.dgvMClassInfo);
             this.dgvMClassInfo.ClearSelection();
         }
+        public void UpdateClassInfo(JObject classInfo)
+        {
+            this.UISetClassInfoInput(this.dgvMClassInfo, classInfo);
+            this.dgvMClassInfo.ClearSelection();
+        }
 
         /// <summary>
         /// Class View에 정보 입력 하기
@@ -110,6 +118,11 @@ namespace ProjectAI.MainForms.UserContral.Monitoring
                     }
                 }
             }
+        }
+
+        private void UISetClassInfoInput(MetroFramework.Controls.MetroGrid metroGrid, JObject classInfo)
+        {
+
         }
 
         private void DgvMClassInfoCellClick(object sender, DataGridViewCellEventArgs e)

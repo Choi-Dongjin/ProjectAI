@@ -74,6 +74,47 @@ namespace ProjectAI
         }
 
         /// <summary>
+        /// 폴더내 파일 검색
+        /// </summary>
+        /// <param name="dirPath"> 대상 경로 </param>
+        /// <param name="getFileNameMode"> "Full", "Name" </param>
+        /// <returns></returns>
+        public static List<string> DirFileSerch(string dirPath, string getFileNameMode)
+        {
+            List<string> fileList = new List<string>();
+            bool fileNameModeBool;
+
+            if (getFileNameMode == "Full")
+            {
+                fileNameModeBool = true;
+            }
+            else if (getFileNameMode == "Name")
+            {
+                fileNameModeBool = false;
+            }
+            else
+            {
+                fileNameModeBool = false;
+            }
+
+            DirectoryInfo di = new DirectoryInfo(dirPath);
+            if (fileNameModeBool)
+                foreach (FileInfo fileInfo in di.GetFiles())
+                {
+                    fileList.Add(fileInfo.FullName);
+                }
+
+            else
+            {
+                foreach (FileInfo fileInfo in di.GetFiles())
+                {
+                    fileList.Add(fileInfo.Name);
+                }
+            }
+            return fileList;
+        }
+
+        /// <summary>
         /// 폴더 사이즈 계산
         /// </summary>
         /// <param name="forderName"> 확인 경로 </param>

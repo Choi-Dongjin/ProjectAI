@@ -1369,6 +1369,10 @@ namespace ProjectAI
 
                     // panelDataReview 설정
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);
+
+                    // Model 정보 업데이트
+                    TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
+                    trainForm.UpdateModelView();
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")
                 {
@@ -2338,60 +2342,63 @@ namespace ProjectAI
             foreach (string imageName in imageNames)
             {
                 // 2-1. Label 데이터 관현 사항 수정 -> Class Info
-                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null)
+                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName] != null)
                 {
-                    string labelName = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString();
+                    if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null)
+                    {
+                        string labelName = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString();
 
-                    // 2-1-1 ClassInfo -> Class Train Number, int_classImageTrainNumber 감소
+                        // 2-1-1 ClassInfo -> Class Train Number, int_classImageTrainNumber 감소
+                        if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                            if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"].ToString(), out bool parseConfirm))
+                                if (parseConfirm)// Class Train Number 감소
+                                    this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTrainNumber"] =
+                                        Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTrainNumber"]) - 1;
+                        // 2-1-2 ClassInfo -> Class Test Number, int_classImageTestNumber 감소
+                        if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
+                            if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"].ToString(), out bool parseConfirm))
+                                if (parseConfirm) // Class Test Number 감소
+                                    this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTestNumber"] =
+                                        Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTestNumber"]) - 1;
+                        // 2-1-3 ClassInfo -> Class Validation Number, int_classImageValidationNumber 감소
+                        if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
+                            if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"].ToString(), out bool parseConfirm))
+                                if (parseConfirm) // Class Validation Number 감소
+                                    this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageValidationNumber"] =
+                                        Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageValidationNumber"]) - 1;
+                    }
+
+                    // 2-2. DataSet 관련 사항 수정 -> ActiveProjectInfo
+                    // 2-2-1 ActiveProjectInfo -> Train Data 관련 사항 수정
                     if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
                         if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"].ToString(), out bool parseConfirm))
-                            if (parseConfirm)// Class Train Number 감소
-                                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTrainNumber"] =
-                                    Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTrainNumber"]) - 1;
-                    // 2-1-2 ClassInfo -> Class Test Number, int_classImageTestNumber 감소
+                            if (parseConfirm)
+                            {
+                                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"] =
+                                    Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
+                                this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] = false; // DataSet 초기화
+                            }
+
+                    // 2-2-2 ActiveProjectInfo -> Test Data 관련 사항 수정
                     if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
                         if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"].ToString(), out bool parseConfirm))
-                            if (parseConfirm) // Class Test Number 감소
-                                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTestNumber"] =
-                                    Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageTestNumber"]) - 1;
-                    // 2-1-3 ClassInfo -> Class Validation Number, int_classImageValidationNumber 감소
+                            if (parseConfirm)
+                            {
+                                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"] =
+                                    Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
+                                this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] = false; // DataSet 초기화
+                            }
+
+                    // 2-2-3 ActiveProjectInfo -> Validation Data 관련 사항 수정
                     if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
                         if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"].ToString(), out bool parseConfirm))
-                            if (parseConfirm) // Class Validation Number 감소
-                                this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageValidationNumber"] =
-                                    Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][labelName]["int_classImageValidationNumber"]) - 1;
+                            if (parseConfirm)
+                            {
+                                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageValidationNumber"] =
+                                    Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageValidationNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
+                                this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["int_imageValidationNumber"] = false; // DataSet 초기화
+                            }
                 }
-
-                // 2-2. DataSet 관련 사항 수정 -> ActiveProjectInfo
-                // 2-2-1 ActiveProjectInfo -> Train Data 관련 사항 수정
-                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
-                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"].ToString(), out bool parseConfirm))
-                        if (parseConfirm) 
-                        {
-                            this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"] =
-                                Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
-                            this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] = false; // DataSet 초기화
-                        }
-                            
-                // 2-2-2 ActiveProjectInfo -> Test Data 관련 사항 수정
-                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
-                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"].ToString(), out bool parseConfirm))
-                        if (parseConfirm) 
-                        {
-                            this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"] =
-                                Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
-                            this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] = false; // DataSet 초기화
-                        }
-                            
-                // 2-2-3 ActiveProjectInfo -> Validation Data 관련 사항 수정
-                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
-                    if (Boolean.TryParse(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"].ToString(), out bool parseConfirm))
-                        if (parseConfirm) 
-                        {
-                            this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageValidationNumber"] =
-                                Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageValidationNumber"]) - 1; // ActivateProjectInco -> int_imageTrainNumber 감소
-                            this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["int_imageValidationNumber"] = false; // DataSet 초기화
-                        }     
             }
             // 3. 변경된 UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트

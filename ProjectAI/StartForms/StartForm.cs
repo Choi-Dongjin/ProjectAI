@@ -41,11 +41,6 @@ namespace ProjectAI
         }
 
         /// <summary>
-        /// MainForm 호출
-        /// </summary>
-        private ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
-
-        /// <summary>
         /// StartFormOptions 호출
         /// </summary>
         private ProjectAI.StartForms.StartFormOptions StartFormOptions = ProjectAI.StartForms.StartFormOptions.GetInstance();
@@ -289,7 +284,11 @@ namespace ProjectAI
 
         private void ButtonStartClick(object sender, EventArgs e)
         {
-            this.MainForm.Show();
+            /// <summary>
+            /// MainForm 호출
+            /// </summary>
+            ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
+            MainForm.Show();
             //Hiding the window, because closing it makes the window unaccessible.
             //this.Hide();
             //this.Parent = null;
