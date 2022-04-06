@@ -1040,14 +1040,83 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private void SetToolTip()
         {
             MetroFramework.Components.MetroToolTip metroToolTip = new MetroFramework.Components.MetroToolTip();
+
+            //Blur
             metroToolTip.Popup += BlurToolTipPopup;
             metroToolTip.Draw += BlurToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMBlurToolTip, "Blur");
 
-            metroToolTip.SetToolTip(this.panelMBlurToolTip, "sesesesses");
+            //Brightness
+            metroToolTip.Popup += BrightnessToolTipPopup;
+            metroToolTip.Draw += BrightnessToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMBrightnessToolTip, "Brightness");
+
+            //Center
+            metroToolTip.Popup += CenterToolTipPopup;
+            metroToolTip.Draw += CenterToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMCenterToolTip, "Center");
+
+            //Contrast
+            metroToolTip.Popup += ContrastToolTipPopup;
+            metroToolTip.Draw += ContrastToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMContrastToolTip, "Contrast");
+
+            //GaussianNoise
+            metroToolTip.Popup += GaussianNoiseToolTipPopup;
+            metroToolTip.Draw += GaussianNoiseToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGaussianNoiseToolTip, "GaussianNoise");
+
+            //Gradation
+            metroToolTip.Popup += GradationToolTipPopup;
+            metroToolTip.Draw += GradationToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGradationToolTip, "Gradation");
+
+            //GradationRGB
+            metroToolTip.Popup += GradationRGBToolTipPopup;
+            metroToolTip.Draw += GradationRGBToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGradationRGBToolTip, "GradationRGB");
+
+            //HorizontalFlip
+            metroToolTip.Popup += HorizontalFlipToolTipPopup;
+            metroToolTip.Draw += HorizontalFlipToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMHorizontalFlipToolTip, "HorizontalFlip");
+
+            //Rotation90
+            metroToolTip.Popup += Rotation90ToolTipPopup;
+            metroToolTip.Draw += Rotation90ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation90ToolTip, "Rotation90");
+
+            //Rotation180
+            metroToolTip.Popup += Rotation180ToolTipPopup;
+            metroToolTip.Draw += Rotation180ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation180ToolTip, "Rotation180");
+
+            //Rotation270
+            metroToolTip.Popup += Rotation270ToolTipPopup;
+            metroToolTip.Draw += Rotation270ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation270ToolTip, "Rotation270");
+
+            //Sharpen
+            metroToolTip.Popup += SharpenToolTipPopup;
+            metroToolTip.Draw += SharpenToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMSharpenToolTip, "Sharpen");
+
+            //VerticalFlip
+            metroToolTip.Popup += VerticalFlipToolTipPopup;
+            metroToolTip.Draw += VerticalFlipToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMVerticalFlipToolTip, "VerticalFlip");
+
+            //Zoom
+            metroToolTip.Popup += ZoomToolTipPopup;
+            metroToolTip.Draw += ZoomToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMZoomToolTip, "Zoom");
         }
+        #endregion ToolTip 설정
+
+        #region Blur
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
+            Image image = Image.FromFile(@"C:\example.gif");
             int MARGIN = 3;
 
             int imageWidth = 2 * MARGIN + image.Width;
@@ -1062,7 +1131,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
 
-            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
+            Image image = Image.FromFile(@"C:\example.gif");
             int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
@@ -1077,7 +1146,462 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+        #endregion Blur
 
-        #endregion ToolTip 설정
+        #region Brightness
+        private void BrightnessToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void BrightnessToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Brightness
+
+        #region Center
+        private void CenterToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void CenterToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Center
+
+        #region Contrast
+        private void ContrastToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void ContrastToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Contrast
+
+        #region GaussianNoise
+        private void GaussianNoiseToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void GaussianNoiseToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion GaussianNoise
+
+        #region Gradation
+        private void GradationToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void GradationToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Gradation
+
+        #region GradationRGB
+        private void GradationRGBToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void GradationRGBToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion GradationRGB
+
+        #region HorizontalFlip
+        private void HorizontalFlipToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void HorizontalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion HorizontalFlip
+
+        #region Rotation90
+        private void Rotation90ToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void Rotation90ToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Rotation90
+
+        #region Rotation180
+        private void Rotation180ToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void Rotation180ToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Rotation180
+
+        #region Rotation270
+        private void Rotation270ToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void Rotation270ToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Rotation270
+
+        #region Sharpen
+        private void SharpenToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void SharpenToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Sharpen
+
+        #region VerticalFlip
+        private void VerticalFlipToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void VerticalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion VerticalFlip
+
+        #region Zoom
+        private void ZoomToolTipPopup(object sender, PopupEventArgs e)
+        {
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+
+            int imageWidth = 2 * MARGIN + image.Width;
+            int imageHeight = 2 * MARGIN + image.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            if (toolTipHeight < imageHeight)
+            {
+                toolTipHeight = imageHeight;
+            }
+            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+        }
+        private void ZoomToolTipDraw(object sender, DrawToolTipEventArgs e)
+        {
+
+            Image image = Image.FromFile(@"C:\example.gif");
+            int MARGIN = 3;
+            e.DrawBackground(); e.DrawBorder();
+            e.Graphics.DrawImage(image, MARGIN, MARGIN);
+
+
+            using (StringFormat stringFormat = new StringFormat())
+            {
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                int imageWidth = 2 * MARGIN + image.Width;
+                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
+                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
+            }
+        }
+        #endregion Zoom
+
     }
 }
