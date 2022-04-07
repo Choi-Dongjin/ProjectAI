@@ -370,6 +370,7 @@
             this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
+            this.gridImageList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridImageList_CellClick);
             this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
             // 
             // cmsMImageListToolKit

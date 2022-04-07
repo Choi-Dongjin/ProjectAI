@@ -1056,6 +1056,13 @@ namespace ProjectAI.MainForms
                 if( MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                     this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
+
+        private void gridImageList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+            string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+            Console.WriteLine(data);
+        }
     }
 }
 

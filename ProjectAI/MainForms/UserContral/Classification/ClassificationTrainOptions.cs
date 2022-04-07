@@ -16,6 +16,7 @@ using MetroFramework.Components;
 using MetroFramework.Forms;
 
 using System.Management;
+using System.IO;
 
 namespace ProjectAI.CustomComponent.MainForms.Classification
 {
@@ -1085,15 +1086,76 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             MetroFramework.Components.MetroToolTip VerticalFlipmetroToolTip = new MetroFramework.Components.MetroToolTip();
             MetroFramework.Components.MetroToolTip ZoommetroToolTip = new MetroFramework.Components.MetroToolTip();
 
+
             //Blur
             BlurmetroToolTip.Popup += BlurToolTipPopup;
             BlurmetroToolTip.Draw += BlurToolTipDraw;
-            BlurmetroToolTip.SetToolTip(panelMBlurToolTip, "Blur");
+            BlurmetroToolTip.SetToolTip(this.panelMBlurToolTip, "Blur");
 
             //Brightness
             BrightnessmetroToolTip.Popup += BrightnessToolTipPopup;
             BrightnessmetroToolTip.Draw += BrightnessToolTipDraw;
-            BrightnessmetroToolTip.SetToolTip(panelMBlurToolTip, "Brightness");
+            BrightnessmetroToolTip.SetToolTip(this.panelMBrightnessToolTip, "Brightness");
+
+            //Center
+            CentermetroToolTip.Popup += CenterToolTipPopup;
+            CentermetroToolTip.Draw += CenterToolTipDraw;
+            CentermetroToolTip.SetToolTip(this.panelMCenterToolTip, "Center");
+
+            //Contrast
+            ContrastmetroToolTip.Popup += ContrastToolTipPopup;
+            ContrastmetroToolTip.Draw += ContrastToolTipDraw;
+            ContrastmetroToolTip.SetToolTip(this.panelMContrastToolTip, "Contrast");
+
+            //GaussianNoise
+            GaussianNoisemetroToolTip.Popup += GaussianNoiseToolTipPopup;
+            GaussianNoisemetroToolTip.Draw += GaussianNoiseToolTipDraw;
+            GaussianNoisemetroToolTip.SetToolTip(this.panelMGaussianNoiseToolTip, "GaussianNoise");
+
+            //Gradation
+            GradationmetroToolTip.Popup += GradationToolTipPopup;
+            GradationmetroToolTip.Draw += GradationToolTipDraw;
+            GradationmetroToolTip.SetToolTip(this.panelMGradationToolTip, "Gradation");
+
+            //GradationRGB
+            GradationRGBmetroToolTip.Popup += GradationRGBToolTipPopup;
+            GradationRGBmetroToolTip.Draw += GradationRGBToolTipDraw;
+            GradationRGBmetroToolTip.SetToolTip(this.panelMGradationRGBToolTip, "GradationRGB");
+
+            //HorizontalFlip
+            HorizontalFlipmetroToolTip.Popup += HorizontalFlipToolTipPopup;
+            HorizontalFlipmetroToolTip.Draw += HorizontalFlipToolTipDraw;
+            HorizontalFlipmetroToolTip.SetToolTip(this.panelMHorizontalFlipToolTip, "HorizontalFlip");
+
+            //Rotation90
+            Rotation90metroToolTip.Popup += Rotation90ToolTipPopup;
+            Rotation90metroToolTip.Draw += Rotation90ToolTipDraw;
+            Rotation90metroToolTip.SetToolTip(this.panelMRotation90ToolTip, "Rotation90");
+
+            //Rotation180
+            Rotation180metroToolTip.Popup += Rotation180ToolTipPopup;
+            Rotation180metroToolTip.Draw += Rotation180ToolTipDraw;
+            Rotation180metroToolTip.SetToolTip(this.panelMRotation180ToolTip, "Rotation180");
+
+            //Rotation270
+            Rotation270metroToolTip.Popup += Rotation270ToolTipPopup;
+            Rotation270metroToolTip.Draw += Rotation270ToolTipDraw;
+            Rotation270metroToolTip.SetToolTip(this.panelMRotation270ToolTip, "Rotation270");
+
+            //Sharpen
+            SharpenmetroToolTip.Popup += SharpenToolTipPopup;
+            SharpenmetroToolTip.Draw += SharpenToolTipDraw;
+            SharpenmetroToolTip.SetToolTip(this.panelMSharpenToolTip, "Sharpen");
+
+            //VerticalFlip
+            VerticalFlipmetroToolTip.Popup += VerticalFlipToolTipPopup;
+            VerticalFlipmetroToolTip.Draw += VerticalFlipToolTipDraw;
+            VerticalFlipmetroToolTip.SetToolTip(this.panelMVerticalFlipToolTip, "VerticalFlip");
+
+            //Zoom
+            ZoommetroToolTip.Popup += ZoomToolTipPopup;
+            ZoommetroToolTip.Draw += ZoomToolTipDraw;
+            ZoommetroToolTip.SetToolTip(this.panelMZoomToolTip, "Zoom");
         }
 
         #region Blur
@@ -1102,7 +1164,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             Image image = Image.FromFile(@"E:\Z2b_이미지\KakaoTalk_20220406_172401550.gif");
             //Bitmap image = CustomIOMainger.LoadBitmap(@"E:\Z2b_이미지\1.webp");
             int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1114,7 +1175,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
             Image image = Image.FromFile(@"C:\example.gif");
             int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
