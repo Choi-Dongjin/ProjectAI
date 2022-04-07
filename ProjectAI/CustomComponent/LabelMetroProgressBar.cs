@@ -3,10 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
-
 namespace ProjectAI.CustomComponent
 {
     public enum ProgressBarDisplayMode
@@ -27,6 +23,7 @@ namespace ProjectAI.CustomComponent
         public Font TextFont { get; set; } = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold);
 
         private SolidBrush _textColourBrush = (SolidBrush)Brushes.Black;
+
         [Category("Additional Options")]
         public Color TextColor
         {
@@ -42,6 +39,7 @@ namespace ProjectAI.CustomComponent
         }
 
         private SolidBrush _progressColourBrush = (SolidBrush)Brushes.LightGreen;
+
         [Category("Additional Options"), Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         public Color ProgressColor
         {
@@ -57,6 +55,7 @@ namespace ProjectAI.CustomComponent
         }
 
         private ProgressBarDisplayMode _visualMode = ProgressBarDisplayMode.CurrProgress;
+
         [Category("Additional Options"), Browsable(true)]
         public ProgressBarDisplayMode VisualMode
         {
@@ -98,12 +97,15 @@ namespace ProjectAI.CustomComponent
                     case (ProgressBarDisplayMode.Percentage):
                         text = PercentageStr;
                         break;
+
                     case (ProgressBarDisplayMode.CurrProgress):
                         text = CurrProgressStr;
                         break;
+
                     case (ProgressBarDisplayMode.TextAndCurrProgress):
                         text = $"{CustomText}: {CurrProgressStr}";
                         break;
+
                     case (ProgressBarDisplayMode.TextAndPercentage):
                         text = $"{CustomText}: {PercentageStr}";
                         break;
@@ -189,5 +191,4 @@ namespace ProjectAI.CustomComponent
 
         #endregion Events
     }
-
 }

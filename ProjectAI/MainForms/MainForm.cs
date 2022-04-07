@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using MetroFramework;
+﻿using MetroFramework;
 using MetroFramework.Components;
-using MetroFramework.Forms;
-
+using Newtonsoft.Json.Linq;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms
 {
@@ -44,26 +34,29 @@ namespace ProjectAI.MainForms
         /// Json File 관리 Class
         /// </summary>
         private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
+
         /// <summary>
         /// Forms 관리 Class
         /// </summary>
         private FormsManiger formsManiger = FormsManiger.GetInstance(); // Forms 관리 Class
+
         /// <summary>
         /// CustomIOManigerFoem 관리 Class
         /// </summary>
         private ProjectManiger.CustomIOManigerFoem CustomIOManigerFoem = ProjectManiger.CustomIOManigerFoem.GetInstance();
+
         /// <summary>
         /// TrainForm 호출
         /// </summary>
         private ProjectAI.TrainForms.TrainForm TrainForm;
 
-
         /// <summary>
-        /// Label TextBox 안전 접근 
+        /// Label TextBox 안전 접근
         /// </summary>
         /// <param name="textBox"> </param>
         /// <param name="text"></param>
         private delegate void SafeCallLabelText(System.Object textBoxObject, string text);
+
         /// <summary>
         /// Label TextBox 안전 접근 쓰기 함수
         /// </summary>
@@ -100,12 +93,13 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// ProgressBar 안전 접근 
+        /// ProgressBar 안전 접근
         /// </summary>
         /// <param name="progressBarObject"> ProgressBar Object </param>
         /// <param name="maximum"> 최대값 </param>
         /// <param name="value"> 현재값 </param>
         private delegate void SafeCallProgressBar(System.Object progressBarObject, int maximum, int value);
+
         /// <summary>
         /// ProgressBar 안전 접근 함수
         /// </summary>
@@ -145,11 +139,12 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// 안전 접근 Panel Visible 상태 확인용 
+        /// 안전 접근 Panel Visible 상태 확인용
         /// </summary>
         /// <param name="panelObject"> 확인할 Panel </param>
         /// <returns></returns>
         private delegate bool SafeCallPanelVisibleStatus(Object panelObject);
+
         /// <summary>
         /// 안전 접근 Panel Visible 값 변경용
         /// </summary>
@@ -191,7 +186,9 @@ namespace ProjectAI.MainForms
             }
             return false;
         }
-        int a = 1;
+
+        private int a = 1;
+
         /// <summary>
         /// Panel Visible 값 적용 안전 접근 함수
         /// </summary>
@@ -285,11 +282,12 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// MainForm 시작전 WorkSpaceEarlyData 기본 파일, 폴더, 설정 변수 확인, 적용 생성 
+        /// MainForm 시작전 WorkSpaceEarlyData 기본 파일, 폴더, 설정 변수 확인, 적용 생성
         /// </summary>
         private void WorkSpaceEarlyDataSet()
         {
             #region 프로그램 WorkSpaceEarlyData 파일 읽고 값 가져오기
+
             JObject workSpacData;
             if (CustomIOMainger.DirChackExistsAndCreate(WorkSpaceEarlyData.m_workSpacDataPath)) // 프로그램 폴더 유무 확인 있으면 true, 없으면 폴더를 만들고 false 반환
             {
@@ -297,25 +295,26 @@ namespace ProjectAI.MainForms
                 {
                     // Json 파일이 있으면 데이터 읽어오기
                     workSpacData = jsonDataManiger.GetJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyDataSetIntegrityCheck); // programOptions Json 파일 읽고 무결성 검사
-                    jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장 
+                    jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장
                 }
                 else
                 {
                     // Json 파일이 없는 경우
                     workSpacData = MainForm.WorkSpaceEarlyDataDefaltSetting();
-                    jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장 
+                    jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장
                 }
             }
             else
             {
                 // Work Spaces 폴더가 없는 경우
                 workSpacData = MainForm.WorkSpaceEarlyDataDefaltSetting();
-                jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장 
+                jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, workSpacData); // Json 파일 저장
             }
 
             // 값 반영
             WorkSpaceEarlyData.workSpaceEarlyDataJobject = workSpacData; // Jobject 반영
-            #endregion
+
+            #endregion 프로그램 WorkSpaceEarlyData 파일 읽고 값 가져오기
         }
 
         /// <summary>
@@ -334,7 +333,7 @@ namespace ProjectAI.MainForms
 
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 100); // panel Data Review 판넬 사이즈 조정
 
-            this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기 
+            this.panelstatus.Visible = false; // 상태 표시 panelstatus 숨기기
             foreach (string workSpaceName in WorkSpaceEarlyData.workSpaceEarlyDataJobject["workSpaceNameList"]) // 버튼 생성
             {
                 CreateWorkSpaceButton(workSpaceName,
@@ -346,7 +345,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// WorkSpaceEarlyDataDefaltSetting -JObject 다시 만들고 기본값으로 설정 
+        /// WorkSpaceEarlyDataDefaltSetting -JObject 다시 만들고 기본값으로 설정
         /// </summary>
         public static JObject WorkSpaceEarlyDataDefaltSetting()
         {
@@ -357,14 +356,14 @@ namespace ProjectAI.MainForms
             workSpaceEarlyData.Merge(programStartPathOptions);
             workSpaceEarlyData.Merge(workSpaceNameList);
 
-            // 다른 orkSpaceEarlyData 이(가) 추가되면 아래로 추가 
+            // 다른 orkSpaceEarlyData 이(가) 추가되면 아래로 추가
 
             //Console.WriteLine(programOptions.ToString());
             return workSpaceEarlyData;
         }
 
         /// <summary>
-        /// WorkSpaceEarlyDataDefaltSetting - programStartPathOptions -JObject 다시 만들고 기본값으로 설정 
+        /// WorkSpaceEarlyDataDefaltSetting - programStartPathOptions -JObject 다시 만들고 기본값으로 설정
         /// </summary>
         public static JObject WorkSpaceEarlyDataProgramStartPathOptionsDefaltSetting()
         {
@@ -383,7 +382,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// WorkSpaceEarlyDataDefaltSetting - workSpaceNameList -JObject 다시 만들고 기본값으로 설정 
+        /// WorkSpaceEarlyDataDefaltSetting - workSpaceNameList -JObject 다시 만들고 기본값으로 설정
         /// </summary>
         public static JObject WorkSpaceEarlyDataWorkSpaceNameListDefaltSetting()
         {
@@ -428,10 +427,10 @@ namespace ProjectAI.MainForms
         /// <param name="jsonData"> 검사할 programEntryPoint 파일 JObject</param>
         public static JObject WorkSpaceEarlyDataSetIntegrityCheck(JObject workSpaceEarlyDataSetJObject)
         {
-           
             if (workSpaceEarlyDataSetJObject != null) // workSpaceEarlyDataSetJObject 에서 GetJsonObject을 타고 넘어온 workSpaceEarlyDataSetJObject 객체가 데이터 읽기에 실패 하였는지 확인
             {
                 #region programStartPathOptions 관리
+
                 if (workSpaceEarlyDataSetJObject["programStartPathOptions"] != null) // programStartPathOptions 객체 확인
                 {
                     // 사용하지 않기 때문에 아직까지는 처리 하지 않음.
@@ -441,27 +440,29 @@ namespace ProjectAI.MainForms
                     // 사용하지 않기 테스트 용으로 구현만
                     workSpaceEarlyDataSetJObject.Merge(MainForm.WorkSpaceEarlyDataProgramStartPathOptionsDefaltSetting());
                 }
-                #endregion
+
+                #endregion programStartPathOptions 관리
 
                 #region workSpaceNameList 관리
+
                 // workSpaceNameList 객체 확인
                 if (workSpaceEarlyDataSetJObject["workSpaceNameList"] != null)
                 {
                     // workSpaceName 객체 확인
-                    if (workSpaceEarlyDataSetJObject["workSpaceName"] != null) 
+                    if (workSpaceEarlyDataSetJObject["workSpaceName"] != null)
                     {
                         #region workSpaceName 관리
-                        JObject workSpaceName = (JObject)workSpaceEarlyDataSetJObject["workSpaceName"]; //  programEntryPointOptions 객체 있음을 확인 
+
+                        JObject workSpaceName = (JObject)workSpaceEarlyDataSetJObject["workSpaceName"]; //  programEntryPointOptions 객체 있음을 확인
 
                         for (int i = 0; i < workSpaceEarlyDataSetJObject["workSpaceNameList"].Count(); i++)
                         {
                             string iworkSpeaceName = workSpaceEarlyDataSetJObject["workSpaceNameList"][i].ToString();
 
                             // workSpaceName의 workSpaceName Options 가 있는지 확인
-                            if (workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName] != null) 
+                            if (workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName] != null)
                             {
-                                JObject workSpaceNameOptions = (JObject)workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName]; //  programEntryPointOptions 객체 있음을 확인 
-                                
+                                JObject workSpaceNameOptions = (JObject)workSpaceEarlyDataSetJObject["workSpaceName"][iworkSpeaceName]; //  programEntryPointOptions 객체 있음을 확인
 
                                 if (workSpaceNameOptions["string_m_workSpacePath"] == null)
                                     workSpaceNameOptions.Add(new JProperty("string_m_programSpace", Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
@@ -475,7 +476,6 @@ namespace ProjectAI.MainForms
                                     workSpaceName[iworkSpeaceName]["int_m_workSpacIndex"] = i;
 
                                 workSpaceNameOptions["string_m_workSpaceSize"] = CustomIOMainger.FormatBytes(CustomIOMainger.DirSize(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName)));
-
                             }
                             // workSpaceName의 workSpaceName Options 이 없음을 확인
                             else
@@ -483,8 +483,8 @@ namespace ProjectAI.MainForms
                                 // workSpaceName의 workSpaceName Options 내용 체우기
                                 System.IO.FileInfo fileInfo = new System.IO.FileInfo(Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, iworkSpeaceName));
                                 long fileSize = 0;
-                                try{ fileSize = fileInfo.Length;}
-                                catch{ fileSize = 0;}
+                                try { fileSize = fileInfo.Length; }
+                                catch { fileSize = 0; }
 
                                 object workSpaceNameOptions = new
                                 {
@@ -503,9 +503,10 @@ namespace ProjectAI.MainForms
                                 workSpaceEarlyDataSetWorkSpaceName.Merge(workSpaceNameOptionsJson); // 합병
                             }
                         }
-                        #endregion
+
+                        #endregion workSpaceName 관리
                     }
-                    // workSpaceName 이 없으면 
+                    // workSpaceName 이 없으면
                     else
                     {
                         JObject workSpaceName = new JObject();
@@ -516,7 +517,7 @@ namespace ProjectAI.MainForms
                             long fileSize = 0;
                             try
                             {
-                                 fileSize = fileInfo.Length;
+                                fileSize = fileInfo.Length;
                             }
                             catch
                             {
@@ -537,12 +538,13 @@ namespace ProjectAI.MainForms
                         workSpaceEarlyDataSetJObject.Add("workSpaceName", workSpaceName);
                     }
                 }
-                // workSpaceNameList 가 없으면 
-                else 
+                // workSpaceNameList 가 없으면
+                else
                 {
                     workSpaceEarlyDataSetJObject.Merge(MainForm.WorkSpaceEarlyDataWorkSpaceNameListDefaltSetting());
                 }
-                #endregion
+
+                #endregion workSpaceNameList 관리
             }
             else
             {
@@ -592,7 +594,7 @@ namespace ProjectAI.MainForms
                     FormsManiger.m_mainFormsUIResetHandler(); // 이전 UI 초기화
                     WorkSpaceData.m_activeProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
                     panelMWorkSpase.Visible = false;
-                    // #3 프로젝트가 열리고 데이터를 읽어왔으면 해야되는 일 
+                    // #3 프로젝트가 열리고 데이터를 읽어왔으면 해야되는 일
                     // 1. 이미지 리스트 UI 에 뿌려주기
                     // 2. 프로젝트 선택할수 있는 UI 만들기
                     // 3. 프로젝트가 선택됬으면 말맞은 UI 뿌려주기
@@ -624,7 +626,6 @@ namespace ProjectAI.MainForms
                 btnMTrainOptionsOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
             else
                 btnMTrainOptionsOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
-            
         }
 
         private void BtnMDataReviewOpenClick(object sender, EventArgs e)
@@ -649,7 +650,7 @@ namespace ProjectAI.MainForms
         private void metroButton3_Click(object sender, EventArgs e)
         {
         }
-        
+
         private void TsmProjectWorkSpaceNewProjectClick(object sender, EventArgs e)
         {
             this.WorkSpaceCreatSequence();
@@ -667,7 +668,7 @@ namespace ProjectAI.MainForms
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
                     JObject jObject = new JObject();
-                    WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(jObject); 
+                    WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(jObject);
                 }
             //this.TrainForm.Show();
         }
@@ -729,7 +730,7 @@ namespace ProjectAI.MainForms
         {
             //if (WorkSpaceData.m_activeProjectMainger != null)
             //    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                    //this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
+            //this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
 
         private void DeletWorkSpace(string deleteWorkSpaceName)
@@ -748,7 +749,7 @@ namespace ProjectAI.MainForms
             WorkSpaceEarlyData.m_workSpaceButtons.Remove(deleteWorkSpaceName); // 해당 WorkSpaceButton 삭제
             deleteWorkSpaceButton.Dispose(); // deleteWorkSpaceButton 초기화
             ProjectContral deleteProjectContral = WorkSpaceData.m_projectMaingersDictionary[deleteWorkSpaceName];
-            WorkSpaceData.m_activeProjectMainger = null; // 활성화된 Project 초기화 
+            WorkSpaceData.m_activeProjectMainger = null; // 활성화된 Project 초기화
             deleteProjectContral.Dispose(); // 변수 매모리에서 해제
             WorkSpaceData.m_projectMaingersDictionary.Remove(deleteWorkSpaceName); // 해당 WorkSpace projectMaingers 삭제
 
@@ -787,7 +788,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// WorkSpace 생성 버튼 
+        /// WorkSpace 생성 버튼
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -811,7 +812,7 @@ namespace ProjectAI.MainForms
                 }
             }
             // #2
-            // 생성된 WorkSpace가 기존에 데이터가 존제한다면 
+            // 생성된 WorkSpace가 기존에 데이터가 존제한다면
         }
 
         /// <summary>
@@ -845,6 +846,7 @@ namespace ProjectAI.MainForms
             newWorkSpaceButton.BtnWorkSpaceOpenClickEvnetHandler += new System.EventHandler(this.WorkSpaceLoadButtonClick);
             //Console.WriteLine(workSpaceIndex);
         }
+
         /// <summary>
         /// WorkSpaceButton 만들기 - 데이터 읽어와서 사용
         /// </summary>
@@ -856,8 +858,9 @@ namespace ProjectAI.MainForms
         {
             CreateWorkSpaceButtonCore(workSpaceName, workSpaceSize, workSpaceVersion, workSpaceIndex);
         }
+
         /// <summary>
-        /// WorkSpaceButton 만들기 - 처음 만드는 경우, 
+        /// WorkSpaceButton 만들기 - 처음 만드는 경우,
         /// </summary>
         /// <param name="workSpaceName"></param>
         private void CreateWorkSpaceButton(string workSpaceName)
@@ -880,9 +883,9 @@ namespace ProjectAI.MainForms
 
             // WorkSpaceButton 생성
             CreateWorkSpaceButtonCore(workSpaceName, CustomIOMainger.FormatBytes(workSpaceSize), workSpaceVersion, workSpaceIndex);
-            workSpaceNameListJArray.Add(workSpaceName); // 추가된 workSpaceName workSpaceNameListJobject에 추가 
+            workSpaceNameListJArray.Add(workSpaceName); // 추가된 workSpaceName workSpaceNameListJobject에 추가
             WorkSpaceEarlyDataSetIntegrityCheck(WorkSpaceEarlyData.workSpaceEarlyDataJobject); // 무결성 검사 이용하여 생성된 workSpaceEarlyData 초기 대이터 생성.
-            jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장 
+            jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장
         }
 
         /// <summary>
@@ -923,7 +926,7 @@ namespace ProjectAI.MainForms
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                    WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog(); // Class Edit 실행 
+                    WorkSpaceData.m_activeProjectMainger.classEdit.ShowDialog(); // Class Edit 실행
         }
 
         private void TrainToolStripMenuItemClick(object sender, EventArgs e)
@@ -932,16 +935,22 @@ namespace ProjectAI.MainForms
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
                     #region 학습 Option Info 가져오기
+
                     JObject trainOptions = new JObject();
                     trainOptions = WorkSpaceData.m_activeProjectMainger.GetTrainInfo(trainOptions);
-                    #endregion 
+                    #endregion 학습 Option Info 가져오기
+
+
 
                     #region 학습 이미지 정보 가져오기
+
                     JObject trainImageData = new JObject();
                     trainImageData = WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(trainImageData);
-                    #endregion
+
+                    #endregion 학습 이미지 정보 가져오기
 
                     #region 학습 정보 넣어주기
+
                     this.TrainForm.ClassificationPushTrainData(
                         (JObject)trainOptions.DeepClone(),
                         (JObject)trainImageData.DeepClone(),
@@ -950,7 +959,8 @@ namespace ProjectAI.MainForms
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString(),
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectName,
                         WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName);
-                    #endregion
+
+                    #endregion 학습 정보 넣어주기
                 }
         }
 
@@ -961,7 +971,7 @@ namespace ProjectAI.MainForms
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
         {
-            if(this.pictureBox1.Image != null)
+            if (this.pictureBox1.Image != null)
                 this.pictureBox1.Image = null;
             try
             {
@@ -981,7 +991,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -993,7 +1003,6 @@ namespace ProjectAI.MainForms
 
         private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
-
         }
 
         private void ImageDeleteToolStripMenuItem1Click(object sender, EventArgs e)
@@ -1053,7 +1062,7 @@ namespace ProjectAI.MainForms
         private void BtnMDeleteWorkSpaceClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                if( MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                if (MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                     this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
 
@@ -1065,6 +1074,3 @@ namespace ProjectAI.MainForms
         }
     }
 }
-
-
-            

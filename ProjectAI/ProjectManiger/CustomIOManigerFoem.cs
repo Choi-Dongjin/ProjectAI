@@ -74,6 +74,7 @@ namespace ProjectAI.ProjectManiger
             /// "예) 설정된 폴더명이 C:\Data -> C:\Data\파일명"
             /// </summary>
             public static int PathToPath { get { return 1; } }
+
             /// <summary>
             /// 학습을 위한 데이터 이동
             /// </summary>
@@ -84,8 +85,9 @@ namespace ProjectAI.ProjectManiger
         /// Main 으로 모니터링 하는 File IO 를 사용하는 Task
         /// </summary>
         private Task taskFileIO;
+
         /// <summary>
-        /// 파일 List 복사 
+        /// 파일 List 복사
         /// </summary>
         /// <param name="files"> 타겟 파일 List </param>
         /// <param name="setPath"> 목표 폴더 </param>
@@ -130,14 +132,15 @@ namespace ProjectAI.ProjectManiger
                         string setFilePath = Path.Combine(setPath, fileName);
 
                         File.Copy(file, setFilePath, true);
-
                     }
                     break;
+
                 case 2:
                     break;
             }
             mainForm.SafeVisiblePanel(mainForm.panelstatus, false); // 모니터링 창 출력
         }
+
         /// <summary>
         /// 파일 List 복사 Task 등록 함수
         /// </summary>
@@ -162,6 +165,7 @@ namespace ProjectAI.ProjectManiger
                 taskFileIO = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName));
             }
         }
+
         /// <summary>
         /// 파일 List 삭제
         /// </summary>
@@ -205,10 +209,10 @@ namespace ProjectAI.ProjectManiger
                 {
                     Console.WriteLine($"ERROR: File IO Del ERROR");
                 }
-                
             }
             mainForm.SafeVisiblePanel(mainForm.panelstatus, false); // 모니터링 창 출력
         }
+
         /// <summary>
         /// 파일 List 삭제 Task 등록 함수
         /// </summary>
@@ -229,6 +233,7 @@ namespace ProjectAI.ProjectManiger
                 taskFileIO = Task.Run(() => this.FoleDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName));
             }
         }
+
         /// <summary>
         /// 폴더 삭제 Task 등록 함수
         /// </summary>

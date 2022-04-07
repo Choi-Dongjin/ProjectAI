@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
-
-using MetroFramework;
-using MetroFramework.Components;
+﻿using MetroFramework.Components;
 using MetroFramework.Forms;
+using System;
+using System.Windows.Forms;
 
 namespace ProjectAI.DataAugmentationExampleForms
 {
@@ -27,7 +15,7 @@ namespace ProjectAI.DataAugmentationExampleForms
 
         public DialogResult DialogResultSelected = DialogResult.None;
 
-        ProjectAI.DataAugmentationExampleForms.Contral1.MinMaxExample minMaxExample;
+        private ProjectAI.DataAugmentationExampleForms.Contral1.MinMaxExample minMaxExample;
 
         public DataAugmentationExampleForm(string imageDataPath, string exCase)
         {
@@ -56,7 +44,6 @@ namespace ProjectAI.DataAugmentationExampleForms
 
         private void DataAugmentationExampleFormLoad(object sender, EventArgs e)
         {
-
         }
 
         private void DataAugmentationExampleFormShown(object sender, EventArgs e)
@@ -65,9 +52,9 @@ namespace ProjectAI.DataAugmentationExampleForms
             {
                 this.minMaxExample = new Contral1.MinMaxExample(this.imageDataPath, this.exCase)
                 {
-                    // 
+                    //
                     // blurExample1
-                    // 
+                    //
                     Dock = System.Windows.Forms.DockStyle.Fill,
                     Location = new System.Drawing.Point(0, 0),
                     //blurExample.Name = "blurExample1";

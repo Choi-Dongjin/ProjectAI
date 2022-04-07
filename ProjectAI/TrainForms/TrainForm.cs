@@ -25,6 +25,7 @@ namespace ProjectAI.TrainForms
         /// 싱글톤 패턴 구현
         /// </summary>
         private static TrainForm trainForm;
+
         /// <summary>
         /// 싱글톤 패턴 Class 호출에 사용
         /// </summary>
@@ -43,13 +44,13 @@ namespace ProjectAI.TrainForms
         /// </summary>
         private ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance(); // Forms 관리 Class
 
-
         private ProjectAI.JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
 
         /// <summary>
         /// Idel Train Options
         /// </summary>
         private ProjectAI.CustomComponent.MainForms.Idle.IdelTrainOptions IdelTrainOptions = new CustomComponent.MainForms.Idle.IdelTrainOptions();
+
         private ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions ClassificationTrainOptions = new CustomComponent.MainForms.Classification.ClassificationTrainOptions();
 
         /// <summary>
@@ -62,30 +63,31 @@ namespace ProjectAI.TrainForms
         /// WaitingforWork 처리 Task
         /// </summary>
         private Task taskWaitingforWork;
+
         /// <summary>
         /// Processing 처리 Task
         /// </summary>
         private Task taskProcessing;
+
         /// <summary>
-        /// 프로세스 완료 결과 저장 데이터 저장 처리 Task 
+        /// 프로세스 완료 결과 저장 데이터 저장 처리 Task
         /// </summary>
         private Task taskDone;
+
         /// <summary>
         /// 이전 프로그램 동작시 학습이 완료 되었던 임시 파일 삭제 처리 Task
         /// </summary>
         private Task taskCleanupfilesbeforeentry;
 
-
-
         /// <summary>
         /// 프로세스 동작 활성화 여부
         /// </summary>
-        bool processingStart = false;
+        private bool processingStart = false;
 
         /// <summary>
         /// Train Forms 처음 동작 확인 dgvMWaitingforWork -> 처음 추가 동작 제어
         /// </summary>
-        bool trainFormF1Start = false;
+        private bool trainFormF1Start = false;
 
         public TrainForm()
         {
@@ -134,6 +136,7 @@ namespace ProjectAI.TrainForms
         /// <param name="textBox"> </param>
         /// <param name="text"></param>
         private delegate void SafeCallTrainFormDataGridViewDelegate(System.Object dataGridViewObject, string processTask, string processType, string processInputDataType, string processStep, string processAccessCode, int processProgress);
+
         /// <summary>
         /// DataGridView 추가
         /// </summary>
@@ -163,7 +166,7 @@ namespace ProjectAI.TrainForms
                     try
                     {
                         dataGridView.Rows.Add(processTask, processType, processInputDataType, processStep, processAccessCode, processProgress);
-                        dataGridView.ClearSelection(); // 셀 선택 막기 
+                        dataGridView.ClearSelection(); // 셀 선택 막기
                     }
                     catch
                     {
@@ -182,14 +185,15 @@ namespace ProjectAI.TrainForms
                 }
                 else
                 {
-                    // 실행 
+                    // 실행
                     dataGridView.Rows.Add(processTask, processType, processInputDataType, processStep, processAccessCode, processProgress);
-                    dataGridView.ClearSelection(); // 셀 선택 막기 
+                    dataGridView.ClearSelection(); // 셀 선택 막기
                 }
             }
         }
 
         private delegate void SafeCallDataGridViewProgressColumnDelegate(System.Object dataGridViewObject, string processAccessCode, int value);
+
         public void SafeDataGridViewProgressValue(System.Object dataGridViewObject, string processAccessCode, int value)
         {
             if (dataGridViewObject.GetType() == typeof(MetroFramework.Controls.MetroGrid))
@@ -221,7 +225,6 @@ namespace ProjectAI.TrainForms
                                 dataGridView.Rows[i].Cells[5].Value = value;
                                 break;
                             }
-                                
                         }
                         catch
                         {
@@ -231,7 +234,7 @@ namespace ProjectAI.TrainForms
                             Console.WriteLine($"value: {value}");
                         }
                     }
-                    // 실행 
+                    // 실행
                 }
             }
             else if (dataGridViewObject.GetType() == typeof(System.Windows.Forms.DataGridView))
@@ -249,14 +252,15 @@ namespace ProjectAI.TrainForms
                         if (processAccessCode.Equals(dataGridView.Rows[i].Cells[4].Value.ToString()))
                             dataGridView.Rows[i].Cells[5].Value = value;
                     }
-                    // 실행 
+                    // 실행
                 }
             }
         }
 
         private delegate void SafeCallDataGridViewProcessStepDelegate(System.Object dataGridViewObject, string processAccessCode, string processStep);
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="dataGridViewObject"></param>
         /// <param name="processAccessCode"></param>
@@ -277,7 +281,6 @@ namespace ProjectAI.TrainForms
                 this.dgvMProcessing.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
              */
             // process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
-
 
             if (dataGridViewObject.GetType() == typeof(MetroFramework.Controls.MetroGrid))
             {
@@ -315,7 +318,7 @@ namespace ProjectAI.TrainForms
                         Console.WriteLine($"dataGridViewObject: {processStep}");
                     }
 
-                    // 실행 
+                    // 실행
                 }
             }
             else if (dataGridViewObject.GetType() == typeof(System.Windows.Forms.DataGridView))
@@ -333,12 +336,13 @@ namespace ProjectAI.TrainForms
                         if (processAccessCode == dataGridView.Rows[i].Cells[4].Value.ToString())
                             dataGridView.Rows[i].Cells[3].Value = processStep;
                     }
-                    // 실행 
+                    // 실행
                 }
             }
         }
 
         private delegate void SafeCallDataGridViewRowDelegate(System.Object dataGridViewObject, string processAccessCode);
+
         public void SafeDataGridViewRowDelete(System.Object dataGridViewObject, string processAccessCode)
         {
             /*
@@ -356,7 +360,6 @@ namespace ProjectAI.TrainForms
              */
             // process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
 
-
             if (dataGridViewObject.GetType() == typeof(MetroFramework.Controls.MetroGrid))
             {
                 MetroFramework.Controls.MetroGrid dataGridView = (MetroFramework.Controls.MetroGrid)dataGridViewObject;
@@ -370,7 +373,7 @@ namespace ProjectAI.TrainForms
                     for (int i = 0; i < dataGridView.Rows.Count; i++)
                         if (processAccessCode == dataGridView.Rows[i].Cells[4].Value.ToString())
                             dataGridView.Rows.Remove(dataGridView.Rows[i]);
-                    // 실행 
+                    // 실행
                 }
             }
             else if (dataGridViewObject.GetType() == typeof(System.Windows.Forms.DataGridView))
@@ -386,12 +389,13 @@ namespace ProjectAI.TrainForms
                     for (int i = 0; i < dataGridView.Rows.Count; i++)
                         if (processAccessCode == dataGridView.Rows[i].Cells[4].Value.ToString())
                             dataGridView.Rows.Remove(dataGridView.Rows[i]);
-                    // 실행 
+                    // 실행
                 }
             }
         }
 
         private delegate void SafeCallRichTextBoxAddTextDelegate(RichTextBox richTextBox, string addText, Color color);
+
         private void SafeRichTextBoxAddText(RichTextBox richTextBox, string addText, Color color = new Color())
         {
             if (color == new Color())
@@ -410,6 +414,7 @@ namespace ProjectAI.TrainForms
         }
 
         private delegate void SafeCallChartContactSeriesAddPointDelegate(System.Windows.Forms.DataVisualization.Charting.Chart chart, string contactSeriesKey, int setX, double setY);
+
         public void SafeChartContactSeriesAddPoint(System.Windows.Forms.DataVisualization.Charting.Chart chart, string contactSeriesKey, int setX, double setY)
         {
             if (chart.InvokeRequired)
@@ -424,6 +429,7 @@ namespace ProjectAI.TrainForms
         }
 
         private delegate void SafeCallChartClearDelegate(System.Windows.Forms.DataVisualization.Charting.Chart chart);
+
         public void SafeChartClear(System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
             if (chart.InvokeRequired)
@@ -441,6 +447,7 @@ namespace ProjectAI.TrainForms
         }
 
         private delegate void SafeCallTapPageNumberChangeDelegate(MetroFramework.Controls.MetroTabPage metroTabPage, int value);
+
         public void SafeTapPageNumberChange(MetroFramework.Controls.MetroTabPage metroTabPage, int value)
         {
             if (metroTabPage.InvokeRequired)
@@ -461,7 +468,6 @@ namespace ProjectAI.TrainForms
             }
         }
 
-
         /// <summary>
         /// UISetIdelTrainOptions UI Setup
         /// </summary>
@@ -476,6 +482,7 @@ namespace ProjectAI.TrainForms
             this.IdelTrainOptions.Size = new System.Drawing.Size(500, 850);
             //this.IdelTrainOptions.TabIndex = 1;
         }
+
         /// <summary>
         /// UISetClassificationTrainOptions UI Setup
         /// </summary>
@@ -492,6 +499,7 @@ namespace ProjectAI.TrainForms
 
             //this.classificationTrainOptions1.TabIndex = 2;
         }
+
         /// <summary>
         /// DataGridView UI Seup
         /// </summary>
@@ -533,8 +541,6 @@ namespace ProjectAI.TrainForms
             processProgressBarDgvMProcessing.HeaderText = "Process Progress";
             // === dgvMProcessing
 
-
-
             // === dgvMWaitingforWork
             this.dgvMWaitingforWork.DataSource = null;
             this.dgvMWaitingforWork.Columns.Clear();
@@ -557,7 +563,6 @@ namespace ProjectAI.TrainForms
             this.dgvMWaitingforWork.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             processProgressBardgvMWaitingforWork.HeaderText = "Process Progress";
             // === dgvMWaitingforWork
-
 
             // === dgvMDoneWork
             this.dgvMDoneWork.DataSource = null;
@@ -613,14 +618,13 @@ namespace ProjectAI.TrainForms
             this.dgvMmodelsEpoch.Columns[7].Name = "Test Escape";
             this.dgvMmodelsEpoch.Columns[8].Name = "Test OverKill";
             // === dgvMmodelsEpoch
-
         }
 
         private void ReadDataandUpdateDataGridView()
         {
             foreach (string processAccesscode in WorkSpaceEarlyData.m_trainFormJobject["processList"])
             {
-                // WorkSpaceEarlyData.m_trainFormJobject 에서는 string_processStep 읽어서 EndProcessing 아니면 
+                // WorkSpaceEarlyData.m_trainFormJobject 에서는 string_processStep 읽어서 EndProcessing 아니면
                 // WorkSpaceEarlyData.m_trainFormJobject 에서는 string_processPath 읽어서 Local Data 읽어오기
 
                 string processModel;
@@ -631,7 +635,7 @@ namespace ProjectAI.TrainForms
                 string processPath;
                 string porkSpasceName;
                 string workSpaceInnerPorjectName;
-                string processStep = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processStep"].ToString(); 
+                string processStep = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processStep"].ToString();
 
                 processPath = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processPath"].ToString();
 
@@ -668,7 +672,6 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processStep == "EndProcessing")
                 {
-
                 }
                 // 3. 학습 데이터 관리 Dictionary 데이터 추가하기
             }
@@ -691,7 +694,6 @@ namespace ProjectAI.TrainForms
         private void TrainFormShown(object sender, EventArgs e)
         {
             //MetroTaskWindow.ShowTaskWindow(this, "Custom MessageBox", new ProjectAI.TrainForms.UserContral.CustomMessageBox(), 10);
-
         }
 
         /// <summary>
@@ -792,6 +794,7 @@ namespace ProjectAI.TrainForms
                 }
             }
         }
+
         /// <summary>
         /// 모델 선택시 내부 모델 정보 보이기
         /// </summary>
@@ -804,7 +807,7 @@ namespace ProjectAI.TrainForms
             //if (sender != null)
             //{
             //    metroGrid.SelectedRows[0]
-            //}  
+            //}
         }
 
         private void DgvMmodelsVersionCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -845,7 +848,7 @@ namespace ProjectAI.TrainForms
                             this.dgvMmodelsEpoch.Rows.Add(locationX, trainLoss, trainAcc, trainEscape, trainOverKill, testLoss, testAcc, testEscape, testOverKill);
                         }
 
-                        // 모델 차트 그리기 
+                        // 모델 차트 그리기
                         this.chartViewLoss.Series["Train & Validation"].Points.Clear();
                         this.chartViewLoss.Series["Test"].Points.Clear();
                         this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
@@ -858,7 +861,6 @@ namespace ProjectAI.TrainForms
 
                         foreach (JProperty trainingProgressData in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["TrainingProgressData"])
                         {
-
                             int locationX = Convert.ToInt32(trainingProgressData.Name);
 
                             double trainLoss = Convert.ToDouble(trainingProgressData.Value["double_TrainLoss"]);
@@ -888,9 +890,7 @@ namespace ProjectAI.TrainForms
             }
             finally
             {
-
             }
-
         }
 
         /// <summary>
@@ -904,7 +904,6 @@ namespace ProjectAI.TrainForms
             {
                 if (this.dgvMmodelsVersion.SelectedRows[0].Cells[0].Value != null)
                 {
-
                     List<string> modelList = new List<string>();
                     foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"]) // 모델 이름 List 로 만들기
                         modelList.Add(modelName);
@@ -940,7 +939,6 @@ namespace ProjectAI.TrainForms
                     this.chartViewAccuracy.Series["selectModelDataTest"].Points.Clear();
                     this.chartViewAccuracy.Series["selectModelDataTest"].Points.AddXY(locationX, testAcc);
                     this.chartViewAccuracy.Series["selectModelDataTest"].ToolTip = string.Format("Epoch: {0}, Accuracy: {1:0.00}", locationX, testAcc);
-
                 }
             }
             catch (Exception ex)
@@ -1001,8 +999,8 @@ namespace ProjectAI.TrainForms
                                     CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass));
                                 else
                                     break;
-                                //이미지 Set Path 추가 
-                                imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass, 
+                                //이미지 Set Path 추가
+                                imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass,
                                     System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
 
                                 // class 관리 Lisy에 추가
@@ -1026,7 +1024,7 @@ namespace ProjectAI.TrainForms
                                     CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass));
                                 else
                                     break;
-                                //이미지 Set Path 추가 
+                                //이미지 Set Path 추가
                                 imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
                                     System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
 
@@ -1075,14 +1073,14 @@ namespace ProjectAI.TrainForms
             "string_workSpasceName": "Test1",
             "string_workSpaceInnerPorjectName": "0jbfjVOaHP",
             "string_processStep": "WaitingforWork"
-            */             
+            */
             if (this.processingStart)
             {
                 string processTask = processInfo["string_processTask"].ToString();
                 string processName = processInfo["string_processName"].ToString();
                 string processTrainTest = processInfo["string_processTrainTest"].ToString();
                 string processImageType = processInfo["string_processImageType"].ToString();
-                
+
                 this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
 
                 this.SafeTapPageNumberChange(this.tclpMProcessActive, 1);
@@ -1090,11 +1088,12 @@ namespace ProjectAI.TrainForms
                 this.SafeTrainFormDataGridViewAdd(this.dgvMProcessing, processTask, processTrainTest, processImageType, "EndPreprocess", processName, 0);
             }
         }
+
         private void ActiveProcessEndPreprocess(JObject processInfo)
         {
             // 파일 학습 가능하도록 Copy
-
         }
+
         private void ActiveProcessClassificationProcessing(JObject processInfo, string corePath)
         {
             // 학습 진행
@@ -1116,12 +1115,12 @@ namespace ProjectAI.TrainForms
             // 외부 프로그램 실행시 외부 프로그램 실행 위치가 불러온 프로그램 실행위치로 변경됨
             string applicationStartupPath = System.Windows.Forms.Application.StartupPath;
 
-            string coreProgramConfigFilePath = System.IO.Path.Combine(applicationStartupPath, "config", "clasf_dnn.cfg"); 
-            // 설정 파일 위치를 조정해야함. 
+            string coreProgramConfigFilePath = System.IO.Path.Combine(applicationStartupPath, "config", "clasf_dnn.cfg");
+            // 설정 파일 위치를 조정해야함.
 
             // Train Config 파일 만들기
             // TrainSystem.Json 학습 Task 정보 읽어오기
-            string processJsonPath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "TrainSystem.Json"); 
+            string processJsonPath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "TrainSystem.Json");
             JObject processJObject = jsonDataManiger.GetJsonObjectShare(processJsonPath);
 
             // Epoch 값 가져오기
@@ -1145,7 +1144,7 @@ namespace ProjectAI.TrainForms
             };
 
             Process classificationProcess = Process.Start(classificationProcessStartInfo);
-            System.IO.StreamReader classificationReader = classificationProcess.StandardOutput;   // 출력되는 값을 가져오기 위해 StreamReader에 연결  
+            System.IO.StreamReader classificationReader = classificationProcess.StandardOutput;   // 출력되는 값을 가져오기 위해 StreamReader에 연결
 
             double trainEpochLoss = 0;
             double trainEpochAccuracy = 0;
@@ -1334,14 +1333,13 @@ namespace ProjectAI.TrainForms
             catch(Exception error)
             {
                 #region ERROR 처리
+
                 Console.WriteLine("\n === === === ===");
                 Console.ResetColor(); //컬러 Reset 진행
                 Console.ForegroundColor = ConsoleColor.Green;
                 foreach (string processLog in processLogs)
                 {
-                    
                     Console.WriteLine(processLog);
-                    
                 }
                 Console.ResetColor(); //컬러 Reset 진행
                 Console.WriteLine("=== ERROR CODE ===");
@@ -1350,7 +1348,8 @@ namespace ProjectAI.TrainForms
                 Console.ResetColor(); //컬러 Reset 진행
                 Console.WriteLine("=== === === === \n ");
                 trainErrorChack = true;
-                #endregion
+
+                #endregion ERROR 처리
             }
 
             bool instantEvaluateErrorChack = false;
@@ -1395,7 +1394,7 @@ namespace ProjectAI.TrainForms
                                                 // 이미지 위치 추가
                                                 imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
 
-                                                // 이미지 Set Path 추가 
+                                                // 이미지 Set Path 추가
                                                 imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
                                                     System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
 
@@ -1407,7 +1406,7 @@ namespace ProjectAI.TrainForms
                                             }
                                 }
                             }
-                                
+
                             // 파일 Copy
                             for (int i = 0; i < imagePathList.Count; i++)
                             {
@@ -1423,7 +1422,7 @@ namespace ProjectAI.TrainForms
                         string bestModelPath = System.IO.Path.Combine(applicationStartupPath, "results", "Models", bestModelName + ".synapsenet");
 
                         // Trian Options list 데이터로 가져오기
-                        trainOptions = this.TransferEvaluationOptionJObjectString(processJObject, bestModelPath); //  검증용 (list 데이터로 가져오기)                    
+                        trainOptions = this.TransferEvaluationOptionJObjectString(processJObject, bestModelPath); //  검증용 (list 데이터로 가져오기)
                         System.IO.File.WriteAllLines(coreProgramConfigFilePath, trainOptions);// Trian Options "clasf_dnn.cfg" 파일 설정
 
                         classificationProcessStartInfo = new ProcessStartInfo(coreProgramPath)
@@ -1437,7 +1436,7 @@ namespace ProjectAI.TrainForms
                         };
 
                         classificationProcess = Process.Start(classificationProcessStartInfo);
-                        classificationReader = classificationProcess.StandardOutput;   // 출력되는 값을 가져오기 위해 StreamReader에 연결  
+                        classificationReader = classificationProcess.StandardOutput;   // 출력되는 값을 가져오기 위해 StreamReader에 연결
 
                         // ProgressBar 초기화
                         this.SafeDataGridViewProgressValue(this.dgvMProcessing, processInfo["string_processName"].ToString(), 0);
@@ -1485,7 +1484,7 @@ namespace ProjectAI.TrainForms
             // ProgressBar 초기화
             this.SafeDataGridViewProgressValue(this.dgvMProcessing, processInfo["string_processName"].ToString(), 100);
 
-            // 결과 처리로 넘기기 Done DataGridView로 정보 옮기기. 
+            // 결과 처리로 넘기기 Done DataGridView로 정보 옮기기.
             // 에러 확인 Train & Instant Evaluate
             if (!trainErrorChack || !instantEvaluateErrorChack)
             {
@@ -1508,9 +1507,10 @@ namespace ProjectAI.TrainForms
                 this.SafeTapPageNumberChange(this.tclpMProcessDone, 1);
             }
         }
+
         private void ActiveProcessClassificationSaveResult(JObject processInfo, string corePath, string workSpacDataPath)
         {
-            // 결과 저장 
+            // 결과 저장
             /* processInfo
                 "string_processModel": "Classification",
                 "string_processTask": "Classification",
@@ -1606,6 +1606,7 @@ namespace ProjectAI.TrainForms
             // Tap contral number 변경
             this.SafeTapPageNumberChange(this.tclpMProcessDone, -1);
         }
+
         private void ActiveProcessEndProcessing()
         {
             // 학습 임시파일 식제
@@ -1621,6 +1622,7 @@ namespace ProjectAI.TrainForms
             List<string> trainOptions = new List<string>();
 
             #region Trian Options 가져오기
+
             // Trian Options 수동
             string networkModel = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["string_NetworkModel"].ToString();
             string epochNumber = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
@@ -1653,9 +1655,11 @@ namespace ProjectAI.TrainForms
             string pretrained = modelLearningInfo["ModelLearningInfo"]["TrainOptionNotDefine"]["double_Pretrained"].ToString();
 
             trainOptions.Add(PackingString($"pretrained |{pretrained}|"));
+
             #endregion Trian Options 가져오기
 
             #region Data Augmentation 데이터 증강 옵션
+
             // DataAugmentationManual 옵션 설정
             // Blur 설정
             if (Boolean.TryParse(modelLearningInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BlurChecked"].ToString(), out bool blurChecked))
@@ -1679,7 +1683,7 @@ namespace ProjectAI.TrainForms
                 {
                     trainOptions.Add(PackingString($"brightness_min |{0}|"));
                     trainOptions.Add(PackingString($"brightness_max |{0}|"));
-                }  
+                }
             }
             else
             {
@@ -1918,9 +1922,11 @@ namespace ProjectAI.TrainForms
             {
                 trainOptions.Add(PackingString($"n_vert_flip |{0}|"));
             }
+
             #endregion Data Augmentation 데이터 증강 옵션
 
             #region ContinualLearning 설정
+
             if (Boolean.TryParse(modelLearningInfo["ModelLearningInfo"]["ContinualLearning"]["bool_ContinualLearningChecked"].ToString(), out bool continualLearningChecked))
             {
                 if (continualLearningChecked)
@@ -1936,9 +1942,12 @@ namespace ProjectAI.TrainForms
             {
                 trainOptions.Add(PackingString($"dnn_file |{"default"}|")); //default ro new
             }
-            #endregion 
+            #endregion ContinualLearning 설정
+
+
 
             #region ClassWeight 가져오기
+
             string classWeight = null;
             foreach (string className in modelLearningInfo["TrainProcessInfo"]["string_array_classList"])
             {
@@ -1951,24 +1960,29 @@ namespace ProjectAI.TrainForms
                 trainOptions.Add(PackingString($"loss_wt |{classWeight}|"));
             else
                 trainOptions.Add(PackingString($"loss_wt |auto|")); // auto ro 1
-            #endregion 
+            #endregion ClassWeight 가져오기
+
+
 
             #region 데이터 옵션 설정
+
             string dataPath = System.IO.Path.Combine(modelLearningInfo["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData");
             trainOptions.Add(PackingString($"dts_path |{dataPath}|"));
             trainOptions.Add(PackingString($"dts_pth_lst ||"));
             trainOptions.Add(PackingString($"train_dir |Train|"));
             trainOptions.Add(PackingString($"test_dir |Test|"));
-            #endregion 
+            #endregion 데이터 옵션 설정
+
+
 
             #region 이미지 설정
+
             trainOptions.Add(PackingString($"img_chnl |{modelLearningInfo["ModelLearningInfo"]["ImageOption"]["int_imageChannel"].ToString()}|"));
             trainOptions.Add(PackingString($"img_sz |{modelLearningInfo["ModelLearningInfo"]["ImageOption"]["int_imageSize"].ToString()}|"));
-            #endregion
 
-            #region Instant Evaluate => 추가 방법 고민중 학습 스레드에서 처리하는걸로
+            #endregion 이미지 설정
 
-            #endregion
+
 
             #region 시스템 설정 옵션
             trainOptions.Add(PackingString($"tr_wrk |{modelLearningInfo["ModelLearningInfo"]["TrainSystemOption"]["int_dataLoaderNUmberofWorkers"].ToString()}|"));
@@ -1977,7 +1991,8 @@ namespace ProjectAI.TrainForms
             trainOptions.Add(PackingString($"heat_map |n|"));
             trainOptions.Add(PackingString($"progress_bar |n|"));
             trainOptions.Add(PackingString($"help ? h ||"));
-            #endregion
+
+            #endregion 시스템 설정 옵션
 
             return trainOptions;
         }
@@ -1987,6 +2002,7 @@ namespace ProjectAI.TrainForms
             List<string> trainOptions = new List<string>();
 
             #region Trian Options 가져오기
+
             // Trian Options 수동
             string networkModel = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["string_NetworkModel"].ToString();
             string epochNumber = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
@@ -2019,9 +2035,11 @@ namespace ProjectAI.TrainForms
             string pretrained = modelLearningInfo["ModelLearningInfo"]["TrainOptionNotDefine"]["double_Pretrained"].ToString();
 
             trainOptions.Add(PackingString($"pretrained |{pretrained}|"));
+
             #endregion Trian Options 가져오기
 
             #region Data Augmentation 데이터 증강 옵션
+
             // DataAugmentationManual 옵션 설정
             // Blur 설정
             if (Boolean.TryParse(modelLearningInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BlurChecked"].ToString(), out bool blurChecked))
@@ -2284,11 +2302,13 @@ namespace ProjectAI.TrainForms
             {
                 trainOptions.Add(PackingString($"n_vert_flip |{0}|"));
             }
+
             #endregion Data Augmentation 데이터 증강 옵션
 
             trainOptions.Add(PackingString($"dnn_file |{ModelPath}|")); //default ro new
 
             #region ClassWeight 가져오기
+
             string classWeight = null;
             foreach (string className in modelLearningInfo["TrainProcessInfo"]["string_array_classList"])
             {
@@ -2301,29 +2321,38 @@ namespace ProjectAI.TrainForms
                 trainOptions.Add(PackingString($"loss_wt |{classWeight}|"));
             else
                 trainOptions.Add(PackingString($"loss_wt |auto|")); // auto ro 1
-            #endregion 
+            #endregion ClassWeight 가져오기
+
+
 
             #region 데이터 옵션 설정
+
             string dataPath = System.IO.Path.Combine(modelLearningInfo["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData");
             trainOptions.Add(PackingString($"dts_path |{dataPath}|"));
             trainOptions.Add(PackingString($"dts_pth_lst ||"));
             trainOptions.Add(PackingString($"train_dir |Train|"));
             trainOptions.Add(PackingString($"test_dir |Test|"));
-            #endregion 
+            #endregion 데이터 옵션 설정
+
+
 
             #region 이미지 설정
+
             trainOptions.Add(PackingString($"img_chnl |{modelLearningInfo["ModelLearningInfo"]["ImageOption"]["int_imageChannel"].ToString()}|"));
             trainOptions.Add(PackingString($"img_sz |{modelLearningInfo["ModelLearningInfo"]["ImageOption"]["int_imageSize"].ToString()}|"));
-            #endregion
+
+            #endregion 이미지 설정
 
             #region 시스템 설정 옵션
+
             trainOptions.Add(PackingString($"tr_wrk |{modelLearningInfo["ModelLearningInfo"]["TrainSystemOption"]["int_dataLoaderNUmberofWorkers"].ToString()}|"));
 
             trainOptions.Add(PackingString($"eval |y|"));
             trainOptions.Add(PackingString($"heat_map |y|"));
             trainOptions.Add(PackingString($"progress_bar |n|"));
             trainOptions.Add(PackingString($"help ? h ||"));
-            #endregion
+
+            #endregion 시스템 설정 옵션
 
             return trainOptions;
         }
@@ -2343,42 +2372,41 @@ namespace ProjectAI.TrainForms
         /// <param name="processInputDataType"> 프로세스 Input Data Type </param>
         /// <param name="processWorkSpasceName"></param>
         /// <param name="ProcessWorkSpaceInnerPorjectName"></param>
-        public void ClassificationPushTrainData(JObject processOption, JObject imageListData, 
+        public void ClassificationPushTrainData(JObject processOption, JObject imageListData,
             string processTask, string processTrainTest, string processInputDataType, string processWorkSpasceName, string ProcessWorkSpaceInnerPorjectName)
         {
             /* Train 대기열에 추가하기
-             * 
+             *
              * 0 등록 시도하는 Process 검증
              * 0-1 생성된 WorkSpace List 가져와서 등록된 WorkSpace와 비교
              * 0-2 등록된 WorkSpace를 활성화된 WorkSpace가 있는지 확인
              * 0-3 활성화 여부에 따라서 조건 설정
-             * 
+             *
              * 1 학습에 필요한 정보 읽고 정보 추가하기 JObject "TrainprocessInfo" 추가
              * 1-1 학습 모델 읽고 프로세스 모델 정보 입력 "processModel" -> "Classification", "Segmentation", "ObjectDetection"
              * 1-2 입력도니 ProcessTask를 통해서 학습, 검증인지 확인후 정보 추가 "ProcessTask" -> "Train". "Test"
              * 1-3 등록되어 있는 Process 이름 검색후 임시 이름 부여하고 "ProcessName", "ProcessPath" 설정 하기
              * 1-4 등록하는 WorkSpace Name 저장, WorkSpace InnerPorject Name 저장
              * 1-5 생성된 정보 JObject 형식으로 만들기
-             * 
+             *
              * 2. 학습 옵션 데이터 관리 데이터로 변경 - 문서 파일에 예시 있음. ModelInfo1.Json
              * 2-1 빈 JArray "array_string_InnerModelList" 추가 -> 저장되는 Inner Model 파일 List
              * 2-2 빈 JObject "InnerModelInfo" 추가 -> 저장된 Inner Model Info
-             * 2-3 빈 JObject "TrainingProgressData" 추가 -> 학습 진행시 각 Epoch 마다 출력되는 Loss , Accuracy, Escape, OverKill (Train, Test) 정보 저장 
+             * 2-3 빈 JObject "TrainingProgressData" 추가 -> 학습 진행시 각 Epoch 마다 출력되는 Loss , Accuracy, Escape, OverKill (Train, Test) 정보 저장
              * 2-4 입력된 JObject trainOption "ModelLearningInfo" 내부에 추가
              * 2-5 빈 JObject "BestModelInfo" 추가 -> 마지막에 저장된 Best Model 저장
              * 2-6 입력된 JObject imageListData "ImageListData" 내부에 추가
              * 2-7 1에서 생성된 JObject "TrainprocessInfo" 추가
-             * 
+             *
              * 3. 학습 데이터 관리 Dictionary 데이터 추가하기
              * 3-1 정리된 데이터 TrainprocessInfo processName을 Key 값으로 하여서 학습 데이터 관리 Dictionary 데이터 추가하기 -> trainProcessData
              * 3-2 정리된 데이터 TrainprocessInfo processName을 Key 값으로 하여서 학습 ProgressBar Dictionary ProgressBar 추가하기 -> trainProcessProgressBar
-             * 
+             *
              * 4. WorkSpaceEarlyData.m_trainFormJobject 데이터 등록하기
              * // process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
-             * 
+             *
              * 5. 관리 폴더, 파일 생성
              */
-
 
             // 0 등록 시도하는 process 검증
             // 0-1. 생성된 WorkSpace List 가져와서 등록된 WorkSpace와 비교
@@ -2411,7 +2439,6 @@ namespace ProjectAI.TrainForms
                 return;
             }
 
-
             // 1 학습에 필요한 정보 읽고 정보 추가하기 JObject "TrainprocessInfo" 추가
             // 1-1 학습 모델 읽고 프로세스 모델 정보 입력 "processModel" -> "Classification", "Segmentation", "ObjectDetection"
             string networkModel = processOption["TrainOptionManual"]["string_NetworkModel"].ToString();
@@ -2437,15 +2464,14 @@ namespace ProjectAI.TrainForms
             {
                 processNames.Add(processNAme); // 기존 프로세스 이름 가져오기
             }
-            string processName = CustomIOMainger.RandomFileName(processNames, 5); // 프로세스 임시 이름 만들기 
+            string processName = CustomIOMainger.RandomFileName(processNames, 5); // 프로세스 임시 이름 만들기
 
             // Path 정보 만들기
             string ProcessPath = System.IO.Path.Combine(WorkSpaceData.m_projectMaingersDictionary[processWorkSpasceName].m_pathActiveProjectWaitingProcess, processName);
 
-
             //  1-4 생성된 정보 JObject 형식으로 만들기
             JObject trainProcessInfo = new JObject
-            { 
+            {
                 ["string_processModel"] = processModel, // 프로세스 모델 정보  "Classification", "Segmentation", "ObjectDetection"
                 ["string_processTask"] = processTask, // 프로세스 Task 정보 "Classification", "Segmentation", "ObjectDetection"
                 ["string_processName"] = processName, // 프로세스 이름 정보
@@ -2464,7 +2490,7 @@ namespace ProjectAI.TrainForms
                 ["array_string_innerModelList"] = new JArray(),
                 // 2-2 빈 JObject "InnerModelInfo" 추가 -> 저장된 Inner Model Info
                 ["InnerModelInfo"] = new JObject(),
-                // 2-3 빈 JObject "TrainingProgressData" 추가 -> 학습 진행시 각 Epoch 마다 출력되는 Loss , Accuracy, Escape, OverKill (Train, Test) 정보 저장 
+                // 2-3 빈 JObject "TrainingProgressData" 추가 -> 학습 진행시 각 Epoch 마다 출력되는 Loss , Accuracy, Escape, OverKill (Train, Test) 정보 저장
                 ["TrainingProgressData"] = new JObject(),
                 // 2-4 입력된 JObject trainOption "ModelLearningInfo" 내부에 추가
                 ["ModelLearningInfo"] = processOption,
@@ -2474,7 +2500,7 @@ namespace ProjectAI.TrainForms
                 ["ImageListData"] = imageListData,
                 // 2-7 1에서 생성된 JObject "TrainprocessInfo" 추가
                 ["TrainProcessInfo"] = trainProcessInfo
-            }; //  process 정보 
+            }; //  process 정보
 
             // 3. 학습 데이터 관리 Dictionary 데이터 추가하기
 
@@ -2485,15 +2511,15 @@ namespace ProjectAI.TrainForms
             // TrainSystem Json 파일 정보 만들기
             // ProcessList 저장
             JArray trainFormProcessList = (JArray)WorkSpaceEarlyData.m_trainFormJobject["processList"];
-            trainFormProcessList.Add(processName); // 프로세스 이름 WorkSpaceEarlyData.m_trainFormJobject - ProcessList에 등록 
+            trainFormProcessList.Add(processName); // 프로세스 이름 WorkSpaceEarlyData.m_trainFormJobject - ProcessList에 등록
             // ProcessInfo 저장
             JObject trainFormProcessInfo = (JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"];
-            trainFormProcessInfo[processName] = trainProcessInfo; // 프로세스 이름 WorkSpaceEarlyData.m_trainFormJobject - ProcessInfo에 등록 
+            trainFormProcessInfo[processName] = trainProcessInfo; // 프로세스 이름 WorkSpaceEarlyData.m_trainFormJobject - ProcessInfo에 등록
 
             // 5.관리 폴더, 파일 생성, 파일 저장
             if (CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectWaitingProcess, processName)))
             {
-                // 기본 폴더가 있으면 
+                // 기본 폴더가 있으면
                 // 기존 폴더 삭제
                 CustomIOMainger.DirDelete(System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectWaitingProcess, processName));
                 CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectWaitingProcess, processName));
@@ -2504,7 +2530,7 @@ namespace ProjectAI.TrainForms
             }
             else
             {
-                // 기존 폴더가 없으면 
+                // 기존 폴더가 없으면
                 // 파일 저장
                 CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectWaitingProcess, processName, "ImageData"));
                 jsonDataManiger.PushJsonObject(System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectWaitingProcess, processName, "TrainSystem.Json"), processInfo);
@@ -2515,6 +2541,7 @@ namespace ProjectAI.TrainForms
             // dgvMWaitingforWork 추가
             this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork, processTask, processTrainTest, processInputDataType, "WaitingforWork", processName, 0);
         }
+
         /// <summary>
         /// 전처리 작업 등록 프로세스
         /// </summary>
@@ -2541,6 +2568,7 @@ namespace ProjectAI.TrainForms
                 }
             }
         }
+
         /// <summary>
         /// 학습 프로세스 DataGridView에 작업이 추가되면
         /// </summary>
@@ -2557,9 +2585,9 @@ namespace ProjectAI.TrainForms
             //processProgressBardgvMWaitingforWork.HeaderText = "Process Progress";
             /*
              * 등록된 프로세스 Task 확인  "Classification", "Segmentation", "ObjectDetection"
-             * 등록된 프로세스 Input Image Type 확인 "SingleImage", "MultiImage" 
+             * 등록된 프로세스 Input Image Type 확인 "SingleImage", "MultiImage"
              * 등록된 정보를 이용하여 Core 선택
-             * 
+             *
              * 학습 Task 생성
              */
 
@@ -2579,11 +2607,10 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
-
-                }  
+                }
             }
 
-            if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음. 
+            if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
                 if (this.trainFormF1Start)
                 {
                     if (processStep == "EndPreprocess")
@@ -2599,6 +2626,7 @@ namespace ProjectAI.TrainForms
                     }
                 }
         }
+
         /// <summary>
         /// 결과 처리 작업 등록
         /// </summary>
@@ -2622,11 +2650,10 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
-
                 }
             }
 
-            // 결과 처리 등록 
+            // 결과 처리 등록
             // Local Data에 결과 처리 이름이 등록이되었는지 확인하고 없으면 해당 workspace Model Data에 등록
 
             // TrainSystem.Json 학습 Local Task 정보 읽어오기
@@ -2646,7 +2673,7 @@ namespace ProjectAI.TrainForms
 
                 // model 관리 이름 만들기
                 string projectAccessModelName = CustomIOMainger.RandomFileName(modelList, 15);
-                
+
                 // local Data에 데이터 저장
                 trainProcessInfo["string_projectAccessModelName"] = projectAccessModelName;
 
@@ -2663,7 +2690,7 @@ namespace ProjectAI.TrainForms
                 this.jsonDataManiger.PushJsonObject(projectModelInfoPath, workspaceModelInfo);
             }
 
-            if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음. 
+            if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
                 // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
                 if (processStep.Equals("Processing Results"))
                 {
@@ -2671,7 +2698,6 @@ namespace ProjectAI.TrainForms
 
             if (this.taskProcessing != null)
             {
-
                 this.taskDone.ContinueWith((task) => this.ActiveProcessClassificationSaveResult((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath, WorkSpaceEarlyData.m_workSpacDataPath), TaskContinuationOptions.ExecuteSynchronously);
             }
             else
@@ -2682,7 +2708,6 @@ namespace ProjectAI.TrainForms
 
         private void ClassificationPuthTrainProcessAdd(JObject processOption)
         {
-
         }
 
         private void BtnMProcessAllStopClick(object sender, EventArgs e)
@@ -2692,12 +2717,10 @@ namespace ProjectAI.TrainForms
 
         private void BtnMProcessStopClick(object sender, EventArgs e)
         {
-
         }
 
         private void metroButton3_Click(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -2714,7 +2737,7 @@ namespace ProjectAI.TrainForms
 
             if (!this.processingStart) // 처음에만 동작 이후 학습 프로세서가 다 끝나서 대기 상황이면 processingStart = flase 로 변경하여 다시 대기 상태로 만들기
             {
-                this.processingStart = true; // 동작중 
+                this.processingStart = true; // 동작중
 
                 List<string> processAccesscodes = new List<string>();
                 // dgvMWaitingforWork의 Row 값을 직업 삭제하기 때문에 List를 만들어서 따로 Accesscode 관리
@@ -2750,18 +2773,19 @@ namespace ProjectAI.TrainForms
 
         private void DgvMWaitingforWorkCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // 작업 진행중인 모델 선택시 리뷰 
+            // 작업 진행중인 모델 선택시 리뷰
             /*
              * 1. 작업 접근 코드 가져오기
              * 2. 작업 접근 코드를 이용해서 작업 정보 읽어오기
              * 3. 작업 Task 정보 읽어오기 Classification, Segmantation, ObjectDetection
              * 4. 알맛은 리뷰 정보 contral 가져와거 붙이기
-             * 5. contral에 정보 적용 
+             * 5. contral에 정보 적용
              * 6. contral readonly 모드로 전환
              */
 
             this.DataGridViewCellMouseDoubleClick(sender, e);
         }
+
         private void DgvMProcessingCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             /*
@@ -2769,14 +2793,15 @@ namespace ProjectAI.TrainForms
              * 2. 작업 접근 코드를 이용해서 작업 정보 읽어오기
              * 3. 작업 Task 정보 읽어오기 Classification, Segmantation, ObjectDetection
              * 4. 알맛은 리뷰 정보 contral 가져와거 붙이기
-             * 5. contral에 정보 적용 
+             * 5. contral에 정보 적용
              * 6. contral readonly 모드로 전환
              */
 
             this.DataGridViewCellMouseDoubleClick(sender, e);
         }
+
         /// <summary>
-        /// 학습 정보 읽어와서 뿌려 주기 
+        /// 학습 정보 읽어와서 뿌려 주기
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2789,7 +2814,7 @@ namespace ProjectAI.TrainForms
              * 3. 작업 Task 정보 읽어오기 "Classification", "Segmentation", "ObjectDetection"
              * 4. 알맛은 리뷰 정보 contral 가져와거 붙이기
              * 5. contral 적용 정보 가져오기
-             * 6. contral에 정보 적용 
+             * 6. contral에 정보 적용
              * 7. contral readonly 모드로 전환
              */
 
@@ -2836,7 +2861,7 @@ namespace ProjectAI.TrainForms
              * 3. 작업 Task 정보 읽어오기 "Classification", "Segmentation", "ObjectDetection"
              * 4. 알맛은 리뷰 정보 contral 가져와거 붙이기
              * 5. contral 적용 정보 가져오기
-             * 6. contral에 정보 적용 
+             * 6. contral에 정보 적용
              * 7. contral readonly 모드로 전환
              */
 
@@ -2884,7 +2909,7 @@ namespace ProjectAI.TrainForms
             string validationRatio = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
             string patienceEpochs = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
 
-            // Data Augmentation Manual 설정 
+            // Data Augmentation Manual 설정
             Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BlurChecked"].ToString(), out bool blurChecked);
             string blur = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_Blur"].ToString();
 
@@ -2937,7 +2962,7 @@ namespace ProjectAI.TrainForms
             Boolean.TryParse(modelInfo["ModelLearningInfo"]["InstantEvaluate"]["bool_InstantEvaluateChecked"].ToString(), out bool instantEvaluateChecked);
             string instantEvaluateDataset = modelInfo["ModelLearningInfo"]["InstantEvaluate"]["string_InstantEvaluateDataset"].ToString();
 
-            // Class Info 
+            // Class Info
             List<string> classNameList = new List<string>();
             foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
             {
@@ -2950,7 +2975,6 @@ namespace ProjectAI.TrainForms
                 this.ClassificationTrainOptions.cbbManetworkModel.Text = "Small";
                 this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Small";
             }
-
             else if (networkModel.Equals("SynapseNet_Classification_34"))
             {
                 this.ClassificationTrainOptions.cbbManetworkModel.Text = "Medium";
@@ -2975,7 +2999,7 @@ namespace ProjectAI.TrainForms
             this.ClassificationTrainOptions.txtValidationRatio.Text = validationRatio;
             this.ClassificationTrainOptions.txtTrainDataNumber.Text = "---";
 
-            // Data Augmentation Manual 설정 
+            // Data Augmentation Manual 설정
             this.ClassificationTrainOptions.ckbMBlur.Checked = blurChecked;
             this.ClassificationTrainOptions.txtBlur.Text = blur;
 
@@ -3025,7 +3049,7 @@ namespace ProjectAI.TrainForms
             this.ClassificationTrainOptions.togMContinualLearning.Checked = continualLearningChecked;
             this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
 
-            // Class Info 
+            // Class Info
             this.ClassificationTrainOptions.UISetupClassWeighContralResetManual(); // 기존 Class Contral 초기화
             int i = 0;
             foreach (string className in classNameList)

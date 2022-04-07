@@ -17,6 +17,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
         /// </summary>
         [Description("편집 버튼 클릭"), Category("Custum Component Property")]
         public event EventHandler BtnMEditClick;
+
         /// <summary>
         /// 버튼 클릭 이벤트
         /// </summary>
@@ -33,6 +34,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
         /// </summary>
         [Description("삭제 버튼 클릭"), Category("Custum Component Property")]
         public event EventHandler BtnMDeleteClick;
+
         /// <summary>
         /// 버튼 클릭 이벤트
         /// </summary>
@@ -49,6 +51,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
         /// </summary>
         [Description("클레스 버튼 클릭"), Category("Custum Component Property")]
         public event EventHandler TileMClassClick;
+
         /// <summary>
         /// 버튼 클릭 이벤트
         /// </summary>
@@ -59,7 +62,6 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
             if (this.TileMClassClick != null)
                 TileMClassClick(sender, e);
         }
-
 
         private MetroFramework.MetroColorStyle ComponentsStyle = MetroFramework.MetroColorStyle.Default;
         private System.Drawing.Color m_tileBackColor = System.Drawing.Color.Gray;
@@ -95,6 +97,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
                 this.ComponentsStyle = value;
             }
         }
+
         [Category("Custum Component Property"), Description("타일 배경 색상")]
         public System.Drawing.Color TileBackColor
         {
@@ -107,6 +110,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
                 this.tileMClass.BackColor = value;
             }
         }
+
         [Category("Custum Component Property"), Description("타일 폰트 색상")]
         public System.Drawing.Color TileFontColor
         {
@@ -119,6 +123,7 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
                 this.tileMClass.ForeColor = value;
             }
         }
+
         [Category("Custum Component Property"), Description("타일 텍스트")]
         public string TileText
         {
@@ -129,9 +134,9 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
             set
             {
                 this.tileMClass.Text = value;
-
             }
         }
+
         [Category("Custum Component Property"), Description("편집 버튼 텍스트")]
         public string EditText
         {
@@ -142,9 +147,9 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
             set
             {
                 this.btnMEdit.Text = value;
-
             }
         }
+
         [Category("Custum Component Property"), Description("삭제 버튼 텍스트")]
         public string DeleteText
         {
@@ -155,7 +160,6 @@ namespace ProjectAI.MainForms.UserContral.ClassEdit
             set
             {
                 this.btnMDelete.Text = value;
-
             }
         }
     }

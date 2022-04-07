@@ -3,13 +3,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
-
 namespace ProjectAI.CustomComponent
 {
-    class RoundMetroTile : MetroFramework.Controls.MetroTile
+    internal class RoundMetroTile : MetroFramework.Controls.MetroTile
     {
         public int cornerRadius = 15; //라운드 너비
         public Color borderColor = Color.DarkGray;//외곽선 색상
@@ -96,6 +92,7 @@ namespace ProjectAI.CustomComponent
         }
 
         #region 속성 추가
+
         [Category("RoundLabel"), Description("라운드 너비")]
         public int CornerRadius
         {
@@ -199,6 +196,7 @@ namespace ProjectAI.CustomComponent
                 isFillRightBtm = value;
             }
         }
+
         #endregion 속성 추가
     }
 }

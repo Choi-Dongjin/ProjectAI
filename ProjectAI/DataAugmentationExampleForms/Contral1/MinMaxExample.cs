@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using MetroFramework.Components;
 using OpenCvSharp;
-using OpenCvSharp.Extensions;
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ProjectAI.DataAugmentationExampleForms.Contral1
 {
@@ -25,6 +16,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         private double outputRate;
 
         public delegate Mat ActiveExampleDelegate(Mat orignalImage, string valueString);
+
         public ActiveExampleDelegate activeConverter;
 
         public MinMaxExample()
@@ -36,6 +28,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             // 이벤트 설정
             this.TrackBarEventSetup();
         }
+
         public MinMaxExample(string imageDataPath, string exCase)
         {
             InitializeComponent();
@@ -75,7 +68,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 this.activeConverter += this.ConvertGaussianNoise;
             }
             // 이벤트 설정
-            
+
             this.TrackBarEventSetup();
         }
 
@@ -98,7 +91,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
 
         private void ActiveConverterSetup()
         {
-
         }
 
         private void ImageRead(string imageDataPath)
@@ -126,7 +118,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 {
                     this.trbMapplied.Minimum = this.trbMminimum.Value;
                 }
-                else if(this.trbMminimum.Value == 0)
+                else if (this.trbMminimum.Value == 0)
                 {
                     this.trbMapplied.Minimum = 0;
                 }
@@ -147,8 +139,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                     }
                 }
             }
-            
-                
         }
 
         private void TrbMmaximumScroll(object sender, ScrollEventArgs e)
@@ -175,7 +165,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                         this.trbMapplied.Minimum = this.trbMmaximum.Value - 1;
                         this.trbMapplied.Maximum = this.trbMmaximum.Value;
                     }
-                    
                 }
                 else if (this.trbMmaximum.Value == 0)
                 {
@@ -187,9 +176,8 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 }
                 else if (this.trbMmaximum.Value < 0)
                 {
-
                 }
-            }   
+            }
         }
 
         private void TrbMappliedValueChanged(object sender, EventArgs e)
@@ -212,6 +200,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         }
 
         #region Converter 설정
+
         /// <summary>
         /// Blur 설정에서 UI 설정
         /// </summary>
@@ -248,6 +237,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
 
             this.outputRate = 1;
         }
+
         /// <summary>
         /// 블러 설정
         /// </summary>
@@ -256,7 +246,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// <returns></returns>
         public Mat ConvertGaussianBlur(Mat orignalImage, string valueString)
         {
-
             Mat converImage = new Mat();
             if (double.TryParse(valueString, out double value))
             {
@@ -302,6 +291,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
 
             this.outputRate = 1;
         }
+
         /// <summary>
         /// Brightness 설정
         /// </summary>
@@ -366,6 +356,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMapplied.MouseWheelBarPartitions = 100;
             this.lblMapplied.Text = (this.trbMapplied.Value * this.outputRate).ToString();
         }
+
         /// <summary>
         /// Center 설정
         /// </summary>
@@ -382,7 +373,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 int locationWidth = (int)(orignalImage.Width * this.outputRate * value / 2);
                 int locationHeight = (int)(orignalImage.Height * this.outputRate * value / 2);
 
-                converImage = orignalImage.SubMat(new Rect(locationX - locationWidth, locationY - locationHeight, locationWidth*2, locationHeight*2));
+                converImage = orignalImage.SubMat(new Rect(locationX - locationWidth, locationY - locationHeight, locationWidth * 2, locationHeight * 2));
                 //Console.WriteLine($"X{locationX - locationWidth}, Y{locationY - locationHeight}");
                 //Console.WriteLine($"-X{locationX + locationWidth}, -Y{locationY + locationHeight}");
                 //Console.WriteLine($"location X{(locationWidth)}, location Y{locationHeight}");
@@ -424,6 +415,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMapplied.MouseWheelBarPartitions = 100;
             this.lblMapplied.Text = (this.trbMapplied.Value * this.outputRate).ToString();
         }
+
         /// <summary>
         /// Center 설정
         /// </summary>
@@ -510,6 +502,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMapplied.MouseWheelBarPartitions = 100;
             this.lblMapplied.Text = (this.trbMapplied.Value * this.outputRate).ToString();
         }
+
         /// <summary>
         /// Center 설정
         /// </summary>
@@ -533,12 +526,13 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Converter 설정
 
         public string GetMaximumValue()
         {
             return lblMmaximum.Text;
         }
+
         public string GetMinimumValue()
         {
             return lblMminimum.Text;

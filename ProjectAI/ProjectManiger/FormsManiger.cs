@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MetroFramework.Components;
 using System.Drawing;
-
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
 
 namespace ProjectAI
 {
@@ -22,27 +14,30 @@ namespace ProjectAI
         private static FormsManiger formsManiger;
 
         public delegate void FormStyleManagerHandler(MetroStyleManager FormStyleManager); // Form Style 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
+
         public static FormStyleManagerHandler m_formStyleManagerHandler; // Form Style 관리 Update Handler
 
         public delegate void FormlanguageManagerHandler(string FormlanguageManager); // Form language 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
+
         public static FormlanguageManagerHandler m_formlanguageManagerHandler; // Form language 관리 Update Handler
 
-
         public delegate void StartFormOptionsManagerHandler(); // StartForm, StartFormOptions 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
+
         public static StartFormOptionsManagerHandler m_startFormOptionsManagerHandler; // StartForm, StartFormOptions 변경시를 관리 Update Handler
 
         public delegate void MainFormsUIResetHandler(); // MainForms UI 적용된 부분 모두 비활성화 변경시를 관리 옵저버 패턴(변형) 구현을 위한 delegate
+
         public static MainFormsUIResetHandler m_mainFormsUIResetHandler; // MainForms UI 적용된 부분 모두 비활성화를 관리 Update Handler
 
         // forms Dark Mode chacker
         public bool m_isDarkMode = true;
+
         public MetroStyleManager m_StyleManager = new MetroStyleManager();
 
         private FormsManiger()
         {
-
         }
-        
+
         /// <summary>
         /// Class 호출에 사용
         /// </summary>
@@ -61,7 +56,6 @@ namespace ProjectAI
         /// </summary>
         public void FormStyleManagerHandlerEnrollment()
         {
-
         }
 
         /// <summary>
@@ -69,7 +63,6 @@ namespace ProjectAI
         /// </summary>
         public void FormlanguageManagerHandlerEnrollment()
         {
-
         }
 
         /// <summary>
@@ -84,7 +77,6 @@ namespace ProjectAI
             //FormsManiger.m_startFormOptionsManagerHandler += WorkSpaceEarlyData.ProgramVariablesChange;
         }
 
-
         internal System.Drawing.Color GetStyleRGBClor(string colorName)
         {
             Color color = new Color();
@@ -93,6 +85,7 @@ namespace ProjectAI
             else if (colorName == "Silver") { color = Color.FromArgb(85, 85, 85); }
             return color;
         }
+
         internal System.Drawing.Color GetThemeRGBClor(string colorName)
         {
             Color color = new Color();

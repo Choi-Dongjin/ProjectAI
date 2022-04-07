@@ -25,12 +25,12 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// Forms 관리 Class
         /// </summary>
-        FormsManiger formsManiger = FormsManiger.GetInstance();
+        private FormsManiger formsManiger = FormsManiger.GetInstance();
 
         public WorkSpaceButton()
         {
             InitializeComponent();
-            
+
             // btnWorkSpaceOpen Click에 이벤트 등록
             this.btnWorkSpaceOpen.Click += BtnWorkSpaceOpenClickEvent;
 
@@ -61,6 +61,7 @@ namespace ProjectAI.MainForms
         }
 
         #region WorkSpace 속성 추가
+
         [Category("WorkSpace"), Description("Work Space Name")]
         public string WorkSpaceName
         {
@@ -125,11 +126,11 @@ namespace ProjectAI.MainForms
                 this.btnWorkSpaceOpen.TabIndex = value;
             }
         }
-        #endregion
+
+        #endregion WorkSpace 속성 추가
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
     }
 }

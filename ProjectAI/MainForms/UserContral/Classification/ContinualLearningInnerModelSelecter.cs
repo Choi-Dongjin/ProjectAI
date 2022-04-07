@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using MetroFramework;
+﻿using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
-
+using Newtonsoft.Json.Linq;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms.UserContral.Classification
 {
@@ -28,8 +18,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
         private string selectInnerModelAccuracy;
         private string selectInnerModelEscape;
         private string selectInnerModelOverKill;
-
-
 
         public ContinualLearningInnerModelSelecter(string modelName)
         {
@@ -66,7 +54,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
             this.UISetModelUpdater(); // Model Info Updataer - 내부 모델 정보 불러오기
             this.UISetChartSetting(); // 선택된 모델 차트 그리기
         }
-
 
         ~ContinualLearningInnerModelSelecter()
         {
@@ -116,7 +103,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
                 {
                     if (WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] != null)
                     {
-
                         foreach (string innerModelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][this.modelName]["array_string_innerModelList"])
                         {
                             // 내부 모델 정보 읽어오기
@@ -152,9 +138,8 @@ namespace ProjectAI.MainForms.UserContral.Classification
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                     if (WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] != null)
                     {
-                        foreach(JProperty trainingProgressData in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][this.modelName]["TrainingProgressData"])
+                        foreach (JProperty trainingProgressData in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][this.modelName]["TrainingProgressData"])
                         {
-
                             int locationX = Convert.ToInt32(trainingProgressData.Name);
 
                             double trainLoss = Convert.ToDouble(trainingProgressData.Value["double_TrainLoss"]);
@@ -195,7 +180,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
                     this.selectInnerModelName = innerModelName;
                     this.selectInnerModelPath = System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModel, WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName, this.modelName, "models", innerModelName);
 
-                    /* 
+                    /*
                         this.dgvMContinualLearningInnerModelSelecter.Columns[0].Name = "Epoch";
                         this.dgvMContinualLearningInnerModelSelecter.Columns[1].Name = "Train Loss"; // Total Labeled Image Number
                         this.dgvMContinualLearningInnerModelSelecter.Columns[2].Name = "Train Accuracy"; //Train Test
@@ -213,8 +198,9 @@ namespace ProjectAI.MainForms.UserContral.Classification
                     this.selectInnerModelOverKill = this.dgvMContinualLearningInnerModelSelecter.Rows[e.RowIndex].Cells[4].Value.ToString();
 
                     this.Close();
-                }  
+                }
         }
+
         /// <summary>
         /// 모델 리뷰 클릭
         /// </summary>
@@ -252,8 +238,9 @@ namespace ProjectAI.MainForms.UserContral.Classification
             //        this.chartAccuracy.Series["selectModelDataTest"].Points.Clear();
             //        this.chartAccuracy.Series["selectModelDataTest"].Points.AddXY(locationX, testAcc);
             //        this.chartAccuracy.Series["selectModelDataTest"].ToolTip = string.Format("Epoch: {0}, Accuracy: {1:0.00}", locationX, testAcc);
-                //}
+            //}
         }
+
         private void DgvMContinualLearningInnerModelSelecterSelectionChanged(object sender, EventArgs e)
         {
             if (dgvMContinualLearningInnerModelSelecter.SelectedRows[0].Index != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
@@ -297,30 +284,36 @@ namespace ProjectAI.MainForms.UserContral.Classification
         {
             return this.selectInnerModelPath;
         }
+
         /// <summary>
-        /// 선택된 모델명 
+        /// 선택된 모델명
         /// </summary>
         /// <returns></returns>
         public string GetModelName()
         {
             return this.selectInnerModelName;
         }
+
         public string GetModelLoss()
         {
             return this.selectInnerModelLoss;
         }
+
         public string GetModelAccuracy()
         {
             return this.selectInnerModelAccuracy;
         }
+
         public string GetModelEscape()
         {
             return this.selectInnerModelEscape;
         }
+
         public string GetModelOverKill()
         {
             return this.selectInnerModelOverKill;
         }
+
         /*
 this.selectInnerModelLoss = this.dgvMContinualLearningInnerModelSelecter.Rows[e.RowIndex].Cells[1].Value.ToString();
 this.selectInnerModelAccuracy = this.dgvMContinualLearningInnerModelSelecter.Rows[e.RowIndex].Cells[2].Value.ToString();

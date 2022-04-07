@@ -18,6 +18,7 @@ namespace ProjectAI.MainForms
         }
 
         #region ProjectImageCount 속성 추가
+
         [Category("ProjectImageCount"), Description("Image Count Name")]
         public string ImageCountName
         {
@@ -30,6 +31,7 @@ namespace ProjectAI.MainForms
                 this.lblimageCountName.Text = value;
             }
         }
+
         [Category("ProjectImageCount"), Description("Image Count Name")]
         public string ImageCount
         {
@@ -83,6 +85,7 @@ namespace ProjectAI.MainForms
                 }
             }
         }
-        #endregion
+
+        #endregion ProjectImageCount 속성 추가
     }
 }

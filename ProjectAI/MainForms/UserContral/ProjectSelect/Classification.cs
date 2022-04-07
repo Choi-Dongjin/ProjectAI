@@ -48,7 +48,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         [Description("Multi Image Button"), Category("Custom Button")]
         public event EventHandler TxtNoneClickEvnetHandler;
 
-        FormsManiger formsManiger = FormsManiger.GetInstance();
+        private FormsManiger formsManiger = FormsManiger.GetInstance();
 
         public Classification()
         {
@@ -68,7 +68,6 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.btnNoneImage.BtnMactiveButtonClickEvnetHandler += BtnNoneClickEvent;
             // TxtMNoneImage Click에 이벤트 함수 등록
             this.btnNoneImage.TxtMTextBoxClickEvnetHandler += TxtNoneClickEvent;
-
 
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
@@ -105,8 +104,8 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                     ImputDataTypeButton passbutton = (ImputDataTypeButton)previousBtn; // ImputDataTypeButton 타이틀
                     MetroFramework.Controls.MetroButton clickButton = (MetroFramework.Controls.MetroButton)btnSender; // 선택된 버튼 MetroButton 이름 비교
                     /*
-                     * ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름을 동일하게 셋팅하였음. 
-                     * 따라서 ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름 비교하여 
+                     * ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름을 동일하게 셋팅하였음.
+                     * 따라서 ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름 비교하여
                      * 같으면 비활성화 하지 않고 다르면 모두 비활성화
                     */
                     Console.WriteLine("");
@@ -126,12 +125,10 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                     }
                     else
                     {
-
                     }
                 }
             }
         }
-
 
         private void DisableText(object btnSender = null)
         {
@@ -160,8 +157,8 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                 this.DisableButton(sender);
                 BtnSingleImageClickEvnetHandler(sender, e);
             }
-                
         }
+
         /// <summary>
         /// TxtSingleImage Click EvnetHandler 함수
         /// </summary>
@@ -189,6 +186,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                 BtnMultiImageClickEvnetHandler(sender, e);
             }
         }
+
         /// <summary>
         /// BtnMultiImage Click EvnetHandler 함수
         /// </summary>

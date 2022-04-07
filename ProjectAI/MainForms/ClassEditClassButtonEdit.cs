@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using MetroFramework;
-using MetroFramework.Components;
+﻿using MetroFramework.Components;
 using MetroFramework.Forms;
+using System;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms
 {
@@ -19,7 +10,7 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// jsonDataManiger
         /// </summary>
-        JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
+        private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
 
         /// <summary>
         /// 폼 메니저
@@ -29,19 +20,20 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// 외부에서 가져온 Button
         /// </summary>
-        ProjectAI.MainForms.UserContral.ClassEdit.ClassButton m_classButton;
+        private ProjectAI.MainForms.UserContral.ClassEdit.ClassButton m_classButton;
 
         /// <summary>
         /// 진입 전 배경 Color Back Up, 취소시 적용
         /// </summary>
-        System.Drawing.Color m_backupClassButtonBackColor;
+        private System.Drawing.Color m_backupClassButtonBackColor;
+
         /// <summary>
         /// 진입전 Text
         /// </summary>
-        string m_backupClassButtonText;
+        private string m_backupClassButtonText;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="classButton"></param>
         public ClassEditClassButtonEdit(ProjectAI.MainForms.UserContral.ClassEdit.ClassButton classButton)
@@ -85,7 +77,6 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void ClassEditClassButtonEditLoad(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -95,7 +86,6 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void ClassEditClassButtonEditShown(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -105,7 +95,6 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void ClassEditClassButtonEditFormClosing(object sender, FormClosingEventArgs e)
         {
-            
         }
 
         private void TileMColorClick(object sender, EventArgs e)
@@ -119,7 +108,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// 확인 
+        /// 확인
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -143,7 +132,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// Enter Key 입력이 있을때 
+        /// Enter Key 입력이 있을때
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -154,7 +143,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// 텍스트 박스가 포커스를 잃을때 
+        /// 텍스트 박스가 포커스를 잃을때
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

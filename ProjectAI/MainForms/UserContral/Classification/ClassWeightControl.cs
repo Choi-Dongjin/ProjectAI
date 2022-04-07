@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ProjectAI.MainForms.UserContral.Classification
 {
@@ -35,7 +29,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
             this.metroStyleManager1.Theme = styleManager.Theme;
         }
 
-
         [Category("ClassWeightControl"), Description("Class Number")]
         public int Number
         {
@@ -54,6 +47,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
                     lblMNumber.Text = value.ToString();
             }
         }
+
         [Category("ClassWeightControl"), Description("Class Name")]
         public string ClassName
         {
@@ -66,6 +60,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
                 lblMClassName.Text = value;
             }
         }
+
         [Category("ClassWeightControl"), Description("Class Color")]
         public Color ClassNameColor
         {
@@ -78,6 +73,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
                 lblMClassName.ForeColor = value;
             }
         }
+
         /// <summary>
         /// Class Train Weight
         /// </summary>

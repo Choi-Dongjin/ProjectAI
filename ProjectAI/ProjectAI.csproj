@@ -422,6 +422,7 @@
     <None Include="Resources\border1W.png" />
     <None Include="Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif" />
     <None Include="Resources\question1.png" />
+    <None Include="Resources\image1.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

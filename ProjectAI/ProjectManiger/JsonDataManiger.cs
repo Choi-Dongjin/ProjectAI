@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using System.IO;
+using System.Text;
 
 namespace ProjectAI
 {
     /// <summary>
     /// 이 클레스를 직접 호출하지 마세요. 싱글톤 구조가 적용되어 있음. GetInstance를 호출 하여 Class 획득
     /// </summary>
-    class JsonDataManiger
+    internal class JsonDataManiger
     {
         private static JsonDataManiger jsonDataManiger; // 싱글톤 패턴 구현을 위한 FormsManiger
 
         private JsonDataManiger()
         {
-
         }
 
         public static JsonDataManiger GetInstance()
@@ -77,6 +71,7 @@ namespace ProjectAI
         }
 
         internal delegate JObject DataIntegrityCheckFuntionInputJObject(JObject jObject);
+
         /// <summary>
         /// Json 파일 읽고 Json 파일 데이터 무결성 검사 진행후(무결성 검사 함수가 필요) jObject로 출력, Json 파일이 어떠한 이유에서든 손상되어 읽을수 없다면 Null을 반환 !!!!!! *** Null에 대한 회피코드를 무결성 코드에 추가할 것.
         /// </summary>
@@ -86,7 +81,7 @@ namespace ProjectAI
         internal JObject GetJsonObject(string jsonFilePath, DataIntegrityCheckFuntionInputJObject dataIntegrityCheckFuntion)
         {
             JObject jObject = new JObject();
-            
+
             using (var stream = File.OpenText(jsonFilePath))
             using (JsonTextReader reader = new JsonTextReader(stream))
             {
@@ -94,7 +89,7 @@ namespace ProjectAI
                 {
                     jObject = (JObject)JToken.ReadFrom(reader);
                 }
-                catch(Newtonsoft.Json.JsonReaderException)
+                catch (Newtonsoft.Json.JsonReaderException)
                 {
                     jObject = null;
                 }

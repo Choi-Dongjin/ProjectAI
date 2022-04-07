@@ -15,7 +15,6 @@ using MetroFramework.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-
 namespace ProjectAI.MainForms.UserContral.Monitoring
 {
     public partial class ClassViewer : UserControl
@@ -37,11 +36,9 @@ namespace ProjectAI.MainForms.UserContral.Monitoring
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
             if (formsManiger.m_isDarkMode) // Light로 변경시 진입
             {
-
             }
             else // Dark로 변경시 진입
             {
-
             }
 
             this.metroStyleManager1.Style = styleManager.Style;
@@ -74,6 +71,7 @@ namespace ProjectAI.MainForms.UserContral.Monitoring
             this.UISetClassInfoInput(this.dgvMClassInfo);
             this.dgvMClassInfo.ClearSelection();
         }
+
         public void UpdateClassInfo(JObject classInfo)
         {
             this.UISetClassInfoInput(this.dgvMClassInfo, classInfo);
@@ -122,7 +120,6 @@ namespace ProjectAI.MainForms.UserContral.Monitoring
 
         private void UISetClassInfoInput(MetroFramework.Controls.MetroGrid metroGrid, JObject classInfo)
         {
-
         }
 
         private void DgvMClassInfoCellClick(object sender, DataGridViewCellEventArgs e)

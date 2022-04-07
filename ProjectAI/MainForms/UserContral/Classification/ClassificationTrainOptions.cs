@@ -1,28 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Newtonsoft.Json;
+﻿using MetroFramework.Components;
 using Newtonsoft.Json.Linq;
-
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
-
-using System.Management;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ProjectAI.CustomComponent.MainForms.Classification
 {
     public partial class ClassificationTrainOptions : UserControl
     {
-        List<string> previousClassList = new List<string>(); // class Update 가 실행되기전 이전 class List값과 비교하여 변경 사항이 있으면 업데이터 동작하도록 설정
+        private List<string> previousClassList = new List<string>(); // class Update 가 실행되기전 이전 class List값과 비교하여 변경 사항이 있으면 업데이터 동작하도록 설정
 
         public ClassificationTrainOptions()
         {
@@ -51,11 +39,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
             if (formsManiger.m_isDarkMode) // Light로 변경시 진입
             {
-
             }
             else // Dark로 변경시 진입
             {
-
             }
 
             this.metroStyleManager1.Style = styleManager.Style;
@@ -65,11 +51,10 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private void TrainOptionsLoad(object sender, EventArgs e)
         {
             this.cbbManetworkModel.Text = this.cbbManetworkModel.PromptText; // 버그인지 this.cbbMnetworkModel.Text 초기설정이 안됨 따라서 this.cbbMnetworkModel.PromptText 를 초기 설정하고 Text에 넣어줌
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<string, ProjectAI.MainForms.UserContral.Classification.ClassWeightControl> classWeightControls = new Dictionary<string, ProjectAI.MainForms.UserContral.Classification.ClassWeightControl>();
 
@@ -84,7 +69,8 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private ProjectAI.MainForms.UserContral.Classification.ClassWeightControl UISetclassWeightControl(int number, string className, Color classColor, int weight = 1)
         {
             #region Control UI Setup
-            /// <summary> 
+
+            /// <summary>
             /// 디자이너 변수입니다.
             /// </summary>
             ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
@@ -98,13 +84,16 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             classWeightControl.Size = new System.Drawing.Size(445, 36);
             classWeightControl.TabIndex = number;
             classWeightControl.Weight = 100;
+
             #endregion Control UI Setup
 
             #region 값 입력
+
             classWeightControl.Number = number;
             classWeightControl.ClassName = className;
             classWeightControl.ClassNameColor = classColor;
             classWeightControl.Weight = weight;
+
             #endregion 값 입력
 
             return classWeightControl;
@@ -130,7 +119,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                                 }
                             }
 
-                            if (this.previousClassList.Count == classNameList.Count) // 이전 List Count가 같으면 업데이트 중단 -> 지금은 삭제, 추가시 업데이터가 동작하기 때문에 문제가 없음, 한번에 수정수 동작하는 경우가 발생하면 문제가 생길수 있음. 
+                            if (this.previousClassList.Count == classNameList.Count) // 이전 List Count가 같으면 업데이트 중단 -> 지금은 삭제, 추가시 업데이터가 동작하기 때문에 문제가 없음, 한번에 수정수 동작하는 경우가 발생하면 문제가 생길수 있음.
                                 return;
 
                             this.previousClassList = classNameList; // 이전 값에 현제값 적용
@@ -147,7 +136,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                                 this.classWeightControls.Add(classNameList[i], classWeightControl);
                                 // panel에 추가
                                 this.panelMClassWeight.Controls.Add(classWeightControl);
-
                             }
                             this.panelMClassWeight.AutoScroll = true;
                             this.panelMClassWeight.MinimumSize = new Size(450, 120);
@@ -200,6 +188,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
 
         #region Trian Options 설정
+
         /// <summary>
         /// 모델 설정 변경시 동작 함수
         /// </summary>
@@ -209,8 +198,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             Console.WriteLine(cbbManetworkModel.Text);
         }
+
         /// <summary>
-        /// 설정 가능한 학습 옵션 
+        /// 설정 가능한 학습 옵션
         /// </summary>
         /// <returns></returns>
         public List<string> BringTrainOptionManual()
@@ -234,11 +224,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             TrainOptionData.Add(PackingString($"n_ep_no_save |{txtMmodelMinimumSelectionEpoch.Text}|"));
             // Validation Ratio (검증 비율) 설정
             TrainOptionData.Add(PackingString($"val_ratio |{txtValidationRatio.Text}|"));
-            // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정 
+            // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정
             TrainOptionData.Add(PackingString($"max_ep_loss_up |{txtPatienceEpochs.Text}|"));
 
             return TrainOptionData;
         }
+
         /// <summary>
         /// 설정 가능한 학습 옵션 JObject로 정리
         /// </summary>
@@ -269,7 +260,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 ["int_ModelMinimumSelectionEpoch"] = txtMmodelMinimumSelectionEpoch.Text,
                 // Validation Ratio (검증 비율) 설정
                 ["int_ValidationRatio"] = txtValidationRatio.Text,
-                // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정 
+                // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정
                 ["int_PatienceEpochs"] = txtPatienceEpochs.Text
             };
 
@@ -277,6 +268,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             TrainOptionData["TrainOptionManual"] = jObject;
             return TrainOptionData;
         }
+
         /// <summary>
         /// 자동으로 설정되는 학습 옵션
         /// </summary>
@@ -285,13 +277,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             // BringTrainOptionAuto 옵션 -> 전문가 옵션 활성화시 수정이 가능하도록 수정 요망 #11
 
-            List<string> TrainOptionData = new List<string>(); // Train Option Auto List 
+            List<string> TrainOptionData = new List<string>(); // Train Option Auto List
             /* #10
-             * Hardware와 InputData 정보를 이용하여 자동으로 선택되는 변수들 설정 해야함. 
+             * Hardware와 InputData 정보를 이용하여 자동으로 선택되는 변수들 설정 해야함.
              * 1. Batch Size
              * 2. Image Size
              */
-            // Batch Size 설정 
+            // Batch Size 설정
             TrainOptionData.Add(PackingString($"batch_sz |{4}|"));
             // Start Learning rate 설정
             TrainOptionData.Add(PackingString($"lr_0 |{1e-3}|"));
@@ -304,6 +296,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return TrainOptionData;
         }
+
         /// <summary>
         /// 자동으로 설정되는 학습 옵션
         /// </summary>
@@ -315,11 +308,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             {
                 // BringTrainOptionAuto 옵션 -> 전문가 옵션 활성화시 수정이 가능하도록 수정 요망 #11
                 /* #10
-                 * Hardware와 InputData 정보를 이용하여 자동으로 선택되는 변수들 설정 해야함. 
+                 * Hardware와 InputData 정보를 이용하여 자동으로 선택되는 변수들 설정 해야함.
                  * 1. Batch Size
                  * 2. Image Size
                  */
-                // Batch Size 설정 
+                // Batch Size 설정
                 ["int_BatchSize"] = "2",
                 // Start Learning rate 설정
                 ["double_StartLearningrate"] = "1e-3",
@@ -336,14 +329,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return TrainOptionData;
         }
+
         /// <summary>
-        /// 일반적인 상황에서는 사용하지 않는 옵션 정의 -> 
+        /// 일반적인 상황에서는 사용하지 않는 옵션 정의 ->
         /// </summary>
         /// <returns></returns>
         public List<string> BringTrainOptionNotDefine()
         {
-            List<string> TrainOptionData = new List<string>(); // Train Option Not Define List 
-            // Trian Options 사용 안함 
+            List<string> TrainOptionData = new List<string>(); // Train Option Not Define List
+            // Trian Options 사용 안함
             // Pretrained (학습된 데이터 이용하기)
             TrainOptionData.Add(PackingString($"pretrained |{1e-10}|")); // Use pretrained weights for ResNet; EffNet or SEResNet50
 
@@ -354,7 +348,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             JObject jObject = new JObject
             {
-                // Trian Options 사용 안함 
+                // Trian Options 사용 안함
                 // Pretrained (학습된 데이터 이용하기)
                 ["double_Pretrained"] = ""
             };
@@ -377,6 +371,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             TrainOptionData.AddRange(this.BringTrainOptionNotDefine()); // TrainOptionNotDefine 정보 가져오기, List 합치기
             return TrainOptionData;
         }
+
         /// <summary>
         /// 학습 옵션 설정 데이터 가져오기
         /// </summary>
@@ -390,9 +385,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return TrainOptionData;
         }
+
         #endregion Trian Options 설정
 
         #region Data Augmentation (데이터 증강) 설정
+
         /// <summary>
         /// Data Augmentation (데이터 증강) Manual 설정값 가져오기
         /// </summary>
@@ -415,9 +412,8 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             else
             {
                 AugmentationData.Add(PackingString($"brightness_min |{0}|"));
-                AugmentationData.Add(PackingString($"brightness_max |{0}|")); 
+                AugmentationData.Add(PackingString($"brightness_max |{0}|"));
             }
-
 
             // Center 설정
             if (ckbMCenter.Checked) // 활성화 여부 확인
@@ -434,14 +430,14 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             else
             {
                 AugmentationData.Add(PackingString($"contrast_min |{1}|"));
-                AugmentationData.Add(PackingString($"contrast_max  |{1}|")); 
+                AugmentationData.Add(PackingString($"contrast_max  |{1}|"));
             }
 
             // Gaussian Noise 설정
             if (ckbMGaussianNoise.Checked) // 활성화 여부 확인
                 AugmentationData.Add(PackingString($"noise |{txtGaussianNoise.Text}|")); // probability of Gausian noise for training images
             else
-                AugmentationData.Add(PackingString($"noise |{0}|")); 
+                AugmentationData.Add(PackingString($"noise |{0}|"));
 
             // Gradation 설정
             if (ckbMGradation.Checked) // 활성화 여부 확인
@@ -508,6 +504,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return AugmentationData;
         }
+
         /// <summary>
         /// Data Augmentation (데이터 증강) Manual 설정값 가져오기
         /// </summary>
@@ -528,7 +525,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_BlurChecked"] = ckbMBlur.Checked;
                 jObject["int_Blur"] = "0";
             }
-                
 
             // Brightness 설정
             if (ckbMBlur.Checked) // 활성화 여부 확인
@@ -555,8 +551,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_CenterChecked"] = ckbMCenter.Checked;
                 jObject["double_Center"] = "1";
             }
-                
-            
 
             // Contrast 설정
             if (ckbMContrast.Checked) // 활성화 여부 확인
@@ -569,7 +563,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             {
                 jObject["bool_ContrastChecked"] = ckbMContrast.Checked;
                 jObject["int_ContrastMin"] = "1";
-                jObject["int_ContrastMax"] = "1"; 
+                jObject["int_ContrastMax"] = "1";
             }
 
             // Gaussian Noise 설정
@@ -583,7 +577,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_GaussianNoiseChecked"] = ckbMGaussianNoise.Checked;
                 jObject["double_GaussianNoise"] = "0";
             }
-                
 
             // Gradation 설정
             if (ckbMGradation.Checked) // 활성화 여부 확인
@@ -596,7 +589,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_GradationChecked"] = ckbMGradation.Checked;
                 jObject["int_Gradation"] = "0";
             }
-               
 
             // Gradation RGB 설정
             if (ckbMContrast.Checked) // 활성화 여부 확인
@@ -610,7 +602,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_GradationRGBChecked"] = ckbMContrast.Checked;
                 jObject["int_GradationRGB"] = "0 0 255";
             }
-
 
             // Horizontal Flip 설정
             if (ckbMHorizontalFlip.Checked) // 활성화 여부 확인
@@ -647,7 +638,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["bool_SharpenChecked"] = ckbMSharpen.Checked;
                 jObject["double_Sharpen"] = "0";
             }
-                
 
             // Vertical Flip 설정
             if (ckbMVerticalFlip.Checked) // 활성화 여부 확인
@@ -665,14 +655,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             else
             {
                 jObject["double_ZoomChecked"] = ckbMZoom.Checked;
-                jObject["double_ZoomMin"] = "1"; 
-                jObject["double_ZoomMax"] = "1"; 
+                jObject["double_ZoomMin"] = "1";
+                jObject["double_ZoomMax"] = "1";
             }
             // BringDataAugmentationManual 옵션 적용
             AugmentationData["DataAugmentationManual"] = jObject;
 
             return AugmentationData;
         }
+
         /// <summary>
         /// 일반적인 상황에서는 사용하지 않는 옵션 정의
         /// </summary>
@@ -700,7 +691,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             {
                 AugmentationData.Add(PackingString($"n_vert_flip |{0}|"));
             }
-                
 
             return AugmentationData;
         }
@@ -720,6 +710,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return AugmentationData;
         }
+
         /// <summary>
         /// Data Augmentation 설정값 가져오기
         /// </summary>
@@ -731,6 +722,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             AugmentationData.AddRange(BringDataAugmentationNotDefine()); // ugmentationNotDefine 정보 가져오기, List 합치기
             return AugmentationData;
         }
+
         /// <summary>
         /// Data Augmentation 설정값 가져오기
         /// </summary>
@@ -743,15 +735,18 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return AugmentationData;
         }
+
         #endregion Data Augmentation (데이터 증강) 설정
 
         #region Continual Learning (이어 학습하기 옵션) 설정
+
         private string m_continualLearningPath = "";
         private string m_continualLearningModelName = "";
         private string m_continualLearningModelLoss = "";
         private string m_continualLearningModelAccuracy = "";
         private string m_continualLearningModelEscape = "";
         private string m_continualLearningModelOverKill = "";
+
         /// <summary>
         /// Data Grid View 설정
         /// </summary>
@@ -765,7 +760,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.dgvMContinualLearning.ColumnCount = 5;
             this.dgvMContinualLearning.Columns[0].Name = "Version";
             this.dgvMContinualLearning.Columns[1].Name = "Best Accuracy"; // (double_TrainAcc + double_TestAcc) / 2
-            this.dgvMContinualLearning.Columns[2].Name = "Best Loss"; 
+            this.dgvMContinualLearning.Columns[2].Name = "Best Loss";
             this.dgvMContinualLearning.Columns[3].Name = "Best Escape";
             this.dgvMContinualLearning.Columns[4].Name = "Best OverKill";
         }
@@ -794,7 +789,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                             int testEscape = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][modelName]["BestModelInfo"]["int_TestEscape"]);
                             int testOverKill = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][modelName]["BestModelInfo"]["int_TestOverKill"]);
 
-                            this.dgvMContinualLearning.Rows.Add(version, (trainAcc + testAcc)/2, (trainLoss + testLoss)/2, (trainEscape + testEscape)/2, (trainOverKill + testOverKill)/2);
+                            this.dgvMContinualLearning.Rows.Add(version, (trainAcc + testAcc) / 2, (trainLoss + testLoss) / 2, (trainEscape + testEscape) / 2, (trainOverKill + testOverKill) / 2);
 
                             version++;
                         }
@@ -850,20 +845,17 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                         {
                             this.cbbManetworkModel.PromptText = "Small";
                             this.cbbManetworkModel.Text = "Small";
-                        }  
-
+                        }
                         else if (selectedNetworkModel == "SynapseNet_Classification_34")
                         {
                             this.cbbManetworkModel.PromptText = "Medium";
                             this.cbbManetworkModel.Text = "Medium";
                         }
-                       
                         else if (selectedNetworkModel == "SynapseNet_Classification_50")
                         {
                             this.cbbManetworkModel.PromptText = "Large";
                             this.cbbManetworkModel.Text = "Large";
                         }
-                        
                         else if (selectedNetworkModel == "SynapseNet_Classification_100")
                         {
                             this.cbbManetworkModel.PromptText = "Extra Large";
@@ -893,6 +885,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             return ContinualLearningData;
         }
+
         /// <summary>
         /// Continual Learning (이어 학습하기 옵션) 설정
         /// </summary>
@@ -924,9 +917,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 jObject["string_ContinualLearning"] = "default";
             }
 
-            jObject["string_ContinualLearningModelName"] = this.m_continualLearningModelName; // 
-            jObject["string_ContinualLearningModelLoss"] = this.m_continualLearningModelLoss; // 
-            jObject["string_ContinualLearningModelAccuracy"] = this.m_continualLearningModelAccuracy; // 
+            jObject["string_ContinualLearningModelName"] = this.m_continualLearningModelName; //
+            jObject["string_ContinualLearningModelLoss"] = this.m_continualLearningModelLoss; //
+            jObject["string_ContinualLearningModelAccuracy"] = this.m_continualLearningModelAccuracy; //
             jObject["string_ContinualLearningModelEscape"] = this.m_continualLearningModelEscape; //
             jObject["string_ContinualLearningModelOverKill"] = this.m_continualLearningModelOverKill; //
 
@@ -952,7 +945,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                  */
                 this.cbbManetworkModel.Enabled = false;
                 this.cbbManetworkModel.Enabled = false;
-
             }
             else
             {
@@ -960,7 +952,8 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.cbbManetworkModel.Enabled = true;
             }
         }
-        #endregion 이어 학습하기 옵션 설정
+
+        #endregion Continual Learning (이어 학습하기 옵션) 설정
 
         #region Class Weight 설정
 
@@ -975,11 +968,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             classWeightData["ClassWeight"] = jObject;
             return classWeightData;
         }
+
         #endregion Class Weight 설정
 
         #region 인스턴스 모델 평가
 
         private string instantEvaluateDataset = "All";
+
         private void TogMInstantEvaluateCheckedChanged(object sender, EventArgs e)
         {
             this.panelInstantEvaluate.Visible = this.togMInstantEvaluate.Checked;
@@ -1019,9 +1014,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
             return instantEvaluateData;
         }
+
         #endregion 인스턴스 모델 평가
 
         #region 이미지 설정 옵션
+
         private JObject BringImageOption(JObject imageOptions)
         {
             JObject jObject = new JObject
@@ -1034,9 +1031,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             imageOptions["ImageOption"] = jObject;
             return imageOptions;
         }
+
         #endregion 이미지 설정 옵션
 
         #region 시스템 설정 옵션
+
         private JObject BringTrainSystemOption(JObject trainSystemOption)
         {
             JObject jObject = new JObject
@@ -1048,10 +1047,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             trainSystemOption["TrainSystemOption"] = jObject;
             return trainSystemOption;
         }
-        #endregion 
+
+        #endregion 시스템 설정 옵션
+
+
 
         /// <summary>
-        /// 학습에 필요한 옵션 가져오기 
+        /// 학습에 필요한 옵션 가져오기
         /// </summary>j
         /// <param name="trainOptions"></param>
         /// <returns> JObject 정리된 옵션 정보 </returns>
@@ -1069,6 +1071,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
 
         #region ToolTip 설정
+
         private void SetToolTip()
         {
             MetroFramework.Components.MetroToolTip BlurmetroToolTip = new MetroFramework.Components.MetroToolTip();
@@ -1085,7 +1088,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             MetroFramework.Components.MetroToolTip SharpenmetroToolTip = new MetroFramework.Components.MetroToolTip();
             MetroFramework.Components.MetroToolTip VerticalFlipmetroToolTip = new MetroFramework.Components.MetroToolTip();
             MetroFramework.Components.MetroToolTip ZoommetroToolTip = new MetroFramework.Components.MetroToolTip();
-
 
             //Blur
             BlurmetroToolTip.Popup += BlurToolTipPopup;
@@ -1158,28 +1160,30 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             ZoommetroToolTip.SetToolTip(this.panelMZoomToolTip, "Zoom");
         }
 
+        //
+        private Image image = global::ProjectAI.Properties.Resources.image1;
+
+        private int MARGIN = 0;
+
         #region Blur
+
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"E:\Z2b_이미지\KakaoTalk_20220406_172401550.gif");
-            //Bitmap image = CustomIOMainger.LoadBitmap(@"E:\Z2b_이미지\1.webp");
-            int MARGIN = 3;
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth;
+            int toolTipHeight = e.ToolTipSize.Height;
             if (toolTipHeight < imageHeight)
             {
                 toolTipHeight = imageHeight;
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-            
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1190,31 +1194,28 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Blur
 
         #region Brightness
+
         private void BrightnessToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
+            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth;
+            int toolTipHeight = e.ToolTipSize.Height;
             if (toolTipHeight < imageHeight)
             {
                 toolTipHeight = imageHeight;
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void BrightnessToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1225,14 +1226,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Brightness
 
         #region Center
+
         private void CenterToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1242,14 +1242,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void CenterToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1260,14 +1257,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Center
 
         #region Contrast
+
         private void ContrastToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1277,14 +1273,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void ContrastToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1295,14 +1288,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Contrast
 
         #region GaussianNoise
+
         private void GaussianNoiseToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1312,14 +1304,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void GaussianNoiseToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1330,14 +1319,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion GaussianNoise
 
         #region Gradation
+
         private void GradationToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1347,14 +1335,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void GradationToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1365,14 +1350,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Gradation
 
         #region GradationRGB
+
         private void GradationRGBToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1382,14 +1366,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void GradationRGBToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1400,14 +1381,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion GradationRGB
 
         #region HorizontalFlip
+
         private void HorizontalFlipToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1417,14 +1397,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void HorizontalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1435,14 +1412,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion HorizontalFlip
 
         #region Rotation90
+
         private void Rotation90ToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1452,14 +1428,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void Rotation90ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1470,14 +1443,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Rotation90
 
         #region Rotation180
+
         private void Rotation180ToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1487,14 +1459,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void Rotation180ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1505,14 +1474,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Rotation180
 
         #region Rotation270
+
         private void Rotation270ToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1522,14 +1490,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void Rotation270ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1540,14 +1505,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Rotation270
 
         #region Sharpen
+
         private void SharpenToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1557,14 +1521,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void SharpenToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1575,14 +1536,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Sharpen
 
         #region VerticalFlip
+
         private void VerticalFlipToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1592,14 +1552,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void VerticalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
 
             using (StringFormat stringFormat = new StringFormat())
             {
@@ -1610,14 +1567,13 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion VerticalFlip
 
         #region Zoom
+
         private void ZoomToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
-
             int imageWidth = 2 * MARGIN + image.Width;
             int imageHeight = 2 * MARGIN + image.Height;
             int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
@@ -1627,14 +1583,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
         }
+
         private void ZoomToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\example.gif");
-            int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
-            
+
             using (StringFormat stringFormat = new StringFormat())
             {
                 stringFormat.Alignment = StringAlignment.Near;
@@ -1644,11 +1598,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
             }
         }
+
         #endregion Zoom
+
         #endregion ToolTip 설정
 
         #region 세부 옵션 설정
-        string ImagePath = @"E:\Z2b_이미지\1.webp";
+
+        private string ImagePath = @"E:\Z2b_이미지\1.webp";
+
         private void TilMBlurClick(object sender, EventArgs e)
         {
             using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "blur"))
@@ -1670,10 +1628,10 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 {
                     this.txtBrightnessMin.Text = dataAugmentationExampleForm.minimumValue;
                     this.txtBrightnessMax.Text = dataAugmentationExampleForm.maximumValue;
-                } 
-            }    
+                }
+            }
         }
-        
+
         private void TilMCenterClick(object sender, EventArgs e)
         {
             ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Center");
@@ -1691,9 +1649,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "GaussianNoise");
             dataAugmentationExampleForm.ShowDialog();
         }
-        #endregion
+
+        #endregion 세부 옵션 설정
 
         #region checkBox 변경 함수
+
         private void CkbMBlurCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1710,6 +1670,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbBrightnessCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1728,6 +1689,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMCenterCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1744,6 +1706,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMContrastCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1762,6 +1725,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMGaussianNoiseCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1778,6 +1742,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMGradationCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1794,6 +1759,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbGradationRGBCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1808,6 +1774,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMSharpenCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1824,6 +1791,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void CkbMZoomCheckedChanged(object sender, EventArgs e)
         {
             if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
@@ -1842,6 +1810,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
-        #endregion
+
+        #endregion checkBox 변경 함수
     }
 }

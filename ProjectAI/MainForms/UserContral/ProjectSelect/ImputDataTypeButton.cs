@@ -16,15 +16,15 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
 {
     public partial class ImputDataTypeButton : UserControl
     {
-        MetroFramework.Controls.MetroButton metroButton = new MetroFramework.Controls.MetroButton();
-        MetroFramework.Controls.MetroTextBox metroTextBox = new MetroFramework.Controls.MetroTextBox();
+        private MetroFramework.Controls.MetroButton metroButton = new MetroFramework.Controls.MetroButton();
+        private MetroFramework.Controls.MetroTextBox metroTextBox = new MetroFramework.Controls.MetroTextBox();
 
-        string saveSettingText;
+        private string saveSettingText;
 
-        string savetitleText;
-        System.Drawing.Image saveSttingImage;
+        private string savetitleText;
+        private System.Drawing.Image saveSttingImage;
 
-        string saveButtonClickRetrun;
+        private string saveButtonClickRetrun;
 
         /// <summary>
         /// 폼 메니저
@@ -54,7 +54,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             ButtonSetting();
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
         }
-    
+
         /// <summary>
         /// delegate UpdataFormStyleManager
         /// </summary>
@@ -119,9 +119,9 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.metroButton = new MetroFramework.Controls.MetroButton();
             this.metroPanel1.Controls.Add(this.metroButton);
 
-            // 
+            //
             // btnMactiveButton
-            // 
+            //
             this.metroButton.BackgroundImage = null;
             this.metroButton.BackgroundImage = this.saveSttingImage;
             this.metroButton.Highlight = true;
@@ -150,9 +150,9 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
 
             this.metroTextBox = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel1.Controls.Add(this.metroTextBox);
-            // 
+            //
             // metroTextBox1
-            // 
+            //
             this.metroTextBox.Style = formsManiger.m_StyleManager.Style;
             this.metroTextBox.Theme = formsManiger.m_StyleManager.Theme;
             this.metroTextBox.CustomButton.Image = null;
@@ -194,6 +194,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         }
 
         #region WorkSpace 속성 추가
+
         [Category("Custom Button"), Description("Title")]
         public string Title
         {
@@ -261,8 +262,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                 this.saveButtonClickRetrun = value;
             }
         }
+
         #endregion WorkSpace 속성 추가
-
-
     }
 }

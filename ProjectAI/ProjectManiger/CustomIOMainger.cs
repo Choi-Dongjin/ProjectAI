@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
 using System.Drawing;
+using System.IO;
+using System.Linq;
 
 namespace ProjectAI
 {
@@ -62,7 +59,7 @@ namespace ProjectAI
         /// <returns></returns>
         public static bool DirChackCreateName(string folderName)
         {
-            char[] ignoreCharArray = { ',', '\\', '/', ':', '*', '?', '"','<', '>', '|', '_', '[', ']' };
+            char[] ignoreCharArray = { ',', '\\', '/', ':', '*', '?', '"', '<', '>', '|', '_', '[', ']' };
             foreach (char ignoreCha in ignoreCharArray)
             {
                 if (folderName.Count(f => f == ignoreCha) > 0)
@@ -103,7 +100,6 @@ namespace ProjectAI
                 {
                     fileList.Add(fileInfo.FullName);
                 }
-
             else
             {
                 foreach (FileInfo fileInfo in di.GetFiles())
@@ -148,7 +144,7 @@ namespace ProjectAI
         /// <returns></returns>
         public static bool DirDelete(string DeleteDirPath)
         {
-            // Directory 파일 삭제 
+            // Directory 파일 삭제
             try
             {
                 DirectoryInfo directory = new DirectoryInfo(DeleteDirPath);
@@ -227,6 +223,7 @@ namespace ProjectAI
             Console.WriteLine(resultString);
             return resultString;
         }
+
         /// <summary>
         /// 기존 이름들과 비교해서 새로운 이름 만들기
         /// </summary>
@@ -247,16 +244,17 @@ namespace ProjectAI
             var resultString = new String(Charsarr);
             Console.WriteLine(resultString);
 
-            foreach ( string name in names)
+            foreach (string name in names)
             {
                 if (name == resultString)
                 {
                     resultString = RandomFileName(names, number);
                 }
             }
-         
+
             return resultString;
         }
+
         /// <summary>
         /// 기존 이름들과 비교해서 새로운 이름 만들기
         /// </summary>
@@ -319,6 +317,7 @@ namespace ProjectAI
             }
             return filesList;
         }
+
         /// <summary>
         /// 이미지 파일 검색
         /// </summary>
@@ -413,6 +412,5 @@ namespace ProjectAI
 
         //    return destSpan.ToString();
         //}
-
     }
 }

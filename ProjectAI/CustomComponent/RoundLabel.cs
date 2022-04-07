@@ -7,7 +7,6 @@ namespace ProjectAI.CustomComponent
 {
     public class RoundLabel : System.Windows.Forms.Label
     {
-
         public int cornerRadius = 15; //라운드 너비
         public Color borderColor = Color.DarkGray;//외곽선 색상
         public int borderWidth = 1;//외곽선 두께
@@ -95,6 +94,7 @@ namespace ProjectAI.CustomComponent
         }
 
         #region 속성 추가
+
         [Category("RoundLabel"), Description("라운드 너비")]
         public int CornerRadius
         {
@@ -198,6 +198,7 @@ namespace ProjectAI.CustomComponent
                 isFillRightBtm = value;
             }
         }
+
         #endregion 속성 추가
     }
 }

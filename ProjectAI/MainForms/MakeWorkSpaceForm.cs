@@ -19,8 +19,8 @@ namespace ProjectAI.MainForms
 {
     public partial class MakeWorkSpaceForm : MetroForm
     {
-        static DateTime start;
-        static TimeSpan time;
+        private static DateTime start;
+        private static TimeSpan time;
 
         public MakeWorkSpaceForm()
         {
@@ -45,7 +45,6 @@ namespace ProjectAI.MainForms
         {
             this.StyleManager.Style = styleManager.Style;
             this.StyleManager.Theme = styleManager.Theme;
-            
         }
 
         private void BtnMOKClick(object sender, EventArgs e)

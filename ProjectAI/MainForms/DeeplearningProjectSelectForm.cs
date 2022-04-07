@@ -27,7 +27,7 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// jsonDataManiger
         /// </summary>
-        JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
+        private JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
 
         /// <summary>
         /// 폼 메니저
@@ -46,7 +46,7 @@ namespace ProjectAI.MainForms
 
             this.StyleManager = this.styleManagerDeeplearningProjectSelectForm;
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
-            
+
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
         }
 
@@ -86,8 +86,8 @@ namespace ProjectAI.MainForms
             e.Cancel = true; //hides the form, cancels closing event
         }
 
-
         #region Classification Tesk 설정
+
         /// <summary>
         /// Classification User Contral 셋업
         /// </summary>
@@ -124,9 +124,8 @@ namespace ProjectAI.MainForms
             this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
             this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
-            #endregion Classification 컨트롤 설정 완료
+            #endregion Classification 컨트롤 설정
         }
-
 
         private void SegmentationUserContralSetting()
         {
@@ -163,8 +162,7 @@ namespace ProjectAI.MainForms
             this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
             this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
-            #endregion Classification 컨트롤 설정 완료
-
+            #endregion Classification 컨트롤 설정
         }
 
         private void ObjectDetectionUserContralSetting()
@@ -202,7 +200,7 @@ namespace ProjectAI.MainForms
             this.classificationUserContral.BtnNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageButtonClick);
             this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
-            #endregion Classification 컨트롤 설정 완료
+            #endregion Classification 컨트롤 설정
         }
 
         /// <summary>
@@ -214,6 +212,7 @@ namespace ProjectAI.MainForms
         {
             this.selectProjectInputDataType = this.classificationUserContral.btnSingleImage.ButtonClickRetrun;
         }
+
         /// <summary>
         /// Classification 싱글 이미지 타입 텍스트박스 클릭시
         /// </summary>
@@ -223,8 +222,9 @@ namespace ProjectAI.MainForms
         {
             this.selectProjectInputDataType = null;
         }
+
         /// <summary>
-        /// Classification 멀티 이미지 타입 버튼 클릭시 
+        /// Classification 멀티 이미지 타입 버튼 클릭시
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -232,6 +232,7 @@ namespace ProjectAI.MainForms
         {
             this.selectProjectInputDataType = this.classificationUserContral.btnMultiImage.ButtonClickRetrun;
         }
+
         /// <summary>
         /// Classification 멀티 이미지 타입 텍스트박스 클릭시
         /// </summary>
@@ -243,7 +244,7 @@ namespace ProjectAI.MainForms
         }
 
         /// <summary>
-        /// Classification None 이미지 타입 버튼 클릭시 
+        /// Classification None 이미지 타입 버튼 클릭시
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -251,6 +252,7 @@ namespace ProjectAI.MainForms
         {
             this.selectProjectInputDataType = this.classificationUserContral.btnNoneImage.ButtonClickRetrun;
         }
+
         /// <summary>
         /// Classification None 이미지 타입 텍스트박스 클릭시
         /// </summary>
@@ -261,9 +263,6 @@ namespace ProjectAI.MainForms
             this.selectProjectInputDataType = null;
         }
 
-
-
-
         /// <summary>
         /// Classification 선택
         /// </summary>
@@ -271,20 +270,20 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void BtnMClassificationClick(object sender, EventArgs e)
         {
-            this.ClassificationUserContralSetting(); // Classification User Contral 셋업 
+            this.ClassificationUserContralSetting(); // Classification User Contral 셋업
         }
 
         private void BtnMSegmentationClick(object sender, EventArgs e)
         {
-            this.SegmentationUserContralSetting(); // Segmentation User Contral 셋업 
+            this.SegmentationUserContralSetting(); // Segmentation User Contral 셋업
         }
 
         private void BtnMObjectDetectionClick(object sender, EventArgs e)
         {
-            this.ObjectDetectionUserContralSetting(); // ObjectDetection User Contral 셋업 
+            this.ObjectDetectionUserContralSetting(); // ObjectDetection User Contral 셋업
         }
-        #endregion  Classification Tesk 설정
 
+        #endregion Classification Tesk 설정
 
         private void BtnMOKClick(object sender, EventArgs e)
         {
