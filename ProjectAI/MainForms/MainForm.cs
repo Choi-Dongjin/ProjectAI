@@ -961,8 +961,8 @@ namespace ProjectAI.MainForms
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
         {
-            if(pictureBox1.Image != null)
-                pictureBox1.Image = null;
+            if(this.pictureBox1.Image != null)
+                this.pictureBox1.Image = null;
             try
             {
                 DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
@@ -970,13 +970,13 @@ namespace ProjectAI.MainForms
 
                 if (data != null)
                 {
-                    pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
+                    this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
                 }
             }
             catch
             {
-                if (pictureBox1.Image != null)
-                    pictureBox1.Image = null;
+                if (this.pictureBox1.Image != null)
+                    this.pictureBox1.Image = null;
             }
         }
 
@@ -1056,8 +1056,6 @@ namespace ProjectAI.MainForms
                 if( MetroMessageBox.Show(this, $"Are you really Deleting the workspace?\nDelete WorkSpace Name: \"{WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString()}\"\nAll related data will be deleted.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                     this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
-
-
     }
 }
 

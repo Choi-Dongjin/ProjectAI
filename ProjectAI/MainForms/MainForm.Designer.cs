@@ -67,7 +67,12 @@
             this.lblImageListpageMid = new System.Windows.Forms.Label();
             this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.classViewer1 = new ProjectAI.MainForms.UserContral.Monitoring.ClassViewer();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -123,12 +128,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.classViewer1 = new ProjectAI.MainForms.UserContral.Monitoring.ClassViewer();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
-            this.panelMlogo = new MetroFramework.Controls.MetroPanel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -151,7 +150,6 @@
             this.panelDataReview.SuspendLayout();
             this.panelMTrainOptions.SuspendLayout();
             this.panelMDataReviewIcon.SuspendLayout();
-            this.panelProjectInfo.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panelWorkSpaseIconIN.SuspendLayout();
             this.panelWorkSpaseButtonIcon.SuspendLayout();
@@ -596,6 +594,39 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(225, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(75, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(150, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(75, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -606,6 +637,26 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(300, 590);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // classViewer1
+            // 
+            this.classViewer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classViewer1.Location = new System.Drawing.Point(0, 0);
+            this.classViewer1.Margin = new System.Windows.Forms.Padding(0);
+            this.classViewer1.Name = "classViewer1";
+            this.classViewer1.Size = new System.Drawing.Size(300, 193);
+            this.classViewer1.TabIndex = 0;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(75, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -714,10 +765,8 @@
             // 
             // panelProjectInfo
             // 
-            this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
             this.panelProjectInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelProjectInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelProjectInfo.Controls.Add(this.panelMlogo);
             this.panelProjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProjectInfo.HorizontalScrollbarBarColor = true;
             this.panelProjectInfo.HorizontalScrollbarHighlightOnWheel = false;
@@ -1187,76 +1236,6 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
             // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(225, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(75, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(150, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(75, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
-            // classViewer1
-            // 
-            this.classViewer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classViewer1.Location = new System.Drawing.Point(0, 0);
-            this.classViewer1.Margin = new System.Windows.Forms.Padding(0);
-            this.classViewer1.Name = "classViewer1";
-            this.classViewer1.Size = new System.Drawing.Size(300, 193);
-            this.classViewer1.TabIndex = 0;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(75, 75);
-            this.iclTotal.TabIndex = 11;
-            // 
-            // panelMlogo
-            // 
-            this.panelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
-            this.panelMlogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panelMlogo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMlogo.HorizontalScrollbarBarColor = true;
-            this.panelMlogo.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelMlogo.HorizontalScrollbarSize = 10;
-            this.panelMlogo.Location = new System.Drawing.Point(10, 10);
-            this.panelMlogo.Margin = new System.Windows.Forms.Padding(0);
-            this.panelMlogo.Name = "panelMlogo";
-            this.panelMlogo.Size = new System.Drawing.Size(989, 84);
-            this.panelMlogo.TabIndex = 2;
-            this.panelMlogo.VerticalScrollbarBarColor = true;
-            this.panelMlogo.VerticalScrollbarHighlightOnWheel = false;
-            this.panelMlogo.VerticalScrollbarSize = 10;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1298,7 +1277,6 @@
             this.panelDataReview.ResumeLayout(false);
             this.panelMTrainOptions.ResumeLayout(false);
             this.panelMDataReviewIcon.ResumeLayout(false);
-            this.panelProjectInfo.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panelWorkSpaseIconIN.ResumeLayout(false);
@@ -1410,6 +1388,5 @@
         public ImageCountLabel iclTotal;
         private UserContral.Monitoring.ClassViewer classViewer1;
         private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem1;
-        private MetroFramework.Controls.MetroPanel panelMlogo;
     }
 }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassificationTrainOptions));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -63,9 +63,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tilZoom = new MetroFramework.Controls.MetroTile();
+            this.tilMZoom = new MetroFramework.Controls.MetroTile();
             this.metroTile28 = new MetroFramework.Controls.MetroTile();
-            this.tilSharpen = new MetroFramework.Controls.MetroTile();
             this.metroTile29 = new MetroFramework.Controls.MetroTile();
             this.metroTile37 = new MetroFramework.Controls.MetroTile();
             this.tilMGaussianNoise = new MetroFramework.Controls.MetroTile();
@@ -73,8 +72,7 @@
             this.metroTile30 = new MetroFramework.Controls.MetroTile();
             this.metroTile39 = new MetroFramework.Controls.MetroTile();
             this.tilMContrast = new MetroFramework.Controls.MetroTile();
-            this.tilGradationRGB = new MetroFramework.Controls.MetroTile();
-            this.tilMCenter = new MetroFramework.Controls.MetroTile();
+            this.tilMGradationRGB = new MetroFramework.Controls.MetroTile();
             this.txtBlur = new System.Windows.Forms.TextBox();
             this.tilMBrightness = new MetroFramework.Controls.MetroTile();
             this.metroTile10 = new MetroFramework.Controls.MetroTile();
@@ -82,7 +80,6 @@
             this.metroTile8 = new MetroFramework.Controls.MetroTile();
             this.metroTile7 = new MetroFramework.Controls.MetroTile();
             this.metroTile3 = new MetroFramework.Controls.MetroTile();
-            this.tilMBlur = new MetroFramework.Controls.MetroTile();
             this.metroTile5 = new MetroFramework.Controls.MetroTile();
             this.metroTile6 = new MetroFramework.Controls.MetroTile();
             this.tilMGradation = new MetroFramework.Controls.MetroTile();
@@ -123,6 +120,9 @@
             this.txtZoomMin = new System.Windows.Forms.TextBox();
             this.txtZoomMax = new System.Windows.Forms.TextBox();
             this.panelMBlurToolTip = new MetroFramework.Controls.MetroPanel();
+            this.tilMBlur = new MetroFramework.Controls.MetroTile();
+            this.tilMSharpen = new MetroFramework.Controls.MetroTile();
+            this.tilMCenter = new MetroFramework.Controls.MetroTile();
             this.tlpContinualLearning = new System.Windows.Forms.TableLayoutPanel();
             this.lblMContinualLearning = new MetroFramework.Controls.MetroLabel();
             this.togMContinualLearning = new MetroFramework.Controls.MetroToggle();
@@ -595,18 +595,15 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 3F));
-            this.tableLayoutPanel1.Controls.Add(this.tilZoom, 10, 13);
+            this.tableLayoutPanel1.Controls.Add(this.tilMZoom, 10, 13);
             this.tableLayoutPanel1.Controls.Add(this.metroTile28, 7, 7);
-            this.tableLayoutPanel1.Controls.Add(this.tilSharpen, 10, 9);
             this.tableLayoutPanel1.Controls.Add(this.metroTile29, 7, 5);
             this.tableLayoutPanel1.Controls.Add(this.metroTile37, 7, 13);
-            this.tableLayoutPanel1.Controls.Add(this.tilMGaussianNoise, 4, 9);
             this.tableLayoutPanel1.Controls.Add(this.metroTile38, 7, 11);
             this.tableLayoutPanel1.Controls.Add(this.metroTile30, 7, 3);
             this.tableLayoutPanel1.Controls.Add(this.metroTile39, 7, 9);
             this.tableLayoutPanel1.Controls.Add(this.tilMContrast, 4, 7);
-            this.tableLayoutPanel1.Controls.Add(this.tilGradationRGB, 4, 13);
-            this.tableLayoutPanel1.Controls.Add(this.tilMCenter, 4, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tilMGradationRGB, 4, 13);
             this.tableLayoutPanel1.Controls.Add(this.txtBlur, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.tilMBrightness, 4, 3);
             this.tableLayoutPanel1.Controls.Add(this.metroTile10, 1, 13);
@@ -614,7 +611,6 @@
             this.tableLayoutPanel1.Controls.Add(this.metroTile8, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.metroTile7, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.metroTile3, 7, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tilMBlur, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.metroTile5, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.metroTile6, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.tilMGradation, 4, 11);
@@ -655,6 +651,10 @@
             this.tableLayoutPanel1.Controls.Add(this.txtZoomMin, 8, 13);
             this.tableLayoutPanel1.Controls.Add(this.txtZoomMax, 9, 13);
             this.tableLayoutPanel1.Controls.Add(this.panelMBlurToolTip, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tilMBlur, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tilMSharpen, 10, 9);
+            this.tableLayoutPanel1.Controls.Add(this.tilMCenter, 4, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tilMGaussianNoise, 4, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 181);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -679,15 +679,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(460, 186);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // tilZoom
+            // tilMZoom
             // 
-            this.tilZoom.ActiveControl = null;
-            this.tilZoom.Location = new System.Drawing.Point(438, 162);
-            this.tilZoom.Margin = new System.Windows.Forms.Padding(1);
-            this.tilZoom.Name = "tilZoom";
-            this.tilZoom.Size = new System.Drawing.Size(18, 18);
-            this.tilZoom.TabIndex = 8;
-            this.tilZoom.UseSelectable = true;
+            this.tilMZoom.ActiveControl = null;
+            this.tilMZoom.Enabled = false;
+            this.tilMZoom.Location = new System.Drawing.Point(438, 162);
+            this.tilMZoom.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMZoom.Name = "tilMZoom";
+            this.tilMZoom.Size = new System.Drawing.Size(18, 18);
+            this.tilMZoom.TabIndex = 8;
+            this.tilMZoom.UseSelectable = true;
             // 
             // metroTile28
             // 
@@ -698,16 +699,6 @@
             this.metroTile28.Size = new System.Drawing.Size(18, 18);
             this.metroTile28.TabIndex = 6;
             this.metroTile28.UseSelectable = true;
-            // 
-            // tilSharpen
-            // 
-            this.tilSharpen.ActiveControl = null;
-            this.tilSharpen.Location = new System.Drawing.Point(438, 120);
-            this.tilSharpen.Margin = new System.Windows.Forms.Padding(1);
-            this.tilSharpen.Name = "tilSharpen";
-            this.tilSharpen.Size = new System.Drawing.Size(18, 18);
-            this.tilSharpen.TabIndex = 10;
-            this.tilSharpen.UseSelectable = true;
             // 
             // metroTile29
             // 
@@ -732,12 +723,14 @@
             // tilMGaussianNoise
             // 
             this.tilMGaussianNoise.ActiveControl = null;
+            this.tilMGaussianNoise.Enabled = false;
             this.tilMGaussianNoise.Location = new System.Drawing.Point(201, 120);
             this.tilMGaussianNoise.Margin = new System.Windows.Forms.Padding(1);
             this.tilMGaussianNoise.Name = "tilMGaussianNoise";
             this.tilMGaussianNoise.Size = new System.Drawing.Size(18, 18);
             this.tilMGaussianNoise.TabIndex = 6;
             this.tilMGaussianNoise.UseSelectable = true;
+            this.tilMGaussianNoise.Click += new System.EventHandler(this.TilMGaussianNoiseClick);
             // 
             // metroTile38
             // 
@@ -772,32 +765,25 @@
             // tilMContrast
             // 
             this.tilMContrast.ActiveControl = null;
+            this.tilMContrast.Enabled = false;
             this.tilMContrast.Location = new System.Drawing.Point(201, 99);
             this.tilMContrast.Margin = new System.Windows.Forms.Padding(1);
             this.tilMContrast.Name = "tilMContrast";
             this.tilMContrast.Size = new System.Drawing.Size(18, 18);
             this.tilMContrast.TabIndex = 7;
             this.tilMContrast.UseSelectable = true;
+            this.tilMContrast.Click += new System.EventHandler(this.TilMContrastClick);
             // 
-            // tilGradationRGB
+            // tilMGradationRGB
             // 
-            this.tilGradationRGB.ActiveControl = null;
-            this.tilGradationRGB.Location = new System.Drawing.Point(201, 162);
-            this.tilGradationRGB.Margin = new System.Windows.Forms.Padding(1);
-            this.tilGradationRGB.Name = "tilGradationRGB";
-            this.tilGradationRGB.Size = new System.Drawing.Size(18, 18);
-            this.tilGradationRGB.TabIndex = 10;
-            this.tilGradationRGB.UseSelectable = true;
-            // 
-            // tilMCenter
-            // 
-            this.tilMCenter.ActiveControl = null;
-            this.tilMCenter.Location = new System.Drawing.Point(201, 78);
-            this.tilMCenter.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMCenter.Name = "tilMCenter";
-            this.tilMCenter.Size = new System.Drawing.Size(18, 18);
-            this.tilMCenter.TabIndex = 8;
-            this.tilMCenter.UseSelectable = true;
+            this.tilMGradationRGB.ActiveControl = null;
+            this.tilMGradationRGB.Enabled = false;
+            this.tilMGradationRGB.Location = new System.Drawing.Point(201, 162);
+            this.tilMGradationRGB.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMGradationRGB.Name = "tilMGradationRGB";
+            this.tilMGradationRGB.Size = new System.Drawing.Size(18, 18);
+            this.tilMGradationRGB.TabIndex = 10;
+            this.tilMGradationRGB.UseSelectable = true;
             // 
             // txtBlur
             // 
@@ -806,6 +792,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtBlur, true);
             this.txtBlur.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel1.SetColumnSpan(this.txtBlur, 2);
+            this.txtBlur.Enabled = false;
             this.txtBlur.Location = new System.Drawing.Point(143, 41);
             this.txtBlur.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtBlur.Name = "txtBlur";
@@ -817,12 +804,15 @@
             // tilMBrightness
             // 
             this.tilMBrightness.ActiveControl = null;
+            this.tilMBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilMBrightness.Enabled = false;
             this.tilMBrightness.Location = new System.Drawing.Point(201, 57);
             this.tilMBrightness.Margin = new System.Windows.Forms.Padding(1);
             this.tilMBrightness.Name = "tilMBrightness";
             this.tilMBrightness.Size = new System.Drawing.Size(18, 18);
             this.tilMBrightness.TabIndex = 5;
             this.tilMBrightness.UseSelectable = true;
+            this.tilMBrightness.Click += new System.EventHandler(this.TilMBrightnessClick);
             // 
             // metroTile10
             // 
@@ -874,17 +864,6 @@
             this.metroTile3.TabIndex = 5;
             this.metroTile3.UseSelectable = true;
             // 
-            // tilMBlur
-            // 
-            this.tilMBlur.ActiveControl = null;
-            this.tilMBlur.Location = new System.Drawing.Point(201, 36);
-            this.tilMBlur.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMBlur.Name = "tilMBlur";
-            this.tilMBlur.Size = new System.Drawing.Size(18, 18);
-            this.tilMBlur.TabIndex = 4;
-            this.tilMBlur.UseSelectable = true;
-            this.tilMBlur.Click += new System.EventHandler(this.TilMBlurClick);
-            // 
             // metroTile5
             // 
             this.metroTile5.ActiveControl = null;
@@ -909,6 +888,7 @@
             // tilMGradation
             // 
             this.tilMGradation.ActiveControl = null;
+            this.tilMGradation.Enabled = false;
             this.tilMGradation.Location = new System.Drawing.Point(201, 141);
             this.tilMGradation.Margin = new System.Windows.Forms.Padding(1);
             this.tilMGradation.Name = "tilMGradation";
@@ -941,6 +921,7 @@
             this.ckbMBlur.TabIndex = 4;
             this.ckbMBlur.Text = "Blur";
             this.ckbMBlur.UseSelectable = true;
+            this.ckbMBlur.CheckedChanged += new System.EventHandler(this.CkbMBlurCheckedChanged);
             // 
             // ckbMContrast
             // 
@@ -954,6 +935,7 @@
             this.ckbMContrast.TabIndex = 6;
             this.ckbMContrast.Text = "Contrast";
             this.ckbMContrast.UseSelectable = true;
+            this.ckbMContrast.CheckedChanged += new System.EventHandler(this.CkbMContrastCheckedChanged);
             // 
             // ckbBrightness
             // 
@@ -967,6 +949,7 @@
             this.ckbBrightness.TabIndex = 6;
             this.ckbBrightness.Text = "Brightness";
             this.ckbBrightness.UseSelectable = true;
+            this.ckbBrightness.CheckedChanged += new System.EventHandler(this.CkbBrightnessCheckedChanged);
             // 
             // ckbMCenter
             // 
@@ -980,6 +963,7 @@
             this.ckbMCenter.TabIndex = 6;
             this.ckbMCenter.Text = "Center";
             this.ckbMCenter.UseSelectable = true;
+            this.ckbMCenter.CheckedChanged += new System.EventHandler(this.CkbMCenterCheckedChanged);
             // 
             // ckbMGaussianNoise
             // 
@@ -993,6 +977,7 @@
             this.ckbMGaussianNoise.TabIndex = 5;
             this.ckbMGaussianNoise.Text = "Gaussian Noise";
             this.ckbMGaussianNoise.UseSelectable = true;
+            this.ckbMGaussianNoise.CheckedChanged += new System.EventHandler(this.CkbMGaussianNoiseCheckedChanged);
             // 
             // ckbMGradation
             // 
@@ -1006,6 +991,7 @@
             this.ckbMGradation.TabIndex = 6;
             this.ckbMGradation.Text = "Gradation";
             this.ckbMGradation.UseSelectable = true;
+            this.ckbMGradation.CheckedChanged += new System.EventHandler(this.CkbMGradationCheckedChanged);
             // 
             // ckbGradationRGB
             // 
@@ -1019,6 +1005,7 @@
             this.ckbGradationRGB.TabIndex = 6;
             this.ckbGradationRGB.Text = "Gradation RGB";
             this.ckbGradationRGB.UseSelectable = true;
+            this.ckbGradationRGB.CheckedChanged += new System.EventHandler(this.CkbGradationRGBCheckedChanged);
             // 
             // ckbMRotation90
             // 
@@ -1071,6 +1058,7 @@
             this.ckbMSharpen.TabIndex = 6;
             this.ckbMSharpen.Text = "Sharpen";
             this.ckbMSharpen.UseSelectable = true;
+            this.ckbMSharpen.CheckedChanged += new System.EventHandler(this.CkbMSharpenCheckedChanged);
             // 
             // ckbMVerticalFlip
             // 
@@ -1097,6 +1085,7 @@
             this.ckbMZoom.TabIndex = 6;
             this.ckbMZoom.Text = "Zoom";
             this.ckbMZoom.UseSelectable = true;
+            this.ckbMZoom.CheckedChanged += new System.EventHandler(this.CkbMZoomCheckedChanged);
             // 
             // lblMDataAugmentation
             // 
@@ -1233,6 +1222,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtBrightnessMin, true);
             this.txtBrightnessMin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBrightnessMin.Enabled = false;
             this.txtBrightnessMin.Location = new System.Drawing.Point(143, 62);
             this.txtBrightnessMin.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtBrightnessMin.Name = "txtBrightnessMin";
@@ -1247,6 +1237,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtBrightnessMax, true);
             this.txtBrightnessMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBrightnessMax.Enabled = false;
             this.txtBrightnessMax.Location = new System.Drawing.Point(173, 62);
             this.txtBrightnessMax.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtBrightnessMax.Name = "txtBrightnessMax";
@@ -1262,6 +1253,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtCenter, true);
             this.txtCenter.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel1.SetColumnSpan(this.txtCenter, 2);
+            this.txtCenter.Enabled = false;
             this.txtCenter.Location = new System.Drawing.Point(143, 83);
             this.txtCenter.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtCenter.Name = "txtCenter";
@@ -1276,6 +1268,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtContrastMin, true);
             this.txtContrastMin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtContrastMin.Enabled = false;
             this.txtContrastMin.Location = new System.Drawing.Point(143, 104);
             this.txtContrastMin.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtContrastMin.Name = "txtContrastMin";
@@ -1290,6 +1283,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtContrastMax, true);
             this.txtContrastMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtContrastMax.Enabled = false;
             this.txtContrastMax.Location = new System.Drawing.Point(173, 104);
             this.txtContrastMax.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtContrastMax.Name = "txtContrastMax";
@@ -1305,6 +1299,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtGaussianNoise, true);
             this.txtGaussianNoise.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel1.SetColumnSpan(this.txtGaussianNoise, 2);
+            this.txtGaussianNoise.Enabled = false;
             this.txtGaussianNoise.Location = new System.Drawing.Point(143, 125);
             this.txtGaussianNoise.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtGaussianNoise.Name = "txtGaussianNoise";
@@ -1320,6 +1315,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtGradation, true);
             this.txtGradation.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel1.SetColumnSpan(this.txtGradation, 2);
+            this.txtGradation.Enabled = false;
             this.txtGradation.Location = new System.Drawing.Point(143, 146);
             this.txtGradation.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtGradation.Name = "txtGradation";
@@ -1335,6 +1331,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtSharpen, true);
             this.txtSharpen.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel1.SetColumnSpan(this.txtSharpen, 2);
+            this.txtSharpen.Enabled = false;
             this.txtSharpen.Location = new System.Drawing.Point(380, 125);
             this.txtSharpen.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtSharpen.Name = "txtSharpen";
@@ -1349,6 +1346,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtZoomMin, true);
             this.txtZoomMin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtZoomMin.Enabled = false;
             this.txtZoomMin.Location = new System.Drawing.Point(380, 167);
             this.txtZoomMin.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtZoomMin.Name = "txtZoomMin";
@@ -1363,6 +1361,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroStyleExtender1.SetApplyMetroTheme(this.txtZoomMax, true);
             this.txtZoomMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtZoomMax.Enabled = false;
             this.txtZoomMax.Location = new System.Drawing.Point(410, 167);
             this.txtZoomMax.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.txtZoomMax.Name = "txtZoomMax";
@@ -1386,6 +1385,43 @@
             this.panelMBlurToolTip.VerticalScrollbarBarColor = true;
             this.panelMBlurToolTip.VerticalScrollbarHighlightOnWheel = false;
             this.panelMBlurToolTip.VerticalScrollbarSize = 10;
+            // 
+            // tilMBlur
+            // 
+            this.tilMBlur.ActiveControl = null;
+            this.tilMBlur.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilMBlur.Enabled = false;
+            this.tilMBlur.Location = new System.Drawing.Point(201, 36);
+            this.tilMBlur.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMBlur.Name = "tilMBlur";
+            this.tilMBlur.Size = new System.Drawing.Size(18, 18);
+            this.tilMBlur.TabIndex = 4;
+            this.tilMBlur.UseSelectable = true;
+            this.tilMBlur.Click += new System.EventHandler(this.TilMBlurClick);
+            // 
+            // tilMSharpen
+            // 
+            this.tilMSharpen.ActiveControl = null;
+            this.tilMSharpen.Enabled = false;
+            this.tilMSharpen.Location = new System.Drawing.Point(438, 120);
+            this.tilMSharpen.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMSharpen.Name = "tilMSharpen";
+            this.tilMSharpen.Size = new System.Drawing.Size(18, 18);
+            this.tilMSharpen.TabIndex = 10;
+            this.tilMSharpen.UseSelectable = true;
+            // 
+            // tilMCenter
+            // 
+            this.tilMCenter.ActiveControl = null;
+            this.tilMCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilMCenter.Enabled = false;
+            this.tilMCenter.Location = new System.Drawing.Point(201, 78);
+            this.tilMCenter.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMCenter.Name = "tilMCenter";
+            this.tilMCenter.Size = new System.Drawing.Size(18, 18);
+            this.tilMCenter.TabIndex = 8;
+            this.tilMCenter.UseSelectable = true;
+            this.tilMCenter.Click += new System.EventHandler(this.TilMCenterClick);
             // 
             // tlpContinualLearning
             // 
@@ -1450,22 +1486,22 @@
             this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
             this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -1475,14 +1511,14 @@
             this.dgvMContinualLearning.Name = "dgvMContinualLearning";
             this.dgvMContinualLearning.ReadOnly = true;
             this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvMContinualLearning.RowHeadersVisible = false;
             this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMContinualLearning.RowTemplate.Height = 23;
@@ -1728,9 +1764,9 @@
         private MetroFramework.Controls.MetroLabel lblMvalidationRatio;
         private MetroFramework.Controls.MetroLabel lblMpatienceEpochs;
         private MetroFramework.Controls.MetroLabel lblMTrainDataNumber;
-        private MetroFramework.Controls.MetroTile tilZoom;
+        private MetroFramework.Controls.MetroTile tilMZoom;
         private MetroFramework.Controls.MetroTile metroTile28;
-        private MetroFramework.Controls.MetroTile tilSharpen;
+        private MetroFramework.Controls.MetroTile tilMSharpen;
         private MetroFramework.Controls.MetroTile metroTile29;
         private MetroFramework.Controls.MetroTile metroTile37;
         private MetroFramework.Controls.MetroTile tilMGaussianNoise;
@@ -1738,7 +1774,7 @@
         private MetroFramework.Controls.MetroTile metroTile30;
         private MetroFramework.Controls.MetroTile metroTile39;
         private MetroFramework.Controls.MetroTile tilMContrast;
-        private MetroFramework.Controls.MetroTile tilGradationRGB;
+        private MetroFramework.Controls.MetroTile tilMGradationRGB;
         private MetroFramework.Controls.MetroTile tilMCenter;
         private MetroFramework.Controls.MetroTile tilMBrightness;
         private MetroFramework.Controls.MetroTile metroTile10;

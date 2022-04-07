@@ -398,5 +398,21 @@ namespace ProjectAI
                 return null;
             }
         }
+
+        //private static string FirstCharToLower2(string str)
+        //{
+        //    ReadOnlySpan<char> rSpan = str.AsSpan();
+        //    ReadOnlySpan<char> rHeadSpan = rSpan.Slice(0, 1);
+        //    ReadOnlySpan<char> rTailSpan = rSpan.Slice(1);
+
+        //    Span<char> destSpan = stackalloc char[str.Length];
+        //    Span<char> destTailSpan = destSpan.Slice(1);
+
+        //    rHeadSpan.ToLowerInvariant(destSpan);
+        //    rTailSpan.CopyTo(destTailSpan);
+
+        //    return destSpan.ToString();
+        //}
+
     }
 }

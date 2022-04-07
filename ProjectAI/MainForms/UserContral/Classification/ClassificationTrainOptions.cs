@@ -1070,15 +1070,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         #region ToolTip 설정
         private void SetToolTip()
         {
-            MetroFramework.Components.MetroToolTip metroToolTip = new MetroFramework.Components.MetroToolTip();
-            metroToolTip.Popup += BlurToolTipPopup;
-            metroToolTip.Draw += BlurToolTipDraw;
-
-            metroToolTip.SetToolTip(this.panelMBlurToolTip, "sesesesses");
+            MetroFramework.Components.MetroToolTip metroToolTipBlur = new MetroFramework.Components.MetroToolTip();
+            metroToolTipBlur.Popup += BlurToolTipPopup;
+            metroToolTipBlur.Draw += BlurToolTipDraw;
+            metroToolTipBlur.SetToolTip(this.panelMBlurToolTip, "1");
         }
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
         {
-            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
+            Image image = Image.FromFile(@"E:\Z2b_이미지\KakaoTalk_20220406_172401550.gif");
+            //Bitmap image = CustomIOMainger.LoadBitmap(@"E:\Z2b_이미지\1.webp");
             int MARGIN = 3;
 
             int imageWidth = 2 * MARGIN + image.Width;
@@ -1092,13 +1092,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-
-            Image image = Image.FromFile(@"C:\ProgrammingFiles\C#\ProjectAI\ProjectAI\Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif");
+            Image image = Image.FromFile(@"E:\Z2b_이미지\KakaoTalk_20220406_172401550.gif");
+            //Bitmap image = CustomIOMainger.LoadBitmap(@"E:\Z2b_이미지\icon\circuit-gaeab5cb8c_1920.jpg");
             int MARGIN = 3;
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
             
-
             using (StringFormat stringFormat = new StringFormat())
             {
                 stringFormat.Alignment = StringAlignment.Near;
@@ -1111,9 +1110,202 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         #endregion ToolTip 설정
 
+        #region 세부 옵션 설정
+        string ImagePath = @"E:\Z2b_이미지\1.webp";
         private void TilMBlurClick(object sender, EventArgs e)
         {
-
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "blur"))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    this.txtBlur.Text = dataAugmentationExampleForm.maximumValue;
+                }
+            }
         }
+
+        private void TilMBrightnessClick(object sender, EventArgs e)
+        {
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Brightness"))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    this.txtBrightnessMin.Text = dataAugmentationExampleForm.minimumValue;
+                    this.txtBrightnessMax.Text = dataAugmentationExampleForm.maximumValue;
+                } 
+            }
+                
+        }
+
+        private void TilMCenterClick(object sender, EventArgs e)
+        {
+            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Center");
+            dataAugmentationExampleForm.ShowDialog();
+        }
+
+        private void TilMContrastClick(object sender, EventArgs e)
+        {
+            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Contrast");
+            dataAugmentationExampleForm.ShowDialog();
+        }
+
+        private void TilMGaussianNoiseClick(object sender, EventArgs e)
+        {
+            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "GaussianNoise");
+            dataAugmentationExampleForm.ShowDialog();
+        }
+        #endregion
+
+        #region checkBox 변경 함수
+        private void CkbMBlurCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtBlur.Enabled = metroCheckBox.Checked;
+                    this.tilMBlur.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtBlur.Enabled = metroCheckBox.Checked;
+                    this.tilMBlur.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbBrightnessCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtBrightnessMin.Enabled = metroCheckBox.Checked;
+                    this.txtBrightnessMax.Enabled = metroCheckBox.Checked;
+                    this.tilMBrightness.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtBrightnessMin.Enabled = metroCheckBox.Checked;
+                    this.txtBrightnessMax.Enabled = metroCheckBox.Checked;
+                    this.tilMBrightness.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMCenterCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtCenter.Enabled = metroCheckBox.Checked;
+                    this.tilMCenter.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtCenter.Enabled = metroCheckBox.Checked;
+                    this.tilMCenter.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMContrastCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtContrastMin.Enabled = metroCheckBox.Checked;
+                    this.txtContrastMax.Enabled = metroCheckBox.Checked;
+                    this.tilMContrast.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtContrastMin.Enabled = metroCheckBox.Checked;
+                    this.txtContrastMax.Enabled = metroCheckBox.Checked;
+                    this.tilMContrast.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMGaussianNoiseCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtGaussianNoise.Enabled = metroCheckBox.Checked;
+                    this.tilMGaussianNoise.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtGaussianNoise.Enabled = metroCheckBox.Checked;
+                    this.tilMGaussianNoise.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMGradationCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtGradation.Enabled = metroCheckBox.Checked;
+                    this.tilMGradation.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtGradation.Enabled = metroCheckBox.Checked;
+                    this.tilMGradation.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbGradationRGBCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.tilMGradationRGB.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.tilMGradationRGB.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMSharpenCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtSharpen.Enabled = metroCheckBox.Checked;
+                    this.tilMSharpen.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtSharpen.Enabled = metroCheckBox.Checked;
+                    this.tilMSharpen.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        private void CkbMZoomCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
+            {
+                if (metroCheckBox.Checked)
+                {
+                    this.txtZoomMin.Enabled = metroCheckBox.Checked;
+                    this.txtZoomMax.Enabled = metroCheckBox.Checked;
+                    this.tilMZoom.Enabled = metroCheckBox.Checked;
+                }
+                else
+                {
+                    this.txtZoomMin.Enabled = metroCheckBox.Checked;
+                    this.txtZoomMax.Enabled = metroCheckBox.Checked;
+                    this.tilMZoom.Enabled = metroCheckBox.Checked;
+                }
+            }
+        }
+        #endregion
     }
 }

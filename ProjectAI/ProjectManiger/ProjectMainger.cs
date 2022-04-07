@@ -295,6 +295,7 @@ namespace ProjectAI
         /// </summary>
         public MainForms.ClassEdit classEdit = new MainForms.ClassEdit();
 
+
         #endregion ProjectMainger에 종속된 Forms 정의
         //=== === === === === === === === === === === === === === === 
         #region ProjectMainger에 종속된 UserContral 정의
@@ -1246,10 +1247,15 @@ namespace ProjectAI
         public void UISetActiveProjectInnerProjectInfo()
         {
             if (m_activeInnerProjectButton.ContainsKey("AddProject")) // 해당 Button이 만들어 져있는지 확인
+            {
                 this.MainForm.panelProjectInfo.Controls.Add(this.m_activeInnerProjectButton["AddProject"]); // 만들어져있는 Button이라면 값 가져오고 Main Fomes에 컨트롤 추가
+            }
+                
             else
-                this.UISetActiveProjectInnerProjectButton("AddProject", "Add Project", MetroColorStyle.Silver);
-
+            {
+                this.MainForm.panelProjectInfo.Controls.Add(this.UISetActiveProjectInnerProjectButton("AddProject", "Add Project", MetroColorStyle.Silver)); // 없으면 만들기 -> Main Fomes에 컨트롤 추가
+            }
+                
             foreach (string innerProjectName in this.m_activeProjectInfoJObject["array_string_projectList"])
             {
                 string selectProject = this.m_activeProjectInfoJObject["string_projectListInfo"][innerProjectName]["string_selectProject"].ToString();
@@ -1266,10 +1272,15 @@ namespace ProjectAI
                     style = MetroColorStyle.Yellow;
                 
                 if (m_activeInnerProjectButton.ContainsKey(innerProjectName)) // 해당 Button이 만들어 져있는지 확인
+                {
                     this.MainForm.panelProjectInfo.Controls.Add(this.m_activeInnerProjectButton[innerProjectName]); // 만들어져있는 Button이라면 값 가져오고 Main Fomes에 컨트롤 추가
+                }
                 else
-                    this.UISetActiveProjectInnerProjectButton(innerProjectName, selectProject, style); // 없으면 만들기
+                {
+                    this.MainForm.panelProjectInfo.Controls.Add(this.UISetActiveProjectInnerProjectButton(innerProjectName, selectProject, style)); // 없으면 만들기 -> Main Fomes에 컨트롤 추가
+                }    
             }
+            this.MainForm.panelProjectInfo.Controls.Add(this.UISetLogo()); // Logo 추가
         }
         /// <summary>
         /// 내부 딥러닝 프로젝트 버튼 설정 함수
@@ -1277,28 +1288,50 @@ namespace ProjectAI
         /// <param name="name"> 컴포넌트 이름 </param>
         /// <param name="text"> 출력 Text </param>
         /// <param name="style"> 색 </param>
-        public void UISetActiveProjectInnerProjectButton(string name, string text, MetroFramework.MetroColorStyle style)
+        public MetroFramework.Controls.MetroTile UISetActiveProjectInnerProjectButton(string name, string text, MetroFramework.MetroColorStyle style)
         {
-            MetroFramework.Controls.MetroTile metroTile = new MetroFramework.Controls.MetroTile();
-
-            // 
-            // metroTile
-            // 
-            metroTile.ActiveControl = null;
-            metroTile.Dock = System.Windows.Forms.DockStyle.Left;
-            metroTile.Location = new System.Drawing.Point(10, 10);
-            metroTile.Name = name;
-            metroTile.Margin = new System.Windows.Forms.Padding(5);
-            metroTile.Size = new System.Drawing.Size(150, 86);
-            metroTile.Style = style;
-            //metroTile.TabIndex = 2;
-            metroTile.Text = text;
-            metroTile.UseSelectable = true;
-            metroTile.UseStyleColors = true;
+            MetroFramework.Controls.MetroTile metroTile = new MetroFramework.Controls.MetroTile
+            {   // metroTile
+                ActiveControl = null,
+                Dock = System.Windows.Forms.DockStyle.Left,
+                Location = new System.Drawing.Point(10, 10),
+                Name = name,
+                Margin = new System.Windows.Forms.Padding(5),
+                Size = new System.Drawing.Size(110, 86),
+                TileTextFontSize = MetroFramework.MetroTileTextSize.Small,
+                TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold,
+                Style = style,
+                //metroTile.TabIndex = 2;
+                Text = text,
+                UseSelectable = true,
+                UseStyleColors = true
+            };
             metroTile.Click += new System.EventHandler(this.UISetActiveProjecttInnerProject);
 
             this.m_activeInnerProjectButton.Add(name, metroTile); // 버튼 관리 Dictionary에 추가
-            this.MainForm.panelProjectInfo.Controls.Add(metroTile); // Main Fomes에 컨트롤 추가
+            return metroTile;
+        }
+
+        private MetroFramework.Controls.MetroPanel UISetLogo()
+        {   // panelMlogo
+            MetroFramework.Controls.MetroPanel panelMlogo = new MetroFramework.Controls.MetroPanel();
+            panelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+            panelMlogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panelMlogo.Dock = System.Windows.Forms.DockStyle.Right;
+            panelMlogo.HorizontalScrollbarBarColor = true;
+            panelMlogo.HorizontalScrollbarHighlightOnWheel = false;
+            panelMlogo.HorizontalScrollbarSize = 10;
+            panelMlogo.Location = new System.Drawing.Point(10, 10);
+            panelMlogo.Margin = new System.Windows.Forms.Padding(0);
+            panelMlogo.MinimumSize = new System.Drawing.Size(409, 84);
+            //panelMlogo.Name = "panelMlogo";
+            panelMlogo.Size = new System.Drawing.Size(409, 84);
+            //panelMlogo.TabIndex = 2;
+            panelMlogo.VerticalScrollbarBarColor = true;
+            panelMlogo.VerticalScrollbarHighlightOnWheel = false;
+            panelMlogo.VerticalScrollbarSize = 10;
+
+            return panelMlogo;
         }
         /// <summary>
         /// 버튼 활성화시 실행 함수 - 프로젝트 UI 뿌려주기
@@ -1370,8 +1403,9 @@ namespace ProjectAI
                     // panelDataReview 설정
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);
 
-                    // Model 정보 업데이트
+                    // trainForm 학습 결과 폼
                     TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
+                    // Model 정보 업데이트
                     trainForm.UpdateModelView();
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Segmentation")

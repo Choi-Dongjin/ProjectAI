@@ -36,12 +36,12 @@
             this.lblMoptionReset = new MetroFramework.Controls.MetroLabel();
             this.btnMoptionReset = new MetroFramework.Controls.MetroButton();
             this.cmbMoptionLanguage = new MetroFramework.Controls.MetroComboBox();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.tableLayoutStartOptionMain = new System.Windows.Forms.TableLayoutPanel();
             this.btnMstartOptionsOK = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsCancel = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsApply = new MetroFramework.Controls.MetroButton();
-            this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerStartFormOptions)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutStartOptionMain.SuspendLayout();
@@ -92,6 +92,22 @@
             this.cmbMoptionLanguage.Name = "cmbMoptionLanguage";
             this.cmbMoptionLanguage.UseSelectable = true;
             // 
+            // metroButton1
+            // 
+            this.metroButton1.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.metroButton1, "metroButton1");
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            // 
+            // metroButton2
+            // 
+            this.metroButton2.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.metroButton2, "metroButton2");
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.UseSelectable = true;
+            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
+            // 
             // tableLayoutStartOptionMain
             // 
             resources.ApplyResources(this.tableLayoutStartOptionMain, "tableLayoutStartOptionMain");
@@ -121,22 +137,6 @@
             this.btnMstartOptionsApply.Name = "btnMstartOptionsApply";
             this.btnMstartOptionsApply.UseSelectable = true;
             this.btnMstartOptionsApply.Click += new System.EventHandler(this.BtnMstartOptionsApplyClick);
-            // 
-            // metroButton1
-            // 
-            this.metroButton1.ForeColor = System.Drawing.SystemColors.ControlText;
-            resources.ApplyResources(this.metroButton1, "metroButton1");
-            this.metroButton1.Name = "metroButton1";
-            this.metroButton1.UseSelectable = true;
-            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
-            // 
-            // metroButton2
-            // 
-            this.metroButton2.ForeColor = System.Drawing.SystemColors.ControlText;
-            resources.ApplyResources(this.metroButton2, "metroButton2");
-            this.metroButton2.Name = "metroButton2";
-            this.metroButton2.UseSelectable = true;
-            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
             // 
             // StartFormOptions
             // 
