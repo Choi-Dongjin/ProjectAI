@@ -1076,6 +1076,71 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             metroToolTip.Popup += BlurToolTipPopup;
             metroToolTip.Draw += BlurToolTipDraw;
             metroToolTip.SetToolTip(this.panelMBlurToolTip, "Blur");
+
+            //Brightness
+            metroToolTip.Popup += BrightnessToolTipPopup;
+            metroToolTip.Draw += BrightnessToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMBrightnessToolTip, "Brightness");
+
+            //Center
+            metroToolTip.Popup += CenterToolTipPopup;
+            metroToolTip.Draw += CenterToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMCenterToolTip, "Center");
+
+            //Contrast
+            metroToolTip.Popup += ContrastToolTipPopup;
+            metroToolTip.Draw += ContrastToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMContrastToolTip, "Contrast");
+
+            //GaussianNoise
+            metroToolTip.Popup += GaussianNoiseToolTipPopup;
+            metroToolTip.Draw += GaussianNoiseToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGaussianNoiseToolTip, "GaussianNoise");
+
+            //Gradation
+            metroToolTip.Popup += GradationToolTipPopup;
+            metroToolTip.Draw += GradationToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGradationToolTip, "Gradation");
+
+            //GradationRGB
+            metroToolTip.Popup += GradationRGBToolTipPopup;
+            metroToolTip.Draw += GradationRGBToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMGradationRGBToolTip, "GradationRGB");
+
+            //HorizontalFlip
+            metroToolTip.Popup += HorizontalFlipToolTipPopup;
+            metroToolTip.Draw += HorizontalFlipToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMHorizontalFlipToolTip, "HorizontalFlip");
+
+            //Rotation90
+            metroToolTip.Popup += Rotation90ToolTipPopup;
+            metroToolTip.Draw += Rotation90ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation90ToolTip, "Rotation90");
+
+            //Rotation180
+            metroToolTip.Popup += Rotation180ToolTipPopup;
+            metroToolTip.Draw += Rotation180ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation180ToolTip, "Rotation180");
+
+            //Rotation270
+            metroToolTip.Popup += Rotation270ToolTipPopup;
+            metroToolTip.Draw += Rotation270ToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMRotation270ToolTip, "Rotation270");
+
+            //Sharpen
+            metroToolTip.Popup += SharpenToolTipPopup;
+            metroToolTip.Draw += SharpenToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMSharpenToolTip, "Sharpen");
+
+            //VerticalFlip
+            metroToolTip.Popup += VerticalFlipToolTipPopup;
+            metroToolTip.Draw += VerticalFlipToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMVerticalFlipToolTip, "VerticalFlip");
+
+            //Zoom
+            metroToolTip.Popup += ZoomToolTipPopup;
+            metroToolTip.Draw += ZoomToolTipDraw;
+            metroToolTip.SetToolTip(this.panelMZoomToolTip, "Zoom");
         }
         #endregion ToolTip 설정
 
@@ -1558,6 +1623,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             e.DrawBackground(); e.DrawBorder();
             e.Graphics.DrawImage(image, MARGIN, MARGIN);
             
+
             using (StringFormat stringFormat = new StringFormat())
             {
                 stringFormat.Alignment = StringAlignment.Near;
@@ -1569,203 +1635,5 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         #endregion Zoom
 
-
-        #region 세부 옵션 설정
-        string ImagePath = @"E:\Z2b_이미지\1.webp";
-        private void TilMBlurClick(object sender, EventArgs e)
-        {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "blur"))
-            {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
-                {
-                    this.txtBlur.Text = dataAugmentationExampleForm.maximumValue;
-                }
-            }
-        }
-
-        private void TilMBrightnessClick(object sender, EventArgs e)
-        {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Brightness"))
-            {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
-                {
-                    this.txtBrightnessMin.Text = dataAugmentationExampleForm.minimumValue;
-                    this.txtBrightnessMax.Text = dataAugmentationExampleForm.maximumValue;
-                } 
-            }
-                
-        }
-
-        private void TilMCenterClick(object sender, EventArgs e)
-        {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Center");
-            dataAugmentationExampleForm.ShowDialog();
-        }
-
-        private void TilMContrastClick(object sender, EventArgs e)
-        {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Contrast");
-            dataAugmentationExampleForm.ShowDialog();
-        }
-
-        private void TilMGaussianNoiseClick(object sender, EventArgs e)
-        {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "GaussianNoise");
-            dataAugmentationExampleForm.ShowDialog();
-        }
-        #endregion
-
-        #region checkBox 변경 함수
-        private void CkbMBlurCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtBlur.Enabled = metroCheckBox.Checked;
-                    this.tilMBlur.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtBlur.Enabled = metroCheckBox.Checked;
-                    this.tilMBlur.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbBrightnessCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtBrightnessMin.Enabled = metroCheckBox.Checked;
-                    this.txtBrightnessMax.Enabled = metroCheckBox.Checked;
-                    this.tilMBrightness.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtBrightnessMin.Enabled = metroCheckBox.Checked;
-                    this.txtBrightnessMax.Enabled = metroCheckBox.Checked;
-                    this.tilMBrightness.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMCenterCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtCenter.Enabled = metroCheckBox.Checked;
-                    this.tilMCenter.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtCenter.Enabled = metroCheckBox.Checked;
-                    this.tilMCenter.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMContrastCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtContrastMin.Enabled = metroCheckBox.Checked;
-                    this.txtContrastMax.Enabled = metroCheckBox.Checked;
-                    this.tilMContrast.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtContrastMin.Enabled = metroCheckBox.Checked;
-                    this.txtContrastMax.Enabled = metroCheckBox.Checked;
-                    this.tilMContrast.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMGaussianNoiseCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtGaussianNoise.Enabled = metroCheckBox.Checked;
-                    this.tilMGaussianNoise.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtGaussianNoise.Enabled = metroCheckBox.Checked;
-                    this.tilMGaussianNoise.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMGradationCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtGradation.Enabled = metroCheckBox.Checked;
-                    this.tilMGradation.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtGradation.Enabled = metroCheckBox.Checked;
-                    this.tilMGradation.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbGradationRGBCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.tilMGradationRGB.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.tilMGradationRGB.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMSharpenCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtSharpen.Enabled = metroCheckBox.Checked;
-                    this.tilMSharpen.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtSharpen.Enabled = metroCheckBox.Checked;
-                    this.tilMSharpen.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        private void CkbMZoomCheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is MetroFramework.Controls.MetroCheckBox metroCheckBox)
-            {
-                if (metroCheckBox.Checked)
-                {
-                    this.txtZoomMin.Enabled = metroCheckBox.Checked;
-                    this.txtZoomMax.Enabled = metroCheckBox.Checked;
-                    this.tilMZoom.Enabled = metroCheckBox.Checked;
-                }
-                else
-                {
-                    this.txtZoomMin.Enabled = metroCheckBox.Checked;
-                    this.txtZoomMax.Enabled = metroCheckBox.Checked;
-                    this.tilMZoom.Enabled = metroCheckBox.Checked;
-                }
-            }
-        }
-        #endregion
     }
 }
