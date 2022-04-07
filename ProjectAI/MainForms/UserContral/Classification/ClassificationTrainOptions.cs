@@ -1051,7 +1051,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         /// <summary>
         /// 학습에 필요한 옵션 가져오기 
-        /// </summary>
+        /// </summary>j
         /// <param name="trainOptions"></param>
         /// <returns> JObject 정리된 옵션 정보 </returns>
         public JObject GetTrainOptions(JObject trainOptions)
@@ -1095,7 +1095,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             BrightnessmetroToolTip.Draw += BrightnessToolTipDraw;
             BrightnessmetroToolTip.SetToolTip(panelMBlurToolTip, "Brightness");
         }
-        #endregion ToolTip 설정
 
         #region Blur
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
@@ -1586,7 +1585,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
         }
         #endregion Zoom
-
+        #endregion ToolTip 설정
 
         #region 세부 옵션 설정
         string ImagePath = @"E:\Z2b_이미지\1.webp";
@@ -1612,10 +1611,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                     this.txtBrightnessMin.Text = dataAugmentationExampleForm.minimumValue;
                     this.txtBrightnessMax.Text = dataAugmentationExampleForm.maximumValue;
                 } 
-            }
-                
+            }    
         }
-
+        
         private void TilMCenterClick(object sender, EventArgs e)
         {
             ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Center");
