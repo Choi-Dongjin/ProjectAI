@@ -900,14 +900,14 @@
             // classToolStripMenuItem
             // 
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
             // 
             // trainToolStripMenuItem1
             // 
             this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
-            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(101, 22);
+            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.trainToolStripMenuItem1.Text = "Train";
             this.trainToolStripMenuItem1.Click += new System.EventHandler(this.TrainToolStripMenuItem1Click);
             // 
@@ -922,7 +922,7 @@
             // trainToolStripMenuItem
             // 
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
             // 

@@ -766,14 +766,32 @@ namespace ProjectAI.TrainForms
         /// </summary>
         public void UpdateModelView()
         {
+            int version = 1;
+
+            // Data Grid Wiew 초기화
+            this.dgvMmodelsVersion.Rows.Clear();
+            this.dgvMmodelsEpoch.Rows.Clear();
+
+            // 모델 차트 초기화
+            this.chartViewLoss.Series["Train & Validation"].Points.Clear();
+            this.chartViewLoss.Series["Test"].Points.Clear();
+            this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
+            this.chartViewAccuracy.Series["Test"].Points.Clear();
+
+            this.chartViewLoss.Series["selectModelDataTrain"].Points.Clear();
+            this.chartViewLoss.Series["selectModelDataTest"].Points.Clear();
+            this.chartViewAccuracy.Series["selectModelDataTrain"].Points.Clear();
+            this.chartViewAccuracy.Series["selectModelDataTest"].Points.Clear();
+
+            // 학습 정보창 초기화
+            this.panelMTrainOption.Controls.Clear();
+
             if (WorkSpaceData.m_activeProjectMainger != null)
             {
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
                     if (WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] != null)
                     {
-                        int version = 1;
-                        this.dgvMmodelsVersion.Rows.Clear();
                         foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"])
                         {
                             double trainLoss = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][modelName]["BestModelInfo"]["double_TrainLoss"]);
@@ -2817,7 +2835,7 @@ namespace ProjectAI.TrainForms
              * 6. contral에 정보 적용
              * 7. contral readonly 모드로 전환
              */
-
+            
             if (sender is MetroFramework.Controls.MetroGrid metroGrid)
             {
                 if (e.RowIndex != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
@@ -3043,10 +3061,11 @@ namespace ProjectAI.TrainForms
             string continualLearningModelAccuracy = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelAccuracy"].ToString();
             string continualLearningModelEscape = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelEscape"].ToString();
             string continualLearningModelOverKill = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelOverKill"].ToString();
-                */
+            */
 
             // ContinualLearning UI 설정
             this.ClassificationTrainOptions.togMContinualLearning.Checked = continualLearningChecked;
+            this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
             this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
 
             // Class Info
@@ -3054,6 +3073,27 @@ namespace ProjectAI.TrainForms
             int i = 0;
             foreach (string className in classNameList)
                 this.ClassificationTrainOptions.UISetupClassWeighContralAddManual(i++, className, Color.Gray); // Class Contral 추가
+
+            // Instant Evaluate
+            this.ClassificationTrainOptions.togMInstantEvaluate.Checked = instantEvaluateChecked;
+            if (instantEvaluateDataset.Equals("All"))
+            {
+                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = true;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
+            }
+            else if (instantEvaluateDataset.Equals("Train"))
+            {
+                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = true;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
+            }
+            else if (instantEvaluateDataset.Equals("Test"))
+            {
+                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
+                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = true;
+            }
         }
     }
 }

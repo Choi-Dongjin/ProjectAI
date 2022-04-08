@@ -146,36 +146,23 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
             if (this.trbMmaximum.Enabled)
             {
-                if (this.trbMmaximum.Value > 0)
+                if (this.trbMmaximum.Value > this.trbMminimum.Value)
                 {
-                    if (this.trbMmaximum.Value > this.trbMminimum.Value)
-                    {
-                        this.trbMapplied.Maximum = this.trbMmaximum.Value;
-                    }
-                    else if (this.trbMmaximum.Value == this.trbMminimum.Value)
-                    {
-                        this.trbMapplied.Maximum = this.trbMmaximum.Value + 1;
-                    }
-                    else if (this.trbMmaximum.Value < this.trbMminimum.Value)
-                    {
-                        this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
-
-                        this.trbMminimum.Value = this.trbMmaximum.Value;
-
-                        this.trbMapplied.Minimum = this.trbMmaximum.Value - 1;
-                        this.trbMapplied.Maximum = this.trbMmaximum.Value;
-                    }
+                    this.trbMapplied.Maximum = this.trbMmaximum.Value;
                 }
-                else if (this.trbMmaximum.Value == 0)
+                else if (this.trbMmaximum.Value == this.trbMminimum.Value)
                 {
                     this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
+                    this.trbMapplied.Maximum = this.trbMmaximum.Value + 1;
+                }
+                else if (this.trbMmaximum.Value < this.trbMminimum.Value)
+                {
+                    this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
+
                     this.trbMminimum.Value = this.trbMmaximum.Value;
 
-                    this.trbMapplied.Minimum = 0;
-                    this.trbMapplied.Maximum = 1;
-                }
-                else if (this.trbMmaximum.Value < 0)
-                {
+                    this.trbMapplied.Minimum = this.trbMmaximum.Value - 1;
+                    this.trbMapplied.Maximum = this.trbMmaximum.Value;
                 }
             }
         }
@@ -391,7 +378,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMminimum.Enabled = true;
             this.trbMminimum.Minimum = 0;
             this.trbMminimum.Maximum = 100;
-            this.trbMminimum.Value = 100;
+            this.trbMminimum.Value = 10;
             this.trbMminimum.SmallChange = 1;
             this.trbMminimum.LargeChange = 5;
             this.trbMminimum.MouseWheelBarPartitions = 1;
@@ -400,16 +387,16 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMmaximum.Enabled = true;
             this.trbMmaximum.Minimum = 0;
             this.trbMmaximum.Maximum = 100;
-            this.trbMmaximum.Value = 100;
+            this.trbMmaximum.Value = 10;
             this.trbMmaximum.SmallChange = 1;
             this.trbMmaximum.LargeChange = 5;
             this.trbMmaximum.MouseWheelBarPartitions = 100;
             this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
 
-            this.trbMapplied.Minimum = 99;
-            this.trbMapplied.Maximum = 100;
+            this.trbMapplied.Minimum = 10;
+            this.trbMapplied.Maximum = 11;
 
-            this.trbMapplied.Value = 100;
+            this.trbMapplied.Value = 10;
             this.trbMapplied.SmallChange = 1;
             this.trbMapplied.LargeChange = 5;
             this.trbMapplied.MouseWheelBarPartitions = 100;
@@ -477,7 +464,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
 
             this.trbMminimum.Enabled = true;
             this.trbMminimum.Minimum = 0;
-            this.trbMminimum.Maximum = 100;
+            this.trbMminimum.Maximum = 10;
             this.trbMminimum.Value = 100;
             this.trbMminimum.SmallChange = 1;
             this.trbMminimum.LargeChange = 5;
@@ -487,7 +474,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMmaximum.Enabled = true;
             this.trbMmaximum.Minimum = 0;
             this.trbMmaximum.Maximum = 100;
-            this.trbMmaximum.Value = 100;
+            this.trbMmaximum.Value = 10;
             this.trbMmaximum.SmallChange = 1;
             this.trbMmaximum.LargeChange = 5;
             this.trbMmaximum.MouseWheelBarPartitions = 100;
@@ -496,7 +483,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMapplied.Minimum = 99;
             this.trbMapplied.Maximum = 100;
 
-            this.trbMapplied.Value = 100;
+            this.trbMapplied.Value = 10;
             this.trbMapplied.SmallChange = 1;
             this.trbMapplied.LargeChange = 5;
             this.trbMapplied.MouseWheelBarPartitions = 100;

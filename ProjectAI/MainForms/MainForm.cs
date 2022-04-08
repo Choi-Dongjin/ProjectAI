@@ -940,8 +940,6 @@ namespace ProjectAI.MainForms
                     trainOptions = WorkSpaceData.m_activeProjectMainger.GetTrainInfo(trainOptions);
                     #endregion 학습 Option Info 가져오기
 
-
-
                     #region 학습 이미지 정보 가져오기
 
                     JObject trainImageData = new JObject();

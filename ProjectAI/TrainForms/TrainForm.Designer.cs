@@ -115,7 +115,6 @@
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.lblMDoneWork = new MetroFramework.Controls.MetroLabel();
             this.tclpModelView = new MetroFramework.Controls.MetroTabPage();
-            this.classViewer1 = new ProjectAI.MainForms.UserContral.Monitoring.ClassViewer();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
             this.chartViewAccuracy = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
@@ -130,6 +129,7 @@
             this.dgvMmodelsVersion = new MetroFramework.Controls.MetroGrid();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
             this.panelMTrainOption = new MetroFramework.Controls.MetroPanel();
+            this.classViewer1 = new ProjectAI.MainForms.UserContral.Monitoring.ClassViewer();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelMProcess.SuspendLayout();
@@ -206,7 +206,7 @@
             this.tclMProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tclMProcess.Location = new System.Drawing.Point(10, 20);
             this.tclMProcess.Name = "tclMProcess";
-            this.tclMProcess.SelectedIndex = 2;
+            this.tclMProcess.SelectedIndex = 0;
             this.tclMProcess.Size = new System.Drawing.Size(551, 1011);
             this.tclMProcess.TabIndex = 2;
             this.tclMProcess.UseSelectable = true;
@@ -251,7 +251,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(0, 865);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(533, 100);
+            this.richTextBox1.Size = new System.Drawing.Size(533, 89);
             this.richTextBox1.TabIndex = 30;
             this.richTextBox1.Text = "";
             // 
@@ -900,7 +900,6 @@
             // 
             this.tclpModelView.AutoScroll = true;
             this.tclpModelView.AutoScrollMinSize = new System.Drawing.Size(533, 778);
-            this.tclpModelView.Controls.Add(this.classViewer1);
             this.tclpModelView.Controls.Add(this.metroLabel10);
             this.tclpModelView.Controls.Add(this.chartViewAccuracy);
             this.tclpModelView.Controls.Add(this.metroLabel8);
@@ -910,6 +909,7 @@
             this.tclpModelView.Controls.Add(this.metroLabel11);
             this.tclpModelView.Controls.Add(this.metroPanel4);
             this.tclpModelView.Controls.Add(this.metroLabel7);
+            this.tclpModelView.Controls.Add(this.classViewer1);
             this.tclpModelView.HorizontalScrollbar = true;
             this.tclpModelView.HorizontalScrollbarBarColor = true;
             this.tclpModelView.HorizontalScrollbarHighlightOnWheel = false;
@@ -926,22 +926,13 @@
             this.tclpModelView.VerticalScrollbarHighlightOnWheel = false;
             this.tclpModelView.VerticalScrollbarSize = 10;
             // 
-            // classViewer1
-            // 
-            this.classViewer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classViewer1.Location = new System.Drawing.Point(0, 785);
-            this.classViewer1.Margin = new System.Windows.Forms.Padding(0);
-            this.classViewer1.Name = "classViewer1";
-            this.classViewer1.Size = new System.Drawing.Size(533, 168);
-            this.classViewer1.TabIndex = 52;
-            // 
             // metroLabel10
             // 
             this.metroLabel10.AutoSize = true;
             this.metroLabel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel10.Location = new System.Drawing.Point(0, 760);
+            this.metroLabel10.Location = new System.Drawing.Point(0, 928);
             this.metroLabel10.Name = "metroLabel10";
             this.metroLabel10.Size = new System.Drawing.Size(94, 25);
             this.metroLabel10.TabIndex = 51;
@@ -962,7 +953,7 @@
             legend5.MaximumAutoSize = 10F;
             legend5.Name = "Legend1";
             this.chartViewAccuracy.Legends.Add(legend5);
-            this.chartViewAccuracy.Location = new System.Drawing.Point(0, 570);
+            this.chartViewAccuracy.Location = new System.Drawing.Point(0, 738);
             this.chartViewAccuracy.Margin = new System.Windows.Forms.Padding(0);
             this.chartViewAccuracy.Name = "chartViewAccuracy";
             series17.ChartArea = "ChartArea1";
@@ -1001,7 +992,7 @@
             this.metroLabel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel8.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel8.Location = new System.Drawing.Point(0, 545);
+            this.metroLabel8.Location = new System.Drawing.Point(0, 713);
             this.metroLabel8.Name = "metroLabel8";
             this.metroLabel8.Size = new System.Drawing.Size(82, 25);
             this.metroLabel8.TabIndex = 49;
@@ -1022,7 +1013,7 @@
             legend6.MaximumAutoSize = 10F;
             legend6.Name = "Legend1";
             this.chartViewLoss.Legends.Add(legend6);
-            this.chartViewLoss.Location = new System.Drawing.Point(0, 355);
+            this.chartViewLoss.Location = new System.Drawing.Point(0, 523);
             this.chartViewLoss.Margin = new System.Windows.Forms.Padding(0);
             this.chartViewLoss.Name = "chartViewLoss";
             series21.ChartArea = "ChartArea1";
@@ -1061,7 +1052,7 @@
             this.metroLabel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel9.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel9.Location = new System.Drawing.Point(0, 330);
+            this.metroLabel9.Location = new System.Drawing.Point(0, 498);
             this.metroLabel9.Name = "metroLabel9";
             this.metroLabel9.Size = new System.Drawing.Size(47, 25);
             this.metroLabel9.TabIndex = 47;
@@ -1075,7 +1066,7 @@
             this.metroPanel5.HorizontalScrollbarBarColor = true;
             this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel5.HorizontalScrollbarSize = 10;
-            this.metroPanel5.Location = new System.Drawing.Point(0, 190);
+            this.metroPanel5.Location = new System.Drawing.Point(0, 358);
             this.metroPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel5.Name = "metroPanel5";
             this.metroPanel5.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
@@ -1162,7 +1153,7 @@
             this.metroLabel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroLabel11.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel11.Location = new System.Drawing.Point(0, 165);
+            this.metroLabel11.Location = new System.Drawing.Point(0, 333);
             this.metroLabel11.Name = "metroLabel11";
             this.metroLabel11.Size = new System.Drawing.Size(145, 25);
             this.metroLabel11.TabIndex = 43;
@@ -1176,7 +1167,7 @@
             this.metroPanel4.HorizontalScrollbarBarColor = true;
             this.metroPanel4.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel4.HorizontalScrollbarSize = 10;
-            this.metroPanel4.Location = new System.Drawing.Point(0, 25);
+            this.metroPanel4.Location = new System.Drawing.Point(0, 193);
             this.metroPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel4.Name = "metroPanel4";
             this.metroPanel4.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
@@ -1264,7 +1255,7 @@
             this.metroLabel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroLabel7.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel7.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel7.Location = new System.Drawing.Point(0, 0);
+            this.metroLabel7.Location = new System.Drawing.Point(0, 168);
             this.metroLabel7.Name = "metroLabel7";
             this.metroLabel7.Size = new System.Drawing.Size(154, 25);
             this.metroLabel7.TabIndex = 22;
@@ -1285,6 +1276,15 @@
             this.panelMTrainOption.VerticalScrollbarBarColor = true;
             this.panelMTrainOption.VerticalScrollbarHighlightOnWheel = false;
             this.panelMTrainOption.VerticalScrollbarSize = 10;
+            // 
+            // classViewer1
+            // 
+            this.classViewer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classViewer1.Location = new System.Drawing.Point(0, 0);
+            this.classViewer1.Margin = new System.Windows.Forms.Padding(0);
+            this.classViewer1.Name = "classViewer1";
+            this.classViewer1.Size = new System.Drawing.Size(533, 168);
+            this.classViewer1.TabIndex = 52;
             // 
             // TrainForm
             // 

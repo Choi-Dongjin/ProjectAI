@@ -1605,51 +1605,79 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         #region 세부 옵션 설정
 
-        private string ImagePath = @"E:\Z2b_이미지\1.webp";
+        
 
         private void TilMBlurClick(object sender, EventArgs e)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "blur"))
-            {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
-                {
-                    this.txtBlur.Text = dataAugmentationExampleForm.maximumValue;
-                }
-            }
+            this.DataAugmentationGetValue("blur", this.txtBlur);
         }
 
         private void TilMBrightnessClick(object sender, EventArgs e)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Brightness"))
-            {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
-                {
-                    this.txtBrightnessMin.Text = dataAugmentationExampleForm.minimumValue;
-                    this.txtBrightnessMax.Text = dataAugmentationExampleForm.maximumValue;
-                }
-            }
+            this.DataAugmentationGetValue("Brightness", this.txtBrightnessMin, this.txtBrightnessMax);
         }
 
         private void TilMCenterClick(object sender, EventArgs e)
         {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Center");
-            dataAugmentationExampleForm.ShowDialog();
+            this.DataAugmentationGetValue("Center", this.txtCenter);
         }
 
         private void TilMContrastClick(object sender, EventArgs e)
         {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "Contrast");
-            dataAugmentationExampleForm.ShowDialog();
+            this.DataAugmentationGetValue("Contrast", this.txtContrastMin, this.txtContrastMax);  
         }
 
         private void TilMGaussianNoiseClick(object sender, EventArgs e)
         {
-            ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, "GaussianNoise");
-            dataAugmentationExampleForm.ShowDialog();
+            this.DataAugmentationGetValue("GaussianNoise", this.txtGaussianNoise);
         }
-
+        private string ImagePath = @"E:\Z2b_이미지\1.webp";
+        private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
+        {
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                }
+            }
+        }
+        private void DataAugmentationGetValue(string exCase, TextBox maxTextBox)
+        {
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                }
+            }
+        }
+        private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox minTextBox, MetroFramework.Controls.MetroTextBox maxTextBox)
+        {
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    minTextBox.Text = dataAugmentationExampleForm.minimumValue;
+                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                }
+            }
+        }
+        private void DataAugmentationGetValue(string exCase, TextBox minTextBox, TextBox maxTextBox)
+        {
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            {
+                dataAugmentationExampleForm.ShowDialog();
+                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                {
+                    minTextBox.Text = dataAugmentationExampleForm.minimumValue;
+                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                }
+            }
+        }
         #endregion 세부 옵션 설정
 
         #region checkBox 변경 함수

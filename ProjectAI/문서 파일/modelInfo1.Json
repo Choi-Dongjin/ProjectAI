@@ -1,5 +1,5 @@
 ﻿{
-  "array_string_InnerModelList":[
+  "array_string_innerModelList":[
     "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_1.synapsenet",
     "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_6.synapsenet",
     "SynapseNet_Classification_18_on_FastTrainTest-512(0)_best_[0_1]_1.000000_10_7.synapsenet",

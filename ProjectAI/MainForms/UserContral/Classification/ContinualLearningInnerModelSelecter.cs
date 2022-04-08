@@ -173,7 +173,8 @@ namespace ProjectAI.MainForms.UserContral.Classification
             if (e.RowIndex != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
                 if (this.dgvMContinualLearningInnerModelSelecter.Rows[e.RowIndex].Cells[0].Value != null)
                 {
-                    string innerModelName = WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][this.modelName]["array_string_InnerModelList"][e.RowIndex].ToString();
+                    //Console.WriteLine(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject.ToString());`
+                    string innerModelName = WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][this.modelName]["array_string_innerModelList"][e.RowIndex].ToString();
 
                     string modelPath = System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModel, WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName, this.modelName, "models", innerModelName);
 
