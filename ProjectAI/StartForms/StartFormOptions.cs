@@ -107,7 +107,7 @@ namespace ProjectAI.StartForms
             ProgramVariables.m_programWokrSpacePath = ProgramVariables.ProgramWokrSpacePathDefalt;
         }
 
-        private void metroButton1_Click(object sender, EventArgs e)
+        private void MetroButton1Click(object sender, EventArgs e)
         {
             ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
 
@@ -120,8 +120,25 @@ namespace ProjectAI.StartForms
             }
         }
 
-        private void metroButton2_Click(object sender, EventArgs e)
+        private void BtnMGetSystemInfoClick(object sender, EventArgs e)
         {
+            //HardwareInformation.GetHardwareInformation();
+            //HardwareInformation.systemHardwareInfoJObject;
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.ValidateNames = false;
+                openFileDialog.CheckFileExists = false;
+                openFileDialog.CheckPathExists = true;
+                openFileDialog.FileName = "Folder Selection.";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string folderPath = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
+                    folderPath = System.IO.Path.Combine(folderPath, "HardwareInfo.Json");
+                    HardwareInformation.GetHardwareInformation();
+                    jsonDataManiger.PushJsonObject(folderPath, HardwareInformation.systemHardwareInfoJObject);
+                }
+            }
         }
     }
 }

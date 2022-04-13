@@ -79,7 +79,7 @@
             this.tableLayoutMainIcons.Controls.Add(this.buttonStartOption, 2, 5);
             this.tableLayoutMainIcons.Controls.Add(this.tableLayoutMainIconPath, 0, 7);
             this.tableLayoutMainIcons.Name = "tableLayoutMainIcons";
-            this.tableLayoutMainIcons.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutMainIcons_Paint);
+            this.tableLayoutMainIcons.Paint += new System.Windows.Forms.PaintEventHandler(this.TableLayoutMainIconsPaint);
             // 
             // metroButton4
             // 

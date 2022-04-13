@@ -33,9 +33,9 @@
             this.panelWorkSpaceStatus = new System.Windows.Forms.Panel();
             this.lblWorkSpaceVersion = new System.Windows.Forms.Label();
             this.lblWorkSpaceSize = new System.Windows.Forms.Label();
-            this.btnWorkSpaceOpen = new ProjectAI.CustomComponent.CircularButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblWorkSpaceName = new MetroFramework.Controls.MetroLabel();
+            this.btnWorkSpaceOpen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -76,22 +76,6 @@
             this.lblWorkSpaceSize.Text = "100 Bytes";
             this.lblWorkSpaceSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnWorkSpaceOpen
-            // 
-            this.btnWorkSpaceOpen.BackColor = System.Drawing.Color.Transparent;
-            this.btnWorkSpaceOpen.BackgroundImage = global::ProjectAI.Properties.Resources.iconTemp;
-            this.btnWorkSpaceOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnWorkSpaceOpen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnWorkSpaceOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnWorkSpaceOpen.ForeColor = System.Drawing.Color.Transparent;
-            this.btnWorkSpaceOpen.Location = new System.Drawing.Point(365, 0);
-            this.btnWorkSpaceOpen.Margin = new System.Windows.Forms.Padding(0);
-            this.btnWorkSpaceOpen.Name = "btnWorkSpaceOpen";
-            this.btnWorkSpaceOpen.Size = new System.Drawing.Size(25, 25);
-            this.btnWorkSpaceOpen.TabIndex = 0;
-            this.btnWorkSpaceOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnWorkSpaceOpen.UseVisualStyleBackColor = false;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
@@ -101,11 +85,11 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.btnWorkSpaceOpen, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblWorkSpaceSize, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblWorkSpaceVersion, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelWorkSpaceStatus, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblWorkSpaceName, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnWorkSpaceOpen, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 5);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -114,7 +98,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(390, 25);
             this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // lblWorkSpaceName
             // 
@@ -128,12 +111,28 @@
             this.lblWorkSpaceName.Text = "Name Test";
             this.lblWorkSpaceName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnWorkSpaceOpen
+            // 
+            this.btnWorkSpaceOpen.BackgroundImage = global::ProjectAI.Properties.Resources.plus;
+            this.btnWorkSpaceOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnWorkSpaceOpen.FlatAppearance.BorderSize = 0;
+            this.btnWorkSpaceOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWorkSpaceOpen.Location = new System.Drawing.Point(365, 0);
+            this.btnWorkSpaceOpen.Margin = new System.Windows.Forms.Padding(0);
+            this.btnWorkSpaceOpen.Name = "btnWorkSpaceOpen";
+            this.btnWorkSpaceOpen.Size = new System.Drawing.Size(25, 23);
+            this.btnWorkSpaceOpen.TabIndex = 7;
+            this.btnWorkSpaceOpen.UseVisualStyleBackColor = true;
+            // 
             // WorkSpaceButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::ProjectAI.Properties.Resources.border1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "WorkSpaceButton";
             this.Padding = new System.Windows.Forms.Padding(5);
@@ -150,8 +149,8 @@
         private System.Windows.Forms.Panel panelWorkSpaceStatus;
         private System.Windows.Forms.Label lblWorkSpaceVersion;
         private System.Windows.Forms.Label lblWorkSpaceSize;
-        private CustomComponent.CircularButton btnWorkSpaceOpen;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroLabel lblWorkSpaceName;
+        private System.Windows.Forms.Button btnWorkSpaceOpen;
     }
 }

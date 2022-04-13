@@ -74,32 +74,9 @@ namespace ProjectAI.CustomComponent
                         g.DrawString(progressVal.ToString() + "%", cellStyle.Font, foreColorBrush, cellBounds.X + 6, cellBounds.Y + 2);
                 }
             }
-            catch (Exception e) { }
-        }
-
-        private void ex()
-        {
-            DataGridView dataGridView = new DataGridView();
-
-            DataGridViewProgressColumn column = new DataGridViewProgressColumn();
-
-            dataGridView.ColumnCount = 2;
-            dataGridView.Columns[0].Name = "TESTHeader1";
-            dataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView.Columns[1].Name = "TESTHeader22";
-            dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView.Columns.Add(column);
-            dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            column.HeaderText = "Progress";
-
-            object[] row1 = new object[] { "test1", "test2", 50 };
-            object[] row2 = new object[] { "test1", "test2", 55 };
-            object[] row3 = new object[] { "test1", "test2", 22 };
-            object[] rows = new object[] { row1, row2, row3 };
-
-            foreach (object[] row in rows)
+            catch (Exception ex)
             {
-                dataGridView.Rows.Add(row);
+                Console.WriteLine(ex);
             }
         }
     }

@@ -15,18 +15,28 @@ namespace ProjectAI
     public struct HardwareInformation
     {
         /// <summary>
+        /// 학습 Batch Size
+        /// </summary>
+        public static string m_batchSize = "2";
+
+        public static JObject systemHardwareInfoJObject;
+
+        /// <summary>
         /// Hardware Information 하드웨어 정보 가져오기
         /// </summary>
         public static void GetHardwareInformation()
         {
+            HardwareInformation.systemHardwareInfoJObject = new JObject();
+
             // OS 정보 얻기
             using (var searcher = new ManagementObjectSearcher("select * from Win32_OperatingSystem"))
             {
                 Console.WriteLine("");
                 Console.WriteLine("OS 정보 얻기");
+                int number = 1;
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    Console.WriteLine("Computer Name  -  " + obj["CSName"]);
+                    Console.WriteLine("Computer Name  -  " + obj["CSName"].ToString());
                     Console.WriteLine("Caption  -  " + obj["Caption"]);
                     Console.WriteLine("Version  -  " + obj["Version"]);
                     Console.WriteLine("BuildNumber  -  " + obj["BuildNumber"]);
@@ -36,6 +46,25 @@ namespace ProjectAI
                     Console.WriteLine("OSType  -  " + obj["OSType"]);
                     Console.WriteLine("OtherTypeDescription  -  " + obj["OtherTypeDescription"]);
                     Console.WriteLine("ServicePackMajorVersion  -  " + obj["ServicePackMajorVersion"]);
+
+
+
+                    JObject jObject = new JObject
+                    {
+                        ["ComputerName"] = obj["CSName"]?.ToString(),
+                        ["Caption"] = obj["Caption"]?.ToString(),
+                        ["Version"] = obj["Version"]?.ToString(),
+                        ["BuildNumber"] = obj["BuildNumber"]?.ToString(),
+                        ["BuildType"] = obj["BuildType"]?.ToString(),
+                        ["OSProductSuite"] = obj["OSProductSuite"]?.ToString(),
+                        ["OSArchitecture"] = obj["OSArchitecture"]?.ToString(),
+                        ["OSType"] = obj["OSType"]?.ToString(),
+                        ["OtherTypeDescription"] = obj["OtherTypeDescription"]?.ToString(),
+                        ["ServicePackMajorVersion"] = obj["ServicePackMajorVersion"]?.ToString()
+                    };
+
+                    HardwareInformation.systemHardwareInfoJObject.Add($"OS_{number}", jObject);
+                    number++;
                 }
             }
 
@@ -44,11 +73,21 @@ namespace ProjectAI
             {
                 Console.WriteLine("");
                 Console.WriteLine("Processors 정보 얻기");
+                int number = 1;
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("NumberOfProcessors  -  " + obj["NumberOfProcessors"]);
                     Console.WriteLine("NumberOfLogicalProcessors  -  " + obj["NumberOfLogicalProcessors"]);
                     Console.WriteLine("PCSystemType  -  " + obj["PCSystemType"]);
+
+                    JObject jObject = new JObject()
+                    {
+                        ["NumberOfProcessors"] = obj["NumberOfProcessors"]?.ToString(),
+                        ["NumberOfLogicalProcessors"] = obj["NumberOfLogicalProcessors"]?.ToString(),
+                        ["PCSystemType"] = obj["PCSystemType"]?.ToString()
+                    };
+                    HardwareInformation.systemHardwareInfoJObject[$"Processors_{number}"] = jObject;
+                    number++;
                 }
             }
 
@@ -57,9 +96,10 @@ namespace ProjectAI
             {
                 Console.WriteLine("");
                 Console.WriteLine("CPU 정보 얻기");
+                int number = 1;
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    Console.WriteLine("Number Of Logical Processors: {0}", Environment.ProcessorCount);
+                    Console.WriteLine("NumberOfLogicalProcessors: {0}", Environment.ProcessorCount);
 
                     Console.WriteLine("Manufacturer  -  " + obj["Manufacturer"]);
                     Console.WriteLine("Name  -  " + obj["Name"]);
@@ -70,6 +110,21 @@ namespace ProjectAI
                     Console.WriteLine("NumberOfCores  -  " + obj["NumberOfCores"]);
                     Console.WriteLine("DataWidth  -  " + obj["DataWidth"]);
                     Console.WriteLine("Family  -  " + obj["Family"]);
+
+                    JObject jObject = new JObject()
+                    {
+                        ["Manufacturer"] = obj["Manufacturer"]?.ToString(),
+                        ["Name"] = obj["Name"]?.ToString(),
+                        ["Description"] = obj["Description"]?.ToString(),
+                        ["ProcessorID"] = obj["ProcessorID"]?.ToString(),
+                        ["Architecture"] = obj["Architecture"]?.ToString(),
+                        ["AddressWidth"] = obj["AddressWidth"]?.ToString(),
+                        ["NumberOfCores"] = obj["NumberOfCores"]?.ToString(),
+                        ["DataWidth"] = obj["DataWidth"]?.ToString(),
+                        ["Family"] = obj["Family"]?.ToString()
+                    };
+                    HardwareInformation.systemHardwareInfoJObject[$"CPU_{number}"] = jObject;
+                    number++;
                 }
             }
 
@@ -78,6 +133,7 @@ namespace ProjectAI
             {
                 Console.WriteLine("");
                 Console.WriteLine("GRAPHIC 카드 정보 얻기");
+                int number = 1;
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("Name  -  " + obj["Name"]);
@@ -90,18 +146,49 @@ namespace ProjectAI
                     Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
                     Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
                     Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
+
+                    JObject jObject = new JObject()
+                    {
+                        ["Name"] = obj["Name"]?.ToString(),
+                        ["DeviceID"] = obj["DeviceID"]?.ToString(),
+                        ["AdapterRAM"] = obj["AdapterRAM"]?.ToString(),
+                        ["AdapterDACType"] = obj["AdapterDACType"]?.ToString(),
+                        ["Monochrome"] = obj["Monochrome"]?.ToString(),
+                        ["InstalledDisplayDrivers"] = obj["InstalledDisplayDrivers"]?.ToString(),
+                        ["DriverVersion"] = obj["DriverVersion"]?.ToString(),
+                        ["VideoProcessor"] = obj["VideoProcessor"]?.ToString(),
+                        ["VideoArchitecture"] = obj["VideoArchitecture"]?.ToString(),
+                        ["VideoMemoryType"] = obj["VideoMemoryType"]?.ToString()
+                    };
+                    HardwareInformation.systemHardwareInfoJObject[$"GRAPHIC_{number}"] = jObject;
+                    number++;
                 }
             }
 
             //메모리 정보 얻기
-            ManagementObjectSearcher win32CompSys = new ManagementObjectSearcher("select * from Win32_ComputerSystem");
-            Console.WriteLine("");
-            Console.WriteLine("//메모리 정보 얻기");
-            foreach (ManagementObject obj in win32CompSys.Get())
+            using (ManagementObjectSearcher win32CompSys = new ManagementObjectSearcher("select * from Win32_ComputerSystem"))
             {
-                string memName = obj["totalphysicalmemory"].ToString();
-                Console.WriteLine(memName);
+                Console.WriteLine("");
+                Console.WriteLine("//메모리 정보 얻기");
+                int number = 1;
+                foreach (ManagementObject obj in win32CompSys.Get())
+                {
+                    string memName = obj["totalphysicalmemory"].ToString();
+                    Console.WriteLine(memName);
+
+                    JObject jObject = new JObject()
+                    {
+                        ["totalphysicalmemory"] = obj["totalphysicalmemory"]?.ToString()
+                    };
+                    HardwareInformation.systemHardwareInfoJObject[$"MEMORY_{number}"] = jObject;
+                    number++;
+                }
             }
+        }
+
+        public static void SettingValuebyGPUValue()
+        {
+            //HardwareInformation.m_batchSize = 
         }
     }
 
@@ -490,6 +577,11 @@ namespace ProjectAI
         public ClassInfoChangeDelegate m_classInfoChangeUpdater; // Class 정보 변경시 업데이터
 
         /// <summary>
+        /// Logo Panel
+        /// </summary>
+        public MetroFramework.Controls.MetroPanel panelLogo;
+
+        /// <summary>
         /// 프로젝트 #Class 처음 진입시
         /// </summary>
         /// <param name="workSpaceName"> 워크 스페이스 이름</param>
@@ -506,6 +598,8 @@ namespace ProjectAI
             this.ActiveProjectEntry(); // 프로젝트 폴더 확인, 문제가 없다면 기존의 데이터 읽어오기
 
             this.m_imageNumberChangeUpdater += this.UISetImageNumberInfo; // 이미지 개수 변경시 동작 함수 등록
+
+            this.panelLogo = this.UISetLogo(); // Logo 적용.
         } //
 
         public void Dispose()
@@ -1280,6 +1374,8 @@ namespace ProjectAI
         /// </summary>
         public void UISetActiveProjectInnerProjectInfo()
         {
+            this.MainForm.panelProjectInfo.Controls.Clear();
+
             if (m_activeInnerProjectButton.ContainsKey("AddProject")) // 해당 Button이 만들어 져있는지 확인
             {
                 this.MainForm.panelProjectInfo.Controls.Add(this.m_activeInnerProjectButton["AddProject"]); // 만들어져있는 Button이라면 값 가져오고 Main Fomes에 컨트롤 추가
@@ -1313,7 +1409,7 @@ namespace ProjectAI
                     this.MainForm.panelProjectInfo.Controls.Add(this.UISetActiveProjectInnerProjectButton(innerProjectName, selectProject, style)); // 없으면 만들기 -> Main Fomes에 컨트롤 추가
                 }
             }
-            this.MainForm.panelProjectInfo.Controls.Add(this.UISetLogo()); // Logo 추가
+            this.MainForm.panelProjectInfo.Controls.Add(this.panelLogo); // Logo 추가
         }
 
         /// <summary>
@@ -1364,6 +1460,7 @@ namespace ProjectAI
             panelMlogo.VerticalScrollbarBarColor = true;
             panelMlogo.VerticalScrollbarHighlightOnWheel = false;
             panelMlogo.VerticalScrollbarSize = 10;
+            panelMlogo.BackColor = System.Drawing.Color.Transparent;
 
             return panelMlogo;
         }
@@ -1383,6 +1480,7 @@ namespace ProjectAI
                 if (button.Name == "AddProject")
                 {
                     this.deeplearningProjectSelectForm.ShowDialog(); // 프로젝트 추가
+                    this.UISetActiveProjectInnerProjectInfo(); // 프로젝트 내부 딥 러닝 프로젝트 버튼 셋업
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "Classification")
                 {

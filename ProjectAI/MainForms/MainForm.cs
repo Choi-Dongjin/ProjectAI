@@ -50,6 +50,27 @@ namespace ProjectAI.MainForms
         /// </summary>
         private ProjectAI.TrainForms.TrainForm TrainForm;
 
+        // panelMlogo
+        MetroFramework.Controls.MetroPanel mainPanelMlogo = new MetroFramework.Controls.MetroPanel
+        {
+            BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio,
+            BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom,
+            Dock = System.Windows.Forms.DockStyle.Right,
+            HorizontalScrollbarBarColor = true,
+            HorizontalScrollbarHighlightOnWheel = false,
+            HorizontalScrollbarSize = 10,
+            Location = new System.Drawing.Point(10, 10),
+            Margin = new System.Windows.Forms.Padding(0),
+            MinimumSize = new System.Drawing.Size(409, 84),
+            //panelMlogo.Name = "panelMlogo";
+            Size = new System.Drawing.Size(409, 84),
+            //panelMlogo.TabIndex = 2;
+            VerticalScrollbarBarColor = true,
+            VerticalScrollbarHighlightOnWheel = false,
+            VerticalScrollbarSize = 10,
+            BackColor = Color.Transparent
+        };
+
         /// <summary>
         /// Label TextBox 안전 접근
         /// </summary>
@@ -187,8 +208,6 @@ namespace ProjectAI.MainForms
             return false;
         }
 
-        private int a = 1;
-
         /// <summary>
         /// Panel Visible 값 적용 안전 접근 함수
         /// </summary>
@@ -227,11 +246,15 @@ namespace ProjectAI.MainForms
         public MainForm()
         {
             InitializeComponent();
+            this.panelProjectInfo.Controls.Add(this.mainPanelMlogo); // Logo 추가
 
+            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
 
             btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
+
+            
         }
 
         private void MainFormLoad(object sender, EventArgs e)
@@ -263,7 +286,15 @@ namespace ProjectAI.MainForms
                 this.panelMWorkSpaceString2.BackgroundImage = global::ProjectAI.Properties.Resources.Workspace;
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameter;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
-                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+                // panel BackgroundImage 변경
+                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                // Logo 적용
+                this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+
+                if (WorkSpaceData.m_activeProjectMainger != null)
+                    if (WorkSpaceData.m_activeProjectMainger.panelLogo != null)
+                        WorkSpaceData.m_activeProjectMainger.panelLogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
             }
             else // Dark로 변경시 진입
             {
@@ -277,7 +308,15 @@ namespace ProjectAI.MainForms
                 this.panelMWorkSpaceString2.BackgroundImage = global::ProjectAI.Properties.Resources.WorkspaceW;
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameterW;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfoW;
-                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
+                // panel BackgroundImage 변경
+                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                // Logo 적용
+                this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
+
+                if (WorkSpaceData.m_activeProjectMainger != null)
+                    if (WorkSpaceData.m_activeProjectMainger.panelLogo != null)
+                        WorkSpaceData.m_activeProjectMainger.panelLogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
             }
         }
 
@@ -589,7 +628,7 @@ namespace ProjectAI.MainForms
             {
                 if (activeProjectName == activeWorkSpaceName)
                 {
-                    MetroMessageBox.Show(this, "열려 있는 프로젝트", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    //MetroMessageBox.Show(this, "열려 있는 프로젝트", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     WorkSpaceData.m_activeProjectMainger = WorkSpaceData.m_projectMaingersDictionary[activeProjectName]; // 활성화된 프로젝트 적용
                     FormsManiger.m_mainFormsUIResetHandler(); // 이전 UI 초기화
                     WorkSpaceData.m_activeProjectMainger.ProjectIdleUISet(); // 초기 UI 적용
@@ -647,7 +686,7 @@ namespace ProjectAI.MainForms
             panelMWorkSpase.Visible = false;
         }
 
-        private void metroButton3_Click(object sender, EventArgs e)
+        private void MetroButton3Click(object sender, EventArgs e)
         {
         }
 
@@ -673,7 +712,7 @@ namespace ProjectAI.MainForms
             //this.TrainForm.Show();
         }
 
-        private void toolStripMenuItem1Click(object sender, EventArgs e)
+        private void ToolStripMenuItem1Click(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
@@ -808,7 +847,7 @@ namespace ProjectAI.MainForms
                 if (dialogResult == DialogResult.OK)
                 {
                     string CreatWorkSpaceName = makeWorkSpaceForm.GetWorkSpaceName(); // 검증 완료됨 WorkSpace 이름 가져오기
-                    CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
+                    this.CreateWorkSpaceButton(CreatWorkSpaceName); // WorkSpaceButton 생성
                 }
             }
             // #2
@@ -1064,11 +1103,16 @@ namespace ProjectAI.MainForms
                     this.DeletWorkSpace(WorkSpaceData.m_activeProjectMainger.m_activeProjectName.ToString());
         }
 
-        private void gridImageList_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void GridImageListCellClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
             string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
             Console.WriteLine(data);
+        }
+
+        private void ImageAddToolStripMenuItemClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

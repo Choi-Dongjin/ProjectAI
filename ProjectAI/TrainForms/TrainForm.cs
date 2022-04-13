@@ -119,6 +119,14 @@ namespace ProjectAI.TrainForms
                 this.metroStyleManager1.Theme = styleManager.Theme;
                 // 배경 색 변경, Forms에 Metro Forms 적용하지 않은 경우
                 this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+
+                // 차트 스타일 변경
+                FormsManiger.ChartWhiteMode(this.chartProcessingLoss);
+                FormsManiger.ChartWhiteMode(this.chartProcessingAccuracy);
+                FormsManiger.ChartWhiteMode(this.chartDoneLoss);
+                FormsManiger.ChartWhiteMode(this.chartDoneAccuracy);
+                FormsManiger.ChartWhiteMode(this.chartViewLoss);
+                FormsManiger.ChartWhiteMode(this.chartViewAccuracy);
             }
             else // Dark로 변경시 진입
             {
@@ -127,6 +135,14 @@ namespace ProjectAI.TrainForms
                 this.metroStyleManager1.Theme = styleManager.Theme;
                 // 배경 색 변경, Forms에 Metro Forms 적용하지 않은 경우
                 this.BackColor = this.formsManiger.GetThemeRGBClor(styleManager.Theme.ToString());
+
+                // 차트 스타일 변경
+                FormsManiger.ChartDarkMode(this.chartProcessingLoss);
+                FormsManiger.ChartDarkMode(this.chartProcessingAccuracy);
+                FormsManiger.ChartDarkMode(this.chartDoneLoss);
+                FormsManiger.ChartDarkMode(this.chartDoneAccuracy);
+                FormsManiger.ChartDarkMode(this.chartViewLoss);
+                FormsManiger.ChartDarkMode(this.chartViewAccuracy);
             }
         }
 
@@ -463,7 +479,7 @@ namespace ProjectAI.TrainForms
                 string stringNumber = phoneNumberSplit[1];
                 if (int.TryParse(phoneNumberSplit[1], out int number))
                 {
-                    metroTabPage.Text = $"{phoneNumberSplit[0]} ( {number + value} )";
+                    metroTabPage.Text = $"{phoneNumberSplit[0].Trim()} ( {number + value} )";
                 }
             }
         }
@@ -689,6 +705,26 @@ namespace ProjectAI.TrainForms
             this.chartProcessingAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
             this.chartProcessingAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
             this.chartProcessingAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            this.chartDoneLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartDoneLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
+            this.chartDoneLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
+            this.chartDoneLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            this.chartDoneAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartDoneAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
+            this.chartDoneAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
+            this.chartDoneAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            this.chartViewLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartViewLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
+            this.chartViewLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
+            this.chartViewLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            this.chartViewAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartViewAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
+            this.chartViewAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
+            this.chartViewAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
         }
 
         private void TrainFormShown(object sender, EventArgs e)
@@ -1460,7 +1496,6 @@ namespace ProjectAI.TrainForms
                         this.SafeDataGridViewProgressValue(this.dgvMProcessing, processInfo["string_processName"].ToString(), 0);
 
                         // Log 가져오기
-                        int time = 0;
                         while (true)
                         {
                             string classificationSystemLog = classificationReader.ReadLine();
@@ -1622,7 +1657,7 @@ namespace ProjectAI.TrainForms
             processJObject["TrainProcessInfo"]["string_processStep"] = "EndProcessing";
             jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
             // Tap contral number 변경
-            this.SafeTapPageNumberChange(this.tclpMProcessDone, -1);
+            //this.SafeTapPageNumberChange(this.tclpMProcessDone, -1);
         }
 
         private void ActiveProcessEndProcessing()
@@ -2682,31 +2717,96 @@ namespace ProjectAI.TrainForms
             string processWorkSpaceInnerPorjectName = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_workSpaceInnerPorjectName"].ToString();
 
             JObject trainProcessInfo = (JObject)processJObject["TrainProcessInfo"];
+
             if (trainProcessInfo["string_projectAccessModelName"] == null)
             {
                 string projectModelInfoPath = System.IO.Path.Combine(WorkSpaceEarlyData.m_workSpacDataPath, processWorkSpasceName, "data", "ModelInfo.Json");
                 JObject workspaceModelInfo = this.jsonDataManiger.GetJsonObjectShare(projectModelInfoPath);
-                JArray modelListJArray = (JArray)workspaceModelInfo[processWorkSpaceInnerPorjectName]["array_string_ModelList"];
-                string[] modelList = modelListJArray.Select(jv => (string)jv).ToArray();
 
-                // model 관리 이름 만들기
-                string projectAccessModelName = CustomIOMainger.RandomFileName(modelList, 15);
+                JArray modelListJArray;
+                string[] modelList;
+                string projectAccessModelName;
 
-                // local Data에 데이터 저장
-                trainProcessInfo["string_projectAccessModelName"] = projectAccessModelName;
+                try
+                {
+                    modelListJArray = (JArray)workspaceModelInfo[processWorkSpaceInnerPorjectName]["array_string_ModelList"];
+                    modelList = modelListJArray.Select(jv => (string)jv).ToArray();
 
-                // workSpace Model 데이터에 데이터 저장
-                modelListJArray.Add(projectAccessModelName);
-                //  workSpace Model 정보 저장 하기
-                JObject projectModelInfo = (JObject)workspaceModelInfo[processWorkSpaceInnerPorjectName];
-                projectModelInfo[projectAccessModelName] = processJObject;
+                    // model 관리 이름 만들기
+                    projectAccessModelName = CustomIOMainger.RandomFileName(modelList, 15);
 
-                // Json 파일 저장
-                // local Data Json 파일 저장
-                this.jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
-                // workSpace Model Json 파일 저장
-                this.jsonDataManiger.PushJsonObject(projectModelInfoPath, workspaceModelInfo);
+                    // local Data에 데이터 저장
+                    trainProcessInfo["string_projectAccessModelName"] = projectAccessModelName;
+
+                    // workSpace Model 데이터에 데이터 저장
+                    modelListJArray.Add(projectAccessModelName);
+                    // workSpace Model 정보 저장 하기
+                    JObject projectModelInfo = (JObject)workspaceModelInfo[processWorkSpaceInnerPorjectName];
+                    projectModelInfo[projectAccessModelName] = processJObject;
+                }
+                catch (System.NullReferenceException ex)
+                {
+                    Console.WriteLine(ex);
+
+                    // projectAccessModelName 생성
+                    projectAccessModelName = CustomIOMainger.RandomFileName(15);
+
+                    // local Data에 데이터 저장
+                    trainProcessInfo["string_projectAccessModelName"] = projectAccessModelName;
+
+                    // workSpace Model 데이터 생성
+                    JArray jArray = new JArray();
+                    jArray.Add(projectAccessModelName);
+
+                    JObject projectModelInfo = new JObject()
+                    {
+                        ["array_string_ModelList"] = jArray,
+                        [projectAccessModelName] = processJObject
+                    };
+
+                    // workSpace Model 정보 저장 하기
+                    workspaceModelInfo[processWorkSpaceInnerPorjectName] = projectModelInfo;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+
+                    // projectAccessModelName 생성
+                    projectAccessModelName = CustomIOMainger.RandomFileName(15);
+
+                    // local Data에 데이터 저장
+                    trainProcessInfo["string_projectAccessModelName"] = projectAccessModelName;
+
+                    // workSpace Model 데이터 생성
+                    JArray jArray = new JArray();
+                    jArray.Add(projectAccessModelName);
+
+                    JObject projectModelInfo = new JObject()
+                    {
+                        ["array_string_ModelList"] = jArray,
+                        [projectAccessModelName] = processJObject
+                    };
+
+                    // workSpace Model 정보 저장 하기
+                    workspaceModelInfo[processWorkSpaceInnerPorjectName] = projectModelInfo;
+                }
+                finally
+                {
+                    // Json 파일 저장
+                    // local Data Json 파일 저장
+                    this.jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
+                    // workSpace Model Json 파일 저장
+                    this.jsonDataManiger.PushJsonObject(projectModelInfoPath, workspaceModelInfo);
+                }
             }
+
+            // 현재 동작중인 WorkSpaceName -> InnerProjectName 확인
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeProjectName != null)
+                    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                        if (processWorkSpasceName.Equals(WorkSpaceData.m_activeProjectMainger.m_activeProjectName))
+                            if (processWorkSpaceInnerPorjectName.Equals(WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName))
+                                this.UpdateModelView(); // 프로젝트 모델 정보 업데이트
 
             if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
                 // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
@@ -2737,7 +2837,7 @@ namespace ProjectAI.TrainForms
         {
         }
 
-        private void metroButton3_Click(object sender, EventArgs e)
+        private void MetroButton3Click(object sender, EventArgs e)
         {
         }
 
@@ -2789,6 +2889,11 @@ namespace ProjectAI.TrainForms
             }
         }
 
+        /// <summary>
+        /// 작업 진행중인 모델 선택시 리뷰
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DgvMWaitingforWorkCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // 작업 진행중인 모델 선택시 리뷰
@@ -2804,6 +2909,11 @@ namespace ProjectAI.TrainForms
             this.DataGridViewCellMouseDoubleClick(sender, e);
         }
 
+        /// <summary>
+        /// 작업 진행중인 모델 선택시 리뷰
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DgvMProcessingCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             /*
@@ -2816,6 +2926,95 @@ namespace ProjectAI.TrainForms
              */
 
             this.DataGridViewCellMouseDoubleClick(sender, e);
+        }
+
+        /// <summary>
+        /// Done 작업 진행중인 모델 선택시 리뷰
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DgvMDoneWorkCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.DataGridViewCellMouseDoubleClick(sender, e);
+
+            try
+            {
+                if (sender is MetroFramework.Controls.MetroGrid metroGrid)
+                {
+                    if (e.RowIndex != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
+                        if (metroGrid.Rows[e.RowIndex].Cells[0].Value != null)
+                        {
+                            // 1. 작업 접근 코드 가져오기
+                            string processAccesscode = metroGrid.Rows[e.RowIndex].Cells[4].Value.ToString();
+
+                            // 2. 작업 정보 가져오기
+                            string processPath = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processPath"].ToString();
+                            JObject localProcessInfo = jsonDataManiger.GetJsonObject(System.IO.Path.Combine(processPath, "TrainSystem.Json"));
+
+                            // 모델 차트 그리기
+                            this.chartDoneLoss.Series["Train & Validation"].Points.Clear();
+                            this.chartDoneLoss.Series["Test"].Points.Clear();
+                            this.chartDoneAccuracy.Series["Train & Validation"].Points.Clear();
+                            this.chartDoneAccuracy.Series["Test"].Points.Clear();
+
+                            this.chartDoneLoss.Series["selectModelDataTrain"].Points.Clear();
+                            this.chartDoneLoss.Series["selectModelDataTest"].Points.Clear();
+                            this.chartDoneAccuracy.Series["selectModelDataTrain"].Points.Clear();
+                            this.chartDoneAccuracy.Series["selectModelDataTest"].Points.Clear();
+
+                            foreach (string innerModelName in localProcessInfo["array_string_innerModelList"])
+                            {
+                                // 내부 모델 정보 읽어오기
+                                int locationX = Convert.ToInt32(localProcessInfo["InnerModelInfo"][innerModelName]["int_locationX"].ToString());
+
+                                double trainLoss = Convert.ToDouble(localProcessInfo["InnerModelInfo"][innerModelName]["double_TrainLoss"].ToString());
+                                double trainAcc = Convert.ToDouble(localProcessInfo["InnerModelInfo"][innerModelName]["double_TrainAcc"].ToString());
+                                int trainEscape = Convert.ToInt32(localProcessInfo["InnerModelInfo"][innerModelName]["int_TrainEscape"].ToString());
+                                int trainOverKill = Convert.ToInt32(localProcessInfo["InnerModelInfo"][innerModelName]["int_TrainOverKill"].ToString());
+
+                                double testLoss = Convert.ToDouble(localProcessInfo["InnerModelInfo"][innerModelName]["double_TestLoss"].ToString());
+                                double testAcc = Convert.ToDouble(localProcessInfo["InnerModelInfo"][innerModelName]["double_TestAcc"].ToString());
+                                int testEscape = Convert.ToInt32(localProcessInfo["InnerModelInfo"][innerModelName]["int_TestEscape"].ToString());
+                                int testOverKill = Convert.ToInt32(localProcessInfo["InnerModelInfo"][innerModelName]["int_TestOverKill"].ToString());
+
+                                this.chartDoneLoss.Series["selectModelDataTrain"].Points.AddXY(locationX, trainLoss);
+                                this.chartDoneLoss.Series["selectModelDataTest"].Points.AddXY(locationX, testLoss);
+
+                                this.chartDoneAccuracy.Series["selectModelDataTrain"].Points.AddXY(locationX, trainAcc);
+                                this.chartDoneAccuracy.Series["selectModelDataTest"].Points.AddXY(locationX, testAcc);
+                            }
+
+                            foreach (JProperty trainingProgressData in localProcessInfo["TrainingProgressData"])
+                            {
+                                int locationX = Convert.ToInt32(trainingProgressData.Name);
+
+                                double trainLoss = Convert.ToDouble(trainingProgressData.Value["double_TrainLoss"]);
+                                double trainAcc = Convert.ToDouble(trainingProgressData.Value["double_TrainAcc"]);
+                                int trainEscape = Convert.ToInt32(trainingProgressData.Value["int_TrainEscape"]);
+                                int trainOverKill = Convert.ToInt32(trainingProgressData.Value["int_TrainOverKill"]);
+
+                                double testLoss = Convert.ToDouble(trainingProgressData.Value["double_TestLoss"]);
+                                double testAcc = Convert.ToDouble(trainingProgressData.Value["double_TestAcc"]);
+                                int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
+                                int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
+
+                                this.chartDoneLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
+                                this.chartDoneLoss.Series["Test"].Points.AddXY(locationX, testLoss);
+
+                                this.chartDoneAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
+                                this.chartDoneAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
+                            } 
+                        }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+            }
+
         }
 
         /// <summary>

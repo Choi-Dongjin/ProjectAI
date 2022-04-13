@@ -63,6 +63,106 @@ namespace ProjectAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap appleBlurA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleBlurA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleBrightnessA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleBrightnessA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleCenterA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleCenterA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleContrastA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleContrastA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleHoriaontalA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleHoriaontalA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleRotation180A72 {
+            get {
+                object obj = ResourceManager.GetObject("appleRotation180A72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleRotation270A72 {
+            get {
+                object obj = ResourceManager.GetObject("appleRotation270A72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleRotation90A72 {
+            get {
+                object obj = ResourceManager.GetObject("appleRotation90A72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleSharpenA72 {
+            get {
+                object obj = ResourceManager.GetObject("appleSharpenA72", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap appleVertical72A {
+            get {
+                object obj = ResourceManager.GetObject("appleVertical72A", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap arrowLeft1 {
             get {
                 object obj = ResourceManager.GetObject("arrowLeft1", resourceCulture);
@@ -93,6 +193,16 @@ namespace ProjectAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap arrowLeft4 {
+            get {
+                object obj = ResourceManager.GetObject("arrowLeft4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap arrowRight1 {
             get {
                 object obj = ResourceManager.GetObject("arrowRight1", resourceCulture);
@@ -106,6 +216,16 @@ namespace ProjectAI.Properties {
         internal static System.Drawing.Bitmap arrowRight2 {
             get {
                 object obj = ResourceManager.GetObject("arrowRight2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowRight4 {
+            get {
+                object obj = ResourceManager.GetObject("arrowRight4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +376,26 @@ namespace ProjectAI.Properties {
         internal static System.Drawing.Bitmap imageBackground2 {
             get {
                 object obj = ResourceManager.GetObject("imageBackground2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap imageBackground2Black {
+            get {
+                object obj = ResourceManager.GetObject("imageBackground2Black", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap imageBackground2Brightness {
+            get {
+                object obj = ResourceManager.GetObject("imageBackground2Brightness", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -110,35 +110,42 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                     {
                         if (WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_array_classList"] != null)
                         {
-                            List<string> classNameList = new List<string>();
-                            foreach (string className in WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_array_classList"])
+                            try
                             {
-                                if (className != null && className != "")
+                                List<string> classNameList = new List<string>();
+                                foreach (string className in WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_array_classList"])
                                 {
-                                    classNameList.Add(className);
+                                    if (className != null && className != "")
+                                    {
+                                        classNameList.Add(className);
+                                    }
                                 }
+
+                                if (this.previousClassList.Count == classNameList.Count) // 이전 List Count가 같으면 업데이트 중단 -> 지금은 삭제, 추가시 업데이터가 동작하기 때문에 문제가 없음, 한번에 수정수 동작하는 경우가 발생하면 문제가 생길수 있음.
+                                    return;
+
+                                this.previousClassList = classNameList; // 이전 값에 현제값 적용
+
+                                classNameList.Reverse();
+                                this.panelMClassWeight.Controls.Clear(); // 판넬 컨트롤 초기화(비우기)
+                                this.classWeightControls = new Dictionary<string, ProjectAI.MainForms.UserContral.Classification.ClassWeightControl>();
+                                for (int i = classNameList.Count - 1; i >= 0; i--)
+                                {
+                                    Color classColor = ColorTranslator.FromHtml(WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][classNameList[i]]["string_classColor"].ToString());
+                                    ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = this.UISetclassWeightControl(i, classNameList[i], classColor); // 설정된 ClassWeightControl 가져오기
+
+                                    // 관리 Dictionary에 추가
+                                    this.classWeightControls.Add(classNameList[i], classWeightControl);
+                                    // panel에 추가
+                                    this.panelMClassWeight.Controls.Add(classWeightControl);
+                                }
+                                this.panelMClassWeight.AutoScroll = true;
+                                this.panelMClassWeight.MinimumSize = new Size(450, 120);
                             }
-
-                            if (this.previousClassList.Count == classNameList.Count) // 이전 List Count가 같으면 업데이트 중단 -> 지금은 삭제, 추가시 업데이터가 동작하기 때문에 문제가 없음, 한번에 수정수 동작하는 경우가 발생하면 문제가 생길수 있음.
-                                return;
-
-                            this.previousClassList = classNameList; // 이전 값에 현제값 적용
-
-                            classNameList.Reverse();
-                            this.panelMClassWeight.Controls.Clear(); // 판넬 컨트롤 초기화(비우기)
-                            this.classWeightControls = new Dictionary<string, ProjectAI.MainForms.UserContral.Classification.ClassWeightControl>();
-                            for (int i = classNameList.Count - 1; i >= 0; i--)
+                            catch (Exception error)
                             {
-                                Color classColor = ColorTranslator.FromHtml(WorkSpaceData.m_activeProjectMainger.m_activeProjectCalssInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][classNameList[i]]["string_classColor"].ToString());
-                                ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = this.UISetclassWeightControl(i, classNameList[i], classColor); // 설정된 ClassWeightControl 가져오기
-
-                                // 관리 Dictionary에 추가
-                                this.classWeightControls.Add(classNameList[i], classWeightControl);
-                                // panel에 추가
-                                this.panelMClassWeight.Controls.Add(classWeightControl);
+                                Console.WriteLine(error);
                             }
-                            this.panelMClassWeight.AutoScroll = true;
-                            this.panelMClassWeight.MinimumSize = new Size(450, 120);
                         }
                         else
                             this.panelMClassWeight.Controls.Clear();
@@ -1050,8 +1057,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         #endregion 시스템 설정 옵션
 
-
-
         /// <summary>
         /// 학습에 필요한 옵션 가져오기
         /// </summary>j
@@ -1072,6 +1077,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         #region ToolTip 설정
 
+        /// <summary>
+        /// 데이터 증강 물음표 toolTip 설정
+        /// </summary>
         private void SetToolTip()
         {
             MetroFramework.Components.MetroToolTip BlurmetroToolTip = new MetroFramework.Components.MetroToolTip();
@@ -1092,12 +1100,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             //Blur
             BlurmetroToolTip.Popup += BlurToolTipPopup;
             BlurmetroToolTip.Draw += BlurToolTipDraw;
-            BlurmetroToolTip.SetToolTip(this.panelMBlurToolTip, "Blur");
+            BlurmetroToolTip.SetToolTip(this.panelMBlurToolTip, " ");
 
             //Brightness
             BrightnessmetroToolTip.Popup += BrightnessToolTipPopup;
             BrightnessmetroToolTip.Draw += BrightnessToolTipDraw;
-            BrightnessmetroToolTip.SetToolTip(this.panelMBrightnessToolTip, "Brightness");
+            BrightnessmetroToolTip.SetToolTip(this.panelMBrightnessToolTip, " ");
 
             //Center
             CentermetroToolTip.Popup += CenterToolTipPopup;
@@ -1160,39 +1168,46 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             ZoommetroToolTip.SetToolTip(this.panelMZoomToolTip, "Zoom");
         }
 
-        //
-        private Image image = global::ProjectAI.Properties.Resources.image1;
+        private int MARGIN = 2;
 
-        private int MARGIN = 0;
+        /// <summary>
+        /// 툴팁 팝업 설정 함수
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="toolTipImage"></param>
+        /// <param name="margin"></param>
+        private void ToolTipPopup(object sender, PopupEventArgs e, Image toolTipImage, int margin)
+        {
+            int totalImageWidth = 2 * margin + toolTipImage.Width;
+            int totalImageHeight = 2 * margin + toolTipImage.Height;
+            e.ToolTipSize = new Size(totalImageWidth, totalImageHeight);
+        }
+        /// <summary>
+        /// 툴팁 이미지 그리기 함수
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="toolTipImage"></param>
+        /// <param name="margin"></param>
+        private void ToolTipDraw(object sender, DrawToolTipEventArgs e, Image toolTipImage, int margin)
+        {
+            e.DrawBackground();
+            e.DrawBorder();
+            e.Graphics.DrawImage(toolTipImage, margin, margin);
+            e.Graphics.DrawString(e.ToolTipText, SystemFonts.DefaultFont, Brushes.White, 0, 0);
+        }
 
         #region Blur
 
         private void BlurToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth;
-            int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleBlurA72, MARGIN);
         }
 
         private void BlurToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleBlurA72, MARGIN);
         }
 
         #endregion Blur
@@ -1201,30 +1216,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void BrightnessToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth;
-            int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleBrightnessA72, MARGIN);
         }
 
         private void BrightnessToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleBrightnessA72, MARGIN);
         }
 
         #endregion Brightness
@@ -1233,29 +1230,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void CenterToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleCenterA72, MARGIN);
         }
 
         private void CenterToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleCenterA72, MARGIN);
         }
 
         #endregion Center
@@ -1264,29 +1244,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void ContrastToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         private void ContrastToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         #endregion Contrast
@@ -1295,29 +1258,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void GaussianNoiseToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         private void GaussianNoiseToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         #endregion GaussianNoise
@@ -1326,29 +1272,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void GradationToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         private void GradationToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         #endregion Gradation
@@ -1357,29 +1286,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void GradationRGBToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         private void GradationRGBToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleContrastA72, MARGIN);
         }
 
         #endregion GradationRGB
@@ -1388,29 +1300,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void HorizontalFlipToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleHoriaontalA72, MARGIN);
         }
 
         private void HorizontalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleHoriaontalA72, MARGIN);
         }
 
         #endregion HorizontalFlip
@@ -1419,29 +1314,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void Rotation90ToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleRotation90A72, MARGIN);
         }
 
         private void Rotation90ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleRotation90A72, MARGIN);
         }
 
         #endregion Rotation90
@@ -1450,29 +1328,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void Rotation180ToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleRotation180A72, MARGIN);
         }
 
         private void Rotation180ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleRotation180A72, MARGIN);
         }
 
         #endregion Rotation180
@@ -1481,29 +1342,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void Rotation270ToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleRotation270A72, MARGIN);
         }
 
         private void Rotation270ToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleRotation270A72, MARGIN);
         }
 
         #endregion Rotation270
@@ -1512,29 +1356,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void SharpenToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleSharpenA72, MARGIN);
         }
 
         private void SharpenToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleSharpenA72, MARGIN);
         }
 
         #endregion Sharpen
@@ -1543,29 +1370,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void VerticalFlipToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleVertical72A, MARGIN);
         }
 
         private void VerticalFlipToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleVertical72A, MARGIN);
         }
 
         #endregion VerticalFlip
@@ -1574,29 +1384,12 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void ZoomToolTipPopup(object sender, PopupEventArgs e)
         {
-            int imageWidth = 2 * MARGIN + image.Width;
-            int imageHeight = 2 * MARGIN + image.Height;
-            int toolTipWidth = e.ToolTipSize.Width + 2 * MARGIN + imageWidth; int toolTipHeight = e.ToolTipSize.Height;
-            if (toolTipHeight < imageHeight)
-            {
-                toolTipHeight = imageHeight;
-            }
-            e.ToolTipSize = new Size(toolTipWidth, toolTipHeight);
+            this.ToolTipPopup(sender, e, global::ProjectAI.Properties.Resources.appleCenterA72, MARGIN);
         }
 
         private void ZoomToolTipDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.DrawBackground(); e.DrawBorder();
-            e.Graphics.DrawImage(image, MARGIN, MARGIN);
-
-            using (StringFormat stringFormat = new StringFormat())
-            {
-                stringFormat.Alignment = StringAlignment.Near;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                int imageWidth = 2 * MARGIN + image.Width;
-                Rectangle rectangle = new Rectangle(imageWidth, 0, e.Bounds.Width - imageWidth, e.Bounds.Height);
-                e.Graphics.DrawString(e.ToolTipText, e.Font, Brushes.Green, rectangle, stringFormat);
-            }
+            this.ToolTipDraw(sender, e, global::ProjectAI.Properties.Resources.appleCenterA72, MARGIN);
         }
 
         #endregion Zoom
@@ -1604,8 +1397,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         #endregion ToolTip 설정
 
         #region 세부 옵션 설정
-
-        
 
         private void TilMBlurClick(object sender, EventArgs e)
         {
@@ -1624,13 +1415,19 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private void TilMContrastClick(object sender, EventArgs e)
         {
-            this.DataAugmentationGetValue("Contrast", this.txtContrastMin, this.txtContrastMax);  
+            this.DataAugmentationGetValue("Contrast", this.txtContrastMin, this.txtContrastMax);
         }
 
         private void TilMGaussianNoiseClick(object sender, EventArgs e)
         {
             this.DataAugmentationGetValue("GaussianNoise", this.txtGaussianNoise);
         }
+
+        private void TilMSharpenClick(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("Sharpen", this.txtSharpen);
+        }
+
         private string ImagePath = @"E:\Z2b_이미지\1.webp";
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
@@ -1840,5 +1637,311 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
 
         #endregion checkBox 변경 함수
+
+        #region Train Option 설정 
+        /// <summary>
+        /// 버튼 더하기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnEpochNumberPClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtEpochNumber.Text, out int epochNumber))
+            {
+                epochNumber++;
+                if (epochNumber <= 999)
+                    this.txtEpochNumber.Text = epochNumber.ToString();
+            }
+            else
+            {
+                this.txtEpochNumber.Text = "100";
+            }
+        }
+        /// <summary>
+        /// 버튼 빼기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnEpochNumberSClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtEpochNumber.Text, out int epochNumber))
+            {
+                epochNumber--;
+                if (epochNumber >= 0)
+                    this.txtEpochNumber.Text = epochNumber.ToString();
+                else
+                    this.txtEpochNumber.Text = "0";
+            }
+            else
+            {
+                this.txtEpochNumber.Text = "100";
+            }
+        }
+        /// <summary>
+        /// TextBox 값 확인
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtEpochNumberTextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtEpochNumber.Text, out int epochNumber))
+            {
+                if (epochNumber < 0)
+                    this.txtEpochNumber.Text = "0";
+                else if (epochNumber > 999)
+                    this.txtEpochNumber.Text = "999";
+            }
+            else
+            {
+                this.txtEpochNumber.Text = "100";
+            }
+        }
+        /// <summary>
+        /// 버튼 더하기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnMmodelMinimumSelectionEpochPClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtMmodelMinimumSelectionEpoch.Text, out int value))
+            {
+                value++;
+                if (value < 999)
+                    this.txtMmodelMinimumSelectionEpoch.Text = value.ToString();
+            }
+            else
+            {
+                this.txtMmodelMinimumSelectionEpoch.Text = "5";
+            }
+        }
+        /// <summary>
+        /// 버튼 뺴기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnMmodelMinimumSelectionEpochSClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtMmodelMinimumSelectionEpoch.Text, out int value))
+            {
+                value--;
+                if (value >= 0)
+                    this.txtMmodelMinimumSelectionEpoch.Text = value.ToString();
+            }
+            else
+            {
+                this.txtMmodelMinimumSelectionEpoch.Text = "5";
+            }
+        }
+        /// <summary>
+        /// TextBox 값 확인
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtMmodelMinimumSelectionEpochTextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtMmodelMinimumSelectionEpoch.Text, out int value))
+            {
+                if (value < 0)
+                    this.txtMmodelMinimumSelectionEpoch.Text = "0";
+                else if (value > 999)
+                    this.txtMmodelMinimumSelectionEpoch.Text = "999";
+            }
+            else
+            {
+                this.txtMmodelMinimumSelectionEpoch.Text = "5";
+            }
+        }
+        /// <summary>
+        /// 버튼 더하기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnPatienceEpochsPClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtPatienceEpochs.Text, out int value))
+            {
+                value++;
+                if (value <= 999)
+                    this.txtPatienceEpochs.Text = value.ToString();
+            }
+            else
+            {
+                this.txtPatienceEpochs.Text = "5";
+            }
+        }
+        /// <summary>
+        /// 버튼 빼기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnPatienceEpochsSClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtPatienceEpochs.Text, out int value))
+            {
+                value--;
+                if (value >= 0)
+                    this.txtPatienceEpochs.Text = value.ToString();
+            }
+            else
+            {
+                this.txtPatienceEpochs.Text = "5";
+            }
+        }
+        /// <summary>
+        /// TextBox 값 확인
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtPatienceEpochsTextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtPatienceEpochs.Text, out int value))
+            {
+                if (value < 0)
+                    this.txtPatienceEpochs.Text = "0";
+                else if (value > 999)
+                    this.txtPatienceEpochs.Text = "999";
+            }
+            else
+            {
+                this.txtPatienceEpochs.Text = "5";
+            }
+        }
+        /// <summary>
+        /// 버튼 더하기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnTrainRepeatPClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtTrainRepeat.Text, out int value))
+            {
+                value++;
+                if (value <= 999)
+                    this.txtTrainRepeat.Text = value.ToString();
+            }
+            else
+            {
+                this.txtTrainRepeat.Text = "3";
+            }
+        }
+        /// <summary>
+        /// 버튼 빼기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnTrainRepeatSClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtTrainRepeat.Text, out int value))
+            {
+                value--;
+                if (value >= 0)
+                    this.txtTrainRepeat.Text = value.ToString();
+            }
+            else
+            {
+                this.txtTrainRepeat.Text = "3";
+            }
+        }
+        /// <summary>
+        /// TextBox 값 확인
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtTrainRepeatTextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtTrainRepeat.Text, out int value))
+            {
+                if (value < 0)
+                    this.txtTrainRepeat.Text = "0";
+                else if (value > 999)
+                    this.txtTrainRepeat.Text = "999";
+            }
+            else
+            {
+                this.txtTrainRepeat.Text = "3";
+            }
+        }
+        /// <summary>
+        /// 더하기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnValidationRatioPClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtValidationRatio.Text, out int value))
+            {
+                value++;
+                if (value <= 100)
+                {
+                    this.txtValidationRatio.Text = value.ToString();
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                this.txtValidationRatio.Text = "3";
+            }
+        }
+        /// <summary>
+        /// 빼기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnValidationRatioSClick(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtValidationRatio.Text, out int value))
+            {
+                value--;
+                if (value >= 0)
+                    this.txtValidationRatio.Text = value.ToString();
+            }
+            else
+            {
+                this.txtValidationRatio.Text = "3";
+            }
+        }
+        /// <summary>
+        ///  TextBox 값 확인
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtValidationRatioTextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(this.txtValidationRatio.Text, out int value))
+            {
+                if (value < 0)
+                {
+                    this.txtValidationRatio.Text = "0";
+                }
+                else if (value > 100)
+                {
+                    this.txtValidationRatio.Text = "100";
+                }
+            }
+            else
+            {
+                this.txtValidationRatio.Text = "3";
+            }
+        }
+
+        #endregion
+
+        private void TxtBlurTextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtBrightnessMinTextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtBrightnessMaxTextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

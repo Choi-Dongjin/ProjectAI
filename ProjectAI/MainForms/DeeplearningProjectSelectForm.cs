@@ -312,8 +312,10 @@ namespace ProjectAI.MainForms
                     int_imageValidationNumber = 0,
                     bool_traininggorNot = false
                 };
-                JObject jObject2 = new JObject();
-                jObject2[mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo);
+                JObject jObject2 = new JObject
+                {
+                    [mkInnerProjectName] = JObject.FromObject(newInnerProjectInfo)
+                };
                 JObject arraystringprojectList = (JObject)WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"];
                 arraystringprojectList.Merge(jObject2);
 

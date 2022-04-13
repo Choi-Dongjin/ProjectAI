@@ -19,9 +19,6 @@ namespace ProjectAI.MainForms
 {
     public partial class MakeWorkSpaceForm : MetroForm
     {
-        private static DateTime start;
-        private static TimeSpan time;
-
         public MakeWorkSpaceForm()
         {
             InitializeComponent();

@@ -128,9 +128,5 @@ namespace ProjectAI.MainForms
         }
 
         #endregion WorkSpace 속성 추가
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
     }
 }

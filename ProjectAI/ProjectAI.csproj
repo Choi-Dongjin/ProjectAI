@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -392,7 +392,6 @@
     <None Include="Resources\logoW X2.png" />
     <None Include="Resources\imageBackground.bmp" />
     <None Include="Resources\imageBackground.png" />
-    <None Include="Resources\imageBackground2.png" />
     <None Include="Resources\classification .png" />
     <None Include="Resources\objectdetection.png" />
     <None Include="Resources\segmentation.png" />
@@ -423,6 +422,25 @@
     <None Include="Resources\db6880e751fe53ee4f0365a800a12b2862f8c547.gif" />
     <None Include="Resources\question1.png" />
     <None Include="Resources\image1.png" />
+    <None Include="Resources\appleBlur72A.png" />
+    <None Include="Resources\appleBrightness72A.png" />
+    <None Include="Resources\appleCenter72A.png" />
+    <None Include="Resources\appleContrast72A.png" />
+    <None Include="Resources\appleBlurA72.png" />
+    <None Include="Resources\appleBrightnessA72.png" />
+    <None Include="Resources\appleCenterA72.png" />
+    <None Include="Resources\appleContrastA72.png" />
+    <None Include="Resources\appleHoriaontalA72.png" />
+    <None Include="Resources\appleRotation90A72.png" />
+    <None Include="Resources\appleRotation180A72.png" />
+    <None Include="Resources\appleRotation270A72.png" />
+    <None Include="Resources\appleSharpenA72.png" />
+    <None Include="Resources\appleVertical72A.png" />
+    <None Include="Resources\arrowLeft4.png" />
+    <None Include="Resources\arrowRight4.png" />
+    <None Include="Resources\imageBackground2.png" />
+    <None Include="Resources\imageBackground2Black.png" />
+    <None Include="Resources\imageBackground2Brightness.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

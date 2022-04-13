@@ -69,6 +69,8 @@ namespace ProjectAI
         private void StartFormShown(object sender, EventArgs e)
         {
             HardwareInformation.GetHardwareInformation();
+            Console.WriteLine(HardwareInformation.systemHardwareInfoJObject.ToString());
+            OpenFileDialog openFileDialog = new OpenFileDialog();
         }
 
         /// <summary>
@@ -344,7 +346,7 @@ namespace ProjectAI
             }
         }
 
-        private void tableLayoutMainIcons_Paint(object sender, PaintEventArgs e)
+        private void TableLayoutMainIconsPaint(object sender, PaintEventArgs e)
         {
         }
     }

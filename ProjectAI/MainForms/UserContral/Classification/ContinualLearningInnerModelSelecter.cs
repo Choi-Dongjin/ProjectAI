@@ -66,8 +66,25 @@ namespace ProjectAI.MainForms.UserContral.Classification
         /// <param styleManager="MetroStyleManager"></param>
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
         {
-            this.StyleManager.Style = styleManager.Style;
-            this.StyleManager.Theme = styleManager.Theme;
+            FormsManiger formsManiger = FormsManiger.GetInstance();
+            if (formsManiger.m_isDarkMode) // Light로 변경시 진입
+            {
+                this.StyleManager.Style = styleManager.Style;
+                this.StyleManager.Theme = styleManager.Theme;
+
+                // 차트 스타일 변경
+                FormsManiger.ChartWhiteMode(this.chartLoss);
+                FormsManiger.ChartWhiteMode(this.chartAccuracy);
+            }
+            else // Dark로 변경시 진입
+            {
+                this.StyleManager.Style = styleManager.Style;
+                this.StyleManager.Theme = styleManager.Theme;
+
+                // 차트 스타일 변경
+                FormsManiger.ChartDarkMode(this.chartLoss);
+                FormsManiger.ChartDarkMode(this.chartAccuracy);
+            }
         }
 
         /// <summary>

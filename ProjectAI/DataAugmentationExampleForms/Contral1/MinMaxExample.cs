@@ -3,6 +3,7 @@ using OpenCvSharp;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace ProjectAI.DataAugmentationExampleForms.Contral1
 {
@@ -62,12 +63,17 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 this.UISetUpContrast();
                 this.activeConverter += this.ConvertContrast;
             }
-            else if (exCase.Equals("GaussianNoise"))
+            else if (exCase.Equals("gaussiannoise"))
             {
                 this.UISetUpGaussianNoise();
                 this.activeConverter += this.ConvertGaussianNoise;
             }
-            // 이벤트 설정
+            else if (exCase.Equals("sharpen"))
+            {
+                this.UISetUpSharpen();
+                this.activeConverter += this.ConvertSharpen;
+            }
+            // 이벤트 설정 
 
             this.TrackBarEventSetup();
         }
@@ -92,16 +98,36 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         private void ActiveConverterSetup()
         {
         }
-
+        /// <summary>
+        /// 이미지 읽어오기 => 이미지 사이즈 조정
+        /// </summary>
+        /// <param name="imageDataPath"></param>
         private void ImageRead(string imageDataPath)
         {
-            this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath);
-            //Console.WriteLine(this.orignalImage.Size());
-            double resizeR = (double)512 / Math.Sqrt((double)(this.orignalImage.Width * this.orignalImage.Height)); // 262144 -> (512 * 512)
-            OpenCvSharp.Cv2.Resize(this.orignalImage, this.orignalImage, new OpenCvSharp.Size(0, 0), resizeR, resizeR);
+            //try
+            //{
+            //    Bitmap bitmap = CustomIOMainger.LoadBitmap(imageDataPath);
+            //    this.orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex);
+            //    this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+            //}
+
+            this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+
+            //double resizeR = (double)1024 / Math.Sqrt((double)(this.orignalImage.Width * this.orignalImage.Height)); // 262144 -> (512 * 512)
+            //if (resizeR <= 1)
+            //    OpenCvSharp.Cv2.Resize(this.orignalImage, this.orignalImage, new OpenCvSharp.Size(0, 0), resizeR, resizeR);
+
+            //Cv2.ImShow("Image",this.orignalImage);
             //Console.WriteLine(this.orignalImage.Size());
         }
 
+        /// <summary>
+        /// 이미지 적용 => 초기 이미지
+        /// </summary>
         public void ActiveExample()
         {
             Bitmap bitmap1 = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(this.orignalImage);
@@ -109,6 +135,11 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.pictureBox2.Image = bitmap1;
         }
 
+        /// <summary>
+        /// 최솟 값 스크롤 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TrbMminimunScroll(object sender, ScrollEventArgs e)
         {
             this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
@@ -141,6 +172,11 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             }
         }
 
+        /// <summary>
+        ///  최댓 값 스크롤 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TrbMmaximumScroll(object sender, ScrollEventArgs e)
         {
             this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
@@ -167,26 +203,41 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             }
         }
 
+        /// <summary>
+        /// 리뷰 이미지 스크롤 값 변경 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TrbMappliedValueChanged(object sender, EventArgs e)
         {
-            if (sender is MetroFramework.Controls.MetroTrackBar metroTrackBar)
+            try
             {
-                if (metroTrackBar.Value == 0)
+                if (sender is MetroFramework.Controls.MetroTrackBar metroTrackBar)
                 {
-                    this.lblMapplied.Text = (metroTrackBar.Value * this.outputRate).ToString();
-                    this.pictureBox2.Image = this.pictureBox1.Image;
+                    if (metroTrackBar.Value == 0)
+                    {
+                        this.lblMapplied.Text = (metroTrackBar.Value * this.outputRate).ToString();
+                        this.pictureBox2.Image = this.pictureBox1.Image;
+                    }
+                    else
+                    {
+                        this.lblMapplied.Text = (metroTrackBar.Value * this.outputRate).ToString();
+                        this.convertImage = activeConverter?.Invoke(this.orignalImage, (metroTrackBar.Value).ToString());
+                        Bitmap bitmap2 = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(this.convertImage);
+                        this.pictureBox2.Image = bitmap2;
+                    }
                 }
-                else
-                {
-                    this.lblMapplied.Text = (metroTrackBar.Value * this.outputRate).ToString();
-                    this.convertImage = activeConverter?.Invoke(this.orignalImage, (metroTrackBar.Value).ToString());
-                    Bitmap bitmap2 = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(this.convertImage);
-                    this.pictureBox2.Image = bitmap2;
-                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                GC.Collect();
             }
         }
 
         #region Converter 설정
+
+        #region Blur 설정
 
         /// <summary>
         /// Blur 설정에서 UI 설정
@@ -241,6 +292,10 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
+        #endregion
+
+        #region Brightness
+
         /// <summary>
         /// Brightness 설정에서 UI 설정
         /// </summary>
@@ -287,27 +342,35 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// <returns></returns>
         public Mat ConvertBrightness(Mat orignalImage, string valueString)
         {
-            Mat converImage = new Mat();
             if (double.TryParse(valueString, out double value))
             {
                 if (value > 0)
                 {
-                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(value, value, value));
-                    Console.WriteLine(value);
-                    Console.WriteLine(val.At<Vec3d>(256, 256)[0]);
-                    Console.WriteLine(val.At<Vec3d>(256, 256)[1]);
-                    Console.WriteLine(val.At<Vec3d>(256, 256)[2]);
-                    Cv2.Add(orignalImage, val, converImage);
+                    Scalar a = new Scalar(value, value, value);
+                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, a);
+                    //Console.WriteLine(value);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[0]);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[1]);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[2]);
+                    Cv2.Add(orignalImage, val, convertImage);
+                    val.Dispose();
                 }
                 else
                 {
                     value = value * -1;
-                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(value, value, value));
-                    Cv2.Subtract(orignalImage, val, converImage);
+                    Scalar a = new Scalar(value, value, value);
+
+                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, a);
+                    Cv2.Subtract(orignalImage, val, convertImage);
+                    val.Dispose();
                 }
             }
-            return converImage;
+            return convertImage;
         }
+
+        #endregion
+
+        #region Center
 
         /// <summary>
         /// Center 설정에서 UI 설정
@@ -368,8 +431,12 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
+        #endregion
+
+        #region Contrast
+
         /// <summary>
-        /// Center 설정에서 UI 설정
+        /// Contrast 설정에서 UI 설정
         /// </summary>
         public void UISetUpContrast()
         {
@@ -414,76 +481,70 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             Mat converImage = new Mat();
             if (double.TryParse(valueString, out double value))
             {
-                int divideValue = (int)(1 / this.outputRate);
-                Mat val1 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(divideValue, divideValue, divideValue));
-                Mat val2 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(value, value, value));
-
-                Cv2.Divide(orignalImage, val1, converImage);
-                Cv2.Multiply(converImage, val2, converImage);
-
-                //Console.WriteLine(value);
-                //Console.WriteLine(1 / this.outputRate);
-
-                //Mat val1 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(10, 10, 10));
+                //int divideValue = (int)(1 / this.outputRate);
+                //Mat val1 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(divideValue, divideValue, divideValue));
                 //Mat val2 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(value, value, value));
-                //Mat val3 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(12, 12, 12));
 
-                //// Y = (10 + v) * (0.1 * a) - (13 * v)
+                //Cv2.Divide(orignalImage, val1, converImage);
+                //Cv2.Multiply(converImage, val2, converImage);
 
-                //Mat alpa = new Mat();
-                //Mat alpa1 = new Mat();
-                //Mat alpa2 = new Mat();
-                //Mat beta = new Mat();
+                Console.WriteLine(value);
 
-                //Cv2.Multiply(val3, val2, beta); // 13 * v
+                //double brightness = value - 50;
+                double brightness = value / 10;
+                double contrast = value - 10;
 
-                //Cv2.Add(val1, val2, alpa1); // (10 + v)
-                //Cv2.Divide(orignalImage, val1, alpa2); // (0.1 * a)
-                //Cv2.Multiply(alpa1, alpa2, alpa); // (0.1 * a)
-
-                //Cv2.Subtract(alpa, beta, converImage); // (10 + v) * 0.1 * a - (13 * v)
-
-                //Cv2.Subtract(orignalImage, converImage, converImage); // (10 + v) * 0.1 * a - (13 * v)
-
-                //Console.WriteLine(alpa1.At<Vec3b>(200, 200));
-                //Console.WriteLine(alpa2.At<Vec3b>(200, 200));
-                //Console.WriteLine(alpa.At<Vec3b>(200, 200));
-
-                //Console.WriteLine(beta.At<Vec3b>(200, 200));
-                //Console.WriteLine(converImage.At<Vec3b>(200, 200));
+                double alpha, beta;
+                if (contrast > 1)
+                {
+                    double delta = 127f * contrast / 100f;
+                    alpha = 255f / (255f - delta * 2);
+                    beta = alpha * (brightness - delta);
+                }
+                else
+                {
+                    double delta = -128f * contrast / 100f;
+                    alpha = (256f - delta * 2) / 255f;
+                    beta = alpha * brightness + delta;
+                }
+                orignalImage.ConvertTo(converImage, MatType.CV_8UC3, alpha, beta);
             }
             return converImage;
         }
 
+        #endregion
+
+        #region GaussianNoise
+
         /// <summary>
-        /// Center 설정에서 UI 설정
+        /// GaussianNoise 설정에서 UI 설정
         /// </summary>
         public void UISetUpGaussianNoise()
         {
-            this.outputRate = 0.1;
+            this.outputRate = 1;
 
             this.trbMminimum.Enabled = true;
             this.trbMminimum.Minimum = 0;
-            this.trbMminimum.Maximum = 10;
-            this.trbMminimum.Value = 100;
+            this.trbMminimum.Maximum = 100;
+            this.trbMminimum.Value = 0;
             this.trbMminimum.SmallChange = 1;
             this.trbMminimum.LargeChange = 5;
-            this.trbMminimum.MouseWheelBarPartitions = 1;
+            this.trbMminimum.MouseWheelBarPartitions = 100;
             this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
 
             this.trbMmaximum.Enabled = true;
             this.trbMmaximum.Minimum = 0;
             this.trbMmaximum.Maximum = 100;
-            this.trbMmaximum.Value = 10;
+            this.trbMmaximum.Value = 0;
             this.trbMmaximum.SmallChange = 1;
             this.trbMmaximum.LargeChange = 5;
             this.trbMmaximum.MouseWheelBarPartitions = 100;
             this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
 
-            this.trbMapplied.Minimum = 99;
+            this.trbMapplied.Minimum = 0;
             this.trbMapplied.Maximum = 100;
 
-            this.trbMapplied.Value = 10;
+            this.trbMapplied.Value = 0;
             this.trbMapplied.SmallChange = 1;
             this.trbMapplied.LargeChange = 5;
             this.trbMapplied.MouseWheelBarPartitions = 100;
@@ -491,27 +552,121 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         }
 
         /// <summary>
-        /// Center 설정
+        /// GaussianNoise 설정
         /// </summary>
         /// <param name="orignalImage"></param>
         /// <param name="valueString"></param>
         /// <returns></returns>
         public Mat ConvertGaussianNoise(Mat orignalImage, string valueString)
         {
-            Mat converImage = new Mat();
+            Mat converImage = new Mat(orignalImage.Size(), MatType.CV_8UC3);
             if (double.TryParse(valueString, out double value))
             {
-                Console.WriteLine(value);
-
-                Mat val1 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(100, 100, 100));
-                Mat val2 = new Mat(orignalImage.Size(), MatType.CV_8UC3, new Scalar(value, value, value));
-
-                Cv2.Divide(orignalImage, val1, converImage);
-                Cv2.Multiply(orignalImage, val2, converImage);
-                //Cv2.Multiply(orignalImage, val1, converImage);
+                double mean = 0;
+                double stddev = value;
+                Cv2.Randn(converImage, Scalar.All(mean), Scalar.All(stddev));
+                Cv2.AddWeighted(orignalImage, 1, converImage, 1, 0, converImage);
             }
             return converImage;
         }
+
+        #endregion
+
+        #region GaussianNoise
+
+        /// <summary>
+        /// GaussianNoise 설정에서 UI 설정
+        /// </summary>
+        public void UISetUpSharpen()
+        {
+            this.outputRate = 1;
+
+            this.trbMminimum.Enabled = false;
+            this.trbMminimum.Minimum = -1;
+            this.trbMminimum.Maximum = 0;
+            this.trbMminimum.Value = -1;
+            this.trbMminimum.SmallChange = 1;
+            this.trbMminimum.LargeChange = 5;
+            this.trbMminimum.MouseWheelBarPartitions = 1;
+            this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
+
+            this.trbMmaximum.Enabled = true;
+            this.trbMmaximum.Minimum = 1;
+            this.trbMmaximum.Maximum = 10;
+            this.trbMmaximum.Value = 1;
+            this.trbMmaximum.SmallChange = 1;
+            this.trbMmaximum.LargeChange = 5;
+            this.trbMmaximum.MouseWheelBarPartitions = 10;
+            this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
+
+            this.trbMapplied.Minimum = 0;
+            this.trbMapplied.Maximum = 1;
+
+            this.trbMapplied.Value = 1;
+            this.trbMapplied.SmallChange = 1;
+            this.trbMapplied.LargeChange = 5;
+            this.trbMapplied.MouseWheelBarPartitions = 10;
+            this.lblMapplied.Text = (this.trbMapplied.Value * this.outputRate).ToString();
+        }
+
+        /// <summary>
+        /// GaussianNoise 설정
+        /// </summary>
+        /// <param name="orignalImage"></param>
+        /// <param name="valueString"></param>
+        /// <returns></returns>
+        public Mat ConvertSharpen(Mat orignalImage, string valueString)
+        {
+            //Mat converImage = new Mat(orignalImage.Size(), MatType.CV_8UC3);
+            Mat converImage = new Mat();
+            if (double.TryParse(valueString, out double value))
+            {
+                /*
+                 *   0, -1, 0
+                 *  -1, 5, -1
+                 *   0, -1, 0
+                 */
+                //float fValue = (float)(value * this.outputRate);
+                //float bValue = (float)(-1);
+                //float[] data = new float[] { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
+                //Mat kernel = new Mat(3, 3, MatType.CV_32F, data);
+                //Cv2.Filter2D(orignalImage, converImage, orignalImage.Type(), kernel, new OpenCvSharp.Point(0, 0));
+
+                int iValue = (2 * (int)value + 1);
+
+                float fValue = (float)(value * this.outputRate);
+                //float bValue = (float)(-1);
+
+                List<float> kernelList = new List<float>();
+
+                for (int i = 0; i < iValue; i++)
+                {
+                    for (int ii = 0; ii < iValue; ii++)
+                    {
+                        kernelList.Add(-1);
+                    }
+                }
+                int listIndex = (iValue * (int)value + (int)value);
+
+                kernelList[listIndex] = kernelList.Count;
+
+                float[] kernelArray = kernelList.ToArray();
+
+                Console.WriteLine($"listIndex: {listIndex}");
+                Console.WriteLine($"iValue: {iValue}");
+                Console.WriteLine($"kernelList: {kernelArray}");
+                Console.WriteLine($"kernelList GetType: {kernelArray.GetType()}");
+
+                foreach (float a in kernelArray)
+                    Console.WriteLine(a);
+
+                Mat kernel = new Mat(iValue, iValue, MatType.CV_32F, kernelArray);
+                Cv2.Filter2D(orignalImage, converImage, orignalImage.Type(), kernel, new OpenCvSharp.Point(0, 0));
+            }
+            return converImage;
+        }
+
+        #endregion
 
         #endregion Converter 설정
 
