@@ -441,6 +441,7 @@
     <None Include="Resources\imageBackground2.png" />
     <None Include="Resources\imageBackground2Black.png" />
     <None Include="Resources\imageBackground2Brightness.png" />
+    <None Include="Resources\gradient.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

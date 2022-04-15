@@ -1428,7 +1428,16 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.DataAugmentationGetValue("Sharpen", this.txtSharpen);
         }
 
-        private string ImagePath = @"E:\Z2b_이미지\1.webp";
+        private void tilMGradation_Click(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("Gradation", this.txtGradation);
+        }
+        private void tilMZoom_Click(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("Zoom", this.txtZoomMax);
+        }
+
+        private string ImagePath = @"C:\test.jpg";
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
             using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))

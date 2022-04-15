@@ -67,7 +67,11 @@
             this.lblImageListpageMid = new System.Windows.Forms.Label();
             this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -122,10 +126,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -592,6 +592,39 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(225, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(75, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(150, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(75, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -601,6 +634,17 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(300, 590);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(75, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -1163,50 +1207,6 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
-            // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(225, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(75, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(150, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(75, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(75, 75);
-            this.iclTotal.TabIndex = 11;
             // 
             // MainForm
             // 

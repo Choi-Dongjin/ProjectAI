@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 
 namespace ProjectAI.DataAugmentationExampleForms.Contral1
 {
@@ -23,7 +24,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         public MinMaxExample()
         {
             InitializeComponent();
-            this.imageDataPath = @"E:\Z2b_이미지\1.webp";
+            this.imageDataPath = @"C:\test.jpg";
             this.ImageRead(imageDataPath);
 
             // 이벤트 설정
@@ -72,6 +73,21 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             {
                 this.UISetUpSharpen();
                 this.activeConverter += this.ConvertSharpen;
+            }
+            else if (exCase.Equals("gradation"))
+            {
+                this.UISetUpGradation();
+                this.activeConverter += this.ConvertGradation;
+            }
+            else if (exCase.Equals("gradationRGB"))
+            {
+                this.UISetUpGradationRGB();
+                this.activeConverter += this.ConvertGradationRGB;
+            }
+            else if (exCase.Equals("zoom"))
+            {
+                this.UISetUpZoom();
+                this.activeConverter += this.ConvertZoom;
             }
             // 이벤트 설정 
 
@@ -559,20 +575,20 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// <returns></returns>
         public Mat ConvertGaussianNoise(Mat orignalImage, string valueString)
         {
-            Mat converImage = new Mat(orignalImage.Size(), MatType.CV_8UC3);
+            Mat convertImage = new Mat(orignalImage.Size(), MatType.CV_8UC3);
             if (double.TryParse(valueString, out double value))
             {
                 double mean = 0;
                 double stddev = value;
-                Cv2.Randn(converImage, Scalar.All(mean), Scalar.All(stddev));
-                Cv2.AddWeighted(orignalImage, 1, converImage, 1, 0, converImage);
+                Cv2.Randn(convertImage, Scalar.All(mean), Scalar.All(stddev));
+                Cv2.AddWeighted(orignalImage, 1, convertImage, 1, 0, convertImage);
             }
-            return converImage;
+            return convertImage;
         }
 
         #endregion
 
-        #region GaussianNoise
+        #region Sharpen
 
         /// <summary>
         /// GaussianNoise 설정에서 UI 설정
@@ -668,6 +684,211 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
 
         #endregion
 
+        #region Gradation
+
+        /// <summary>
+        /// Gradation 설정에서 UI 설정
+        /// </summary>
+        public void UISetUpGradation()
+        {
+            this.outputRate = 0.01;
+            this.trbMminimum.Enabled = true;
+            this.trbMminimum.Minimum = 0;
+            this.trbMminimum.Maximum = 1;
+            this.trbMminimum.Value = 0;
+            this.trbMminimum.SmallChange = 1;
+            this.trbMminimum.LargeChange = 5;
+            this.trbMminimum.MouseWheelBarPartitions = 100;
+            this.lblMminimum.Text = this.trbMminimum.Value.ToString();
+
+            this.trbMmaximum.Enabled = true;
+            this.trbMmaximum.Minimum = 0;
+            this.trbMmaximum.Maximum = 100;
+            this.trbMmaximum.Value = 100;
+            this.trbMmaximum.SmallChange = 1;
+            this.trbMmaximum.LargeChange = 5;
+            this.trbMmaximum.MouseWheelBarPartitions = 100;
+            this.lblMmaximum.Text = this.trbMmaximum.Value.ToString();
+
+            this.trbMapplied.Minimum = this.trbMminimum.Value;
+            if (this.trbMmaximum.Value != 0)
+                this.trbMapplied.Maximum = this.trbMmaximum.Value;
+            else
+                this.trbMapplied.Maximum = 1;
+
+            this.trbMapplied.Value = 0;
+            this.trbMapplied.SmallChange = 1;
+            this.trbMapplied.LargeChange = 5;
+            this.trbMapplied.MouseWheelBarPartitions = 100;
+            this.lblMapplied.Text = this.trbMapplied.Value.ToString();
+
+        }
+
+        /// <summary>
+        ///  Gradation설정
+        /// </summary>
+        /// <param name="orignalImage"></param>
+        /// <param name="valueString"></param>
+        /// <returns></returns>
+        public Mat ConvertGradation(Mat orignalImage, string valueString)
+        {
+            if (double.TryParse(valueString, out double value))
+            {
+                value = outputRate * value;
+                Scalar a = new Scalar(0, 0, 0);
+                convertImage = new Mat(orignalImage.Size(), MatType.CV_8UC3, a);
+                for (int r = 0; r < convertImage.Rows; r++)
+                {
+                    double rValue = (double)r * (double)convertImage.Width / 255.0 * 0.5;
+                    Scalar rgb = new Scalar(0, 0, rValue);
+                   convertImage.Row(r).SetTo(rgb);
+                }
+                convertImage.ConvertTo(convertImage, MatType.CV_8UC3, value, 0);
+                //Cv2.ImShow("orign", orignalImage);
+                //Cv2.ImShow("convert",convertImage);
+                Cv2.Add(orignalImage, convertImage, convertImage);
+            }
+            return convertImage;
+        }
+        #endregion
+
+        #region GradationRGB
+        /// <summary>
+        /// Gradation 설정에서 UI 설정
+        /// </summary>
+        public void UISetUpGradationRGB()
+        {
+            this.trbMminimum.Enabled = true;
+            this.trbMminimum.Minimum = -255;
+            this.trbMminimum.Maximum = 0;
+            this.trbMminimum.Value = 0;
+            this.trbMminimum.SmallChange = 1;
+            this.trbMminimum.LargeChange = 5;
+            this.trbMminimum.MouseWheelBarPartitions = 255;
+            this.lblMminimum.Text = this.trbMminimum.Value.ToString();
+
+            this.trbMmaximum.Enabled = true;
+            this.trbMmaximum.Minimum = 0;
+            this.trbMmaximum.Maximum = 255;
+            this.trbMmaximum.Value = 0;
+            this.trbMmaximum.SmallChange = 1;
+            this.trbMmaximum.LargeChange = 5;
+            this.trbMmaximum.MouseWheelBarPartitions = 255;
+            this.lblMmaximum.Text = this.trbMmaximum.Value.ToString();
+
+            this.trbMapplied.Minimum = this.trbMminimum.Value;
+            if (this.trbMmaximum.Value != 0)
+                this.trbMapplied.Maximum = this.trbMmaximum.Value;
+            else
+                this.trbMapplied.Maximum = 1;
+
+            this.trbMapplied.Value = 0;
+            this.trbMapplied.SmallChange = 1;
+            this.trbMapplied.LargeChange = 5;
+            this.trbMapplied.MouseWheelBarPartitions = 10;
+            this.lblMapplied.Text = this.trbMapplied.Value.ToString();
+
+            this.outputRate = 1;
+        }
+
+        /// <summary>
+        /// Brightness 설정
+        /// </summary>
+        /// <param name="orignalImage"></param>
+        /// <param name="valueString"></param>
+        /// <returns></returns>
+        public Mat ConvertGradationRGB(Mat orignalImage, string valueString)
+        {
+            if (double.TryParse(valueString, out double value))
+            {
+                if (value > 0)
+                {
+                    Scalar a = new Scalar(value, value, value);
+                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, a);
+                    //Console.WriteLine(value);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[0]);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[1]);
+                    //Console.WriteLine(val.At<Vec3d>(256, 256)[2]);
+                    Cv2.Add(orignalImage, val, convertImage);
+                    val.Dispose();
+                }
+                else
+                {
+                    value = value * -1;
+                    Scalar a = new Scalar(value, value, value);
+
+                    Mat val = new Mat(orignalImage.Size(), MatType.CV_8UC3, a);
+                    Cv2.Subtract(orignalImage, val, convertImage);
+                    val.Dispose();
+                }
+            }
+            return convertImage;
+        }
+
+        #endregion
+
+        #region Zoom
+
+        /// <summary>
+        /// Center 설정에서 UI 설정
+        /// </summary>
+        public void UISetUpZoom()
+        {
+            this.outputRate = 0.01;
+
+            this.trbMminimum.Enabled = false;
+            this.trbMminimum.Minimum = 0;
+            this.trbMminimum.Maximum = 1;
+            this.trbMminimum.Value = 0;
+            this.trbMminimum.SmallChange = 1;
+            this.trbMminimum.LargeChange = 5;
+            this.trbMminimum.MouseWheelBarPartitions = 1;
+            this.lblMminimum.Text = (this.trbMminimum.Value * this.outputRate).ToString();
+
+            this.trbMmaximum.Enabled = true;
+            this.trbMmaximum.Minimum = 10;
+            this.trbMmaximum.Maximum = 100;
+            this.trbMmaximum.Value = 100;
+            this.trbMmaximum.SmallChange = 1;
+            this.trbMmaximum.LargeChange = 5;
+            this.trbMmaximum.MouseWheelBarPartitions = 100;
+            this.lblMmaximum.Text = (this.trbMmaximum.Value * this.outputRate).ToString();
+
+            this.trbMapplied.Minimum = 9;
+            this.trbMapplied.Maximum = 100;
+
+            this.trbMapplied.Value = 100;
+            this.trbMapplied.SmallChange = 1;
+            this.trbMapplied.LargeChange = 5;
+            this.trbMapplied.MouseWheelBarPartitions = 100;
+            this.lblMapplied.Text = (this.trbMapplied.Value * this.outputRate).ToString();
+        }
+
+        /// <summary>
+        /// Center 설정
+        /// </summary>
+        /// <param name="orignalImage"></param>
+        /// <param name="valueString"></param>
+        /// <returns></returns>
+        public Mat ConvertZoom(Mat orignalImage, string valueString)
+        {
+            Mat converImage = new Mat();
+            if (double.TryParse(valueString, out double value))
+            {
+                int locationX = (int)(orignalImage.Width / 2);
+                int locationY = (int)(orignalImage.Height / 2);
+                int locationWidth = (int)(orignalImage.Width * this.outputRate * value / 2);
+                int locationHeight = (int)(orignalImage.Height * this.outputRate * value / 2);
+
+                converImage = orignalImage.SubMat(new Rect(locationX - locationWidth, locationY - locationHeight, locationWidth * 2, locationHeight * 2));
+                //Console.WriteLine($"X{locationX - locationWidth}, Y{locationY - locationHeight}");
+                //Console.WriteLine($"-X{locationX + locationWidth}, -Y{locationY + locationHeight}");
+                //Console.WriteLine($"location X{(locationWidth)}, location Y{locationHeight}");
+            }
+            return converImage;
+        }
+
+        #endregion
         #endregion Converter 설정
 
         public string GetMaximumValue()
