@@ -740,8 +740,8 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 for (int r = 0; r < convertImage.Rows; r++)
                 {
                     double rValue = (double)r * (double)convertImage.Width / 255.0 * 0.5;
-                    Scalar rgb = new Scalar(0, 0, rValue);
-                   convertImage.Row(r).SetTo(rgb);
+                    Scalar bgr = new Scalar(0, 0, rValue);
+                   convertImage.Row(r).SetTo(bgr);
                 }
                 convertImage.ConvertTo(convertImage, MatType.CV_8UC3, value, 0);
                 //Cv2.ImShow("orign", orignalImage);
