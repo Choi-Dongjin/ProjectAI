@@ -1428,6 +1428,14 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.DataAugmentationGetValue("Sharpen", this.txtSharpen);
         }
 
+        private void tilMGradation_Click(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("Gradation", this.txtGradation);
+        }
+        private void tilMZoom_Click(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("Zoom", this.txtZoomMax);
+        }
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
