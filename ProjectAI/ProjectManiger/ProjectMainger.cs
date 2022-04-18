@@ -1092,6 +1092,10 @@ namespace ProjectAI
             {
                 MetroMessageBox.Show(this.MainForm, "m_activeProjectCalssInfoJObject.Json 데이터 없음 초기화", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                Form1 form1 = new Form1();
+                form1.SetMessageBox(MetroColorStyle.Red, formsManiger.m_StyleManager.Theme, "ERROR", "Calss Info 데이터 없음 초기화");
+                form1.ShowDialog();
+
                 this.jsonDataManiger.JsonChackFileAndCreate(this.m_pathActiveProjectCalssInfo); // 파일 초기화
                 JObject jObject = new JObject() { };
                 this.jsonDataManiger.PushJsonObject(this.m_pathActiveProjectCalssInfo, jObject);
@@ -1445,7 +1449,15 @@ namespace ProjectAI
         private MetroFramework.Controls.MetroPanel UISetLogo()
         {   // panelMlogo
             MetroFramework.Controls.MetroPanel panelMlogo = new MetroFramework.Controls.MetroPanel();
-            panelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+            if (formsManiger.m_isDarkMode)
+            {
+                panelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+            }
+            else
+            {
+                panelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
+            }
+
             panelMlogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             panelMlogo.Dock = System.Windows.Forms.DockStyle.Right;
             panelMlogo.HorizontalScrollbarBarColor = true;
@@ -1575,7 +1587,7 @@ namespace ProjectAI
         /// <summary>
         /// 활성화된 워크스페이스 이미지 추가
         /// </summary>
-        public void ImageAdding()
+        public void ImageFilesAdding()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -1681,6 +1693,11 @@ namespace ProjectAI
                     this.JsonDataSave(1);
                 }
             }
+        }
+
+        public void ImageFolderAdding()
+        {
+
         }
 
         /// <summary>
@@ -2113,9 +2130,9 @@ namespace ProjectAI
                 this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
                 //this.UISetImageListDataGridview(this.imageListPage);
 
-                //this.JsonDataSave(0); // Json 데이터 저장
-                //this.JsonDataSave(1); // Json 데이터 저장
-                //this.JsonDataSave(2); // Json 데이터 저장
+                this.JsonDataSave(0); // Json 데이터 저장
+                this.JsonDataSave(1); // Json 데이터 저장
+                this.JsonDataSave(2); // Json 데이터 저장
 
                 // 7. 저장 버튼 활성화
                 this.SaveEnabled(); // 저장 활성화
@@ -2240,9 +2257,9 @@ namespace ProjectAI
             this.m_imageNumberChangeUpdater?.Invoke(); // 이미지 개수 정보 업데이트
             //this.UISetImageListDataGridview(this.imageListPage);
 
-            //this.JsonDataSave(0); // Json 데이터 저장
-            //this.JsonDataSave(1); // Json 데이터 저장
-            //this.JsonDataSave(2); // Json 데이터 저장
+            this.JsonDataSave(0); // Json 데이터 저장
+            this.JsonDataSave(1); // Json 데이터 저장
+            this.JsonDataSave(2); // Json 데이터 저장
 
             // 6. 저장 버튼 활성화
             this.SaveEnabled(); // 저장 활성화
@@ -2361,9 +2378,9 @@ namespace ProjectAI
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
             //this.UISetImageListDataGridview(this.imageListPage);
 
-            //this.JsonDataSave(0); // Json 데이터 저장
-            //this.JsonDataSave(1); // Json 데이터 저장
-            //this.JsonDataSave(2); // Json 데이터 저장
+            this.JsonDataSave(0); // Json 데이터 저장
+            this.JsonDataSave(1); // Json 데이터 저장
+            this.JsonDataSave(2); // Json 데이터 저장
 
             // 6. 저장 버튼 활성화
             this.SaveEnabled(); // 저장 활성화
@@ -2462,6 +2479,11 @@ namespace ProjectAI
             this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
 
             #endregion 라벨링 정보 수정 적용하기 ActiveProjectInfo
+
+            // Json 파일 저장
+            this.JsonDataSave(0);
+            this.JsonDataSave(1);
+            this.JsonDataSave(2);
 
             // 5. 변경된 UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
@@ -2569,6 +2591,11 @@ namespace ProjectAI
             // 3. 변경된 UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
 
+            // Json 파일 저장
+            this.JsonDataSave(0);
+            this.JsonDataSave(1);
+            this.JsonDataSave(2);
+
             // 4. 저장 버튼 활성화
             this.SaveEnabled(); // 저장 활성화
             this.SaveButoonChacked(); // 저장 버튼 확인
@@ -2585,6 +2612,11 @@ namespace ProjectAI
             MetroFramework.Controls.MetroTile deleteButton = this.m_activeInnerProjectButton[deleteInnerProjectName]; // 삭제할 버튼 불러오기
             this.m_activeInnerProjectButton.Remove(deleteInnerProjectName); // 삭제할 버튼 관리 변수에서 삭제
             this.MainForm.panelProjectInfo.Controls.Remove(deleteButton); // 삭제할 버튼 Main Fomes에 컨트롤 삭제
+
+            // Json 파일 저장
+            this.JsonDataSave(0);
+            this.JsonDataSave(1);
+            this.JsonDataSave(2);
         }
 
         /// <summary>

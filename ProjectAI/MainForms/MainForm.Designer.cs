@@ -67,7 +67,11 @@
             this.lblImageListpageMid = new System.Windows.Forms.Label();
             this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -94,6 +98,7 @@
             this.trainToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelWorkSpaseIconIN = new System.Windows.Forms.Panel();
             this.panelMWorkSpaceString1 = new MetroFramework.Controls.MetroPanel();
             this.btnMWorkSpaseClose = new MetroFramework.Controls.MetroButton();
@@ -122,10 +127,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -200,7 +201,7 @@
             // 
             // panelMWorkSpaceString2
             // 
-            this.panelMWorkSpaceString2.BackgroundImage = global::ProjectAI.Properties.Resources.Workspace;
+            this.panelMWorkSpaceString2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelMWorkSpaceString2.BackgroundImage")));
             this.panelMWorkSpaceString2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelMWorkSpaceString2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMWorkSpaceString2.HorizontalScrollbarBarColor = true;
@@ -217,7 +218,7 @@
             // 
             // btnMWorkSpaseOpen
             // 
-            this.btnMWorkSpaseOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
+            this.btnMWorkSpaseOpen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMWorkSpaseOpen.BackgroundImage")));
             this.btnMWorkSpaseOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMWorkSpaseOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMWorkSpaseOpen.Location = new System.Drawing.Point(0, 0);
@@ -283,7 +284,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -295,7 +296,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
@@ -390,88 +391,96 @@
             this.imageLabelInfoResetToolStripMenuItem,
             this.imageSetInfoResetToolStripMenuItem});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(197, 210);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(205, 274);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(201, 6);
             // 
             // imageFilesAddToolStripMenuItem1
             // 
+            this.imageFilesAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open_source;
             this.imageFilesAddToolStripMenuItem1.Name = "imageFilesAddToolStripMenuItem1";
-            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageFilesAddToolStripMenuItem1.Text = "Image File Add";
             this.imageFilesAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFilesAddToolStripMenuItem1Click);
             // 
             // imageFolderAddToolStripMenuItem1
             // 
+            this.imageFolderAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open2;
             this.imageFolderAddToolStripMenuItem1.Name = "imageFolderAddToolStripMenuItem1";
-            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageFolderAddToolStripMenuItem1.Text = "Image Folder Add";
             this.imageFolderAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFolderAddToolStripMenuItem1Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(201, 6);
             // 
             // imageLabelingToolStripMenuItem1
             // 
+            this.imageLabelingToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.product_development1;
             this.imageLabelingToolStripMenuItem1.Name = "imageLabelingToolStripMenuItem1";
-            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageLabelingToolStripMenuItem1.Text = "Image Labeling";
             this.imageLabelingToolStripMenuItem1.Click += new System.EventHandler(this.ImageLabelingToolStripMenuItem1Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(201, 6);
             // 
             // imageSetTrainToolStripMenuItem1
             // 
+            this.imageSetTrainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.book;
             this.imageSetTrainToolStripMenuItem1.Name = "imageSetTrainToolStripMenuItem1";
-            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageSetTrainToolStripMenuItem1.Text = "Image Set Train";
             this.imageSetTrainToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTrainToolStripMenuItem1Click);
             // 
             // imageSetTestToolStripMenuItem1
             // 
+            this.imageSetTestToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.completed_task;
             this.imageSetTestToolStripMenuItem1.Name = "imageSetTestToolStripMenuItem1";
-            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageSetTestToolStripMenuItem1.Text = "Image Set Test";
             this.imageSetTestToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTestToolStripMenuItem1Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(201, 6);
             // 
             // imageDeleteToolStripMenuItem1
             // 
+            this.imageDeleteToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.delete;
             this.imageDeleteToolStripMenuItem1.Name = "imageDeleteToolStripMenuItem1";
-            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
             this.imageDeleteToolStripMenuItem1.Text = "Image Delete";
             this.imageDeleteToolStripMenuItem1.Click += new System.EventHandler(this.ImageDeleteToolStripMenuItem1Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(201, 6);
             // 
             // imageLabelInfoResetToolStripMenuItem
             // 
+            this.imageLabelInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.refresh2;
             this.imageLabelInfoResetToolStripMenuItem.Name = "imageLabelInfoResetToolStripMenuItem";
-            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(204, 30);
             this.imageLabelInfoResetToolStripMenuItem.Text = "Image Label Info Reset";
             this.imageLabelInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageLabelInfoResetToolStripMenuItemClick);
             // 
             // imageSetInfoResetToolStripMenuItem
             // 
+            this.imageSetInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.reset;
             this.imageSetInfoResetToolStripMenuItem.Name = "imageSetInfoResetToolStripMenuItem";
-            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(204, 30);
             this.imageSetInfoResetToolStripMenuItem.Text = "Image Set Info Reset";
             this.imageSetInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageSetInfoResetToolStripMenuItemClick);
             // 
@@ -503,7 +512,7 @@
             // btnimagePageReverse
             // 
             this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageReverse, true);
-            this.btnimagePageReverse.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
+            this.btnimagePageReverse.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageReverse.BackgroundImage")));
             this.btnimagePageReverse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnimagePageReverse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnimagePageReverse.FlatAppearance.BorderSize = 0;
@@ -518,7 +527,7 @@
             // btnimagePageNext
             // 
             this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageNext, true);
-            this.btnimagePageNext.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
+            this.btnimagePageNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageNext.BackgroundImage")));
             this.btnimagePageNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnimagePageNext.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnimagePageNext.FlatAppearance.BorderSize = 0;
@@ -592,6 +601,39 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(225, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(75, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(150, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(75, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -601,6 +643,17 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(300, 590);
             this.panelDataReview.TabIndex = 10;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(75, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -632,7 +685,7 @@
             // 
             // panelMTrainParameterString
             // 
-            this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameter;
+            this.panelMTrainParameterString.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelMTrainParameterString.BackgroundImage")));
             this.panelMTrainParameterString.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelMTrainParameterString.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMTrainParameterString.HorizontalScrollbarBarColor = true;
@@ -649,7 +702,7 @@
             // 
             // btnMTrainOptionsOpen
             // 
-            this.btnMTrainOptionsOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight2;
+            this.btnMTrainOptionsOpen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMTrainOptionsOpen.BackgroundImage")));
             this.btnMTrainOptionsOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMTrainOptionsOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMTrainOptionsOpen.Location = new System.Drawing.Point(0, 0);
@@ -679,7 +732,7 @@
             // 
             // panelMDataBaseInfoString
             // 
-            this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
+            this.panelMDataBaseInfoString.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelMDataBaseInfoString.BackgroundImage")));
             this.panelMDataBaseInfoString.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelMDataBaseInfoString.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMDataBaseInfoString.HorizontalScrollbarBarColor = true;
@@ -696,7 +749,7 @@
             // 
             // btnMDataReviewOpen
             // 
-            this.btnMDataReviewOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
+            this.btnMDataReviewOpen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMDataReviewOpen.BackgroundImage")));
             this.btnMDataReviewOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMDataReviewOpen.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMDataReviewOpen.Location = new System.Drawing.Point(0, 0);
@@ -709,7 +762,7 @@
             // 
             // panelProjectInfo
             // 
-            this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.panelProjectInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelProjectInfo.BackgroundImage")));
             this.panelProjectInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelProjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProjectInfo.HorizontalScrollbarBarColor = true;
@@ -857,7 +910,8 @@
             // toolToolStripMenuItem
             // 
             this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.trainToolStripMenuItem});
+            this.trainToolStripMenuItem,
+            this.changeStyleToolStripMenuItem});
             this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
             this.toolToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.toolToolStripMenuItem.Text = "Tool";
@@ -865,9 +919,16 @@
             // trainToolStripMenuItem
             // 
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
+            // 
+            // changeStyleToolStripMenuItem
+            // 
+            this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
+            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
+            this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
             // 
             // panelWorkSpaseIconIN
             // 
@@ -884,7 +945,7 @@
             // 
             // panelMWorkSpaceString1
             // 
-            this.panelMWorkSpaceString1.BackgroundImage = global::ProjectAI.Properties.Resources.Workspace;
+            this.panelMWorkSpaceString1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelMWorkSpaceString1.BackgroundImage")));
             this.panelMWorkSpaceString1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelMWorkSpaceString1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMWorkSpaceString1.HorizontalScrollbarBarColor = true;
@@ -901,7 +962,7 @@
             // 
             // btnMWorkSpaseClose
             // 
-            this.btnMWorkSpaseClose.BackgroundImage = global::ProjectAI.Properties.Resources.arrowLeft2;
+            this.btnMWorkSpaseClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMWorkSpaseClose.BackgroundImage")));
             this.btnMWorkSpaseClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMWorkSpaseClose.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnMWorkSpaseClose.Location = new System.Drawing.Point(0, 0);
@@ -1119,6 +1180,7 @@
             this.imageFolderAddToolStripMenuItem.Name = "imageFolderAddToolStripMenuItem";
             this.imageFolderAddToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.imageFolderAddToolStripMenuItem.Text = "Image Folder Add";
+            this.imageFolderAddToolStripMenuItem.Click += new System.EventHandler(this.imageFolderAddToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1163,50 +1225,6 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
-            // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(225, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(75, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(150, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(75, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(75, 75);
-            this.iclTotal.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -1357,5 +1375,6 @@
         public System.Windows.Forms.Panel panelDataReview;
         public ImageCountLabel iclTotal;
         private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem changeStyleToolStripMenuItem;
     }
 }

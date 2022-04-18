@@ -874,69 +874,69 @@ namespace ProjectAI.TrainForms
             try
             {
                 //if (this.dgvMmodelsVersion.SelectedRows[0].Index != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
-                    if (this.dgvMmodelsVersion.SelectedRows[0].Cells[0].Value != null)
+                if (this.dgvMmodelsVersion.SelectedRows[0].Cells[0].Value != null)
+                {
+                    List<string> modelList = new List<string>();
+                    foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"]) // 모델 이름 List 로 만들기
+                        modelList.Add(modelName);
+
+                    int version = this.dgvMmodelsVersion.SelectedRows[0].Index; // 호출하는 모델 버전 정보 가져오기
+
+                    string selectModelName = modelList[version]; // 선택된 모델 관리 이름
+                    this.dgvMmodelsEpoch.Rows.Clear();
+                    foreach (string innerModelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["array_string_innerModelList"])
                     {
-                        List<string> modelList = new List<string>();
-                        foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"]) // 모델 이름 List 로 만들기
-                            modelList.Add(modelName);
+                        // 내부 모델 정보 읽어오기
+                        int locationX = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_locationX"]);
 
-                        int version = Convert.ToInt32(this.dgvMmodelsVersion.SelectedRows[0].Cells[0].Value.ToString()) - 1; // 호출하는 모델 버전 정보 가져오기
+                        double trainLoss = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TrainLoss"]);
+                        double trainAcc = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TrainAcc"]);
+                        int trainEscape = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TrainEscape"]);
+                        int trainOverKill = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TrainOverKill"]);
 
-                        string selectModelName = modelList[version]; // 선택된 모델 관리 이름
-                        this.dgvMmodelsEpoch.Rows.Clear();
-                        foreach (string innerModelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["array_string_innerModelList"])
-                        {
-                            // 내부 모델 정보 읽어오기
-                            int locationX = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_locationX"]);
+                        double testLoss = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TestLoss"]);
+                        double testAcc = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TestAcc"]);
+                        int testEscape = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TestEscape"]);
+                        int testOverKill = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TestOverKill"]);
 
-                            double trainLoss = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TrainLoss"]);
-                            double trainAcc = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TrainAcc"]);
-                            int trainEscape = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TrainEscape"]);
-                            int trainOverKill = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TrainOverKill"]);
-
-                            double testLoss = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TestLoss"]);
-                            double testAcc = Convert.ToDouble(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["double_TestAcc"]);
-                            int testEscape = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TestEscape"]);
-                            int testOverKill = Convert.ToInt32(WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["InnerModelInfo"][innerModelName]["int_TestOverKill"]);
-
-                            this.dgvMmodelsEpoch.Rows.Add(locationX, trainLoss, trainAcc, trainEscape, trainOverKill, testLoss, testAcc, testEscape, testOverKill);
-                        }
-
-                        // 모델 차트 그리기
-                        this.chartViewLoss.Series["Train & Validation"].Points.Clear();
-                        this.chartViewLoss.Series["Test"].Points.Clear();
-                        this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
-                        this.chartViewAccuracy.Series["Test"].Points.Clear();
-
-                        this.chartViewLoss.Series["selectModelDataTrain"].Points.Clear();
-                        this.chartViewLoss.Series["selectModelDataTest"].Points.Clear();
-                        this.chartViewAccuracy.Series["selectModelDataTrain"].Points.Clear();
-                        this.chartViewAccuracy.Series["selectModelDataTest"].Points.Clear();
-
-                        foreach (JProperty trainingProgressData in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["TrainingProgressData"])
-                        {
-                            int locationX = Convert.ToInt32(trainingProgressData.Name);
-
-                            double trainLoss = Convert.ToDouble(trainingProgressData.Value["double_TrainLoss"]);
-                            double trainAcc = Convert.ToDouble(trainingProgressData.Value["double_TrainAcc"]);
-                            int trainEscape = Convert.ToInt32(trainingProgressData.Value["int_TrainEscape"]);
-                            int trainOverKill = Convert.ToInt32(trainingProgressData.Value["int_TrainOverKill"]);
-
-                            double testLoss = Convert.ToDouble(trainingProgressData.Value["double_TestLoss"]);
-                            double testAcc = Convert.ToDouble(trainingProgressData.Value["double_TestAcc"]);
-                            int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
-                            int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
-
-                            this.chartViewLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
-                            this.chartViewLoss.Series["Test"].Points.AddXY(locationX, testLoss);
-
-                            this.chartViewAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
-                            this.chartViewAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
-                        }
-
-                        // 모델 학습 정보 가져오기
-                        this.DataGridViewCellMouseDoubleClick(this.dgvMmodelsVersion, selectModelName);
+                        this.dgvMmodelsEpoch.Rows.Add(locationX, trainLoss, trainAcc, trainEscape, trainOverKill, testLoss, testAcc, testEscape, testOverKill);
                     }
+
+                    // 모델 차트 그리기
+                    this.chartViewLoss.Series["Train & Validation"].Points.Clear();
+                    this.chartViewLoss.Series["Test"].Points.Clear();
+                    this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
+                    this.chartViewAccuracy.Series["Test"].Points.Clear();
+
+                    this.chartViewLoss.Series["selectModelDataTrain"].Points.Clear();
+                    this.chartViewLoss.Series["selectModelDataTest"].Points.Clear();
+                    this.chartViewAccuracy.Series["selectModelDataTrain"].Points.Clear();
+                    this.chartViewAccuracy.Series["selectModelDataTest"].Points.Clear();
+
+                    foreach (JProperty trainingProgressData in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["TrainingProgressData"])
+                    {
+                        int locationX = Convert.ToInt32(trainingProgressData.Name);
+
+                        double trainLoss = Convert.ToDouble(trainingProgressData.Value["double_TrainLoss"]);
+                        double trainAcc = Convert.ToDouble(trainingProgressData.Value["double_TrainAcc"]);
+                        int trainEscape = Convert.ToInt32(trainingProgressData.Value["int_TrainEscape"]);
+                        int trainOverKill = Convert.ToInt32(trainingProgressData.Value["int_TrainOverKill"]);
+
+                        double testLoss = Convert.ToDouble(trainingProgressData.Value["double_TestLoss"]);
+                        double testAcc = Convert.ToDouble(trainingProgressData.Value["double_TestAcc"]);
+                        int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
+                        int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
+
+                        this.chartViewLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
+                        this.chartViewLoss.Series["Test"].Points.AddXY(locationX, testLoss);
+
+                        this.chartViewAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
+                        this.chartViewAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
+                    }
+
+                    // 모델 학습 정보 가져오기
+                    this.DataGridViewCellMouseDoubleClick(this.dgvMmodelsVersion, selectModelName);
+                }
             }
             catch(Exception ex)
             {
@@ -3292,6 +3292,55 @@ namespace ProjectAI.TrainForms
                 this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
                 this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
                 this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = true;
+            }
+        }
+
+        private void ModelOutputToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.ValidateNames = false;
+                openFileDialog.CheckFileExists = false;
+                openFileDialog.CheckPathExists = true;
+                openFileDialog.FileName = "Folder Selection.";
+
+                if (WorkSpaceData.m_activeProjectMainger != null)
+                    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    {
+                        if (this.dgvMmodelsVersion.SelectedRows.Count > 0)
+                        {
+                            if (this.dgvMmodelsEpoch.SelectedRows.Count > 0)
+                            {
+                                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    Console.WriteLine(System.IO.Path.GetDirectoryName(openFileDialog.FileName));
+                                    string copyPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(openFileDialog.FileName), "Models");
+                                    CustomIOMainger.DirChackExistsAndCreate(copyPath);
+
+                                    JArray modelList = (JArray)WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"];
+                                    string modelName = modelList[this.dgvMmodelsVersion.SelectedRows[0].Index].ToString();
+                                    List<string> innerModelPathList = new List<string>();
+
+                                    for (int i = 0; i < this.dgvMmodelsEpoch.SelectedRows.Count; i++)
+                                    {
+                                        JArray innerModelList = (JArray)WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][modelName]["array_string_innerModelList"];
+                                        string innerModelName = innerModelList[i].ToString() + ".synapsenet";
+
+                                        string innerModelPath = System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModel, WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName, modelName, "models", innerModelName);
+
+                                        innerModelPathList.Add(innerModelPath); // 모델 List에 추가
+                                    }
+                                    ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
+                                    //customIOManigerFoem.CreateFileCopyList
+                                    ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+                                    // File IO Task 등록
+                                    customIOManigerFoem.CreateFileCopyList(innerModelPathList, copyPath, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+                                                                            mainForm.pgbMfileIOstatus, mainForm.lblMwaorkInNumber, mainForm.lblMtotalNumber, mainForm.lblMIOStatus, mainForm.lblMworkInFileName);
+                                }
+                            }
+                        }
+                    }
+                
             }
         }
     }

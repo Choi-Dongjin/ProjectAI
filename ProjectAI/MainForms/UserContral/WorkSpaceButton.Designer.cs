@@ -102,6 +102,7 @@
             // lblWorkSpaceName
             // 
             this.lblWorkSpaceName.AutoSize = true;
+            this.lblWorkSpaceName.BackColor = System.Drawing.Color.White;
             this.lblWorkSpaceName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblWorkSpaceName.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.lblWorkSpaceName.Location = new System.Drawing.Point(28, 0);
@@ -113,14 +114,13 @@
             // 
             // btnWorkSpaceOpen
             // 
-            this.btnWorkSpaceOpen.BackgroundImage = global::ProjectAI.Properties.Resources.plus;
+            this.btnWorkSpaceOpen.BackgroundImage = global::ProjectAI.Properties.Resources.arrowRight5;
             this.btnWorkSpaceOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnWorkSpaceOpen.FlatAppearance.BorderSize = 0;
             this.btnWorkSpaceOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnWorkSpaceOpen.Location = new System.Drawing.Point(365, 0);
-            this.btnWorkSpaceOpen.Margin = new System.Windows.Forms.Padding(0);
+            this.btnWorkSpaceOpen.Location = new System.Drawing.Point(368, 3);
             this.btnWorkSpaceOpen.Name = "btnWorkSpaceOpen";
-            this.btnWorkSpaceOpen.Size = new System.Drawing.Size(25, 23);
+            this.btnWorkSpaceOpen.Size = new System.Drawing.Size(19, 19);
             this.btnWorkSpaceOpen.TabIndex = 7;
             this.btnWorkSpaceOpen.UseVisualStyleBackColor = true;
             // 

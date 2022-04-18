@@ -44,7 +44,7 @@ namespace ProjectAI.StartForms
         {
             InitializeComponent();
 
-            this.StyleManager = styleManagerStartFormOptions;
+            this.StyleManager = this.styleManagerStartFormOptions;
             // Forms Calss formStyleManagerHandler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
         }
@@ -122,8 +122,6 @@ namespace ProjectAI.StartForms
 
         private void BtnMGetSystemInfoClick(object sender, EventArgs e)
         {
-            //HardwareInformation.GetHardwareInformation();
-            //HardwareInformation.systemHardwareInfoJObject;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.ValidateNames = false;

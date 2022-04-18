@@ -1428,10 +1428,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.DataAugmentationGetValue("Sharpen", this.txtSharpen);
         }
 
-        private string ImagePath = @"E:\Z2b_이미지\1.webp";
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+            string imagePath = mainForm.GetSelectImagePath();
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
             {
                 dataAugmentationExampleForm.ShowDialog();
                 if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
@@ -1442,7 +1443,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void DataAugmentationGetValue(string exCase, TextBox maxTextBox)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+            string imagePath = mainForm.GetSelectImagePath();
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
             {
                 dataAugmentationExampleForm.ShowDialog();
                 if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
@@ -1453,7 +1456,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox minTextBox, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+            string imagePath = mainForm.GetSelectImagePath();
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
             {
                 dataAugmentationExampleForm.ShowDialog();
                 if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
@@ -1465,7 +1470,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         }
         private void DataAugmentationGetValue(string exCase, TextBox minTextBox, TextBox maxTextBox)
         {
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(this.ImagePath, exCase))
+            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+            string imagePath = mainForm.GetSelectImagePath();
+            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
             {
                 dataAugmentationExampleForm.ShowDialog();
                 if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)

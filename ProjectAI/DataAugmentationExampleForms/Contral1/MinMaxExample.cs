@@ -84,6 +84,17 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// <param styleManager="MetroStyleManager"></param>
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
         {
+            FormsManiger formsManiger = FormsManiger.GetInstance();
+            if (formsManiger.m_isDarkMode) // Light로 변경시 진입
+            {
+                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            }
+            else // Dark로 변경시 진입
+            {
+                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+            }
             this.metroStyleManager1.Style = styleManager.Style;
             this.metroStyleManager1.Theme = styleManager.Theme;
         }

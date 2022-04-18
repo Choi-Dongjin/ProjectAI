@@ -246,25 +246,24 @@ namespace ProjectAI.MainForms
         public MainForm()
         {
             InitializeComponent();
+
             this.panelProjectInfo.Controls.Add(this.mainPanelMlogo); // Logo 추가
 
-            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+            this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
 
             btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
-
-            
         }
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            WorkSpaceEarlyDataSet();
+            this.WorkSpaceEarlyDataSet();
         }
 
         private void MainFormShown(object sender, EventArgs e)
         {
-            MainFormCallUISeting();
+            this.MainFormCallUISeting();
             this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
         }
 
@@ -604,6 +603,8 @@ namespace ProjectAI.MainForms
             this.Hide();
             this.Parent = null;
             e.Cancel = true; //hides the form, cancels closing event
+
+            this.ProgramEndSequence();
         }
 
         /// <summary>
@@ -709,6 +710,9 @@ namespace ProjectAI.MainForms
                     JObject jObject = new JObject();
                     WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(jObject);
                 }
+            Form1 form1 = new Form1();
+            form1.SetMessageBox(MetroColorStyle.Red, formsManiger.m_StyleManager.Theme, "ERROR", "Calss Info 데이터 없음 초기화");
+            form1.ShowDialog();
             //this.TrainForm.Show();
         }
 
@@ -932,6 +936,7 @@ namespace ProjectAI.MainForms
         /// </summary>
         private void ProgramEndSequence()
         {
+            this.Close();
             try
             {
                 Application.ExitThread();
@@ -946,7 +951,6 @@ namespace ProjectAI.MainForms
             {
                 Environment.Exit(1);
             }
-            this.Close();
         }
 
         private void BtnimagePageNextClick(object sender, EventArgs e)
@@ -1027,6 +1031,30 @@ namespace ProjectAI.MainForms
             }
         }
 
+        public string GetSelectImagePath()
+        {
+            string imagePath = null;
+            try
+            {
+                DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+
+                if (data != null)
+                {
+                    return Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+
+            }
+            return imagePath;
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -1035,11 +1063,12 @@ namespace ProjectAI.MainForms
         private void ImageFilesAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                WorkSpaceData.m_activeProjectMainger.ImageAdding();
+                WorkSpaceData.m_activeProjectMainger.ImageFilesAdding();
         }
 
         private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
+
         }
 
         private void ImageDeleteToolStripMenuItem1Click(object sender, EventArgs e)
@@ -1111,6 +1140,30 @@ namespace ProjectAI.MainForms
         }
 
         private void ImageAddToolStripMenuItemClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChangeStyleToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (this.formsManiger.m_isDarkMode) // Dark로 변경시 진입
+            {
+                this.formsManiger.m_isDarkMode = false;
+                this.formsManiger.m_StyleManager.Style = MetroColorStyle.Silver;
+                this.formsManiger.m_StyleManager.Theme = MetroThemeStyle.Dark;
+                this.BackColor = this.formsManiger.GetThemeRGBClor("Dark");
+            }
+            else // Light로 변경시 진입
+            {
+                this.formsManiger.m_isDarkMode = true;
+                this.formsManiger.m_StyleManager.Style = MetroColorStyle.Lime;
+                this.formsManiger.m_StyleManager.Theme = MetroThemeStyle.Light;
+                this.BackColor = this.formsManiger.GetThemeRGBClor("Light");
+            }
+            FormsManiger.m_formStyleManagerHandler?.Invoke(this.formsManiger.m_StyleManager);
+        }
+
+        private void imageFolderAddToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

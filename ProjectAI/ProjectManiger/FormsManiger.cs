@@ -53,48 +53,62 @@ namespace ProjectAI
         
         public static void ChartDarkMode(System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
-            // 차트 스타일 변경
-            if (chart != null)
+            try
             {
-                chart.BackColor = Color.FromArgb(17, 17, 17);
-                chart.Legends[0].BackColor = Color.Transparent;
-                chart.Legends[0].ForeColor = Color.White;
-                chart.ChartAreas[0].BackColor = Color.Transparent;
-                chart.ChartAreas[0].AxisX.LineColor = Color.White;
-                chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-                chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.White;
-                chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
-                chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.White;
-                chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.White;
-                chart.ChartAreas[0].AxisY.LineColor = Color.White;
-                chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
-                chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
-                chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
-                chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.White;
-                chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.White;
+                // 차트 스타일 변경
+                if (chart != null)
+                {
+                    chart.BackColor = Color.FromArgb(17, 17, 17);
+                    chart.Legends[0].BackColor = Color.Transparent;
+                    chart.Legends[0].ForeColor = Color.White;
+                    chart.ChartAreas[0].BackColor = Color.Transparent;
+                    chart.ChartAreas[0].AxisX.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+                    chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisY.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+                    chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.White;
+                }
+            }
+            catch
+            {
+
             }
         }
         public static void ChartWhiteMode(System.Windows.Forms.DataVisualization.Charting.Chart chart)
         {
-            // 차트 스타일 변경
-            if (chart != null)
+            try
             {
-                chart.BackColor = Color.White;
-                chart.Legends[0].BackColor = Color.Transparent;
-                chart.Legends[0].ForeColor = Color.Black;
-                chart.ChartAreas[0].BackColor = Color.Transparent;
-                chart.ChartAreas[0].AxisX.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
-                chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisY.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Black;
-                chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.Black;
-                chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.Black;
+                // 차트 스타일 변경
+                if (chart != null)
+                {
+                    chart.BackColor = Color.White;
+                    chart.Legends[0].BackColor = Color.Transparent;
+                    chart.Legends[0].ForeColor = Color.Black;
+                    chart.ChartAreas[0].BackColor = Color.Transparent;
+                    chart.ChartAreas[0].AxisX.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.Black;
+                }
+            }
+            catch
+            {
+
             }
         }
 

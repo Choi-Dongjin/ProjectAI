@@ -179,6 +179,7 @@
             this.MinimizeBox = false;
             this.Name = "StartForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StartFormFormClosing);
             this.Load += new System.EventHandler(this.StartFormLoad);
             this.Shown += new System.EventHandler(this.StartFormShown);
             this.tableLayoutProjectAIMain.ResumeLayout(false);

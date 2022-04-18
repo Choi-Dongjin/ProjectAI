@@ -268,9 +268,15 @@ namespace ProjectAI
             this.styleManagerStartForm.Theme = styleManager.Theme;
 
             if (styleManager.Theme == MetroThemeStyle.Light)
+            {
                 PanelMainLogo.BackgroundImage = Properties.Resources.iconlogoB_X2;
+                this.BackColor = formsManiger.GetThemeRGBClor("Light");
+            }
             else
+            {
                 PanelMainLogo.BackgroundImage = Properties.Resources.iconlogoW_X2;
+                this.BackColor = formsManiger.GetThemeRGBClor("Dark");
+            }
         }
 
         private void ButtonStartClick(object sender, EventArgs e)
@@ -280,6 +286,7 @@ namespace ProjectAI
             /// </summary>
             ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
             MainForm.Show();
+            this.Close();
             //Hiding the window, because closing it makes the window unaccessible.
             //this.Hide();
             //this.Parent = null;
@@ -322,8 +329,7 @@ namespace ProjectAI
                 formsManiger.m_StyleManager.Theme = MetroThemeStyle.Light;
                 this.BackColor = formsManiger.GetThemeRGBClor("Light");
             }
-
-            FormsManiger.m_formStyleManagerHandler(formsManiger.m_StyleManager);
+            FormsManiger.m_formStyleManagerHandler?.Invoke(formsManiger.m_StyleManager);
         }
 
         private void ButtonStartOptionClick(object sender, EventArgs e)
@@ -333,13 +339,16 @@ namespace ProjectAI
 
         private void BtnMprogramWorkSpaceChangeClick(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                folderBrowserDialog.SelectedPath = ProgramVariables.m_programWokrSpacePath;
+                openFileDialog.ValidateNames = false;
+                openFileDialog.CheckFileExists = false;
+                openFileDialog.CheckPathExists = true;
+                openFileDialog.FileName = "Folder Selection.";
 
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    ProgramVariables.m_programWokrSpacePath = folderBrowserDialog.SelectedPath;
+                    ProgramVariables.m_programWokrSpacePath = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
                     FormsManiger.m_startFormOptionsManagerHandler(); // StartForm 변경사항 반영
                     CustomIOMainger.DirChackExistsAndCreate(ProgramVariables.m_programWokrSpacePath); // 경로에 폴더가 있는지 확인
                 }
@@ -348,6 +357,14 @@ namespace ProjectAI
 
         private void TableLayoutMainIconsPaint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void StartFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Hiding the window, because closing it makes the window unaccessible.
+            this.Hide();
+            this.Parent = null;
+            e.Cancel = true; //hides the form, cancels closing event
         }
     }
 }
