@@ -85,6 +85,74 @@ namespace ProjectAI.ProjectManiger
         /// Main 으로 모니터링 하는 File IO 를 사용하는 Task
         /// </summary>
         private Task taskFileIO;
+        /// <summary>
+        /// File IO Task 동작 코드 0 = null, 1 = File Copy List, 2 = Del List
+        /// </summary>
+        private List<int> taskFileIOactivateCodeList = new List<int>();
+
+        private List<List<string>> taskFileIOFilesList = new List<List<string>>();
+        private List<string> setPathList = new List<string>();
+        private List<int> fileCopyListSetList = new List<int>();
+        private List<object> prograssBarList = new List<object>();
+        private List<object> labelWorkInProgressNumberList = new List<object>();
+        private List<object> labelTotalProgressNumberList = new List<object>();
+        private List<object> workInIOStatusList = new List<object>();
+        private List<object> workInProgressNameList = new List<object>();
+
+        private void FileIOListManiger()
+        {
+            int taskFileIOactivateCode;
+            List<string> files;
+            string setPath;
+            int fileCopyListSet;
+            object prograssBar;
+            object labelWorkInProgressNumber;
+            object labelTotalProgressNumber;
+            object workInIOStatus;
+            object workInProgressName;
+            while (true)
+            {
+                lock (taskFileIOactivateCodeList)
+                {
+                    if (taskFileIOactivateCodeList.Count > 0)
+                    {
+                        taskFileIOactivateCode = taskFileIOactivateCodeList[0];
+                        files = taskFileIOFilesList[0];
+                        setPath = setPathList[0];
+                        fileCopyListSet = fileCopyListSetList[0];
+                        prograssBar = prograssBarList[0];
+                        labelWorkInProgressNumber = labelWorkInProgressNumberList[0];
+                        labelTotalProgressNumber = labelTotalProgressNumberList[0];
+                        workInIOStatus = workInIOStatusList[0];
+                        workInProgressName = workInProgressNameList[0];
+
+                        taskFileIOactivateCodeList.RemoveAt(0);
+                        taskFileIOFilesList.RemoveAt(0);
+                        setPathList.RemoveAt(0);
+                        fileCopyListSetList.RemoveAt(0);
+                        prograssBarList.RemoveAt(0);
+                        labelWorkInProgressNumberList.RemoveAt(0);
+                        labelTotalProgressNumberList.RemoveAt(0);
+                        workInIOStatusList.RemoveAt(0);
+                        workInProgressNameList.RemoveAt(0);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (taskFileIOactivateCode == 1)
+                {
+                    Task task = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
+                    task.Wait();
+                }
+                else if (taskFileIOactivateCode == 2)
+                {
+                    Task task = Task.Run(() => this.FileDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
+                    task.Wait();
+                }
+            }
+        }
 
         /// <summary>
         /// 파일 List 복사
@@ -155,14 +223,26 @@ namespace ProjectAI.ProjectManiger
         public void CreateFileCopyList(List<string> files, string setPath, int fileCopyListSet, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object WorkInProgressName = null)
         {
             //this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName)
-
-            if (taskFileIO != null)
+            lock (taskFileIOactivateCodeList)
             {
-                taskFileIO.ContinueWith((tesk) => this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName), TaskContinuationOptions.ExecuteSynchronously);
+                taskFileIOactivateCodeList.Add(1);
+                taskFileIOFilesList.Add(files);
+                setPathList.Add(setPath);
+                fileCopyListSetList.Add(fileCopyListSet);
+                prograssBarList.Add(prograssBar);
+                labelWorkInProgressNumberList.Add(labelWorkInProgressNumber);
+                labelTotalProgressNumberList.Add(labelTotalProgressNumber);
+                workInIOStatusList.Add(workInIOStatus);
+                workInProgressNameList.Add(WorkInProgressName);
             }
-            else
+
+            if (this.taskFileIO == null)
             {
-                taskFileIO = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName));
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
+            }
+            else if (this.taskFileIO.Status == TaskStatus.RanToCompletion)
+            {
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
             }
         }
 
@@ -175,7 +255,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="labelTotalProgressNumber"> label 총 파일 겟수 </param>
         /// <param name="workInIOStatus"> label 총 파일 겟수 </param>
         /// <param name="workInProgressName"> label 복사중인 파일 이름 </param>
-        private void FoleDelList(List<string> files, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
+        private void FileDelList(List<string> files, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
         {
             bool monitoring = false;
             int totalFileNumber = files.Count;
@@ -224,13 +304,26 @@ namespace ProjectAI.ProjectManiger
         /// <param name="workInProgressName"> label 복사중인 파일 이름 </param>
         public void CreateFileDelList(List<string> files, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object WorkInProgressName = null)
         {
-            if (taskFileIO != null)
+            lock (taskFileIOactivateCodeList)
             {
-                taskFileIO.ContinueWith((tesk) => this.FoleDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName), TaskContinuationOptions.ExecuteSynchronously);
+                taskFileIOactivateCodeList.Add(1);
+                taskFileIOFilesList.Add(files);
+                setPathList.Add(null);
+                fileCopyListSetList.Add(0);
+                prograssBarList.Add(prograssBar);
+                labelWorkInProgressNumberList.Add(labelWorkInProgressNumber);
+                labelTotalProgressNumberList.Add(labelTotalProgressNumber);
+                workInIOStatusList.Add(workInIOStatus);
+                workInProgressNameList.Add(WorkInProgressName);
             }
-            else
+
+            if (this.taskFileIO == null)
             {
-                taskFileIO = Task.Run(() => this.FoleDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName));
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
+            }
+            else if (this.taskFileIO.Status == TaskStatus.RanToCompletion)
+            {
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
             }
         }
 
@@ -240,14 +333,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="Path"></param>
         public void DeleteDictionary(string Path)
         {
-            if (this.taskFileIO != null)
-            {
-                this.taskFileIO.ContinueWith((task) => CustomIOMainger.DirDelete(Path), TaskContinuationOptions.ExecuteSynchronously);
-            }
-            else
-            {
-                this.taskFileIO = Task.Run(() => CustomIOMainger.DirDelete(Path));
-            }
+            Task.Run(() => CustomIOMainger.DirDelete(Path));
         }
     }
 }

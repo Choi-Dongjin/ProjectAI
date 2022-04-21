@@ -63,16 +63,21 @@ namespace ProjectAI.TrainForms
         /// WaitingforWork 처리 Task
         /// </summary>
         private Task taskWaitingforWork;
+        private List<string> taskWaitingforWorkList = new List<string>();
 
         /// <summary>
         /// Processing 처리 Task
         /// </summary>
         private Task taskProcessing;
+        private List<string> taskProcessingList = new List<string>();
+        private List<string> taskProcessingCorePaht = new List<string>();
 
         /// <summary>
         /// 프로세스 완료 결과 저장 데이터 저장 처리 Task
         /// </summary>
         private Task taskDone;
+        private List<string> taskDonegList = new List<string>();
+        private List<string> taskDoneCorePaht = new List<string>();
 
         /// <summary>
         /// 이전 프로그램 동작시 학습이 완료 되었던 임시 파일 삭제 처리 Task
@@ -2642,14 +2647,41 @@ namespace ProjectAI.TrainForms
 
                 if (processSet == "WaitingforWork")
                 {
-                    if (this.taskWaitingforWork != null)
+                    lock (this.taskWaitingforWorkList)
                     {
-                        this.taskWaitingforWork.ContinueWith((task) => this.ActiveProcessWaitingforWork((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone()), TaskContinuationOptions.ExecuteSynchronously);
+                        this.taskWaitingforWorkList.Add(processName);
+                    }
+                    if (this.taskWaitingforWork == null)
+                        this.taskWaitingforWork = Task.Run(() => this.TaskWaitingforManiger());
+                    else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
+                    {
+                        this.taskWaitingforWork = Task.Run(() => this.TaskWaitingforManiger());
+                    }
+                }
+            }
+        }
+        private void TaskWaitingforManiger()
+        {
+            while (true)
+            {
+                string processName = null;
+                lock (this.taskWaitingforWorkList)
+                {
+                    if (this.taskWaitingforWorkList.Count > 0)
+                    {
+                        processName = this.taskWaitingforWorkList[0];
+                        this.taskWaitingforWorkList.RemoveAt(0);
                     }
                     else
                     {
-                        this.taskWaitingforWork = Task.Run(() => this.ActiveProcessWaitingforWork((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone()));
+                        //this.taskWaitingforWork = null;
+                        break;
                     }
+                }
+                if (processName != null)
+                {
+                    Task task = Task.Run(() => this.ActiveProcessWaitingforWork((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone()));
+                    task.Wait();
                 }
             }
         }
@@ -2700,23 +2732,51 @@ namespace ProjectAI.TrainForms
                 {
                     if (processStep == "EndPreprocess")
                     {
+                        lock (this.taskProcessingList)
+                            lock (this.taskProcessingCorePaht)
+                            {
+                                this.taskProcessingList.Add(processAccesscode);
+                                this.taskProcessingCorePaht.Add(corePath);
+                            }
+
                         if (this.taskProcessing != null)
                         {
-                            if (this.taskProcessing.Status == TaskStatus.RanToCompletion)
-                            {
-                                this.taskProcessing = Task.Run(() => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath));
-                            }
-                            else
-                            {
-                                this.taskProcessing.ContinueWith((task) => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath), TaskContinuationOptions.ExecuteSynchronously);
-                            }
+                            this.taskProcessing = Task.Run(() => this.TaskProcessingManiger());
                         }
-                        else
+                        else if (this.taskProcessing.Status == TaskStatus.RanToCompletion)
                         {
-                            this.taskProcessing = Task.Run(() => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath));
+                            this.taskProcessing = Task.Run(() => this.TaskProcessingManiger());
                         }
                     }
                 }
+        }
+        private void TaskProcessingManiger()
+        {
+            while (true)
+            {
+                string processAccesscode = null;
+                string corePath = null;
+                lock (this.taskProcessingList)
+                    lock (this.taskProcessingCorePaht)
+                    {
+                        if (this.taskProcessingList.Count > 0)
+                        {
+                            processAccesscode = this.taskProcessingList[0];
+                            corePath = this.taskProcessingCorePaht[0];
+
+                            this.taskProcessingList.RemoveAt(0);
+                            this.taskProcessingCorePaht.RemoveAt(0);
+                        }
+                        else
+                            break;
+                    }
+                if (processAccesscode != null)
+                {
+                    Task task = Task.Run(() => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath));
+                    task.Wait();
+                }
+            }
+
         }
 
         /// <summary>
@@ -2853,13 +2913,50 @@ namespace ProjectAI.TrainForms
                 {
                 }
 
-            if (this.taskProcessing != null)
+            lock (this.taskDonegList)
+                lock (this.taskDoneCorePaht)
+                {
+                    this.taskDonegList.Add(processAccesscode);
+                    this.taskDoneCorePaht.Add(corePath);
+                }
+
+            if (this.taskDone != null)
             {
-                this.taskDone.ContinueWith((task) => this.ActiveProcessClassificationSaveResult((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath, WorkSpaceEarlyData.m_workSpacDataPath), TaskContinuationOptions.ExecuteSynchronously);
+                this.taskDone = Task.Run(() => this.TaskDoneManiger());
             }
-            else
+            else if (this.taskDone.Status == TaskStatus.RanToCompletion)
             {
-                this.taskDone = Task.Run(() => this.ActiveProcessClassificationSaveResult((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath, WorkSpaceEarlyData.m_workSpacDataPath));
+                this.taskDone = Task.Run(() => this.TaskDoneManiger());
+            }
+        }
+        private void TaskDoneManiger()
+        {
+            while (true)
+            {
+                string processAccesscode = null;
+                string corePath = null;
+
+                lock (this.taskDonegList)
+                    lock (this.taskDoneCorePaht)
+                    {
+                        if (this.taskDonegList.Count > 0)
+                        {
+                            processAccesscode = this.taskDonegList[0];
+                            corePath = this.taskDoneCorePaht[0];
+
+                            this.taskDonegList.RemoveAt(0);
+                            this.taskDoneCorePaht.RemoveAt(0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                if (processAccesscode != null)
+                {
+                    Task task = Task.Run(() => this.ActiveProcessClassificationSaveResult((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath, WorkSpaceEarlyData.m_workSpacDataPath));
+                    task.Wait();
+                }
             }
         }
 
