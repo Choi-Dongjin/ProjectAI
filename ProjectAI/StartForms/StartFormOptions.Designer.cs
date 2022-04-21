@@ -32,18 +32,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartFormOptions));
             this.styleManagerStartFormOptions = new MetroFramework.Components.MetroStyleManager(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.lblMoptionLanguage = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.cmbMoptionLanguage = new MetroFramework.Controls.MetroComboBox();
+            this.btnMGetSystemInfo = new MetroFramework.Controls.MetroButton();
             this.lblMoptionReset = new MetroFramework.Controls.MetroLabel();
             this.btnMoptionReset = new MetroFramework.Controls.MetroButton();
-            this.cmbMoptionLanguage = new MetroFramework.Controls.MetroComboBox();
-            this.lblMoptionLanguage = new MetroFramework.Controls.MetroLabel();
-            this.btnMGetSystemInfo = new MetroFramework.Controls.MetroButton();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutStartOptionMain = new System.Windows.Forms.TableLayoutPanel();
             this.btnMstartOptionsOK = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsCancel = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsApply = new MetroFramework.Controls.MetroButton();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerStartFormOptions)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutStartOptionMain.SuspendLayout();
@@ -68,6 +68,40 @@
             this.tableLayoutPanel1.Controls.Add(this.metroLabel3, 0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
+            // metroLabel1
+            // 
+            resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel1.Name = "metroLabel1";
+            // 
+            // lblMoptionLanguage
+            // 
+            resources.ApplyResources(this.lblMoptionLanguage, "lblMoptionLanguage");
+            this.lblMoptionLanguage.Name = "lblMoptionLanguage";
+            // 
+            // metroLabel2
+            // 
+            resources.ApplyResources(this.metroLabel2, "metroLabel2");
+            this.metroLabel2.Name = "metroLabel2";
+            // 
+            // cmbMoptionLanguage
+            // 
+            this.cmbMoptionLanguage.FormattingEnabled = true;
+            resources.ApplyResources(this.cmbMoptionLanguage, "cmbMoptionLanguage");
+            this.cmbMoptionLanguage.Items.AddRange(new object[] {
+            resources.GetString("cmbMoptionLanguage.Items"),
+            resources.GetString("cmbMoptionLanguage.Items1")});
+            this.cmbMoptionLanguage.Name = "cmbMoptionLanguage";
+            this.cmbMoptionLanguage.UseSelectable = true;
+            // 
+            // btnMGetSystemInfo
+            // 
+            this.btnMGetSystemInfo.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.btnMGetSystemInfo, "btnMGetSystemInfo");
+            this.btnMGetSystemInfo.Name = "btnMGetSystemInfo";
+            this.btnMGetSystemInfo.UseSelectable = true;
+            this.btnMGetSystemInfo.Click += new System.EventHandler(this.BtnMGetSystemInfoClick);
+            // 
             // lblMoptionReset
             // 
             resources.ApplyResources(this.lblMoptionReset, "lblMoptionReset");
@@ -81,39 +115,11 @@
             this.btnMoptionReset.UseSelectable = true;
             this.btnMoptionReset.Click += new System.EventHandler(this.BtnMoptionResetClick);
             // 
-            // cmbMoptionLanguage
+            // metroLabel3
             // 
-            this.cmbMoptionLanguage.FormattingEnabled = true;
-            resources.ApplyResources(this.cmbMoptionLanguage, "cmbMoptionLanguage");
-            this.cmbMoptionLanguage.Items.AddRange(new object[] {
-            resources.GetString("cmbMoptionLanguage.Items"),
-            resources.GetString("cmbMoptionLanguage.Items1")});
-            this.cmbMoptionLanguage.Name = "cmbMoptionLanguage";
-            this.cmbMoptionLanguage.UseSelectable = true;
-            // 
-            // lblMoptionLanguage
-            // 
-            resources.ApplyResources(this.lblMoptionLanguage, "lblMoptionLanguage");
-            this.lblMoptionLanguage.Name = "lblMoptionLanguage";
-            // 
-            // btnMGetSystemInfo
-            // 
-            this.btnMGetSystemInfo.ForeColor = System.Drawing.SystemColors.ControlText;
-            resources.ApplyResources(this.btnMGetSystemInfo, "btnMGetSystemInfo");
-            this.btnMGetSystemInfo.Name = "btnMGetSystemInfo";
-            this.btnMGetSystemInfo.UseSelectable = true;
-            this.btnMGetSystemInfo.Click += new System.EventHandler(this.BtnMGetSystemInfoClick);
-            // 
-            // metroLabel2
-            // 
-            resources.ApplyResources(this.metroLabel2, "metroLabel2");
-            this.metroLabel2.Name = "metroLabel2";
-            // 
-            // metroLabel1
-            // 
-            resources.ApplyResources(this.metroLabel1, "metroLabel1");
-            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel1.Name = "metroLabel1";
+            resources.ApplyResources(this.metroLabel3, "metroLabel3");
+            this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel3.Name = "metroLabel3";
             // 
             // tableLayoutStartOptionMain
             // 
@@ -144,12 +150,6 @@
             this.btnMstartOptionsApply.Name = "btnMstartOptionsApply";
             this.btnMstartOptionsApply.UseSelectable = true;
             this.btnMstartOptionsApply.Click += new System.EventHandler(this.BtnMstartOptionsApplyClick);
-            // 
-            // metroLabel3
-            // 
-            resources.ApplyResources(this.metroLabel3, "metroLabel3");
-            this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel3.Name = "metroLabel3";
             // 
             // StartFormOptions
             // 

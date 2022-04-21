@@ -17,6 +17,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
         {
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
         }
 
         /// <summary>

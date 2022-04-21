@@ -76,7 +76,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             ProjectAI.MainForms.UserContral.Classification.ClassWeightControl classWeightControl = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             classWeightControl.BackgroundImage = global::ProjectAI.Properties.Resources.border1;
             classWeightControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.metroStyleExtender1.SetApplyMetroTheme(classWeightControl, true);
+            //this.metroStyleExtender1.SetApplyMetroTheme(classWeightControl, true);
             classWeightControl.Dock = System.Windows.Forms.DockStyle.Top;
             classWeightControl.Margin = new System.Windows.Forms.Padding(0);
             classWeightControl.Name = className;
@@ -291,7 +291,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
              * 2. Image Size
              */
             // Batch Size 설정
-            TrainOptionData.Add(PackingString($"batch_sz |{4}|"));
+            TrainOptionData.Add(PackingString($"batch_sz |{2}|"));
             // Start Learning rate 설정
             TrainOptionData.Add(PackingString($"lr_0 |{1e-3}|"));
             // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
@@ -1031,7 +1031,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             JObject jObject = new JObject
             {
                 ["int_imageChannel"] = 3,
-                ["int_imageSize"] = 512
+                ["int_imageSize"] = 256
             };
 
             // Image Option 정보 가져오기
@@ -1047,7 +1047,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             JObject jObject = new JObject
             {
-                ["int_dataLoaderNUmberofWorkers"] = 4
+                ["int_dataLoaderNUmberofWorkers"] = 8
             };
 
             // Image Option 정보 가져오기
@@ -1428,11 +1428,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.DataAugmentationGetValue("Sharpen", this.txtSharpen);
         }
 
-        private void tilMGradation_Click(object sender, EventArgs e)
+        private void TilMGradationClick(object sender, EventArgs e)
         {
             this.DataAugmentationGetValue("Gradation", this.txtGradation);
         }
-        private void tilMZoom_Click(object sender, EventArgs e)
+        private void TilMGradationRGBClick(object sender, EventArgs e)
+        {
+            this.DataAugmentationGetValue("GradationRGB", this.txtGradation);
+        }
+        private void TilMZoomClick(object sender, EventArgs e)
         {
             this.DataAugmentationGetValue("Zoom", this.txtZoomMax);
         }
@@ -1958,5 +1962,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
 
         }
+
+
     }
 }

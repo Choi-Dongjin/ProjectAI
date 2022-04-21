@@ -28,9 +28,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassificationTrainOptions));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -82,11 +82,8 @@
             this.panelMContrastToolTip = new MetroFramework.Controls.MetroPanel();
             this.panelMCenterToolTip = new MetroFramework.Controls.MetroPanel();
             this.tilMZoom = new MetroFramework.Controls.MetroTile();
-            this.tilMContrast = new MetroFramework.Controls.MetroTile();
-            this.tilMGradationRGB = new MetroFramework.Controls.MetroTile();
             this.txtBlur = new System.Windows.Forms.TextBox();
             this.tilMBrightness = new MetroFramework.Controls.MetroTile();
-            this.tilMGradation = new MetroFramework.Controls.MetroTile();
             this.ckbMHorizontalFlip = new MetroFramework.Controls.MetroCheckBox();
             this.ckbMBlur = new MetroFramework.Controls.MetroCheckBox();
             this.ckbMContrast = new MetroFramework.Controls.MetroCheckBox();
@@ -130,6 +127,9 @@
             this.tilMGaussianNoise = new MetroFramework.Controls.MetroTile();
             this.panelMBrightnessToolTip = new MetroFramework.Controls.MetroPanel();
             this.panelMGaussianNoiseToolTip = new MetroFramework.Controls.MetroPanel();
+            this.tilMContrast = new MetroFramework.Controls.MetroTile();
+            this.tilMGradation = new MetroFramework.Controls.MetroTile();
+            this.tilMGradationRGB = new MetroFramework.Controls.MetroTile();
             this.tlpContinualLearning = new System.Windows.Forms.TableLayoutPanel();
             this.lblMContinualLearning = new MetroFramework.Controls.MetroLabel();
             this.togMContinualLearning = new MetroFramework.Controls.MetroToggle();
@@ -375,9 +375,9 @@
             this.lblMmodelMinimumSelectionEpoch.AutoSize = true;
             this.lblMmodelMinimumSelectionEpoch.Location = new System.Drawing.Point(3, 118);
             this.lblMmodelMinimumSelectionEpoch.Name = "lblMmodelMinimumSelectionEpoch";
-            this.lblMmodelMinimumSelectionEpoch.Size = new System.Drawing.Size(103, 19);
+            this.lblMmodelMinimumSelectionEpoch.Size = new System.Drawing.Size(105, 19);
             this.lblMmodelMinimumSelectionEpoch.TabIndex = 7;
-            this.lblMmodelMinimumSelectionEpoch.Text = "Minimum Select";
+            this.lblMmodelMinimumSelectionEpoch.Text = "Epoch Minimum";
             this.lblMmodelMinimumSelectionEpoch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblMtrainRepeat
@@ -405,9 +405,9 @@
             this.lblMpatienceEpochs.AutoSize = true;
             this.lblMpatienceEpochs.Location = new System.Drawing.Point(3, 139);
             this.lblMpatienceEpochs.Name = "lblMpatienceEpochs";
-            this.lblMpatienceEpochs.Size = new System.Drawing.Size(102, 19);
+            this.lblMpatienceEpochs.Size = new System.Drawing.Size(97, 19);
             this.lblMpatienceEpochs.TabIndex = 10;
-            this.lblMpatienceEpochs.Text = "Patience Epochs";
+            this.lblMpatienceEpochs.Text = "Epoch Patience";
             this.lblMpatienceEpochs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblMTrainDataNumber
@@ -743,7 +743,6 @@
             this.tableLayoutPanel1.Controls.Add(this.panelMContrastToolTip, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.panelMCenterToolTip, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.tilMZoom, 10, 13);
-            this.tableLayoutPanel1.Controls.Add(this.tilMGradationRGB, 4, 13);
             this.tableLayoutPanel1.Controls.Add(this.txtBlur, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.tilMBrightness, 4, 3);
             this.tableLayoutPanel1.Controls.Add(this.ckbMHorizontalFlip, 6, 1);
@@ -790,6 +789,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panelMBrightnessToolTip, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.panelMGaussianNoiseToolTip, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.tilMContrast, 4, 7);
+            this.tableLayoutPanel1.Controls.Add(this.tilMGradationRGB, 4, 13);
             this.tableLayoutPanel1.Controls.Add(this.tilMGradation, 4, 11);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 181);
@@ -1001,30 +1001,7 @@
             this.tilMZoom.Size = new System.Drawing.Size(18, 18);
             this.tilMZoom.TabIndex = 8;
             this.tilMZoom.UseSelectable = true;
-            this.tilMZoom.Click += new System.EventHandler(this.tilMZoom_Click);
-            // 
-            // tilMContrast
-            // 
-            this.tilMContrast.ActiveControl = null;
-            this.tilMContrast.Enabled = false;
-            this.tilMContrast.Location = new System.Drawing.Point(201, 99);
-            this.tilMContrast.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMContrast.Name = "tilMContrast";
-            this.tilMContrast.Size = new System.Drawing.Size(18, 18);
-            this.tilMContrast.TabIndex = 7;
-            this.tilMContrast.UseSelectable = true;
-            this.tilMContrast.Click += new System.EventHandler(this.TilMContrastClick);
-            // 
-            // tilMGradationRGB
-            // 
-            this.tilMGradationRGB.ActiveControl = null;
-            this.tilMGradationRGB.Enabled = false;
-            this.tilMGradationRGB.Location = new System.Drawing.Point(201, 162);
-            this.tilMGradationRGB.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMGradationRGB.Name = "tilMGradationRGB";
-            this.tilMGradationRGB.Size = new System.Drawing.Size(18, 18);
-            this.tilMGradationRGB.TabIndex = 10;
-            this.tilMGradationRGB.UseSelectable = true;
+            this.tilMZoom.Click += new System.EventHandler(this.TilMZoomClick);
             // 
             // txtBlur
             // 
@@ -1055,18 +1032,6 @@
             this.tilMBrightness.TabIndex = 5;
             this.tilMBrightness.UseSelectable = true;
             this.tilMBrightness.Click += new System.EventHandler(this.TilMBrightnessClick);
-            // 
-            // tilMGradation
-            // 
-            this.tilMGradation.ActiveControl = null;
-            this.tilMGradation.Enabled = false;
-            this.tilMGradation.Location = new System.Drawing.Point(201, 141);
-            this.tilMGradation.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMGradation.Name = "tilMGradation";
-            this.tilMGradation.Size = new System.Drawing.Size(18, 18);
-            this.tilMGradation.TabIndex = 11;
-            this.tilMGradation.UseSelectable = true;
-            this.tilMGradation.Click += new System.EventHandler(this.tilMGradation_Click);
             // 
             // ckbMHorizontalFlip
             // 
@@ -1642,6 +1607,42 @@
             this.panelMGaussianNoiseToolTip.VerticalScrollbarHighlightOnWheel = false;
             this.panelMGaussianNoiseToolTip.VerticalScrollbarSize = 10;
             // 
+            // tilMContrast
+            // 
+            this.tilMContrast.ActiveControl = null;
+            this.tilMContrast.Enabled = false;
+            this.tilMContrast.Location = new System.Drawing.Point(201, 99);
+            this.tilMContrast.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMContrast.Name = "tilMContrast";
+            this.tilMContrast.Size = new System.Drawing.Size(18, 18);
+            this.tilMContrast.TabIndex = 7;
+            this.tilMContrast.UseSelectable = true;
+            this.tilMContrast.Click += new System.EventHandler(this.TilMContrastClick);
+            // 
+            // tilMGradation
+            // 
+            this.tilMGradation.ActiveControl = null;
+            this.tilMGradation.Enabled = false;
+            this.tilMGradation.Location = new System.Drawing.Point(201, 141);
+            this.tilMGradation.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMGradation.Name = "tilMGradation";
+            this.tilMGradation.Size = new System.Drawing.Size(18, 18);
+            this.tilMGradation.TabIndex = 11;
+            this.tilMGradation.UseSelectable = true;
+            this.tilMGradation.Click += new System.EventHandler(this.TilMGradationClick);
+            // 
+            // tilMGradationRGB
+            // 
+            this.tilMGradationRGB.ActiveControl = null;
+            this.tilMGradationRGB.Enabled = false;
+            this.tilMGradationRGB.Location = new System.Drawing.Point(201, 162);
+            this.tilMGradationRGB.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMGradationRGB.Name = "tilMGradationRGB";
+            this.tilMGradationRGB.Size = new System.Drawing.Size(18, 18);
+            this.tilMGradationRGB.TabIndex = 10;
+            this.tilMGradationRGB.UseSelectable = true;
+            this.tilMGradationRGB.Click += new System.EventHandler(this.TilMGradationRGBClick);
+            // 
             // tlpContinualLearning
             // 
             this.tlpContinualLearning.ColumnCount = 1;
@@ -1705,22 +1706,22 @@
             this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
             this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -1730,14 +1731,14 @@
             this.dgvMContinualLearning.Name = "dgvMContinualLearning";
             this.dgvMContinualLearning.ReadOnly = true;
             this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMContinualLearning.RowHeadersVisible = false;
             this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMContinualLearning.RowTemplate.Height = 23;

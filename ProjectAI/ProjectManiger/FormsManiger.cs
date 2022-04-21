@@ -68,12 +68,14 @@ namespace ProjectAI
                     chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.White;
                     chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.White;
                     chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.White;
+                    chart.ChartAreas[0].AxisX.TitleForeColor = Color.White;
                     chart.ChartAreas[0].AxisY.LineColor = Color.White;
                     chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
                     chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
                     chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.White;
                     chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.White;
                     chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.White;
+
                 }
             }
             catch
@@ -98,6 +100,7 @@ namespace ProjectAI
                     chart.ChartAreas[0].AxisX.MajorTickMark.LineColor = Color.Black;
                     chart.ChartAreas[0].AxisX.MinorGrid.LineColor = Color.Black;
                     chart.ChartAreas[0].AxisX.MinorTickMark.LineColor = Color.Black;
+                    chart.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
                     chart.ChartAreas[0].AxisY.LineColor = Color.Black;
                     chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Black;
                     chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.Black;

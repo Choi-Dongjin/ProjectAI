@@ -50,6 +50,9 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.imageFilesAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageFilesAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageFolderAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.imageLabelingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -60,12 +63,13 @@
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.imageLabelInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageSetInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutImageDataManiger = new System.Windows.Forms.TableLayoutPanel();
+            this.lblImageListpageMid = new System.Windows.Forms.Label();
+            this.lblImageListpage = new System.Windows.Forms.Label();
             this.btnimagePageReverse = new System.Windows.Forms.Button();
             this.btnimagePageNext = new System.Windows.Forms.Button();
             this.lblImageListpageTotal = new System.Windows.Forms.Label();
-            this.lblImageListpageMid = new System.Windows.Forms.Label();
-            this.lblImageListpage = new System.Windows.Forms.Label();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
             this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
             this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
@@ -284,7 +288,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -380,6 +384,9 @@
             this.toolStripSeparator11,
             this.imageFilesAddToolStripMenuItem1,
             this.imageFolderAddToolStripMenuItem1,
+            this.toolStripSeparator14,
+            this.imageFilesAddWizardToolStripMenuItem,
+            this.imageFolderAddWizardToolStripMenuItem,
             this.toolStripSeparator7,
             this.imageLabelingToolStripMenuItem1,
             this.toolStripSeparator8,
@@ -389,22 +396,23 @@
             this.imageDeleteToolStripMenuItem1,
             this.toolStripSeparator10,
             this.imageLabelInfoResetToolStripMenuItem,
-            this.imageSetInfoResetToolStripMenuItem});
+            this.imageSetInfoResetToolStripMenuItem,
+            this.toolStripSeparator15});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(205, 274);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 346);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(216, 6);
             // 
             // imageFilesAddToolStripMenuItem1
             // 
             this.imageFilesAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open_source;
             this.imageFilesAddToolStripMenuItem1.Name = "imageFilesAddToolStripMenuItem1";
-            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageFilesAddToolStripMenuItem1.Text = "Image File Add";
             this.imageFilesAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFilesAddToolStripMenuItem1Click);
             // 
@@ -412,33 +420,54 @@
             // 
             this.imageFolderAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open2;
             this.imageFolderAddToolStripMenuItem1.Name = "imageFolderAddToolStripMenuItem1";
-            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageFolderAddToolStripMenuItem1.Text = "Image Folder Add";
             this.imageFolderAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFolderAddToolStripMenuItem1Click);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageFilesAddWizardToolStripMenuItem
+            // 
+            this.imageFilesAddWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_sourceWizard;
+            this.imageFilesAddWizardToolStripMenuItem.Name = "imageFilesAddWizardToolStripMenuItem";
+            this.imageFilesAddWizardToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageFilesAddWizardToolStripMenuItem.Text = "Image Files Add Wizard";
+            this.imageFilesAddWizardToolStripMenuItem.Click += new System.EventHandler(this.ImageFilesAddWizardToolStripMenuItemClick);
+            // 
+            // imageFolderAddWizardToolStripMenuItem
+            // 
+            this.imageFolderAddWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open2Wizard;
+            this.imageFolderAddWizardToolStripMenuItem.Name = "imageFolderAddWizardToolStripMenuItem";
+            this.imageFolderAddWizardToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageFolderAddWizardToolStripMenuItem.Text = "Image Folder Add Wizard";
+            this.imageFolderAddWizardToolStripMenuItem.Click += new System.EventHandler(this.ImageFolderAddWizardToolStripMenuItemClick);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
             // 
             // imageLabelingToolStripMenuItem1
             // 
             this.imageLabelingToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.product_development1;
             this.imageLabelingToolStripMenuItem1.Name = "imageLabelingToolStripMenuItem1";
-            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageLabelingToolStripMenuItem1.Text = "Image Labeling";
             this.imageLabelingToolStripMenuItem1.Click += new System.EventHandler(this.ImageLabelingToolStripMenuItem1Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(216, 6);
             // 
             // imageSetTrainToolStripMenuItem1
             // 
             this.imageSetTrainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.book;
             this.imageSetTrainToolStripMenuItem1.Name = "imageSetTrainToolStripMenuItem1";
-            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageSetTrainToolStripMenuItem1.Text = "Image Set Train";
             this.imageSetTrainToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTrainToolStripMenuItem1Click);
             // 
@@ -446,33 +475,33 @@
             // 
             this.imageSetTestToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.completed_task;
             this.imageSetTestToolStripMenuItem1.Name = "imageSetTestToolStripMenuItem1";
-            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageSetTestToolStripMenuItem1.Text = "Image Set Test";
             this.imageSetTestToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTestToolStripMenuItem1Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(216, 6);
             // 
             // imageDeleteToolStripMenuItem1
             // 
             this.imageDeleteToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.delete;
             this.imageDeleteToolStripMenuItem1.Name = "imageDeleteToolStripMenuItem1";
-            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(204, 30);
+            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageDeleteToolStripMenuItem1.Text = "Image Delete";
             this.imageDeleteToolStripMenuItem1.Click += new System.EventHandler(this.ImageDeleteToolStripMenuItem1Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(216, 6);
             // 
             // imageLabelInfoResetToolStripMenuItem
             // 
             this.imageLabelInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.refresh2;
             this.imageLabelInfoResetToolStripMenuItem.Name = "imageLabelInfoResetToolStripMenuItem";
-            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(204, 30);
+            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
             this.imageLabelInfoResetToolStripMenuItem.Text = "Image Label Info Reset";
             this.imageLabelInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageLabelInfoResetToolStripMenuItemClick);
             // 
@@ -480,80 +509,42 @@
             // 
             this.imageSetInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.reset;
             this.imageSetInfoResetToolStripMenuItem.Name = "imageSetInfoResetToolStripMenuItem";
-            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(204, 30);
+            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
             this.imageSetInfoResetToolStripMenuItem.Text = "Image Set Info Reset";
             this.imageSetInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageSetInfoResetToolStripMenuItemClick);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(216, 6);
             // 
             // tableLayoutImageDataManiger
             // 
             this.tableLayoutImageDataManiger.ColumnCount = 7;
             this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageMid, 3, 0);
+            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpage, 2, 0);
             this.tableLayoutImageDataManiger.Controls.Add(this.btnimagePageReverse, 1, 0);
             this.tableLayoutImageDataManiger.Controls.Add(this.btnimagePageNext, 5, 0);
             this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageTotal, 4, 0);
-            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageMid, 3, 0);
-            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpage, 2, 0);
             this.tableLayoutImageDataManiger.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutImageDataManiger.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutImageDataManiger.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutImageDataManiger.Name = "tableLayoutImageDataManiger";
             this.tableLayoutImageDataManiger.RowCount = 1;
             this.tableLayoutImageDataManiger.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutImageDataManiger.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutImageDataManiger.Size = new System.Drawing.Size(246, 35);
             this.tableLayoutImageDataManiger.TabIndex = 0;
             // 
-            // btnimagePageReverse
-            // 
-            this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageReverse, true);
-            this.btnimagePageReverse.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageReverse.BackgroundImage")));
-            this.btnimagePageReverse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnimagePageReverse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnimagePageReverse.FlatAppearance.BorderSize = 0;
-            this.btnimagePageReverse.Location = new System.Drawing.Point(58, 0);
-            this.btnimagePageReverse.Margin = new System.Windows.Forms.Padding(0);
-            this.btnimagePageReverse.Name = "btnimagePageReverse";
-            this.btnimagePageReverse.Size = new System.Drawing.Size(35, 35);
-            this.btnimagePageReverse.TabIndex = 2;
-            this.btnimagePageReverse.UseVisualStyleBackColor = true;
-            this.btnimagePageReverse.Click += new System.EventHandler(this.BtnimagePageReverseClick);
-            // 
-            // btnimagePageNext
-            // 
-            this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageNext, true);
-            this.btnimagePageNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageNext.BackgroundImage")));
-            this.btnimagePageNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnimagePageNext.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnimagePageNext.FlatAppearance.BorderSize = 0;
-            this.btnimagePageNext.Location = new System.Drawing.Point(153, 0);
-            this.btnimagePageNext.Margin = new System.Windows.Forms.Padding(0);
-            this.btnimagePageNext.Name = "btnimagePageNext";
-            this.btnimagePageNext.Size = new System.Drawing.Size(35, 35);
-            this.btnimagePageNext.TabIndex = 3;
-            this.btnimagePageNext.UseVisualStyleBackColor = true;
-            this.btnimagePageNext.Click += new System.EventHandler(this.BtnimagePageNextClick);
-            // 
-            // lblImageListpageTotal
-            // 
-            this.lblImageListpageTotal.AutoSize = true;
-            this.lblImageListpageTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblImageListpageTotal.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
-            this.lblImageListpageTotal.Location = new System.Drawing.Point(128, 0);
-            this.lblImageListpageTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.lblImageListpageTotal.Name = "lblImageListpageTotal";
-            this.lblImageListpageTotal.Size = new System.Drawing.Size(25, 35);
-            this.lblImageListpageTotal.TabIndex = 9;
-            this.lblImageListpageTotal.Text = "0";
-            this.lblImageListpageTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // lblImageListpageMid
             // 
+            this.styleExtenderMainForm.SetApplyMetroTheme(this.lblImageListpageMid, true);
             this.lblImageListpageMid.AutoSize = true;
             this.lblImageListpageMid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblImageListpageMid.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -567,17 +558,62 @@
             // 
             // lblImageListpage
             // 
+            this.styleExtenderMainForm.SetApplyMetroTheme(this.lblImageListpage, true);
             this.lblImageListpage.AutoSize = true;
             this.lblImageListpage.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblImageListpage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblImageListpage.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
-            this.lblImageListpage.Location = new System.Drawing.Point(93, 0);
+            this.lblImageListpage.Location = new System.Drawing.Point(98, 0);
             this.lblImageListpage.Margin = new System.Windows.Forms.Padding(0);
             this.lblImageListpage.Name = "lblImageListpage";
-            this.lblImageListpage.Size = new System.Drawing.Size(25, 35);
+            this.lblImageListpage.Size = new System.Drawing.Size(20, 35);
             this.lblImageListpage.TabIndex = 10;
             this.lblImageListpage.Text = "0";
             this.lblImageListpage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImageListpage.TextChanged += new System.EventHandler(this.LblImageListpageTextChanged);
+            // 
+            // btnimagePageReverse
+            // 
+            this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageReverse, true);
+            this.btnimagePageReverse.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageReverse.BackgroundImage")));
+            this.btnimagePageReverse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnimagePageReverse.FlatAppearance.BorderSize = 0;
+            this.btnimagePageReverse.Location = new System.Drawing.Point(63, 0);
+            this.btnimagePageReverse.Margin = new System.Windows.Forms.Padding(0);
+            this.btnimagePageReverse.Name = "btnimagePageReverse";
+            this.btnimagePageReverse.Size = new System.Drawing.Size(35, 35);
+            this.btnimagePageReverse.TabIndex = 2;
+            this.btnimagePageReverse.UseVisualStyleBackColor = true;
+            this.btnimagePageReverse.Click += new System.EventHandler(this.BtnimagePageReverseClick);
+            // 
+            // btnimagePageNext
+            // 
+            this.styleExtenderMainForm.SetApplyMetroTheme(this.btnimagePageNext, true);
+            this.btnimagePageNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageNext.BackgroundImage")));
+            this.btnimagePageNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnimagePageNext.FlatAppearance.BorderSize = 0;
+            this.btnimagePageNext.Location = new System.Drawing.Point(148, 0);
+            this.btnimagePageNext.Margin = new System.Windows.Forms.Padding(0);
+            this.btnimagePageNext.Name = "btnimagePageNext";
+            this.btnimagePageNext.Size = new System.Drawing.Size(35, 35);
+            this.btnimagePageNext.TabIndex = 3;
+            this.btnimagePageNext.UseVisualStyleBackColor = true;
+            this.btnimagePageNext.Click += new System.EventHandler(this.BtnimagePageNextClick);
+            // 
+            // lblImageListpageTotal
+            // 
+            this.styleExtenderMainForm.SetApplyMetroTheme(this.lblImageListpageTotal, true);
+            this.lblImageListpageTotal.AutoSize = true;
+            this.lblImageListpageTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblImageListpageTotal.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
+            this.lblImageListpageTotal.Location = new System.Drawing.Point(128, 0);
+            this.lblImageListpageTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.lblImageListpageTotal.Name = "lblImageListpageTotal";
+            this.lblImageListpageTotal.Size = new System.Drawing.Size(20, 35);
+            this.lblImageListpageTotal.TabIndex = 9;
+            this.lblImageListpageTotal.Text = "0";
+            this.lblImageListpageTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImageListpageTotal.TextChanged += new System.EventHandler(this.LblImageListpageTotalTextChanged);
             // 
             // tableLayoutDataReview
             // 
@@ -1306,7 +1342,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceProgramExit;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceTestButton;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
         private System.Windows.Forms.Label lblImageListpageMid;
         private System.Windows.Forms.ToolStripMenuItem imageAddToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageFolderAddToolStripMenuItem;
@@ -1376,5 +1411,10 @@
         public ImageCountLabel iclTotal;
         private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem changeStyleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem imageFilesAddWizardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageFolderAddWizardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
     }
 }

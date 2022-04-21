@@ -36,6 +36,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblWorkSpaceName = new MetroFramework.Controls.MetroLabel();
             this.btnWorkSpaceOpen = new System.Windows.Forms.Button();
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +56,7 @@
             // 
             // lblWorkSpaceVersion
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.lblWorkSpaceVersion, true);
             this.lblWorkSpaceVersion.AutoSize = true;
             this.lblWorkSpaceVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblWorkSpaceVersion.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -66,6 +68,7 @@
             // 
             // lblWorkSpaceSize
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.lblWorkSpaceSize, true);
             this.lblWorkSpaceSize.AutoSize = true;
             this.lblWorkSpaceSize.BackColor = System.Drawing.Color.Transparent;
             this.lblWorkSpaceSize.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -78,6 +81,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.tableLayoutPanel1, true);
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -126,6 +130,7 @@
             // 
             // WorkSpaceButton
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this, true);
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -152,5 +157,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroLabel lblWorkSpaceName;
         private System.Windows.Forms.Button btnWorkSpaceOpen;
+        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
     }
 }

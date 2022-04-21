@@ -33,10 +33,8 @@ namespace ProjectAI.MainForms
 
             // btnWorkSpaceOpen Click에 이벤트 등록
             this.btnWorkSpaceOpen.Click += BtnWorkSpaceOpenClickEvent;
-
-            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
-
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
+            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
-﻿using MetroFramework.Components;
-using OpenCvSharp;
+﻿using OpenCvSharp;
+using MetroFramework.Components;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -24,7 +24,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         public MinMaxExample()
         {
             InitializeComponent();
-            this.imageDataPath = @"C:\test.jpg";
             this.ImageRead(imageDataPath);
 
             // 이벤트 설정
@@ -79,7 +78,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 this.UISetUpGradation();
                 this.activeConverter += this.ConvertGradation;
             }
-            else if (exCase.Equals("gradationRGB"))
+            else if (exCase.Equals("gradationrgb"))
             {
                 this.UISetUpGradationRGB();
                 this.activeConverter += this.ConvertGradationRGB;
@@ -131,22 +130,24 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// <param name="imageDataPath"></param>
         private void ImageRead(string imageDataPath)
         {
-            //try
-            //{
-            //    Bitmap bitmap = CustomIOMainger.LoadBitmap(imageDataPath);
-            //    this.orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
-            //}
+            // 이미지 읽어오기
+            try
+            {
+                Bitmap bitmap = CustomIOMainger.LoadBitmap(imageDataPath);
+                this.orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+            }
 
-            this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+            //this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
 
-            //double resizeR = (double)1024 / Math.Sqrt((double)(this.orignalImage.Width * this.orignalImage.Height)); // 262144 -> (512 * 512)
-            //if (resizeR <= 1)
-            //    OpenCvSharp.Cv2.Resize(this.orignalImage, this.orignalImage, new OpenCvSharp.Size(0, 0), resizeR, resizeR);
+            // 이미지 축소
+            double resizeR = (double)1024 / Math.Sqrt((double)(this.orignalImage.Width * this.orignalImage.Height)); // 262144 -> (512 * 512)
+            if (resizeR <= 1)
+                OpenCvSharp.Cv2.Resize(this.orignalImage, this.orignalImage, new OpenCvSharp.Size(0, 0), resizeR, resizeR);
 
             //Cv2.ImShow("Image",this.orignalImage);
             //Console.WriteLine(this.orignalImage.Size());
@@ -751,7 +752,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 for (int r = 0; r < convertImage.Rows; r++)
                 {
                     double rValue = (double)r * (double)convertImage.Width / 255.0 * 0.5;
-                    Scalar bgr = new Scalar(0, 0, rValue);
+                    Scalar bgr = new Scalar(rValue, rValue, rValue);
                    convertImage.Row(r).SetTo(bgr);
                 }
                 convertImage.ConvertTo(convertImage, MatType.CV_8UC3, value, 0);
@@ -769,7 +770,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         /// </summary>
         public void UISetUpGradationRGB()
         {
-            this.trbMminimum.Enabled = true;
+            this.trbMminimum.Enabled = false;
             this.trbMminimum.Minimum = -255;
             this.trbMminimum.Maximum = 0;
             this.trbMminimum.Value = 0;

@@ -33,15 +33,26 @@ namespace ProjectAI.MainForms.UserContral.Classification
         private void ContinualLearningInnerModelSelecterLoad(object sender, EventArgs e)
         {
             // 차트 색 수정
-            this.chartLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartLoss.Series["Train"].Color = ColorTranslator.FromHtml("#41b6e6");
             this.chartLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
             this.chartLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
             this.chartLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
 
-            this.chartAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
+            this.chartAccuracy.Series["Train"].Color = ColorTranslator.FromHtml("#41b6e6");
             this.chartAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
             this.chartAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
             this.chartAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            // 차트 라인 수정
+            this.chartLoss.Series["Train"].BorderWidth = 2;
+            this.chartLoss.Series["Test"].BorderWidth = 2;
+            this.chartLoss.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartLoss.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartAccuracy.Series["Train"].BorderWidth = 2;
+            this.chartAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
         }
 
         private void ContinualLearningInnerModelSelecterShown(object sender, EventArgs e)
@@ -169,10 +180,10 @@ namespace ProjectAI.MainForms.UserContral.Classification
                             int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
                             int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
 
-                            this.chartLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
+                            this.chartLoss.Series["Train"].Points.AddXY(locationX, trainLoss);
                             this.chartLoss.Series["Test"].Points.AddXY(locationX, testLoss);
 
-                            this.chartAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
+                            this.chartAccuracy.Series["Train"].Points.AddXY(locationX, trainAcc);
                             this.chartAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
                         }
                     }

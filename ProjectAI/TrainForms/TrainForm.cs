@@ -468,7 +468,7 @@ namespace ProjectAI.TrainForms
         {
             if (metroTabPage.InvokeRequired)
             {
-                var d = new SafeCallChartClearDelegate(SafeChartClear);
+                var d = new SafeCallTapPageNumberChangeDelegate(SafeTapPageNumberChange);
                 Invoke(d, new object[] { metroTabPage, value });
             }
             else
@@ -725,6 +725,37 @@ namespace ProjectAI.TrainForms
             this.chartViewAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
             this.chartViewAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
             this.chartViewAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+
+            // 차트 BorderWidth 수정
+            this.chartProcessingLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["Test"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartProcessingAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartDoneLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartDoneLoss.Series["Test"].BorderWidth = 2;
+            this.chartDoneLoss.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartDoneLoss.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartDoneAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartViewLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartViewLoss.Series["Test"].BorderWidth = 2;
+            this.chartViewLoss.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartViewLoss.Series["selectModelDataTest"].BorderWidth = 2;
+
+            this.chartViewAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
         }
 
         private void TrainFormShown(object sender, EventArgs e)
@@ -1628,7 +1659,8 @@ namespace ProjectAI.TrainForms
 
             foreach (string fileName in CustomIOMainger.DirFileSerch(resultsEvalsFilePath, "Full"))
             {
-                System.IO.File.Copy(fileName, System.IO.Path.Combine(projectModelEvalsPath, modelList[0]), true);
+                if (modelList[0].Count() > 0)
+                    System.IO.File.Copy(fileName, System.IO.Path.Combine(projectModelEvalsPath, modelList[0]), true);
                 break;
             }
 
@@ -2670,7 +2702,14 @@ namespace ProjectAI.TrainForms
                     {
                         if (this.taskProcessing != null)
                         {
-                            this.taskProcessing.ContinueWith((task) => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath), TaskContinuationOptions.ExecuteSynchronously);
+                            if (this.taskProcessing.Status == TaskStatus.RanToCompletion)
+                            {
+                                this.taskProcessing = Task.Run(() => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath));
+                            }
+                            else
+                            {
+                                this.taskProcessing.ContinueWith((task) => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath), TaskContinuationOptions.ExecuteSynchronously);
+                            }
                         }
                         else
                         {
@@ -3113,186 +3152,194 @@ namespace ProjectAI.TrainForms
 
         private void UISetClassificationTrainInfo(JObject modelInfo)
         {
-            this.panelMTrainOption.Controls.Clear(); // 컨트롤 초기화
-            this.panelMTrainOption.Controls.Add(this.ClassificationTrainOptions); // 컨트롤 적용
-            this.ClassificationTrainOptions.Enabled = false;
-
-            // 5. Contral 정보 가져오기
-            // Trian Options 수동
-            string networkModel = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["string_NetworkModel"].ToString();
-            string epochNumber = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
-            string trainRepeat = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_TrainRepeat"].ToString();
-            string modelMinimumSelectionEpoch = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ModelMinimumSelectionEpoch"].ToString();
-            string validationRatio = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
-            string patienceEpochs = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
-
-            // Data Augmentation Manual 설정
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BlurChecked"].ToString(), out bool blurChecked);
-            string blur = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_Blur"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BrightnessChecked"].ToString(), out bool brightnessChecked);
-            string brightnessMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_BrightnessMin"].ToString();
-            string brightnessMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_BrightnessMax"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_CenterChecked"].ToString(), out bool centerChecked);
-            string center = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_Center"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_ContrastChecked"].ToString(), out bool contrastChecked);
-            string contrastMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_ContrastMin"].ToString();
-            string contrastMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_ContrastMax"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GaussianNoiseChecked"].ToString(), out bool gaussianNoiseChecked);
-            string gaussianNoise = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_GaussianNoise"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GaussianNoiseChecked"].ToString(), out bool gradationChecked);
-            string gradation = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_Gradation"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GradationRGBChecked"].ToString(), out bool gradationRGBChecked);
-            string gradationRGB = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_GradationRGB"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_HorizontalFlipChecked"].ToString(), out bool horizontalFlipChecked);
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation90Checked"].ToString(), out bool rotation90Checked);
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation180Checked"].ToString(), out bool rotation180Checked);
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation270Checked"].ToString(), out bool rotation270Checked);
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_SharpenChecked"].ToString(), out bool sharpenChecked);
-            string sharpen = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_Sharpen"].ToString();
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_VerticalFlipChecked"].ToString(), out bool verticalFlipChecked);
-
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomChecked"].ToString(), out bool zoomChecked);
-            string zoomMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomMin"].ToString();
-            string zoomMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomMax"].ToString();
-
-            // ContinualLearning
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["ContinualLearning"]["bool_ContinualLearningChecked"].ToString(), out bool continualLearningChecked);
-            string continualLearning = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearning"].ToString();
-
-            string continualLearningModelName = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelName"].ToString();
-            string continualLearningModelLoss = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelLoss"].ToString();
-            string continualLearningModelAccuracy = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelAccuracy"].ToString();
-            string continualLearningModelEscape = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelEscape"].ToString();
-            string continualLearningModelOverKill = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelOverKill"].ToString();
-
-            // InstantEvaluate
-            Boolean.TryParse(modelInfo["ModelLearningInfo"]["InstantEvaluate"]["bool_InstantEvaluateChecked"].ToString(), out bool instantEvaluateChecked);
-            string instantEvaluateDataset = modelInfo["ModelLearningInfo"]["InstantEvaluate"]["string_InstantEvaluateDataset"].ToString();
-
-            // Class Info
-            List<string> classNameList = new List<string>();
-            foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+            try
             {
-                classNameList.Add(className);
-            }
+                this.panelMTrainOption.Controls.Clear(); // 컨트롤 초기화
+                this.panelMTrainOption.Controls.Add(this.ClassificationTrainOptions); // 컨트롤 적용
+                this.ClassificationTrainOptions.Enabled = false;
 
-            // 6. Contral 정보 적용
-            if (networkModel.Equals("SynapseNet_Classification_18"))
+                // 5. Contral 정보 가져오기
+                // Trian Options 수동
+                string networkModel = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["string_NetworkModel"].ToString();
+                string epochNumber = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
+                string trainRepeat = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_TrainRepeat"].ToString();
+                string modelMinimumSelectionEpoch = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ModelMinimumSelectionEpoch"].ToString();
+                string validationRatio = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
+                string patienceEpochs = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
+
+                // Data Augmentation Manual 설정
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BlurChecked"].ToString(), out bool blurChecked);
+                string blur = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_Blur"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_BrightnessChecked"].ToString(), out bool brightnessChecked);
+                string brightnessMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_BrightnessMin"].ToString();
+                string brightnessMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_BrightnessMax"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_CenterChecked"].ToString(), out bool centerChecked);
+                string center = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_Center"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_ContrastChecked"].ToString(), out bool contrastChecked);
+                string contrastMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_ContrastMin"].ToString();
+                string contrastMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_ContrastMax"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GaussianNoiseChecked"].ToString(), out bool gaussianNoiseChecked);
+                string gaussianNoise = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_GaussianNoise"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GaussianNoiseChecked"].ToString(), out bool gradationChecked);
+                string gradation = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_Gradation"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_GradationRGBChecked"].ToString(), out bool gradationRGBChecked);
+                string gradationRGB = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["int_GradationRGB"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_HorizontalFlipChecked"].ToString(), out bool horizontalFlipChecked);
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation90Checked"].ToString(), out bool rotation90Checked);
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation180Checked"].ToString(), out bool rotation180Checked);
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_Rotation270Checked"].ToString(), out bool rotation270Checked);
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_SharpenChecked"].ToString(), out bool sharpenChecked);
+                string sharpen = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_Sharpen"].ToString();
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["bool_VerticalFlipChecked"].ToString(), out bool verticalFlipChecked);
+
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomChecked"].ToString(), out bool zoomChecked);
+                string zoomMin = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomMin"].ToString();
+                string zoomMax = modelInfo["ModelLearningInfo"]["DataAugmentationManual"]["double_ZoomMax"].ToString();
+
+                // ContinualLearning
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["ContinualLearning"]["bool_ContinualLearningChecked"].ToString(), out bool continualLearningChecked);
+                string continualLearning = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearning"].ToString();
+
+                string continualLearningModelName = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelName"].ToString();
+                string continualLearningModelLoss = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelLoss"].ToString();
+                string continualLearningModelAccuracy = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelAccuracy"].ToString();
+                string continualLearningModelEscape = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelEscape"].ToString();
+                string continualLearningModelOverKill = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelOverKill"].ToString();
+
+                // InstantEvaluate
+                Boolean.TryParse(modelInfo["ModelLearningInfo"]["InstantEvaluate"]["bool_InstantEvaluateChecked"].ToString(), out bool instantEvaluateChecked);
+                string instantEvaluateDataset = modelInfo["ModelLearningInfo"]["InstantEvaluate"]["string_InstantEvaluateDataset"].ToString();
+
+                // Class Info
+                List<string> classNameList = new List<string>();
+                foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+                {
+                    classNameList.Add(className);
+                }
+
+                // 6. Contral 정보 적용
+                if (networkModel.Equals("SynapseNet_Classification_18"))
+                {
+                    this.ClassificationTrainOptions.cbbManetworkModel.Text = "Small";
+                    this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Small";
+                }
+                else if (networkModel.Equals("SynapseNet_Classification_34"))
+                {
+                    this.ClassificationTrainOptions.cbbManetworkModel.Text = "Medium";
+                    this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Medium";
+                }
+                else if (networkModel.Equals("SynapseNet_Classification_50"))
+                {
+                    this.ClassificationTrainOptions.cbbManetworkModel.Text = "Large";
+                    this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Large";
+                }
+                else if (networkModel.Equals("SynapseNet_Classification_100"))
+                {
+                    this.ClassificationTrainOptions.cbbManetworkModel.Text = "Extra Large";
+                    this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Extra Large";
+                }
+
+                // Trian Options 수동
+                this.ClassificationTrainOptions.txtEpochNumber.Text = epochNumber;
+                this.ClassificationTrainOptions.txtMmodelMinimumSelectionEpoch.Text = modelMinimumSelectionEpoch;
+                this.ClassificationTrainOptions.txtPatienceEpochs.Text = patienceEpochs;
+                this.ClassificationTrainOptions.txtTrainRepeat.Text = trainRepeat;
+                this.ClassificationTrainOptions.txtValidationRatio.Text = validationRatio;
+                this.ClassificationTrainOptions.txtTrainDataNumber.Text = "---";
+
+                // Data Augmentation Manual 설정
+                this.ClassificationTrainOptions.ckbMBlur.Checked = blurChecked;
+                this.ClassificationTrainOptions.txtBlur.Text = blur;
+
+                this.ClassificationTrainOptions.ckbBrightness.Checked = brightnessChecked;
+                this.ClassificationTrainOptions.txtBrightnessMin.Text = brightnessMin;
+                this.ClassificationTrainOptions.txtBrightnessMax.Text = brightnessMax;
+
+                this.ClassificationTrainOptions.ckbMCenter.Checked = centerChecked;
+                this.ClassificationTrainOptions.txtCenter.Text = center;
+
+                this.ClassificationTrainOptions.ckbMContrast.Checked = contrastChecked;
+                this.ClassificationTrainOptions.txtContrastMin.Text = contrastMin;
+                this.ClassificationTrainOptions.txtContrastMax.Text = contrastMax;
+
+                this.ClassificationTrainOptions.ckbMGaussianNoise.Checked = gaussianNoiseChecked;
+                this.ClassificationTrainOptions.txtGaussianNoise.Text = gaussianNoise;
+
+                this.ClassificationTrainOptions.ckbMGradation.Checked = gradationChecked;
+                this.ClassificationTrainOptions.txtGradation.Text = gradation;
+
+                this.ClassificationTrainOptions.ckbGradationRGB.Checked = gradationRGBChecked;
+
+                this.ClassificationTrainOptions.ckbMHorizontalFlip.Checked = horizontalFlipChecked;
+
+                this.ClassificationTrainOptions.ckbMRotation90.Checked = rotation90Checked;
+                this.ClassificationTrainOptions.ckbMRotation180.Checked = rotation180Checked;
+                this.ClassificationTrainOptions.ckbMRotation270.Checked = rotation270Checked;
+
+                this.ClassificationTrainOptions.ckbMSharpen.Checked = sharpenChecked;
+                this.ClassificationTrainOptions.txtSharpen.Text = sharpen;
+
+                this.ClassificationTrainOptions.ckbMVerticalFlip.Checked = verticalFlipChecked;
+
+                this.ClassificationTrainOptions.ckbMZoom.Checked = zoomChecked;
+                this.ClassificationTrainOptions.txtZoomMin.Text = zoomMin;
+                this.ClassificationTrainOptions.txtZoomMax.Text = zoomMax;
+
+                /*
+                string continualLearningModelName = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelName"].ToString();
+                string continualLearningModelLoss = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelLoss"].ToString();
+                string continualLearningModelAccuracy = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelAccuracy"].ToString();
+                string continualLearningModelEscape = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelEscape"].ToString();
+                string continualLearningModelOverKill = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelOverKill"].ToString();
+                */
+
+                // ContinualLearning UI 설정
+                this.ClassificationTrainOptions.togMContinualLearning.Checked = continualLearningChecked;
+                this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
+                this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
+
+                // Class Info
+                this.ClassificationTrainOptions.UISetupClassWeighContralResetManual(); // 기존 Class Contral 초기화
+                int i = 0;
+                foreach (string className in classNameList)
+                    this.ClassificationTrainOptions.UISetupClassWeighContralAddManual(i++, className, Color.Gray); // Class Contral 추가
+
+                // Instant Evaluate
+                this.ClassificationTrainOptions.togMInstantEvaluate.Checked = instantEvaluateChecked;
+                if (instantEvaluateDataset.Equals("All"))
+                {
+                    this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = true;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
+                }
+                else if (instantEvaluateDataset.Equals("Train"))
+                {
+                    this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = true;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
+                }
+                else if (instantEvaluateDataset.Equals("Test"))
+                {
+                    this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
+                    this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = true;
+                }
+            }
+            catch(Exception ex)
             {
-                this.ClassificationTrainOptions.cbbManetworkModel.Text = "Small";
-                this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Small";
+
             }
-            else if (networkModel.Equals("SynapseNet_Classification_34"))
-            {
-                this.ClassificationTrainOptions.cbbManetworkModel.Text = "Medium";
-                this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Medium";
-            }
-            else if (networkModel.Equals("SynapseNet_Classification_50"))
-            {
-                this.ClassificationTrainOptions.cbbManetworkModel.Text = "Large";
-                this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Large";
-            }
-            else if (networkModel.Equals("SynapseNet_Classification_100"))
-            {
-                this.ClassificationTrainOptions.cbbManetworkModel.Text = "Extra Large";
-                this.ClassificationTrainOptions.cbbManetworkModel.PromptText = "Extra Large";
-            }
-
-            // Trian Options 수동
-            this.ClassificationTrainOptions.txtEpochNumber.Text = epochNumber;
-            this.ClassificationTrainOptions.txtMmodelMinimumSelectionEpoch.Text = modelMinimumSelectionEpoch;
-            this.ClassificationTrainOptions.txtPatienceEpochs.Text = patienceEpochs;
-            this.ClassificationTrainOptions.txtTrainRepeat.Text = trainRepeat;
-            this.ClassificationTrainOptions.txtValidationRatio.Text = validationRatio;
-            this.ClassificationTrainOptions.txtTrainDataNumber.Text = "---";
-
-            // Data Augmentation Manual 설정
-            this.ClassificationTrainOptions.ckbMBlur.Checked = blurChecked;
-            this.ClassificationTrainOptions.txtBlur.Text = blur;
-
-            this.ClassificationTrainOptions.ckbBrightness.Checked = brightnessChecked;
-            this.ClassificationTrainOptions.txtBrightnessMin.Text = brightnessMin;
-            this.ClassificationTrainOptions.txtBrightnessMax.Text = brightnessMax;
-
-            this.ClassificationTrainOptions.ckbMCenter.Checked = centerChecked;
-            this.ClassificationTrainOptions.txtCenter.Text = center;
-
-            this.ClassificationTrainOptions.ckbMContrast.Checked = contrastChecked;
-            this.ClassificationTrainOptions.txtContrastMin.Text = contrastMin;
-            this.ClassificationTrainOptions.txtContrastMax.Text = contrastMax;
-
-            this.ClassificationTrainOptions.ckbMGaussianNoise.Checked = gaussianNoiseChecked;
-            this.ClassificationTrainOptions.txtGaussianNoise.Text = gaussianNoise;
-
-            this.ClassificationTrainOptions.ckbMGradation.Checked = gradationChecked;
-            this.ClassificationTrainOptions.txtGradation.Text = gradation;
-
-            this.ClassificationTrainOptions.ckbGradationRGB.Checked = gradationRGBChecked;
-
-            this.ClassificationTrainOptions.ckbMHorizontalFlip.Checked = horizontalFlipChecked;
-
-            this.ClassificationTrainOptions.ckbMRotation90.Checked = rotation90Checked;
-            this.ClassificationTrainOptions.ckbMRotation180.Checked = rotation180Checked;
-            this.ClassificationTrainOptions.ckbMRotation270.Checked = rotation270Checked;
-
-            this.ClassificationTrainOptions.ckbMSharpen.Checked = sharpenChecked;
-            this.ClassificationTrainOptions.txtSharpen.Text = sharpen;
-
-            this.ClassificationTrainOptions.ckbMVerticalFlip.Checked = verticalFlipChecked;
-
-            this.ClassificationTrainOptions.ckbMZoom.Checked = zoomChecked;
-            this.ClassificationTrainOptions.txtZoomMin.Text = zoomMin;
-            this.ClassificationTrainOptions.txtZoomMax.Text = zoomMax;
-
-            /*
-            string continualLearningModelName = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelName"].ToString();
-            string continualLearningModelLoss = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelLoss"].ToString();
-            string continualLearningModelAccuracy = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelAccuracy"].ToString();
-            string continualLearningModelEscape = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelEscape"].ToString();
-            string continualLearningModelOverKill = modelInfo["ModelLearningInfo"]["ContinualLearning"]["string_ContinualLearningModelOverKill"].ToString();
-            */
-
-            // ContinualLearning UI 설정
-            this.ClassificationTrainOptions.togMContinualLearning.Checked = continualLearningChecked;
-            this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
-            this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
-
-            // Class Info
-            this.ClassificationTrainOptions.UISetupClassWeighContralResetManual(); // 기존 Class Contral 초기화
-            int i = 0;
-            foreach (string className in classNameList)
-                this.ClassificationTrainOptions.UISetupClassWeighContralAddManual(i++, className, Color.Gray); // Class Contral 추가
-
-            // Instant Evaluate
-            this.ClassificationTrainOptions.togMInstantEvaluate.Checked = instantEvaluateChecked;
-            if (instantEvaluateDataset.Equals("All"))
-            {
-                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = true;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
-            }
-            else if (instantEvaluateDataset.Equals("Train"))
-            {
-                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = true;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = false;
-            }
-            else if (instantEvaluateDataset.Equals("Test"))
-            {
-                this.ClassificationTrainOptions.tilMInstantEvaluateAll.Visible = false;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTrain.Visible = false;
-                this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = true;
-            }
+            
         }
 
         private void ModelOutputToolStripMenuItemClick(object sender, EventArgs e)
