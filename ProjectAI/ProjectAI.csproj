@@ -157,6 +157,12 @@
     <Compile Include="MainForms\DatasetSelect.Designer.cs">
       <DependentUpon>DatasetSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForms\MainFormsImageListPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\MainFormsImageListPage.Designer.cs">
+      <DependentUpon>MainFormsImageListPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForms\UserContral\ClassEdit\ClassButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -305,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\DatasetSelect.resx">
       <DependentUpon>DatasetSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\MainFormsImageListPage.resx">
+      <DependentUpon>MainFormsImageListPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ClassEdit\ClassButton.resx">
       <DependentUpon>ClassButton.cs</DependentUpon>
@@ -473,6 +482,7 @@
     <None Include="Resources\orientalTilesBlack.png" />
     <None Include="Resources\open2Wizard.png" />
     <None Include="Resources\open-sourceWizard.png" />
+    <None Include="Resources\OpenCVexImage.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

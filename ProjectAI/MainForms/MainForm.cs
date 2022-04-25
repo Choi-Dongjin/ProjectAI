@@ -954,13 +954,23 @@ namespace ProjectAI.MainForms
         private void BtnimagePageNextClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext().ToString();
+                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext().ToString();
         }
 
         private void BtnimagePageReverseClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse().ToString();
+                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse().ToString();
+        }
+
+        private void IblImageListpageClick(object sender, EventArgs e)
+        {
+            MainFormsImageListPage mainFormsImageListPage = new MainFormsImageListPage();
+            if (mainFormsImageListPage.ShowDialog() == DialogResult.OK)
+            {
+                if (WorkSpaceData.m_activeProjectMainger != null)
+                    this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageManual(mainFormsImageListPage.GetPage()).ToString();
+            }
         }
 
         private void ClassToolStripMenuItemClick(object sender, EventArgs e)

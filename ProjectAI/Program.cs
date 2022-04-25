@@ -35,7 +35,7 @@ namespace ProjectAI
 
                 // 데이터 처리
                 ProgramEntryPointVariables.m_language = programEntryPointOptionsJson["string_m_language"].ToString();
-                ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptionsJson["string_m_classificationPath"].ToString();
+                ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptionsJson["string_m_classificationPath"].DeepClone().ToString();
             }
             else
             {
@@ -92,12 +92,16 @@ namespace ProjectAI
         public static void IfProgramEntryPointOptionsChange()
         {
             JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // JsonDataManiger 호출
+
+            string language = ProgramEntryPointVariables.m_language;
+            string corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath.ToString();
+
             JObject programEntryPoint = jsonDataManiger.GetJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, ProgramEntryPointOptionsDataIntegrityCheck); // programEntryPointOptions Json 파일 읽고 무결성 검사
             JObject programEntryPointOptions = (JObject)programEntryPoint["programEntryPointOptions"]; //  programEntryPointOptions 객체 있음을 확인
 
             // 값 반영
-            programEntryPointOptions["string_m_language"] = ProgramEntryPointVariables.m_language;
-            programEntryPointOptions["string_m_classificationPath"] = ProgramEntryPointVariables.m_prohramClassificationCorePath;
+            programEntryPointOptions["string_m_language"] = language;
+            programEntryPointOptions["string_m_classificationPath"] = corePath;
 
             // 옵션 추가시 작성
             jsonDataManiger.PushJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, programEntryPoint); // Json 파일 저장
@@ -137,7 +141,7 @@ namespace ProjectAI
                         programEntryPointOptions.Add(new JProperty("string_m_classificationPath", $"{ProgramEntryPointVariables.ProhramClassificationCorePathDefalt}"));
                     else
                     {
-                        ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptions["string_m_classificationPath"].ToString();
+                        ProgramEntryPointVariables.m_prohramClassificationCorePath = programEntryPointOptions["string_m_classificationPath"].DeepClone().ToString();
                     }
                 }
                 else // programEntryPointOptions 객체가 없음을 확인

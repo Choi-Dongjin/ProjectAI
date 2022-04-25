@@ -105,6 +105,7 @@ namespace ProjectAI.StartForms
         private void BtnMoptionResetClick(object sender, EventArgs e)
         {
             ProgramVariables.m_programWokrSpacePath = ProgramVariables.ProgramWokrSpacePathDefalt;
+            ProgramEntryPointVariables.m_prohramClassificationCorePath = ProgramEntryPointVariables.ProhramClassificationCorePathDefalt;
         }
 
         private void MetroButton1Click(object sender, EventArgs e)

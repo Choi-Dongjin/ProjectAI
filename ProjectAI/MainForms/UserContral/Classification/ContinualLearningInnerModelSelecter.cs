@@ -25,7 +25,10 @@ namespace ProjectAI.MainForms.UserContral.Classification
 
             this.StyleManager = this.metroStyleManager1;
             // Forms Calss formStyleManagerHandler 등록
-            FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+            //FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+
+            FormsManiger formsManiger = FormsManiger.GetInstance();
+            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
 
             this.modelName = modelName;
         }
@@ -33,15 +36,15 @@ namespace ProjectAI.MainForms.UserContral.Classification
         private void ContinualLearningInnerModelSelecterLoad(object sender, EventArgs e)
         {
             // 차트 색 수정
-            this.chartLoss.Series["Train"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+            this.chartLoss.Series["Train"].Color = ColorTranslator.FromHtml("#e124f2");
+            this.chartLoss.Series["Test"].Color = ColorTranslator.FromHtml("#fa484e");
+            this.chartLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#952bff");
+            this.chartLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#c7a520");
 
-            this.chartAccuracy.Series["Train"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+            this.chartAccuracy.Series["Train"].Color = ColorTranslator.FromHtml("#e124f2");
+            this.chartAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#fa484e");
+            this.chartAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#952bff");
+            this.chartAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#c7a520");
 
             // 차트 라인 수정
             this.chartLoss.Series["Train"].BorderWidth = 2;
@@ -57,9 +60,6 @@ namespace ProjectAI.MainForms.UserContral.Classification
 
         private void ContinualLearningInnerModelSelecterShown(object sender, EventArgs e)
         {
-            FormsManiger formsManiger = FormsManiger.GetInstance();
-            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
-
             //UI Setup
             this.UISetContinualLearningInnerModelSelecter(); // Data Grid View setup
             this.UISetModelUpdater(); // Model Info Updataer - 내부 모델 정보 불러오기
@@ -68,7 +68,7 @@ namespace ProjectAI.MainForms.UserContral.Classification
 
         ~ContinualLearningInnerModelSelecter()
         {
-            FormsManiger.m_formStyleManagerHandler -= this.UpdataFormStyleManager;
+            //FormsManiger.m_formStyleManagerHandler -= this.UpdataFormStyleManager;
         }
 
         /// <summary>

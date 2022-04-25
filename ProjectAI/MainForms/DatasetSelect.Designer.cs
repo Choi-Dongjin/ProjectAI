@@ -72,7 +72,7 @@
             this.tilMTrainValidation.Name = "tilMTrainValidation";
             this.tilMTrainValidation.Size = new System.Drawing.Size(198, 96);
             this.tilMTrainValidation.TabIndex = 0;
-            this.tilMTrainValidation.Text = "Train & Validation";
+            this.tilMTrainValidation.Text = "Train";
             this.tilMTrainValidation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.tilMTrainValidation.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.tilMTrainValidation.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;

@@ -128,7 +128,7 @@
     <value>7, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 262</value>
+    <value>600, 261</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableLayoutStartOptionMain.ColumnCount" type="System.Int32, mscorlib">
@@ -409,7 +409,7 @@
     <value>6</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 147</value>
+    <value>560, 146</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -433,7 +433,7 @@
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 150</value>
+    <value>257, 149</value>
   </data>
   <data name="btnMstartOptionsOK.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -460,7 +460,7 @@
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 150</value>
+    <value>359, 149</value>
   </data>
   <data name="btnMstartOptionsCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -487,7 +487,7 @@
     <value>Fill</value>
   </data>
   <data name="btnMstartOptionsApply.Location" type="System.Drawing.Point, System.Drawing">
-    <value>461, 150</value>
+    <value>461, 149</value>
   </data>
   <data name="btnMstartOptionsApply.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 29</value>
@@ -523,7 +523,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutStartOptionMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 182</value>
+    <value>560, 181</value>
   </data>
   <data name="tableLayoutStartOptionMain.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

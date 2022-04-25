@@ -96,7 +96,6 @@
             series4.IsVisibleInLegend = false;
             series4.Legend = "Legend1";
             series4.Name = "selectModelDataTest";
-            series4.YValuesPerPoint = 2;
             this.chartLoss.Series.Add(series1);
             this.chartLoss.Series.Add(series2);
             this.chartLoss.Series.Add(series3);

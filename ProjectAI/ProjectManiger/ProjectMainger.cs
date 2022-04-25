@@ -1,6 +1,7 @@
 ﻿using MetroFramework;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1277,12 +1278,13 @@ namespace ProjectAI
             this.MainForm.gridImageList.Rows.Clear();
             this.MainForm.gridImageList.Refresh();
 
-            this.MainForm.gridImageList.ColumnCount = 5;
+            this.MainForm.gridImageList.ColumnCount = 6;
             this.MainForm.gridImageList.Columns[0].Name = "NO";
             this.MainForm.gridImageList.Columns[1].Name = "Files Name";
             this.MainForm.gridImageList.Columns[2].Name = "Set"; //Train Test
-            this.MainForm.gridImageList.Columns[3].Name = "Class";
-            this.MainForm.gridImageList.Columns[4].Name = "Probability";
+            this.MainForm.gridImageList.Columns[3].Name = "Labeled";
+            this.MainForm.gridImageList.Columns[4].Name = "Prediction";
+            this.MainForm.gridImageList.Columns[5].Name = "Probability";
 
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             //this.m_activeProjectImageListJObject["imageList"];
@@ -1300,53 +1302,95 @@ namespace ProjectAI
         /// </summary>
         private void UISetImageListDataGridview(int page)
         {
-            this.MainForm.gridImageList.Rows.Clear();
-
-            page = page - 1;
-
-            JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
-            if (imageFiles != null)
+            try
             {
-                foreach (string imageFile in imageFiles)
+                this.MainForm.gridImageList.Rows.Clear();
+
+                page = page - 1;
+
+                JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
+                if (imageFiles != null)
                 {
-                    if (imageFile != null && imageFile != "")
+                    foreach (string imageFile in imageFiles)
                     {
-                        int imageNumber = Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[imageFile]["int_ImageNumber"]);
-                        string set = null;
-                        string activeClass = null;
-                        double threshold = 0.0;
-
-                        if (this.m_activeInnerProjectName != null)
+                        if (imageFile != null && imageFile != "")
                         {
-                            if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName] != null)
+                            int imageNumber = Convert.ToInt32(this.m_activeProjectDataImageListDataJObject[imageFile]["int_ImageNumber"]);
+                            string set = null;
+                            string activeClass = null;
+                            string activeClassColor = null;
+                            string predictionClass = null;
+                            double threshold = 0.0;
+
+                            if (this.m_activeInnerProjectName != null)
                             {
-                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
-                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"]))
-                                        set = "Train";
+                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName] != null)
+                                {
+                                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"] != null)
+                                        if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Train"]))
+                                            set = "Train";
 
-                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
-                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"]))
-                                        if (set != null)
-                                            set += ", Test";
-                                        else
-                                            set = "Test";
+                                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"] != null)
+                                        if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Test"]))
+                                            if (set != null)
+                                                set += ", Test";
+                                            else
+                                                set = "Test";
 
-                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
-                                    if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"]))
-                                        if (set != null)
-                                            set += ", Validation";
-                                        else
-                                            set = "Validation";
+                                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"] != null)
+                                        if (Convert.ToBoolean(this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["bool_Validation"]))
+                                            if (set != null)
+                                                set += ", Validation";
+                                            else
+                                                set = "Validation";
 
-                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null)
-                                    activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString();
-                                if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["double_threshold"] != null)
-                                    threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile][this.m_activeInnerProjectName]["Labeled"]["double_threshold"]);
+                                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"] != null)
+                                    {
+                                        activeClass = this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["string_Label"].ToString();
+                                        activeClassColor = this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][activeClass]["string_classColor"].ToString();
+                                    }
+
+                                    if (this.m_activeProjectDataImageListDataJObject[imageFile]["Labeled"][this.m_activeInnerProjectName]["double_threshold"] != null)
+                                        threshold = Convert.ToDouble(this.m_activeProjectDataImageListDataJObject[imageFile][this.m_activeInnerProjectName]["Labeled"]["double_threshold"]);
+                                }
                             }
+                            /*
+                            this.MainForm.gridImageList.Columns[0].Name = "NO";
+                            this.MainForm.gridImageList.Columns[1].Name = "Files Name";
+                            this.MainForm.gridImageList.Columns[2].Name = "Set"; //Train Test
+                            this.MainForm.gridImageList.Columns[3].Name = "Class";
+                            this.MainForm.gridImageList.Columns[4].Name = "Probability";
+                            */
+
+                            this.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            if (activeClassColor != null)
+                                this.MainForm.gridImageList.Rows[this.MainForm.gridImageList.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
+
                         }
-                        this.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, threshold);
                     }
                 }
+
+                int size = 0;
+                for (int i = 0; i < this.MainForm.gridImageList.Columns.Count; i++)
+                {
+                    size += this.MainForm.gridImageList.Columns[i].Width;
+                }
+                // Data Grid View Size 조정
+                if (this.MainForm.ckbMdataGridViewAutoSize.Checked)
+                {
+                    try
+                    {
+                        this.MainForm.splitContainerImageAndImageList.SplitterDistance = this.MainForm.splitContainerImageAndImageList.Width - size;
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            catch
+            {
+
             }
         }
 
@@ -1370,6 +1414,17 @@ namespace ProjectAI
         {
             if (this.imageListPage > 1)
                 this.UISetImageListDataGridview(--this.imageListPage);
+            return imageListPage;
+        }
+
+        public int ImageListPageManual(int page)
+        {
+            int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
+            if (page >= 0 && page <= imageListnumber && this.imageListPage != page)
+            {
+                this.imageListPage = page;
+                this.UISetImageListDataGridview(this.imageListPage);
+            }
             return imageListPage;
         }
 
@@ -1838,6 +1893,7 @@ namespace ProjectAI
                             this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
 
                             // Json 파일 저장
+                            this.JsonDataSave(0);
                             this.JsonDataSave(1);
                             this.JsonDataSave(2);
                             this.JsonDataSave(3);
@@ -1993,6 +2049,7 @@ namespace ProjectAI
                             this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
 
                             // Json 파일 저장
+                            this.JsonDataSave(0);
                             this.JsonDataSave(1);
                             this.JsonDataSave(2);
                             this.JsonDataSave(3);
@@ -2000,6 +2057,7 @@ namespace ProjectAI
                     }
                 }
             }
+
         }
 
         /// <summary>

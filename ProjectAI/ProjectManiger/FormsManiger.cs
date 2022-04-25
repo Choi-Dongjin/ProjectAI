@@ -76,6 +76,18 @@ namespace ProjectAI
                     chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.White;
                     chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.White;
 
+                    // 색변경
+                    try
+                    {
+                        chart.Series["Train"].Color = ColorTranslator.FromHtml("#e124f2");
+                        chart.Series["Test"].Color = ColorTranslator.FromHtml("#fa484e");
+                        chart.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#6373ff");
+                        chart.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#fcff52");
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
             catch
@@ -107,6 +119,19 @@ namespace ProjectAI
                     chart.ChartAreas[0].AxisY.MajorTickMark.LineColor = Color.Black;
                     chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.Black;
                     chart.ChartAreas[0].AxisY.MinorTickMark.LineColor = Color.Black;
+
+                    // 색변경
+                    try
+                    {
+                        chart.Series["Train"].Color = ColorTranslator.FromHtml("#e124f2");
+                        chart.Series["Test"].Color = ColorTranslator.FromHtml("#fa484e");
+                        chart.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001aff"); 
+                        chart.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff6f00");
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
             catch

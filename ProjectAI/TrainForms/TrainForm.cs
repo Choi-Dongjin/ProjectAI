@@ -460,7 +460,7 @@ namespace ProjectAI.TrainForms
             }
             else
             {
-                chart.Series["Train & Validation"].Points.Clear();
+                chart.Series["Train"].Points.Clear();
                 chart.Series["Test"].Points.Clear();
                 chart.Series["selectModelDataTrain"].Points.Clear();
                 chart.Series["selectModelDataTest"].Points.Clear();
@@ -701,66 +701,44 @@ namespace ProjectAI.TrainForms
         private void TrainFormLoad(object sender, EventArgs e)
         {
             // 차트 색 수정
-            this.chartProcessingLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartProcessingLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartProcessingLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartProcessingLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
-
-            this.chartProcessingAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartProcessingAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartProcessingAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartProcessingAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
-
-            this.chartDoneLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartDoneLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartDoneLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartDoneLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
-
-            this.chartDoneAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartDoneAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartDoneAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartDoneAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
-
-            this.chartViewLoss.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartViewLoss.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartViewLoss.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartViewLoss.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
-
-            this.chartViewAccuracy.Series["Train & Validation"].Color = ColorTranslator.FromHtml("#41b6e6");
-            this.chartViewAccuracy.Series["Test"].Color = ColorTranslator.FromHtml("#ffb549");
-            this.chartViewAccuracy.Series["selectModelDataTrain"].Color = ColorTranslator.FromHtml("#001871");
-            this.chartViewAccuracy.Series["selectModelDataTest"].Color = ColorTranslator.FromHtml("#ff585d");
+            // 차트 스타일 변경
+            FormsManiger.ChartWhiteMode(this.chartProcessingLoss);
+            FormsManiger.ChartWhiteMode(this.chartProcessingAccuracy);
+            FormsManiger.ChartWhiteMode(this.chartDoneLoss);
+            FormsManiger.ChartWhiteMode(this.chartDoneAccuracy);
+            FormsManiger.ChartWhiteMode(this.chartViewLoss);
+            FormsManiger.ChartWhiteMode(this.chartViewAccuracy);
 
             // 차트 BorderWidth 수정
-            this.chartProcessingLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["Train"].BorderWidth = 2;
             this.chartProcessingLoss.Series["Test"].BorderWidth = 2;
-            this.chartProcessingLoss.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartProcessingLoss.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartProcessingLoss.Series["selectModelDataTest"].BorderWidth = 4;
 
-            this.chartProcessingAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["Train"].BorderWidth = 2;
             this.chartProcessingAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartProcessingAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartProcessingAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartProcessingAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
 
-            this.chartDoneLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartDoneLoss.Series["Train"].BorderWidth = 2;
             this.chartDoneLoss.Series["Test"].BorderWidth = 2;
-            this.chartDoneLoss.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartDoneLoss.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartDoneLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartDoneLoss.Series["selectModelDataTest"].BorderWidth = 4;
 
-            this.chartDoneAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["Train"].BorderWidth = 2;
             this.chartDoneAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartDoneAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartDoneAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartDoneAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
 
-            this.chartViewLoss.Series["Train & Validation"].BorderWidth = 2;
+            this.chartViewLoss.Series["Train"].BorderWidth = 2;
             this.chartViewLoss.Series["Test"].BorderWidth = 2;
-            this.chartViewLoss.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartViewLoss.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartViewLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartViewLoss.Series["selectModelDataTest"].BorderWidth = 4;
 
-            this.chartViewAccuracy.Series["Train & Validation"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["Train"].BorderWidth = 2;
             this.chartViewAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartViewAccuracy.Series["selectModelDataTrain"].BorderWidth = 2;
-            this.chartViewAccuracy.Series["selectModelDataTest"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartViewAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
         }
 
         private void TrainFormShown(object sender, EventArgs e)
@@ -845,9 +823,9 @@ namespace ProjectAI.TrainForms
             this.dgvMmodelsEpoch.Rows.Clear();
 
             // 모델 차트 초기화
-            this.chartViewLoss.Series["Train & Validation"].Points.Clear();
+            this.chartViewLoss.Series["Train"].Points.Clear();
             this.chartViewLoss.Series["Test"].Points.Clear();
-            this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
+            this.chartViewAccuracy.Series["Train"].Points.Clear();
             this.chartViewAccuracy.Series["Test"].Points.Clear();
 
             this.chartViewLoss.Series["selectModelDataTrain"].Points.Clear();
@@ -939,9 +917,9 @@ namespace ProjectAI.TrainForms
                     }
 
                     // 모델 차트 그리기
-                    this.chartViewLoss.Series["Train & Validation"].Points.Clear();
+                    this.chartViewLoss.Series["Train"].Points.Clear();
                     this.chartViewLoss.Series["Test"].Points.Clear();
-                    this.chartViewAccuracy.Series["Train & Validation"].Points.Clear();
+                    this.chartViewAccuracy.Series["Train"].Points.Clear();
                     this.chartViewAccuracy.Series["Test"].Points.Clear();
 
                     this.chartViewLoss.Series["selectModelDataTrain"].Points.Clear();
@@ -963,10 +941,10 @@ namespace ProjectAI.TrainForms
                         int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
                         int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
 
-                        this.chartViewLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
+                        this.chartViewLoss.Series["Train"].Points.AddXY(locationX, trainLoss);
                         this.chartViewLoss.Series["Test"].Points.AddXY(locationX, testLoss);
 
-                        this.chartViewAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
+                        this.chartViewAccuracy.Series["Train"].Points.AddXY(locationX, trainAcc);
                         this.chartViewAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
                     }
 
@@ -1308,8 +1286,8 @@ namespace ProjectAI.TrainForms
                                 trainOverKill = int.Parse(stringOverKill.Split(':')[1].Split('/')[0]);
 
                                 // Train 차트 그리기
-                                this.SafeChartContactSeriesAddPoint(this.chartProcessingAccuracy, "Train & Validation", processTotalEpochNumber, trainEpochAccuracy);
-                                this.SafeChartContactSeriesAddPoint(this.chartProcessingLoss, "Train & Validation", processTotalEpochNumber, trainEpochLoss);
+                                this.SafeChartContactSeriesAddPoint(this.chartProcessingAccuracy, "Train", processTotalEpochNumber, trainEpochAccuracy);
+                                this.SafeChartContactSeriesAddPoint(this.chartProcessingLoss, "Train", processTotalEpochNumber, trainEpochLoss);
 
                                 // Progress Bar 갱신
                                 this.SafeDataGridViewProgressValue(this.dgvMProcessing, processInfo["string_processName"].ToString(), (int)Math.Round((double)((processTotalEpochNumber + 0.5) / (double)(epochNumber * trainRepeat)) * 100));
@@ -2739,7 +2717,7 @@ namespace ProjectAI.TrainForms
                                 this.taskProcessingCorePaht.Add(corePath);
                             }
 
-                        if (this.taskProcessing != null)
+                        if (this.taskProcessing == null)
                         {
                             this.taskProcessing = Task.Run(() => this.TaskProcessingManiger());
                         }
@@ -2920,7 +2898,7 @@ namespace ProjectAI.TrainForms
                     this.taskDoneCorePaht.Add(corePath);
                 }
 
-            if (this.taskDone != null)
+            if (this.taskDone == null)
             {
                 this.taskDone = Task.Run(() => this.TaskDoneManiger());
             }
@@ -3088,9 +3066,9 @@ namespace ProjectAI.TrainForms
                             JObject localProcessInfo = jsonDataManiger.GetJsonObject(System.IO.Path.Combine(processPath, "TrainSystem.Json"));
 
                             // 모델 차트 그리기
-                            this.chartDoneLoss.Series["Train & Validation"].Points.Clear();
+                            this.chartDoneLoss.Series["Train"].Points.Clear();
                             this.chartDoneLoss.Series["Test"].Points.Clear();
-                            this.chartDoneAccuracy.Series["Train & Validation"].Points.Clear();
+                            this.chartDoneAccuracy.Series["Train"].Points.Clear();
                             this.chartDoneAccuracy.Series["Test"].Points.Clear();
 
                             this.chartDoneLoss.Series["selectModelDataTrain"].Points.Clear();
@@ -3134,10 +3112,10 @@ namespace ProjectAI.TrainForms
                                 int testEscape = Convert.ToInt32(trainingProgressData.Value["int_TestEscape"]);
                                 int testOverKill = Convert.ToInt32(trainingProgressData.Value["int_TestOverKill"]);
 
-                                this.chartDoneLoss.Series["Train & Validation"].Points.AddXY(locationX, trainLoss);
+                                this.chartDoneLoss.Series["Train"].Points.AddXY(locationX, trainLoss);
                                 this.chartDoneLoss.Series["Test"].Points.AddXY(locationX, testLoss);
 
-                                this.chartDoneAccuracy.Series["Train & Validation"].Points.AddXY(locationX, trainAcc);
+                                this.chartDoneAccuracy.Series["Train"].Points.AddXY(locationX, trainAcc);
                                 this.chartDoneAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
                             } 
                         }

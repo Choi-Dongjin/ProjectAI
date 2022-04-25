@@ -139,7 +139,15 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                try
+                {
+                    this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                }
+                catch (Exception ex2)
+                {
+                    this.orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(global::ProjectAI.Properties.Resources.OpenCVexImage);
+                    Console.WriteLine(ex2);
+                }
             }
 
             //this.orignalImage = OpenCvSharp.Cv2.ImRead(imageDataPath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
