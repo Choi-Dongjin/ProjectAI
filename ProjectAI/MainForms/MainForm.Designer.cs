@@ -41,9 +41,6 @@
             this.btnMWorkSpaseOpen = new MetroFramework.Controls.MetroButton();
             this.panelProjectMain = new System.Windows.Forms.Panel();
             this.splitContainerImageAndImageList = new System.Windows.Forms.SplitContainer();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panelImageDataView = new System.Windows.Forms.Panel();
             this.gridImageList = new MetroFramework.Controls.MetroGrid();
             this.cmsMImageListToolKit = new MetroFramework.Controls.MetroContextMenu(this.components);
@@ -105,6 +102,7 @@
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hiddenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelWorkSpaseIconIN = new System.Windows.Forms.Panel();
             this.panelMWorkSpaceString1 = new MetroFramework.Controls.MetroPanel();
             this.btnMWorkSpaseClose = new MetroFramework.Controls.MetroButton();
@@ -121,32 +119,17 @@
             this.pgbMfileIOstatus = new MetroFramework.Controls.MetroProgressBar();
             this.panelMWorkSpase = new MetroFramework.Controls.MetroPanel();
             this.panelWorkSpaseButton = new System.Windows.Forms.Panel();
-            this.cmsImageListToolKit = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.imageAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageFolderAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.imageLabelingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.imageSetTrainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageSetTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.imageDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cmsMtryIcon = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
             this.panelProjectMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerImageAndImageList)).BeginInit();
-            this.splitContainerImageAndImageList.Panel1.SuspendLayout();
             this.splitContainerImageAndImageList.Panel2.SuspendLayout();
             this.splitContainerImageAndImageList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelImageDataView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).BeginInit();
             this.cmsMImageListToolKit.SuspendLayout();
@@ -161,7 +144,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panelstatus.SuspendLayout();
             this.panelMWorkSpase.SuspendLayout();
-            this.cmsImageListToolKit.SuspendLayout();
+            this.cmsMtryIcon.SuspendLayout();
             this.SuspendLayout();
             // 
             // styleManagerMainForm
@@ -258,10 +241,6 @@
             this.splitContainerImageAndImageList.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainerImageAndImageList.Name = "splitContainerImageAndImageList";
             // 
-            // splitContainerImageAndImageList.Panel1
-            // 
-            this.splitContainerImageAndImageList.Panel1.Controls.Add(this.splitContainer1);
-            // 
             // splitContainerImageAndImageList.Panel2
             // 
             this.splitContainerImageAndImageList.Panel2.Controls.Add(this.panelImageDataView);
@@ -271,57 +250,14 @@
             this.splitContainerImageAndImageList.SplitterDistance = 200;
             this.splitContainerImageAndImageList.TabIndex = 0;
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
-            this.splitContainer1.Panel2Collapsed = true;
-            this.splitContainer1.Size = new System.Drawing.Size(200, 665);
-            this.splitContainer1.SplitterDistance = 25;
-            this.splitContainer1.TabIndex = 4;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(200, 665);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(96, 100);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            // 
             // panelImageDataView
             // 
             this.panelImageDataView.Controls.Add(this.gridImageList);
             this.panelImageDataView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImageDataView.Location = new System.Drawing.Point(0, 56);
+            this.panelImageDataView.Location = new System.Drawing.Point(0, 64);
             this.panelImageDataView.Margin = new System.Windows.Forms.Padding(0);
             this.panelImageDataView.Name = "panelImageDataView";
-            this.panelImageDataView.Size = new System.Drawing.Size(281, 609);
+            this.panelImageDataView.Size = new System.Drawing.Size(281, 601);
             this.panelImageDataView.TabIndex = 0;
             // 
             // gridImageList
@@ -371,7 +307,7 @@
             this.gridImageList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gridImageList.RowTemplate.Height = 23;
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridImageList.Size = new System.Drawing.Size(281, 609);
+            this.gridImageList.Size = new System.Drawing.Size(281, 601);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
             this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -538,7 +474,7 @@
             this.tableLayoutImageDataManiger.Controls.Add(this.btnimagePageNext, 5, 0);
             this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageTotal, 4, 0);
             this.tableLayoutImageDataManiger.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutImageDataManiger.Location = new System.Drawing.Point(0, 21);
+            this.tableLayoutImageDataManiger.Location = new System.Drawing.Point(0, 29);
             this.tableLayoutImageDataManiger.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutImageDataManiger.Name = "tableLayoutImageDataManiger";
             this.tableLayoutImageDataManiger.RowCount = 1;
@@ -632,7 +568,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(281, 21);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(281, 29);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // ckbMdataGridViewAutoSize
@@ -859,7 +795,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1038, 24);
             this.menuStrip1.TabIndex = 5;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Text = "SynapseNet Learning Studio";
             // 
             // tsmWorSpace
             // 
@@ -881,6 +817,7 @@
             // 
             // tsmProjectWorkSpaceNewProject
             // 
+            this.tsmProjectWorkSpaceNewProject.Image = global::ProjectAI.Properties.Resources.project_management;
             this.tsmProjectWorkSpaceNewProject.Name = "tsmProjectWorkSpaceNewProject";
             this.tsmProjectWorkSpaceNewProject.Size = new System.Drawing.Size(188, 22);
             this.tsmProjectWorkSpaceNewProject.Text = "New Project";
@@ -894,6 +831,7 @@
             // tsmProjectAllWorkSpaceSave
             // 
             this.tsmProjectAllWorkSpaceSave.Enabled = false;
+            this.tsmProjectAllWorkSpaceSave.Image = global::ProjectAI.Properties.Resources.save_1_all;
             this.tsmProjectAllWorkSpaceSave.Name = "tsmProjectAllWorkSpaceSave";
             this.tsmProjectAllWorkSpaceSave.Size = new System.Drawing.Size(188, 22);
             this.tsmProjectAllWorkSpaceSave.Text = "Save All Project";
@@ -902,6 +840,7 @@
             // tsmProjectWorkSpaceSave
             // 
             this.tsmProjectWorkSpaceSave.Enabled = false;
+            this.tsmProjectWorkSpaceSave.Image = global::ProjectAI.Properties.Resources.save_1;
             this.tsmProjectWorkSpaceSave.Name = "tsmProjectWorkSpaceSave";
             this.tsmProjectWorkSpaceSave.Size = new System.Drawing.Size(188, 22);
             this.tsmProjectWorkSpaceSave.Text = "Save Project";
@@ -909,6 +848,7 @@
             // 
             // deleteWorkSpaceToolStripMenuItem
             // 
+            this.deleteWorkSpaceToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.project_management_del;
             this.deleteWorkSpaceToolStripMenuItem.Name = "deleteWorkSpaceToolStripMenuItem";
             this.deleteWorkSpaceToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.deleteWorkSpaceToolStripMenuItem.Text = "Delete WorkSpace";
@@ -916,6 +856,7 @@
             // 
             // tsmProjectDelete
             // 
+            this.tsmProjectDelete.Image = global::ProjectAI.Properties.Resources.delete;
             this.tsmProjectDelete.Name = "tsmProjectDelete";
             this.tsmProjectDelete.Size = new System.Drawing.Size(188, 22);
             this.tsmProjectDelete.Text = "Delete Project";
@@ -928,6 +869,7 @@
             // 
             // tsmProjectWorSpaceProgramExit
             // 
+            this.tsmProjectWorSpaceProgramExit.Image = global::ProjectAI.Properties.Resources.shutdown;
             this.tsmProjectWorSpaceProgramExit.Name = "tsmProjectWorSpaceProgramExit";
             this.tsmProjectWorSpaceProgramExit.Size = new System.Drawing.Size(188, 22);
             this.tsmProjectWorSpaceProgramExit.Text = "Program Exit";
@@ -963,6 +905,7 @@
             // 
             // classToolStripMenuItem
             // 
+            this.classToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.product_development2;
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
             this.classToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.classToolStripMenuItem.Text = "Class";
@@ -970,6 +913,7 @@
             // 
             // trainToolStripMenuItem1
             // 
+            this.trainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.deeplearning_view;
             this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
             this.trainToolStripMenuItem1.Size = new System.Drawing.Size(101, 22);
             this.trainToolStripMenuItem1.Text = "Train";
@@ -979,13 +923,15 @@
             // 
             this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.trainToolStripMenuItem,
-            this.changeStyleToolStripMenuItem});
+            this.changeStyleToolStripMenuItem,
+            this.hiddenToolStripMenuItem});
             this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
             this.toolToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.toolToolStripMenuItem.Text = "Tool";
             // 
             // trainToolStripMenuItem
             // 
+            this.trainToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.deep_learning;
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
             this.trainToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.trainToolStripMenuItem.Text = "Train";
@@ -993,10 +939,18 @@
             // 
             // changeStyleToolStripMenuItem
             // 
+            this.changeStyleToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.memphis_style;
             this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
             this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
             this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
+            // 
+            // hiddenToolStripMenuItem
+            // 
+            this.hiddenToolStripMenuItem.Name = "hiddenToolStripMenuItem";
+            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.hiddenToolStripMenuItem.Text = "Hidden";
+            this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
             // 
             // panelWorkSpaseIconIN
             // 
@@ -1072,7 +1026,7 @@
             // 
             // btnMDeleteWorkSpace
             // 
-            this.btnMDeleteWorkSpace.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMDeleteWorkSpace.BackgroundImage")));
+            this.btnMDeleteWorkSpace.BackgroundImage = global::ProjectAI.Properties.Resources.minus;
             this.btnMDeleteWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMDeleteWorkSpace.FontWeight = MetroFramework.MetroButtonWeight.Light;
             this.btnMDeleteWorkSpace.Location = new System.Drawing.Point(180, 3);
@@ -1084,7 +1038,7 @@
             // 
             // btnMnewWorkSpace
             // 
-            this.btnMnewWorkSpace.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMnewWorkSpace.BackgroundImage")));
+            this.btnMnewWorkSpace.BackgroundImage = global::ProjectAI.Properties.Resources.plus;
             this.btnMnewWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMnewWorkSpace.Location = new System.Drawing.Point(212, 3);
             this.btnMnewWorkSpace.Name = "btnMnewWorkSpace";
@@ -1213,86 +1167,37 @@
             this.panelWorkSpaseButton.Size = new System.Drawing.Size(241, 720);
             this.panelWorkSpaseButton.TabIndex = 4;
             // 
-            // cmsImageListToolKit
+            // trayIcon
             // 
-            this.cmsImageListToolKit.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.cmsImageListToolKit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator12,
-            this.imageAddToolStripMenuItem,
-            this.imageFolderAddToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.imageLabelingToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.imageSetTrainToolStripMenuItem,
-            this.imageSetTestToolStripMenuItem,
-            this.toolStripSeparator5,
-            this.imageDeleteToolStripMenuItem,
-            this.toolStripSeparator6});
-            this.cmsImageListToolKit.Name = "contextMenuStrip1";
-            this.cmsImageListToolKit.Size = new System.Drawing.Size(171, 166);
+            this.trayIcon.ContextMenuStrip = this.cmsMtryIcon;
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
+            this.trayIcon.Text = "SynapseNet Learning Studio";
+            this.trayIcon.Visible = true;
             // 
-            // toolStripSeparator12
+            // cmsMtryIcon
             // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(167, 6);
+            this.cmsMtryIcon.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.cmsMtryIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.cmsMtryIcon.Name = "cmsMtryIcon";
+            this.cmsMtryIcon.Size = new System.Drawing.Size(113, 64);
             // 
-            // imageAddToolStripMenuItem
+            // showToolStripMenuItem
             // 
-            this.imageAddToolStripMenuItem.Name = "imageAddToolStripMenuItem";
-            this.imageAddToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageAddToolStripMenuItem.Text = "Image File Add";
-            this.imageAddToolStripMenuItem.Click += new System.EventHandler(this.ImageAddToolStripMenuItemClick);
+            this.showToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.synapseimaging;
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(112, 30);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.ShowToolStripMenuItemClick);
             // 
-            // imageFolderAddToolStripMenuItem
+            // exitToolStripMenuItem
             // 
-            this.imageFolderAddToolStripMenuItem.Name = "imageFolderAddToolStripMenuItem";
-            this.imageFolderAddToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageFolderAddToolStripMenuItem.Text = "Image Folder Add";
-            this.imageFolderAddToolStripMenuItem.Click += new System.EventHandler(this.imageFolderAddToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(167, 6);
-            // 
-            // imageLabelingToolStripMenuItem
-            // 
-            this.imageLabelingToolStripMenuItem.Name = "imageLabelingToolStripMenuItem";
-            this.imageLabelingToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageLabelingToolStripMenuItem.Text = "Image Labeling";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
-            // 
-            // imageSetTrainToolStripMenuItem
-            // 
-            this.imageSetTrainToolStripMenuItem.Name = "imageSetTrainToolStripMenuItem";
-            this.imageSetTrainToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageSetTrainToolStripMenuItem.Text = "Image Set Train";
-            // 
-            // imageSetTestToolStripMenuItem
-            // 
-            this.imageSetTestToolStripMenuItem.Name = "imageSetTestToolStripMenuItem";
-            this.imageSetTestToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageSetTestToolStripMenuItem.Text = "Image Set Test";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(167, 6);
-            // 
-            // imageDeleteToolStripMenuItem
-            // 
-            this.imageDeleteToolStripMenuItem.Name = "imageDeleteToolStripMenuItem";
-            this.imageDeleteToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.imageDeleteToolStripMenuItem.Text = "Image Delete";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
+            this.exitToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.shutdown;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 30);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
             // 
             // MainForm
             // 
@@ -1316,16 +1221,9 @@
             this.tableLayoutMainForm.ResumeLayout(false);
             this.panelWorkSpaseIconOUT.ResumeLayout(false);
             this.panelProjectMain.ResumeLayout(false);
-            this.splitContainerImageAndImageList.Panel1.ResumeLayout(false);
             this.splitContainerImageAndImageList.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerImageAndImageList)).EndInit();
             this.splitContainerImageAndImageList.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelImageDataView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).EndInit();
             this.cmsMImageListToolKit.ResumeLayout(false);
@@ -1344,7 +1242,7 @@
             this.panelstatus.ResumeLayout(false);
             this.panelstatus.PerformLayout();
             this.panelMWorkSpase.ResumeLayout(false);
-            this.cmsImageListToolKit.ResumeLayout(false);
+            this.cmsMtryIcon.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1369,23 +1267,11 @@
         private MetroFramework.Controls.MetroPanel panelMTrainOptions;
         private MetroFramework.Controls.MetroButton btnMTrainOptionsOpen;
         private System.Windows.Forms.Panel panelWorkSpaseButton;
-        private System.Windows.Forms.ContextMenuStrip cmsImageListToolKit;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceProgramExit;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceTestButton;
-        private System.Windows.Forms.Label lblImageListpageMid;
-        private System.Windows.Forms.ToolStripMenuItem imageAddToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imageFolderAddToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem imageLabelingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem imageSetTrainToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imageSetTestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem imageDeleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         public System.Windows.Forms.Panel panelTrainOptions;
         public MetroFramework.Components.MetroStyleExtender styleExtenderMainForm;
         private MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
@@ -1399,12 +1285,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem imageDeleteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        public System.Windows.Forms.Label lblImageListpageTotal;
-        public System.Windows.Forms.Label lblImageListpage;
-        public System.Windows.Forms.Panel panelImageDataView;
-        public MetroFramework.Controls.MetroGrid gridImageList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         public MetroFramework.Controls.MetroPanel panelProjectInfo;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
@@ -1418,15 +1299,11 @@
         public MetroFramework.Controls.MetroLabel lblMIOStatus;
         public MetroFramework.Controls.MetroLabel lblMtotalNumber;
         public MetroFramework.Controls.MetroLabel lblStatus;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private MetroFramework.Controls.MetroPanel panelMWorkSpaceString1;
         private MetroFramework.Controls.MetroPanel panelMWorkSpaceString2;
         private MetroFramework.Controls.MetroPanel panelMTrainParameterString;
         private MetroFramework.Controls.MetroPanel panelMDataBaseInfoString;
         private MetroFramework.Controls.MetroButton btnMWorkSpaseClose;
-        private System.Windows.Forms.Button btnimagePageReverse;
-        private System.Windows.Forms.Button btnimagePageNext;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         public System.Windows.Forms.ToolStripMenuItem tsmProjectWorkSpaceSave;
         public System.Windows.Forms.ToolStripMenuItem tsmProjectAllWorkSpaceSave;
@@ -1447,10 +1324,21 @@
         private System.Windows.Forms.ToolStripMenuItem imageFilesAddWizardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageFolderAddWizardToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.NotifyIcon trayIcon;
+        private MetroFramework.Controls.MetroContextMenu cmsMtryIcon;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hiddenToolStripMenuItem;
         public System.Windows.Forms.SplitContainer splitContainerImageAndImageList;
+        public System.Windows.Forms.Panel panelImageDataView;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
+        private System.Windows.Forms.Label lblImageListpageMid;
+        public System.Windows.Forms.Label lblImageListpage;
+        private System.Windows.Forms.Button btnimagePageReverse;
+        private System.Windows.Forms.Button btnimagePageNext;
+        public System.Windows.Forms.Label lblImageListpageTotal;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         public MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize;
+        public MetroFramework.Controls.MetroGrid gridImageList;
     }
 }

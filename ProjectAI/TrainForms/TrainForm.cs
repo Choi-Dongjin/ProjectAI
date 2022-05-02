@@ -113,6 +113,8 @@ namespace ProjectAI.TrainForms
             this.ReadDataandUpdateDataGridView(); // 데이터 읽고 컨트롤에 추가하기
 
             this.trainFormF1Start = true; // Train Forms 처음 동작 확인 dgvMWaitingforWork -> 처음 추가 동작 제어
+
+            this.UISetUPClassificationTrainOptionsDgvMContinualLearningColumns(); // ClassificationTrainOptions UI Setup
         }
 
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
@@ -149,6 +151,21 @@ namespace ProjectAI.TrainForms
                 FormsManiger.ChartDarkMode(this.chartViewLoss);
                 FormsManiger.ChartDarkMode(this.chartViewAccuracy);
             }
+        }
+
+        private void UISetUPClassificationTrainOptionsDgvMContinualLearningColumns()
+        {
+            this.ClassificationTrainOptions.dgvMContinualLearning.DataSource = null;
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns.Clear();
+            this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
+            this.ClassificationTrainOptions.dgvMContinualLearning.Refresh();
+
+            this.ClassificationTrainOptions.dgvMContinualLearning.ColumnCount = 5;
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns[0].Name = "Version";
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns[1].Name = "Best Accuracy"; // (double_TrainAcc + double_TestAcc) / 2
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns[2].Name = "Best Loss";
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns[3].Name = "Best Escape";
+            this.ClassificationTrainOptions.dgvMContinualLearning.Columns[4].Name = "Best OverKill";
         }
 
         /// <summary>
@@ -661,7 +678,8 @@ namespace ProjectAI.TrainForms
                 processPath = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processPath"].ToString();
 
                 JObject localProcessInfo = jsonDataManiger.GetJsonObject(System.IO.Path.Combine(processPath, "TrainSystem.Json"));
-
+                if (localProcessInfo == null)
+                    break;
                 processModel = localProcessInfo["TrainProcessInfo"]["string_processModel"].ToString();
                 processTask = localProcessInfo["TrainProcessInfo"]["string_processTask"].ToString();
                 processName = localProcessInfo["TrainProcessInfo"]["string_processName"].ToString();
@@ -840,6 +858,7 @@ namespace ProjectAI.TrainForms
             {
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
+                    WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject = jsonDataManiger.GetJsonObjectShare(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModelInfo);
                     if (WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] != null)
                     {
                         foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"])
@@ -1204,8 +1223,8 @@ namespace ProjectAI.TrainForms
             ProcessStartInfo classificationProcessStartInfo = new ProcessStartInfo(coreProgramPath)
             {
                 UseShellExecute = false,
-                WindowStyle = ProcessWindowStyle.Normal, //Classification.exe 출력 콘솔 숨기기
-                CreateNoWindow = false,                               // cmd창을 띄우지 안도록 하기
+                WindowStyle = ProcessWindowStyle.Hidden, //Classification.exe 출력 콘솔 숨기기
+                CreateNoWindow = true,                               // cmd창을 띄우지 안도록 하기
                 RedirectStandardOutput = true,        // cmd창에서 데이터를 가져오기
                 RedirectStandardInput = true,          // cmd창으로 데이터 보내기
                 RedirectStandardError = true          // cmd창에서 오류 내용 가져오기
@@ -1496,8 +1515,8 @@ namespace ProjectAI.TrainForms
                         classificationProcessStartInfo = new ProcessStartInfo(coreProgramPath)
                         {
                             UseShellExecute = false,
-                            WindowStyle = ProcessWindowStyle.Normal, //Classification.exe 출력 콘솔 숨기기
-                            CreateNoWindow = false,                               // cmd창을 띄우지 안도록 하기
+                            WindowStyle = ProcessWindowStyle.Hidden, //Classification.exe 출력 콘솔 숨기기
+                            CreateNoWindow = true,                               // cmd창을 띄우지 안도록 하기
                             RedirectStandardOutput = true,        // cmd창에서 데이터를 가져오기
                             RedirectStandardInput = true,          // cmd창으로 데이터 보내기
                             RedirectStandardError = true          // cmd창에서 오류 내용 가져오기
@@ -1636,14 +1655,14 @@ namespace ProjectAI.TrainForms
 
             try
             {
-                System.IO.Directory.Move(System.IO.Path.Combine(resultsHeatmapsFilePath, "Heat_maps_0"), System.IO.Path.Combine(projectModelHeatmapsPath, modelList[0]));
+                System.IO.Directory.Move(System.IO.Path.Combine(resultsHeatmapsFilePath, "Heat_maps_0"), System.IO.Path.Combine(projectModelHeatmapsPath, modelList[count - 1]));
             }
             catch { }
 
             foreach (string fileName in CustomIOMainger.DirFileSerch(resultsEvalsFilePath, "Full"))
             {
                 if (modelList[0].Count() > 0)
-                    System.IO.File.Copy(fileName, System.IO.Path.Combine(projectModelEvalsPath, modelList[0]), true);
+                    System.IO.File.Copy(fileName, System.IO.Path.Combine(projectModelEvalsPath, modelList[count - 1]), true);
                 break;
             }
 
@@ -2883,7 +2902,11 @@ namespace ProjectAI.TrainForms
                     if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                         if (processWorkSpasceName.Equals(WorkSpaceData.m_activeProjectMainger.m_activeProjectName))
                             if (processWorkSpaceInnerPorjectName.Equals(WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName))
+                            {
                                 this.UpdateModelView(); // 프로젝트 모델 정보 업데이트
+                                WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].ModelUpdate();
+                            }
+                                
 
             if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
                 // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
@@ -3380,8 +3403,11 @@ namespace ProjectAI.TrainForms
 
                 // ContinualLearning UI 설정
                 this.ClassificationTrainOptions.togMContinualLearning.Checked = continualLearningChecked;
-                this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
-                this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
+                if (continualLearningChecked)
+                {
+                    this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Clear();
+                    this.ClassificationTrainOptions.dgvMContinualLearning.Rows.Add("Model", continualLearningModelLoss, continualLearningModelAccuracy, continualLearningModelEscape, continualLearningModelOverKill);
+                }
 
                 // Class Info
                 this.ClassificationTrainOptions.UISetupClassWeighContralResetManual(); // 기존 Class Contral 초기화
@@ -3425,6 +3451,8 @@ namespace ProjectAI.TrainForms
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.CheckPathExists = true;
                 openFileDialog.FileName = "Folder Selection.";
+                //openFileDialog.Filter = "모델 파일 (*.synapsenet)|*.synapsenet";
+                openFileDialog.Filter = " |Folder Selection";
 
                 if (WorkSpaceData.m_activeProjectMainger != null)
                     if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
@@ -3463,6 +3491,29 @@ namespace ProjectAI.TrainForms
                         }
                     }
                 
+            }
+        }
+
+        private void DgvMmodelsEpochCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (this.dgvMmodelsVersion.SelectedRows[0].Cells[0].Value != null)
+            {
+                List<string> modelList = new List<string>();
+                foreach (string modelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["array_string_ModelList"]) // 모델 이름 List 로 만들기
+                    modelList.Add(modelName);
+
+                int version = this.dgvMmodelsVersion.SelectedRows[0].Index; // 호출하는 모델 버전 정보 가져오기
+
+                string selectModelName = modelList[version]; // 선택된 모델 관리 이름
+
+                List<string> innerModelList = new List<string>();
+                foreach (string innerModelName in WorkSpaceData.m_activeProjectMainger.m_activeProjectModelInfoJObject[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName][selectModelName]["array_string_innerModelList"])
+                {
+                    innerModelList.Add(innerModelName);
+                }
+
+                WorkSpaceData.m_activeProjectMainger.m_avtiveModelsName = selectModelName;
+                WorkSpaceData.m_activeProjectMainger.m_avtiveinnerModelsName = innerModelList[e.RowIndex];
             }
         }
     }

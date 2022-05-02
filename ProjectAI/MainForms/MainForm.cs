@@ -6,6 +6,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace ProjectAI.MainForms
 {
@@ -15,7 +17,7 @@ namespace ProjectAI.MainForms
         /// 싱글톤 패턴 구현
         /// </summary>
         private static MainForm mainForm;
-
+        
         /// <summary>
         /// 싱글톤 패턴 Class 호출에 사용
         /// </summary>
@@ -248,7 +250,6 @@ namespace ProjectAI.MainForms
             InitializeComponent();
 
             this.panelProjectInfo.Controls.Add(this.mainPanelMlogo); // Logo 추가
-
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
@@ -258,6 +259,7 @@ namespace ProjectAI.MainForms
 
         private void MainFormLoad(object sender, EventArgs e)
         {
+            this.gridImageList.DoubleBuffered(true);
             this.WorkSpaceEarlyDataSet();
         }
 
@@ -286,14 +288,17 @@ namespace ProjectAI.MainForms
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameter;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
                 // panel BackgroundImage 변경
-                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
                 this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
                 // Logo 적용
                 this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
 
                 if (WorkSpaceData.m_activeProjectMainger != null)
+                {
                     if (WorkSpaceData.m_activeProjectMainger.panelLogo != null)
                         WorkSpaceData.m_activeProjectMainger.panelLogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
+
+                    WorkSpaceData.m_activeProjectMainger.m_idelPictureBox.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                }
             }
             else // Dark로 변경시 진입
             {
@@ -308,16 +313,20 @@ namespace ProjectAI.MainForms
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameterW;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfoW;
                 // panel BackgroundImage 변경
-                this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
                 this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
                 // Logo 적용
                 this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
 
                 if (WorkSpaceData.m_activeProjectMainger != null)
                     if (WorkSpaceData.m_activeProjectMainger.panelLogo != null)
+                    {
                         WorkSpaceData.m_activeProjectMainger.panelLogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
+                        WorkSpaceData.m_activeProjectMainger.m_idelPictureBox.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                    }
             }
         }
+
+        //private void UISetTrayIcon
 
         /// <summary>
         /// MainForm 시작전 WorkSpaceEarlyData 기본 파일, 폴더, 설정 변수 확인, 적용 생성
@@ -361,8 +370,7 @@ namespace ProjectAI.MainForms
         private void MainFormCallUISeting()
         {
             this.panelMWorkSpase.Visible = true; // WorkSpase 판넬 보이기
-
-            this.panelTrainOptions.Visible = false; // TrainO ptions 폼 안보이기
+            this.panelTrainOptions.Visible = false; // Train ptions 폼 안보이기
             this.tableLayoutDataReview.Visible = false; // Data Review 폼 안보이기
 
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
@@ -708,9 +716,9 @@ namespace ProjectAI.MainForms
                 {
                     WorkSpaceData.m_activeProjectMainger.ImageFolderAddingWizard();
                 }
-            Form1 form1 = new Form1();
-            form1.SetMessageBox(MetroColorStyle.Red, formsManiger.m_StyleManager.Theme, "ERROR", "Calss Info 데이터 없음 초기화");
-            form1.ShowDialog();
+            //Form1 form1 = new Form1();
+            //form1.SetMessageBox(MetroColorStyle.Red, formsManiger.m_StyleManager.Theme, "ERROR", "Calss Info 데이터 없음 초기화");
+            //form1.ShowDialog();
             //this.TrainForm.Show();
         }
 
@@ -815,6 +823,13 @@ namespace ProjectAI.MainForms
                 }
             }
             jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장
+
+            int index = 0;
+            foreach(MainForms.WorkSpaceButton editButtonIndex in WorkSpaceEarlyData.m_workSpaceButtons.Values)
+            {
+                editButtonIndex.WorkSpaceButtonIndex = index;
+                index++;
+            }
         }
 
         /// <summary>
@@ -1020,22 +1035,11 @@ namespace ProjectAI.MainForms
 
         private void GridImageListSelectionChanged(object sender, EventArgs e)
         {
-            if (this.pictureBox1.Image != null)
-                this.pictureBox1.Image = null;
-            try
+            if (gridImageList.SelectedRows.Count > 0)
             {
                 DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
                 string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
-
-                if (data != null)
-                {
-                    this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data));
-                }
-            }
-            catch
-            {
-                if (this.pictureBox1.Image != null)
-                    this.pictureBox1.Image = null;
+                WorkSpaceData.m_activeProjectMainger.PrintImage(data);
             }
         }
 
@@ -1097,8 +1101,6 @@ namespace ProjectAI.MainForms
         {
             if (MetroMessageBox.Show(this, "Are you sure you want to delete the image?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                this.pictureBox1.Image = null;
-                this.pictureBox2.Image = null;
                 if (WorkSpaceData.m_activeProjectMainger != null)
                     WorkSpaceData.m_activeProjectMainger.ImageDel(this.gridImageList);
             }
@@ -1158,9 +1160,9 @@ namespace ProjectAI.MainForms
 
         private void GridImageListCellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
-            string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
-            Console.WriteLine(data);
+            //DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+            //string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+            //Console.WriteLine(data);
         }
 
         private void ImageAddToolStripMenuItemClick(object sender, EventArgs e)
@@ -1251,6 +1253,37 @@ namespace ProjectAI.MainForms
                 //Console.WriteLine("24F");
             }
             return size;
+        }
+
+        private void ShowToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void ExitToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.ProgramEndSequence();
+        }
+
+        private void HiddenToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void metroTile4_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        public static void DoubleBuffered(this DataGridView dgv, bool setting)
+        {
+            Type dgvType = dgv.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(dgv, setting, null);
         }
     }
 }

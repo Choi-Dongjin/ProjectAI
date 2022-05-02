@@ -35,16 +35,16 @@
             this.lblClassificationINFO = new System.Windows.Forms.Label();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.lblInputDataType = new System.Windows.Forms.Label();
             this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-            this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnNoneImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).BeginInit();
             this.metroPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -171,21 +171,6 @@
             this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // lblInputDataType
-            // 
-            this.lblInputDataType.AutoSize = true;
-            this.lblInputDataType.Font = new System.Drawing.Font("Noto Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
-            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
-            this.lblInputDataType.Name = "lblInputDataType";
-            this.lblInputDataType.Size = new System.Drawing.Size(131, 19);
-            this.lblInputDataType.TabIndex = 2;
-            this.lblInputDataType.Text = "Input Data Type";
-            // 
-            // metroStyleManagerClassification
-            // 
-            this.metroStyleManagerClassification.Owner = this;
-            // 
             // metroPanel2
             // 
             this.metroPanel2.Controls.Add(this.btnNoneImage);
@@ -204,6 +189,35 @@
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
             // 
+            // lblInputDataType
+            // 
+            this.lblInputDataType.AutoSize = true;
+            this.lblInputDataType.Font = new System.Drawing.Font("Noto Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
+            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
+            this.lblInputDataType.Name = "lblInputDataType";
+            this.lblInputDataType.Size = new System.Drawing.Size(131, 19);
+            this.lblInputDataType.TabIndex = 2;
+            this.lblInputDataType.Text = "Input Data Type";
+            // 
+            // metroStyleManagerClassification
+            // 
+            this.metroStyleManagerClassification.Owner = this;
+            // 
+            // btnNoneImage
+            // 
+            this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
+            this.btnNoneImage.ButtonClickRetrun = "CADIamge";
+            this.btnNoneImage.CustomButtonName = "CAD Iamge";
+            this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNoneImage.InputLabelText = "CAD Iamge 설명";
+            this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
+            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
+            this.btnNoneImage.Name = "btnNoneImage";
+            this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
+            this.btnNoneImage.TabIndex = 102;
+            this.btnNoneImage.Title = "CAD Iamge";
+            // 
             // btnMultiImage
             // 
             this.btnMultiImage.BackColor = System.Drawing.Color.Transparent;
@@ -217,20 +231,6 @@
             this.btnMultiImage.Size = new System.Drawing.Size(160, 190);
             this.btnMultiImage.TabIndex = 101;
             this.btnMultiImage.Title = "Multi Image";
-            // 
-            // btnNoneImage
-            // 
-            this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
-            this.btnNoneImage.ButtonClickRetrun = "";
-            this.btnNoneImage.CustomButtonName = "None Image";
-            this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnNoneImage.InputLabelText = "None Image 설명";
-            this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
-            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
-            this.btnNoneImage.Name = "btnNoneImage";
-            this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
-            this.btnNoneImage.TabIndex = 102;
-            this.btnNoneImage.Title = "None Image";
             // 
             // btnSingleImage
             // 
@@ -257,8 +257,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).EndInit();
             this.metroPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManagerClassification)).EndInit();
             this.ResumeLayout(false);
 
         }

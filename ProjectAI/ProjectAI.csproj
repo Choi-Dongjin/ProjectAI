@@ -205,11 +205,11 @@
     <Compile Include="MainForms\UserContral\ImageCountLabel.Designer.cs">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageTool\ImageTollTestForms.cs">
-      <SubType>Form</SubType>
+    <Compile Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImageTool\ImageTollTestForms.Designer.cs">
-      <DependentUpon>ImageTollTestForms.cs</DependentUpon>
+    <Compile Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.Designer.cs">
+      <DependentUpon>SimpleTwoImageViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\UserContral\Monitoring\ClassViewer.cs">
       <SubType>UserControl</SubType>
@@ -336,14 +336,14 @@
     <EmbeddedResource Include="MainForms\UserContral\ImageCountLabel.resx">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImageTool\ImageTollTestForms.resx">
-      <DependentUpon>ImageTollTestForms.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForms\DeeplearningProjectSelectForm.resx">
       <DependentUpon>DeeplearningProjectSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.resx">
+      <DependentUpon>SimpleTwoImageViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\Monitoring\ClassViewer.resx">
       <DependentUpon>ClassViewer.cs</DependentUpon>
@@ -483,6 +483,15 @@
     <None Include="Resources\open2Wizard.png" />
     <None Include="Resources\open-sourceWizard.png" />
     <None Include="Resources\OpenCVexImage.png" />
+    <None Include="Resources\project-management.png" />
+    <None Include="Resources\project-management-del.png" />
+    <None Include="Resources\save-1.png" />
+    <None Include="Resources\save-1-all.png" />
+    <None Include="Resources\memphis-style.png" />
+    <None Include="Resources\deep-learning.png" />
+    <None Include="Resources\deeplearning-view.png" />
+    <None Include="Resources\shutdown.png" />
+    <None Include="Resources\synapseimaging.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup />

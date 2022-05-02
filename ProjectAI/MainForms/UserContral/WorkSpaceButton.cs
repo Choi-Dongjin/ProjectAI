@@ -45,6 +45,8 @@ namespace ProjectAI.MainForms
         {
             this.metroStyleManager1.Style = styleManager.Style;
             this.metroStyleManager1.Theme = styleManager.Theme;
+            this.lblWorkSpaceName.Style = styleManager.Style;
+            this.lblWorkSpaceName.Theme = styleManager.Theme;
         }
 
         /// <summary>

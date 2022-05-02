@@ -211,7 +211,7 @@
             this.tclMProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tclMProcess.Location = new System.Drawing.Point(10, 20);
             this.tclMProcess.Name = "tclMProcess";
-            this.tclMProcess.SelectedIndex = 1;
+            this.tclMProcess.SelectedIndex = 2;
             this.tclMProcess.Size = new System.Drawing.Size(551, 772);
             this.tclMProcess.TabIndex = 2;
             this.tclMProcess.UseSelectable = true;
@@ -507,6 +507,7 @@
             this.metroButton3.Text = "Stop Register";
             this.metroToolTip1.SetToolTip(this.metroButton3, "Stop Processing Register");
             this.metroButton3.UseSelectable = true;
+            this.metroButton3.Visible = false;
             this.metroButton3.Click += new System.EventHandler(this.MetroButton3Click);
             // 
             // metroLabel1
@@ -622,6 +623,7 @@
             this.btnMProcessStop.TabIndex = 1;
             this.btnMProcessStop.Text = "Stop";
             this.btnMProcessStop.UseSelectable = true;
+            this.btnMProcessStop.Visible = false;
             this.btnMProcessStop.Click += new System.EventHandler(this.BtnMProcessStopClick);
             // 
             // btnMProcessAllStop
@@ -1158,6 +1160,7 @@
             this.dgvMmodelsEpoch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMmodelsEpoch.Size = new System.Drawing.Size(533, 130);
             this.dgvMmodelsEpoch.TabIndex = 0;
+            this.dgvMmodelsEpoch.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMmodelsEpochCellMouseDoubleClick);
             this.dgvMmodelsEpoch.SelectionChanged += new System.EventHandler(this.DgvMmodelsEpochSelectionChanged);
             // 
             // cmsMmodelOutput

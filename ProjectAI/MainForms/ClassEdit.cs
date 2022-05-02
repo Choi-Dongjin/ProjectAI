@@ -267,19 +267,20 @@ namespace ProjectAI.MainForms
         /// <returns></returns>
         private ProjectAI.MainForms.UserContral.ClassEdit.ClassButton ClassButtonSetting(string backColor, string foreColor, string name, MetroColorStyle metroColorStyle = MetroColorStyle.Default)
         {
-            ProjectAI.MainForms.UserContral.ClassEdit.ClassButton classButton = new UserContral.ClassEdit.ClassButton();
+            ProjectAI.MainForms.UserContral.ClassEdit.ClassButton classButton = new UserContral.ClassEdit.ClassButton
+            {
+                DeleteText = "Delete",
+                EditText = "Edit",
+                Dock = System.Windows.Forms.DockStyle.Top,
 
-            classButton.DeleteText = "Delete";
-            classButton.EditText = "Edit";
-            classButton.Dock = System.Windows.Forms.DockStyle.Top;
+                TileBackColor = ColorTranslator.FromHtml(backColor),
+                ForeColor = ColorTranslator.FromHtml(foreColor),
+                TileText = name,
+                Name = name,
 
-            classButton.TileBackColor = ColorTranslator.FromHtml(backColor);
-            classButton.ForeColor = ColorTranslator.FromHtml(foreColor);
-            classButton.TileText = name;
-            classButton.Name = name;
-
-            classButton.Size = new System.Drawing.Size(393, 42);
-            classButton.Style = metroColorStyle;
+                Size = new System.Drawing.Size(393, 42),
+                Style = metroColorStyle
+            };
 
             classButton.BtnMEditClick += this.BtnCeditClick; // Class Button 클릭 이벤트 등록 - edit
             classButton.BtnMDeleteClick += this.BtnCdeleteClick; // Class Button 클릭 이벤트 등록 - delete

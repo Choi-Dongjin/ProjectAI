@@ -775,7 +775,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         /// <summary>
         /// 모델 정보 업데이터
         /// </summary>
-        private void ModelUpdate()
+        public void ModelUpdate()
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
             {

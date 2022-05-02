@@ -49,22 +49,23 @@ namespace ProjectAI
         internal JObject GetJsonObject(string jsonFilePath)
         {
             JObject jObject = new JObject();
-
-            using (var stream = File.OpenText(jsonFilePath))
-            using (JsonTextReader reader = new JsonTextReader(stream))
+            try
             {
-                try
+                using (var stream = File.OpenText(jsonFilePath))
+                using (JsonTextReader reader = new JsonTextReader(stream))
                 {
-                    jObject = (JObject)JToken.ReadFrom(reader);
+
+                        jObject = (JObject)JToken.ReadFrom(reader);
+
                 }
-                catch (Newtonsoft.Json.JsonReaderException)
-                {
-                    jObject = null;
-                }
-                catch
-                {
-                    jObject = null;
-                }
+            }
+            catch (Newtonsoft.Json.JsonReaderException)
+            {
+                jObject = null;
+            }
+            catch
+            {
+                jObject = null;
             }
 
             return jObject;
