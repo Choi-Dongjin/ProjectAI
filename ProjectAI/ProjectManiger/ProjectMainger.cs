@@ -368,6 +368,22 @@ namespace ProjectAI
         /// </summary>
         public static bool m_workSpaceSave = false;
     }
+    
+    /// <summary>
+    /// MainForm에서 CAD image 선택하려고 할 때 또다른 Form을 생성하는데 생성된 Form을 저장하는 변수
+    /// </summary>
+    public struct CADFormSave
+    {
+        public static Dictionary<string, object> m_CadimageViewDictionary = new Dictionary<string, object>();
+
+        public static string projectName;
+
+        public static string OriginImageName;
+
+        public static string OriginImagePath;
+
+        public static string [] CADImagePath;
+    }
 
     /// <summary>
     /// WorkSpace 가 호출되면 호출되는 Class,각 WorkSpace의 데이터 관리
@@ -1595,104 +1611,18 @@ namespace ProjectAI
                     {
                         Console.WriteLine("Classification");
                         Console.WriteLine("SingleImage");
-
-                        this.m_activeInnerProjectName = button.Name; // 활성화된 프로젝트 등록
-                        this.m_activeInnerProjectTask = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString();
-                        this.m_activeInnerProjectInputImageType = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString();
-
-                        bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-
-                        #region panelTrainOptions
-                        // panelTrainOptions 설정
-                        foreach (string activeInnerProjectName in this.m_classificationTrainOptionDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
-                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
-                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
-                                {
-                                    alreadyOpenedProjectClassification = true; // 실행되어 있다면 확인용 변수 True로 변경
-                                    break;
-                                }
-                        if (!alreadyOpenedProjectClassification) // 처음 실행된 내부 프로젝트 라면
-                        {
-                            ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions m_classificationTrainOptionl =
-                                new CustomComponent.MainForms.Classification.ClassificationTrainOptions(); // Classification TrainOption 생성
-                            m_classificationTrainOptionl = this.ActiveProjectClassificationContralsSetting(m_classificationTrainOptionl); // 생성된 Classification TrainOption 셋업
-
-                            this.m_classInfoChangeUpdater += m_classificationTrainOptionl.UISetupDataReadClassWeightControlReset; // Class 업데이터 등록
-                            this.m_imageNumberChangeUpdater += m_classificationTrainOptionl.UISetupTrainNumberUpdataer; // 이미지 개수 변경시 업데이터 등록
-
-                            this.m_classificationTrainOptionDictionary.Add(this.m_activeInnerProjectName, m_classificationTrainOptionl); // 관리 Dictionary에 추가
-                        } // 처음 실행된 내부 프로젝트 라면
-                        #endregion panelTrainOptions
-
-                        #region panelDataReview
-                        // panelDataReview 설정
-                        foreach (string activeInnerProjectName in this.m_classViewerDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
-                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
-                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
-                                {
-                                    alreadyOpenedProjectClassViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
-                                    break;
-                                }
-                        if (!alreadyOpenedProjectClassViewer)
-                        {
-                            ProjectAI.MainForms.UserContral.Monitoring.ClassViewer classViewer = this.UISetClassViewerContralsSetting(); // ClassViewer 생성
-                            this.m_classInfoChangeUpdater += classViewer.UpdateClassInfo; // Class 업데이터 등록
-                            this.m_classViewerDictionary.Add(this.m_activeInnerProjectName, classViewer); // 관리 Dictionary에 추가
-                        }
-                        #endregion panelDataReview
-
-                        #region ImageViewer
-                        // ImageViewer 설정
-                        foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
-                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
-                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
-                                {
-                                    alreadyOpenedProjectImageViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
-                                    break;
-                                }
-                        if (!alreadyOpenedProjectImageViewer)
-                        {
-                            ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer simpleTwoImageViewer = new MainForms.UserContral.ImageView.SimpleTwoImageViewer();
-                            simpleTwoImageViewer = this.SimpleTwoImageViewerrContralsSetting(simpleTwoImageViewer);
-                            this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, simpleTwoImageViewer);
-                        }
-                        #endregion ImageViewer
-
-                        #region ImageList
-                        //foreach ()
-                        #endregion ImageList
-
-                        this.ProjectIdleUIRemove(); // IdleUI 삭제
-                                                    // panelTrainOptions 설정
-
-                        #region 컨트롤 추가
-                        this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
-                        this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
-                        this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
-                        #endregion 컨트롤 추가
-
-
-                        this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
-                        this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
-
-
-
-                        // trainForm 학습 결과 폼
-                        TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
-                        // Model 정보 업데이트
-                        trainForm.UpdateModelView();
+                        SingleImage(button.Name); // 바로 아래 region
                     }
-                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "MultiImage")
+                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "MultiImage")
                     {
                         Console.WriteLine("Classification");
                         Console.WriteLine("MultiImage");
                     }
-                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "CADIamge")
+                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "CADImage")
                     {
                         Console.WriteLine("Classification");
-                        Console.WriteLine("CADIamge");
+                        Console.WriteLine("CADImage");
+                        CadImage(button.Name); //바로 아래 region
                     }
 
                 }
@@ -1712,6 +1642,201 @@ namespace ProjectAI
                 }
             }
         }
+
+        #region SingleImage
+        /// <summary>
+        /// SingleImage 일 때
+        /// </summary>
+        /// <param name="btnName"></param>
+        public void SingleImage(string btnName)
+        {
+            this.m_activeInnerProjectName = btnName; // 활성화된 프로젝트 등록
+            this.m_activeInnerProjectTask = this.m_activeProjectInfoJObject["string_projectListInfo"][btnName]["string_selectProject"].ToString();
+            this.m_activeInnerProjectInputImageType = this.m_activeProjectInfoJObject["string_projectListInfo"][btnName]["string_selectProjectInputDataType"].ToString();
+
+            bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+            bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+            bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+
+            #region panelTrainOptions
+            // panelTrainOptions 설정
+            foreach (string activeInnerProjectName in this.m_classificationTrainOptionDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectClassification = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectClassification) // 처음 실행된 내부 프로젝트 라면
+            {
+                ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions m_classificationTrainOptionl =
+                    new CustomComponent.MainForms.Classification.ClassificationTrainOptions(); // Classification TrainOption 생성
+                m_classificationTrainOptionl = this.ActiveProjectClassificationContralsSetting(m_classificationTrainOptionl); // 생성된 Classification TrainOption 셋업
+
+                this.m_classInfoChangeUpdater += m_classificationTrainOptionl.UISetupDataReadClassWeightControlReset; // Class 업데이터 등록
+                this.m_imageNumberChangeUpdater += m_classificationTrainOptionl.UISetupTrainNumberUpdataer; // 이미지 개수 변경시 업데이터 등록
+
+                this.m_classificationTrainOptionDictionary.Add(this.m_activeInnerProjectName, m_classificationTrainOptionl); // 관리 Dictionary에 추가
+            } // 처음 실행된 내부 프로젝트 라면
+            #endregion panelTrainOptions
+
+            #region panelDataReview
+            // panelDataReview 설정
+            foreach (string activeInnerProjectName in this.m_classViewerDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectClassViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectClassViewer)
+            {
+                ProjectAI.MainForms.UserContral.Monitoring.ClassViewer classViewer = this.UISetClassViewerContralsSetting(); // ClassViewer 생성
+                this.m_classInfoChangeUpdater += classViewer.UpdateClassInfo; // Class 업데이터 등록
+                this.m_classViewerDictionary.Add(this.m_activeInnerProjectName, classViewer); // 관리 Dictionary에 추가
+            }
+            #endregion panelDataReview
+
+            #region ImageViewer
+            // ImageViewer 설정
+            foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectImageViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectImageViewer)
+            {
+                ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer simpleTwoImageViewer = new MainForms.UserContral.ImageView.SimpleTwoImageViewer();
+                simpleTwoImageViewer = this.SimpleTwoImageViewerrContralsSetting(simpleTwoImageViewer);
+                this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, simpleTwoImageViewer);
+            }
+            #endregion ImageViewer
+
+            #region ImageList
+            //foreach ()
+            #endregion ImageList
+
+            this.ProjectIdleUIRemove(); // IdleUI 삭제
+                                        // panelTrainOptions 설정
+
+            #region 컨트롤 추가
+            this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
+            this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
+            this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
+            #endregion 컨트롤 추가
+
+
+            this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
+            this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
+
+
+            // trainForm 학습 결과 폼
+            TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
+            // Model 정보 업데이트
+            trainForm.UpdateModelView();
+        }
+#endregion
+
+        #region CadImage
+        /// <summary>
+        /// CadImage 일 때
+        /// </summary>
+        /// <param name="btnName"></param>
+        public void CadImage(string btnName)
+        {
+            this.m_activeInnerProjectName = btnName; // 활성화된 프로젝트 등록
+            this.m_activeInnerProjectTask = this.m_activeProjectInfoJObject["string_projectListInfo"][btnName]["string_selectProject"].ToString();
+            this.m_activeInnerProjectInputImageType = this.m_activeProjectInfoJObject["string_projectListInfo"][btnName]["string_selectProjectInputDataType"].ToString();
+
+            bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+            bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+            bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+
+            #region panelTrainOptions
+            // panelTrainOptions 설정
+            foreach (string activeInnerProjectName in this.m_classificationTrainOptionDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectClassification = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectClassification) // 처음 실행된 내부 프로젝트 라면
+            {
+                ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions m_classificationTrainOptionl =
+                    new CustomComponent.MainForms.Classification.ClassificationTrainOptions(); // Classification TrainOption 생성
+                m_classificationTrainOptionl = this.ActiveProjectClassificationContralsSetting(m_classificationTrainOptionl); // 생성된 Classification TrainOption 셋업
+
+                this.m_classInfoChangeUpdater += m_classificationTrainOptionl.UISetupDataReadClassWeightControlReset; // Class 업데이터 등록
+                this.m_imageNumberChangeUpdater += m_classificationTrainOptionl.UISetupTrainNumberUpdataer; // 이미지 개수 변경시 업데이터 등록
+
+                this.m_classificationTrainOptionDictionary.Add(this.m_activeInnerProjectName, m_classificationTrainOptionl); // 관리 Dictionary에 추가
+            } // 처음 실행된 내부 프로젝트 라면
+            #endregion panelTrainOptions
+
+            #region panelDataReview
+            // panelDataReview 설정
+            foreach (string activeInnerProjectName in this.m_classViewerDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectClassViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectClassViewer)
+            {
+                ProjectAI.MainForms.UserContral.Monitoring.ClassViewer classViewer = this.UISetClassViewerContralsSetting(); // ClassViewer 생성
+                this.m_classInfoChangeUpdater += classViewer.UpdateClassInfo; // Class 업데이터 등록
+                this.m_classViewerDictionary.Add(this.m_activeInnerProjectName, classViewer); // 관리 Dictionary에 추가
+            }
+            #endregion panelDataReview
+
+            #region ImageViewer
+            // ImageViewer 설정
+            foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                    if (activeInnerProjectName == btnName) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                    {
+                        alreadyOpenedProjectImageViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                        break;
+                    }
+            if (!alreadyOpenedProjectImageViewer)
+            {
+                ProjectAI.MainForms.UserContral.ImageView.CadImageViewer cadImageViewer = new MainForms.UserContral.ImageView.CadImageViewer();
+                cadImageViewer = this.CadImageViewerrContralsSetting(cadImageViewer);
+                this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, cadImageViewer);
+                CADFormSave.projectName = this.m_activeInnerProjectName;
+            }
+            #endregion ImageViewer
+
+            #region ImageList
+            //foreach ()
+            #endregion ImageList
+
+            this.ProjectIdleUIRemove(); // IdleUI 삭제
+                                        // panelTrainOptions 설정
+
+            #region 컨트롤 추가
+            this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
+            this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
+            this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
+            #endregion 컨트롤 추가
+
+
+            this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
+            this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
+
+
+            // trainForm 학습 결과 폼
+            TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
+            // Model 정보 업데이트
+            trainForm.UpdateModelView();
+        }
+        #endregion
+
+
         /// <summary>
         ///
         /// </summary>
@@ -1769,6 +1894,45 @@ namespace ProjectAI
             return simpleTwoImageViewer;
         }
 
+        private ProjectAI.MainForms.UserContral.ImageView.CadImageViewer CadImageViewerrContralsSetting(ProjectAI.MainForms.UserContral.ImageView.CadImageViewer cadImageViewer)
+        {
+            //this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            //((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            //this.splitContainer1.Panel1.SuspendLayout();
+            //this.splitContainer1.Panel2.SuspendLayout();
+            //this.splitContainer1.SuspendLayout();
+            //this.splitContainerImageAndImageList.Panel1.Controls.Add(this.splitContainer1);
+            //// 
+            //// splitContainer1
+            //// 
+            //this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            //this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
+            //this.splitContainer1.Name = "splitContainer1";
+            //// 
+            //// splitContainer1.Panel1
+            //// 
+            //this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            //// 
+            //// splitContainer1.Panel2
+            //// 
+            //this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
+            //this.splitContainer1.Panel2Collapsed = true;
+            //this.splitContainer1.Size = new System.Drawing.Size(200, 665);
+            //this.splitContainer1.SplitterDistance = 25;
+            //this.splitContainer1.TabIndex = 4;
+            // 
+            // simpleTwoImageViewer
+            // 
+
+            cadImageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            cadImageViewer.Location = new System.Drawing.Point(0, 0);
+            cadImageViewer.Name = "cadImageViewer1";
+            cadImageViewer.Size = new System.Drawing.Size(200, 665);
+            //simpleTwoImageViewer.TabIndex = 5;
+            return cadImageViewer;
+        }
+
         public void PrintImage(string imageName)
         {
             if (this.m_activeInnerProjectName != null)
@@ -1821,13 +1985,59 @@ namespace ProjectAI
                             imageViewer.pictureBox1.Image = null;
                         }
                     }
+                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CadImage")
+                    {
+                        ProjectAI.MainForms.UserContral.ImageView.CadImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.CadImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
+                        if (imageViewer.pictureBox1.Image != null)
+                            imageViewer.pictureBox1.Image = null;
+                        if (imageViewer.pictureBox2.Image != null)
+                            imageViewer.pictureBox2.Image = null;
+
+                        imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                        try
+                        {
+                            if (this.m_avtiveModelsName != null)
+                            {
+                                if (this.m_avtiveinnerModelsName != null)
+                                {
+                                    try
+                                    {
+                                        string geatMapPath = Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
+                                        string[] heatmapImageArray = CustomIOMainger.DirFileSerch(geatMapPath, "Name").ToArray();
+                                        string strFindValue2 = Array.Find(heatmapImageArray, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
+                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(geatMapPath, strFindValue2));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex);
+                                        imageViewer.pictureBox2.Image = null;
+                                    }
+                                    finally
+                                    {
+                                        if (imageViewer.pictureBox2.Image != null)
+                                        {
+                                            //imageView = this.m_imageViewDictionary[this.m_activeInnerProjectName]
+                                            imageViewer.splitContainer1.Panel2Collapsed = false;
+                                        }
+                                        else
+                                        {
+                                            imageViewer.splitContainer1.Panel2Collapsed = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            imageViewer.pictureBox1.Image = null;
+                        }
+                    }
                 }
             }
             else
             {
                 this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
             }
-            
         }
         
         /// <summary>
@@ -1852,7 +2062,7 @@ namespace ProjectAI
                     {
                         if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()] != null)
                         {
-                            //MetroMessageBox.Show(this.MainForm, "존제하는 이미지 데이터", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //MetroMessageBox.Show(this.MainForm, "존재하는 이미지 데이터", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             delIndexs.Add(i);
                         }
                     }
@@ -1885,7 +2095,7 @@ namespace ProjectAI
                             imageListList.Add(data);
                         }
                     }
-
+                    
                     imageListList.AddRange(files.ToList());
                     int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageeListSetNumber));
 
@@ -2249,6 +2459,222 @@ namespace ProjectAI
                 }
             }
 
+        }
+
+        /// <summary>
+        /// CAD 이미지와 묶일 이미지 선택
+        /// </summary>
+        public void OriginImageFilesSelect()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = @"\";
+                openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
+                openFileDialog.Multiselect = true; // 파일 다중 선택
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = openFileDialog.SafeFileNames;
+                    string[] filesPath = openFileDialog.FileNames;
+                    string imageName = files[0];
+                    CADFormSave.OriginImagePath = filesPath[0];
+                    if (this.m_activeInnerProjectName != null)
+                    {                        
+                        if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
+                        {
+                            if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                            {
+                                
+                                ProjectAI.MainForms.CadImageSelect imageViewer = (ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
+
+                                if (imageViewer.pictureBox1.Image != null)
+                                    imageViewer.pictureBox1.Image = null;
+                                CADFormSave.OriginImageName = imageName;
+                                imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// CAD 이미지 선택
+        /// </summary>
+        public void CADImageFilesSelect()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = @"\";
+                openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
+                openFileDialog.Multiselect = true; // 파일 다중 선택
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = openFileDialog.SafeFileNames;
+                    string[] filesPath = openFileDialog.FileNames;
+                    string imageName = files[0];
+                    if (this.m_activeInnerProjectName != null)
+                    {
+                        if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
+                        {
+                            if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                            {
+
+                                ProjectAI.MainForms.CadImageSelect imageViewer = (ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
+
+                                if (imageViewer.pictureBox2.Image != null)
+                                    imageViewer.pictureBox2.Image = null;
+                                if (CADFormSave.CADImagePath != null)
+                                    CADFormSave.CADImagePath = null;
+                                CADFormSave.CADImagePath = filesPath;
+                                imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 기본 이미지와 CAD이미지를 선택한 후 OK 누를 때 기본 이미지 정보에 CAD이미지의 PATH를 저장하여 JSON에 저장
+        /// </summary>
+        public void CADImageAdding()
+        {
+
+            ProjectAI.MainForms.UserContral.ImageView.CadImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.CadImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
+            int CheckIndex = -1;
+            JObject labeledDatainnerProjectLabelName = new JObject();
+            string file = CADFormSave.OriginImageName;
+            Console.WriteLine(file);
+            if (this.m_activeProjectDataImageListDataJObject[file.ToString()] != null)
+            {
+                MetroMessageBox.Show(this.MainForm, "존재하는 이미지 데이터", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CheckIndex = 0;
+            }
+
+            //this.MainForm.panelstatus.Visible = true;
+            int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
+            int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
+            int imageeListSetNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
+            JObject imageListJObject = (JObject)this.m_activeProjectImageListJObject["imageList"];
+            JArray imageList = (JArray)imageListJObject[(imageListNumber - 1).ToString()];
+
+            List<string> imageListList = new List<string>();
+            if (imageList != null)
+            {
+                foreach (string data in imageList)
+                {
+                    imageListList.Add(data);
+                }
+            }
+
+            //imageListList.AddRange(file.ToList());
+            int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageeListSetNumber));
+
+            //찾은 이미지와 같은 이미지가 존재하지 않을 때 ImageListData에 이미지 생성
+            if (CheckIndex < 0)
+            {
+                // Image List Data 값 반영
+                imageTotalNumber++;
+                object imageData = new
+                {
+                    int_ImageNumber = imageTotalNumber,
+                    string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, file),
+                    Labeled = new JObject() { }
+                };
+                this.m_activeProjectDataImageListDataJObject[file.ToString()] = JObject.FromObject(imageData);
+
+                //Labeled -> 해당 프로젝트 -> CadImage: 1:1 대응되는 CadImage 정보 확인 
+                if (imageViewer.pictureBox2.Image != null)
+                {
+                    labeledDatainnerProjectLabelName = new JObject
+                    {
+                        {  "CadImage", Path.Combine(this.m_pathActiveProjectImage, file) }
+                    };
+                }
+                else
+                {
+                    labeledDatainnerProjectLabelName = new JObject
+                    {
+                        {  "CadImage", "" }
+                    };
+                }
+                JObject labeledDatainnerProject = new JObject
+                    {
+                        { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+                    };
+
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                labeledData.Merge(labeledDatainnerProject);
+            }
+            // 같은 이미지가 존재할 경우
+            else if (CheckIndex == 0)
+            {
+                if (imageViewer.pictureBox2.Image != null)
+                {
+                    labeledDatainnerProjectLabelName = new JObject
+                    {
+                        {  "CadImage", Path.Combine(this.m_pathActiveProjectImage, file) }
+                    };
+                }
+                else
+                {
+                    labeledDatainnerProjectLabelName = new JObject
+                    {
+                        {  "CadImage", "" }
+                    };
+                }
+                JObject labeledDatainnerProject = new JObject
+                    {
+                        { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+                    };
+
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                labeledData.Merge(labeledDatainnerProject);
+            }
+            // image List 값 반영
+            for (int i = 0; i < totalImageListnumber; i++)
+            {
+                List<string> iImageList;
+
+                try
+                {
+                    iImageList = imageListList.GetRange(i * imageeListSetNumber, imageeListSetNumber);
+                }
+                catch
+                {
+                    iImageList = imageListList.GetRange(i * imageeListSetNumber, imageListList.Count - i * imageeListSetNumber);
+                }
+
+                this.m_activeProjectImageListJObject["imageList"][(i + imageListNumber - 1).ToString()] = JArray.FromObject(iImageList.ToArray());
+            }
+
+            // File IO Task 등록
+            customIOManigerFoem.CreateFileCopyList(CADFormSave.CADImagePath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+                                                    MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
+
+            // 변경된 값 반영
+            this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
+            this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageeListSetNumber;
+            this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
+
+            //Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
+            // Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
+            //UI 적용
+            this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
+            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+
+            // Json 파일 저장
+            this.JsonDataSave(1);
+            this.JsonDataSave(2);
+            this.JsonDataSave(3);
         }
 
         /// <summary>

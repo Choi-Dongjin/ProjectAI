@@ -44,6 +44,15 @@
     <ApplicationIcon>Resources\synapseimaging2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ComponentFactory.Krypton.Docking">
+      <HintPath>..\..\Krypton-master\Krypton-master\Bin\ComponentFactory.Krypton.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Toolkit">
+      <HintPath>..\..\Krypton-master\Krypton-master\Bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialSkin, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialSkin.2.2.3.1\lib\net48\MaterialSkin.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
@@ -75,6 +84,7 @@
       <HintPath>..\packages\System.CodeDom.6.0.0\lib\net461\System.CodeDom.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Drawing.Common.6.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
@@ -138,6 +148,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\CadImageSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForms\CadImageSelect.Designer.cs">
+      <DependentUpon>CadImageSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\ClassEdit.cs">
       <SubType>Form</SubType>
@@ -204,6 +220,18 @@
     </Compile>
     <Compile Include="MainForms\UserContral\ImageCountLabel.Designer.cs">
       <DependentUpon>ImageCountLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\CadImageViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\CadImageViewer.Designer.cs">
+      <DependentUpon>CadImageViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\CadOverView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\CadOverView.Designer.cs">
+      <DependentUpon>CadOverView.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.cs">
       <SubType>UserControl</SubType>
@@ -303,6 +331,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\CadImageSelect.resx">
+      <DependentUpon>CadImageSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForms\ClassEdit.resx">
       <DependentUpon>ClassEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -341,6 +372,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ImageView\CadImageViewer.resx">
+      <DependentUpon>CadImageViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ImageView\CadOverView.resx">
+      <DependentUpon>CadOverView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.resx">
       <DependentUpon>SimpleTwoImageViewer.cs</DependentUpon>

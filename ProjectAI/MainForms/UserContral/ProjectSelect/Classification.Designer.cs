@@ -36,11 +36,11 @@
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-            this.lblInputDataType = new System.Windows.Forms.Label();
-            this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
             this.btnNoneImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.lblInputDataType = new System.Windows.Forms.Label();
+            this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -111,11 +111,11 @@
             // lblClassificationINFO
             // 
             this.lblClassificationINFO.AutoSize = true;
-            this.lblClassificationINFO.Font = new System.Drawing.Font("Noto Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClassificationINFO.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClassificationINFO.Location = new System.Drawing.Point(3, 43);
             this.lblClassificationINFO.Margin = new System.Windows.Forms.Padding(3);
             this.lblClassificationINFO.Name = "lblClassificationINFO";
-            this.lblClassificationINFO.Size = new System.Drawing.Size(151, 19);
+            this.lblClassificationINFO.Size = new System.Drawing.Size(144, 19);
             this.lblClassificationINFO.TabIndex = 3;
             this.lblClassificationINFO.Text = "Classification INFO";
             // 
@@ -189,34 +189,19 @@
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
             // 
-            // lblInputDataType
-            // 
-            this.lblInputDataType.AutoSize = true;
-            this.lblInputDataType.Font = new System.Drawing.Font("Noto Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
-            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
-            this.lblInputDataType.Name = "lblInputDataType";
-            this.lblInputDataType.Size = new System.Drawing.Size(131, 19);
-            this.lblInputDataType.TabIndex = 2;
-            this.lblInputDataType.Text = "Input Data Type";
-            // 
-            // metroStyleManagerClassification
-            // 
-            this.metroStyleManagerClassification.Owner = this;
-            // 
             // btnNoneImage
             // 
             this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
-            this.btnNoneImage.ButtonClickRetrun = "CADIamge";
-            this.btnNoneImage.CustomButtonName = "CAD Iamge";
+            this.btnNoneImage.ButtonClickRetrun = "CADImage";
+            this.btnNoneImage.CustomButtonName = "CAD Image";
             this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnNoneImage.InputLabelText = "CAD Iamge 설명";
+            this.btnNoneImage.InputLabelText = "CAD Image 설명";
             this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
             this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
             this.btnNoneImage.Name = "btnNoneImage";
             this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
             this.btnNoneImage.TabIndex = 102;
-            this.btnNoneImage.Title = "CAD Iamge";
+            this.btnNoneImage.Title = "CAD Image";
             // 
             // btnMultiImage
             // 
@@ -245,6 +230,21 @@
             this.btnSingleImage.Size = new System.Drawing.Size(160, 190);
             this.btnSingleImage.TabIndex = 100;
             this.btnSingleImage.Title = "Single Image";
+            // 
+            // lblInputDataType
+            // 
+            this.lblInputDataType.AutoSize = true;
+            this.lblInputDataType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
+            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
+            this.lblInputDataType.Name = "lblInputDataType";
+            this.lblInputDataType.Size = new System.Drawing.Size(123, 19);
+            this.lblInputDataType.TabIndex = 2;
+            this.lblInputDataType.Text = "Input Data Type";
+            // 
+            // metroStyleManagerClassification
+            // 
+            this.metroStyleManagerClassification.Owner = this;
             // 
             // Classification
             // 

@@ -46,6 +46,7 @@
             this.cmsMImageListToolKit = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.imageFilesAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.imageFilesAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,11 +71,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.ckbMdataGridViewAutoSize = new MetroFramework.Controls.MetroCheckBox();
             this.tableLayoutDataReview = new System.Windows.Forms.TableLayoutPanel();
-            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
-            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
             this.panelDataReview = new System.Windows.Forms.Panel();
-            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -123,6 +120,10 @@
             this.cmsMtryIcon = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
+            this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -323,6 +324,7 @@
             this.cmsMImageListToolKit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator11,
             this.imageFilesAddToolStripMenuItem1,
+            this.imageSelectToolStripMenuItem,
             this.imageFolderAddToolStripMenuItem1,
             this.toolStripSeparator14,
             this.imageFilesAddWizardToolStripMenuItem,
@@ -339,7 +341,7 @@
             this.imageSetInfoResetToolStripMenuItem,
             this.toolStripSeparator15});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 346);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 376);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
@@ -355,6 +357,14 @@
             this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageFilesAddToolStripMenuItem1.Text = "Image File Add";
             this.imageFilesAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFilesAddToolStripMenuItem1Click);
+            // 
+            // imageSelectToolStripMenuItem
+            // 
+            this.imageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_source;
+            this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
+            this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageSelectToolStripMenuItem.Text = "Image Select";
+            this.imageSelectToolStripMenuItem.Click += new System.EventHandler(this.imageSelectToolStripMenuItem_Click);
             // 
             // imageFolderAddToolStripMenuItem1
             // 
@@ -605,39 +615,6 @@
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
-            // iclTest
-            // 
-            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTest.ImageCount = "0";
-            this.iclTest.ImageCountName = "Test";
-            this.iclTest.Location = new System.Drawing.Point(225, 0);
-            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTest.Name = "iclTest";
-            this.iclTest.Size = new System.Drawing.Size(75, 75);
-            this.iclTest.TabIndex = 14;
-            // 
-            // iclTrain
-            // 
-            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTrain.ImageCount = "0";
-            this.iclTrain.ImageCountName = "Train";
-            this.iclTrain.Location = new System.Drawing.Point(150, 0);
-            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTrain.Name = "iclTrain";
-            this.iclTrain.Size = new System.Drawing.Size(75, 75);
-            this.iclTrain.TabIndex = 13;
-            // 
-            // iclLabeled
-            // 
-            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclLabeled.ImageCount = "0";
-            this.iclLabeled.ImageCountName = "Labeled";
-            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
-            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
-            this.iclLabeled.Name = "iclLabeled";
-            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
-            this.iclLabeled.TabIndex = 12;
-            // 
             // panelDataReview
             // 
             this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
@@ -647,17 +624,6 @@
             this.panelDataReview.Name = "panelDataReview";
             this.panelDataReview.Size = new System.Drawing.Size(300, 590);
             this.panelDataReview.TabIndex = 10;
-            // 
-            // iclTotal
-            // 
-            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iclTotal.ImageCount = "0";
-            this.iclTotal.ImageCountName = "Total";
-            this.iclTotal.Location = new System.Drawing.Point(0, 0);
-            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
-            this.iclTotal.Name = "iclTotal";
-            this.iclTotal.Size = new System.Drawing.Size(75, 75);
-            this.iclTotal.TabIndex = 11;
             // 
             // panelTrainOptions
             // 
@@ -786,6 +752,7 @@
             // menuStrip1
             // 
             this.styleExtenderMainForm.SetApplyMetroTheme(this.menuStrip1, true);
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmWorSpace,
@@ -812,28 +779,28 @@
             this.tsmProjectWorSpaceTestButton,
             this.toolStripMenuItem1});
             this.tsmWorSpace.Name = "tsmWorSpace";
-            this.tsmWorSpace.Size = new System.Drawing.Size(79, 20);
+            this.tsmWorSpace.Size = new System.Drawing.Size(78, 20);
             this.tsmWorSpace.Text = "WorkSpace";
             // 
             // tsmProjectWorkSpaceNewProject
             // 
             this.tsmProjectWorkSpaceNewProject.Image = global::ProjectAI.Properties.Resources.project_management;
             this.tsmProjectWorkSpaceNewProject.Name = "tsmProjectWorkSpaceNewProject";
-            this.tsmProjectWorkSpaceNewProject.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectWorkSpaceNewProject.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectWorkSpaceNewProject.Text = "New Project";
             this.tsmProjectWorkSpaceNewProject.Click += new System.EventHandler(this.TsmProjectWorkSpaceNewProjectClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
             // 
             // tsmProjectAllWorkSpaceSave
             // 
             this.tsmProjectAllWorkSpaceSave.Enabled = false;
             this.tsmProjectAllWorkSpaceSave.Image = global::ProjectAI.Properties.Resources.save_1_all;
             this.tsmProjectAllWorkSpaceSave.Name = "tsmProjectAllWorkSpaceSave";
-            this.tsmProjectAllWorkSpaceSave.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectAllWorkSpaceSave.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectAllWorkSpaceSave.Text = "Save All Project";
             this.tsmProjectAllWorkSpaceSave.Click += new System.EventHandler(this.TsmProjectAllWorkSpaceSaveClick);
             // 
@@ -842,7 +809,7 @@
             this.tsmProjectWorkSpaceSave.Enabled = false;
             this.tsmProjectWorkSpaceSave.Image = global::ProjectAI.Properties.Resources.save_1;
             this.tsmProjectWorkSpaceSave.Name = "tsmProjectWorkSpaceSave";
-            this.tsmProjectWorkSpaceSave.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectWorkSpaceSave.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectWorkSpaceSave.Text = "Save Project";
             this.tsmProjectWorkSpaceSave.Click += new System.EventHandler(this.TsmProjectWorSpaceSaveProjectClick);
             // 
@@ -850,7 +817,7 @@
             // 
             this.deleteWorkSpaceToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.project_management_del;
             this.deleteWorkSpaceToolStripMenuItem.Name = "deleteWorkSpaceToolStripMenuItem";
-            this.deleteWorkSpaceToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.deleteWorkSpaceToolStripMenuItem.Size = new System.Drawing.Size(191, 30);
             this.deleteWorkSpaceToolStripMenuItem.Text = "Delete WorkSpace";
             this.deleteWorkSpaceToolStripMenuItem.Click += new System.EventHandler(this.TsmDeleteWorkSpaceClick);
             // 
@@ -858,39 +825,39 @@
             // 
             this.tsmProjectDelete.Image = global::ProjectAI.Properties.Resources.delete;
             this.tsmProjectDelete.Name = "tsmProjectDelete";
-            this.tsmProjectDelete.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectDelete.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectDelete.Text = "Delete Project";
             this.tsmProjectDelete.Click += new System.EventHandler(this.TsmProjectDeleteClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
             // 
             // tsmProjectWorSpaceProgramExit
             // 
             this.tsmProjectWorSpaceProgramExit.Image = global::ProjectAI.Properties.Resources.shutdown;
             this.tsmProjectWorSpaceProgramExit.Name = "tsmProjectWorSpaceProgramExit";
-            this.tsmProjectWorSpaceProgramExit.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectWorSpaceProgramExit.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectWorSpaceProgramExit.Text = "Program Exit";
             this.tsmProjectWorSpaceProgramExit.Click += new System.EventHandler(this.TsmProjectWorSpaceProgramExitClick);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(188, 6);
             // 
             // tsmProjectWorSpaceTestButton
             // 
             this.tsmProjectWorSpaceTestButton.Name = "tsmProjectWorSpaceTestButton";
-            this.tsmProjectWorSpaceTestButton.Size = new System.Drawing.Size(188, 22);
+            this.tsmProjectWorSpaceTestButton.Size = new System.Drawing.Size(191, 30);
             this.tsmProjectWorSpaceTestButton.Text = "Test Button";
             this.tsmProjectWorSpaceTestButton.Click += new System.EventHandler(this.TsmProjectWorkSpaceTestButtonClick);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 30);
             this.toolStripMenuItem1.Text = "Test Set Inner Project";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
             // 
@@ -900,14 +867,14 @@
             this.classToolStripMenuItem,
             this.trainToolStripMenuItem1});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // classToolStripMenuItem
             // 
             this.classToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.product_development2;
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
             // 
@@ -915,7 +882,7 @@
             // 
             this.trainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.deeplearning_view;
             this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
-            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(101, 22);
+            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(188, 30);
             this.trainToolStripMenuItem1.Text = "Train";
             this.trainToolStripMenuItem1.Click += new System.EventHandler(this.TrainToolStripMenuItem1Click);
             // 
@@ -926,14 +893,14 @@
             this.changeStyleToolStripMenuItem,
             this.hiddenToolStripMenuItem});
             this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
-            this.toolToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.toolToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.toolToolStripMenuItem.Text = "Tool";
             // 
             // trainToolStripMenuItem
             // 
             this.trainToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.deep_learning;
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
             // 
@@ -941,14 +908,14 @@
             // 
             this.changeStyleToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.memphis_style;
             this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
-            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
             this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
             // 
             // hiddenToolStripMenuItem
             // 
             this.hiddenToolStripMenuItem.Name = "hiddenToolStripMenuItem";
-            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.hiddenToolStripMenuItem.Text = "Hidden";
             this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
             // 
@@ -1173,21 +1140,23 @@
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "SynapseNet Learning Studio";
             this.trayIcon.Visible = true;
+            this.trayIcon.DoubleClick += new System.EventHandler(this.ShowToolStripMenuItemClick);
             // 
             // cmsMtryIcon
             // 
+            this.cmsMtryIcon.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmsMtryIcon.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.cmsMtryIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.cmsMtryIcon.Name = "cmsMtryIcon";
-            this.cmsMtryIcon.Size = new System.Drawing.Size(113, 64);
+            this.cmsMtryIcon.Size = new System.Drawing.Size(112, 64);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.synapseimaging;
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(112, 30);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(111, 30);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.ShowToolStripMenuItemClick);
             // 
@@ -1195,9 +1164,53 @@
             // 
             this.exitToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.shutdown;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(111, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
+            // 
+            // iclTest
+            // 
+            this.iclTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTest.ImageCount = "0";
+            this.iclTest.ImageCountName = "Test";
+            this.iclTest.Location = new System.Drawing.Point(225, 0);
+            this.iclTest.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTest.Name = "iclTest";
+            this.iclTest.Size = new System.Drawing.Size(75, 75);
+            this.iclTest.TabIndex = 14;
+            // 
+            // iclTrain
+            // 
+            this.iclTrain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTrain.ImageCount = "0";
+            this.iclTrain.ImageCountName = "Train";
+            this.iclTrain.Location = new System.Drawing.Point(150, 0);
+            this.iclTrain.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTrain.Name = "iclTrain";
+            this.iclTrain.Size = new System.Drawing.Size(75, 75);
+            this.iclTrain.TabIndex = 13;
+            // 
+            // iclLabeled
+            // 
+            this.iclLabeled.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclLabeled.ImageCount = "0";
+            this.iclLabeled.ImageCountName = "Labeled";
+            this.iclLabeled.Location = new System.Drawing.Point(75, 0);
+            this.iclLabeled.Margin = new System.Windows.Forms.Padding(0);
+            this.iclLabeled.Name = "iclLabeled";
+            this.iclLabeled.Size = new System.Drawing.Size(75, 75);
+            this.iclLabeled.TabIndex = 12;
+            // 
+            // iclTotal
+            // 
+            this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iclTotal.ImageCount = "0";
+            this.iclTotal.ImageCountName = "Total";
+            this.iclTotal.Location = new System.Drawing.Point(0, 0);
+            this.iclTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.iclTotal.Name = "iclTotal";
+            this.iclTotal.Size = new System.Drawing.Size(75, 75);
+            this.iclTotal.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -1340,5 +1353,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         public MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize;
         public MetroFramework.Controls.MetroGrid gridImageList;
+        private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
     }
 }
