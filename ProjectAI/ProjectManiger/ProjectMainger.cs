@@ -2470,7 +2470,7 @@ namespace ProjectAI
             {
                 openFileDialog.InitialDirectory = @"\";
                 openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
-                openFileDialog.Multiselect = true; // 파일 다중 선택
+
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string[] files = openFileDialog.SafeFileNames;
@@ -2487,7 +2487,10 @@ namespace ProjectAI
                                 ProjectAI.MainForms.CadImageSelect imageViewer = (ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
 
                                 if (imageViewer.pictureBox1.Image != null)
+                                {
+                                    imageViewer.pictureBox1.Image.Dispose();
                                     imageViewer.pictureBox1.Image = null;
+                                }
                                 CADFormSave.OriginImageName = imageName;
                                 imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
                             }
@@ -2510,7 +2513,7 @@ namespace ProjectAI
             {
                 openFileDialog.InitialDirectory = @"\";
                 openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
-                openFileDialog.Multiselect = true; // 파일 다중 선택
+
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string[] files = openFileDialog.SafeFileNames;
@@ -2526,7 +2529,10 @@ namespace ProjectAI
                                 ProjectAI.MainForms.CadImageSelect imageViewer = (ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
 
                                 if (imageViewer.pictureBox2.Image != null)
+                                {
+                                    imageViewer.pictureBox2.Image.Dispose();
                                     imageViewer.pictureBox2.Image = null;
+                                }
                                 if (CADFormSave.CADImagePath != null)
                                     CADFormSave.CADImagePath = null;
                                 CADFormSave.CADImagePath = filesPath;
@@ -2657,8 +2663,8 @@ namespace ProjectAI
             }
 
             // File IO Task 등록
-            customIOManigerFoem.CreateFileCopyList(CADFormSave.CADImagePath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
-                                                    MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
+            //customIOManigerFoem.CreateFileCopyList(CADFormSave.CADImagePath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+                                              //      MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
 
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);

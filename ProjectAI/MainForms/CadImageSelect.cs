@@ -40,7 +40,9 @@ namespace ProjectAI.MainForms
             ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance();
             this.StyleManager = this.metroStyleManager1;
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+
         }
+
 
         /// <summary>
         /// delegate UpdataFormStyleManager
@@ -64,8 +66,9 @@ namespace ProjectAI.MainForms
         {
             this.DialogResult = DialogResult.Cancel;
             this.selectDialogResult = DialogResult.Cancel;
-            this.Hide();
-            //this.Close();
+
+            this.Close();
+            //this.Dispose();
         }
 
         private void PictureBox1Click(object sender, EventArgs e)
@@ -82,6 +85,13 @@ namespace ProjectAI.MainForms
                 WorkSpaceData.m_activeProjectMainger.CADImageFilesSelect();
             if (this.pictureBox1.Image != null && this.pictureBox2.Image != null)
                 this.btnOK.Enabled = true;
+        }
+
+        private void CadImageSelect_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            this.Parent = null;
+            e.Cancel = true;
         }
     }
 }

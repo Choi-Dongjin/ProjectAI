@@ -1293,7 +1293,19 @@ namespace ProjectAI.MainForms
         {
             if (!CADFormSave.m_CadimageViewDictionary.ContainsKey(CADFormSave.projectName))
                 CADFormSave.m_CadimageViewDictionary.Add(CADFormSave.projectName, this.CADForm);
-            this.CADForm.Show();
+
+            if (this.CADForm.pictureBox1.Image != null)
+            {
+                this.CADForm.pictureBox1.Image.Dispose();
+                this.CADForm.pictureBox1.Image = null;
+            }
+            if (this.CADForm.pictureBox2.Image != null)
+            {
+                this.CADForm.pictureBox2.Image.Dispose();
+                this.CADForm.pictureBox2.Image = null;
+            }
+
+            this.CADForm.ShowDialog();
         }
     }
 
