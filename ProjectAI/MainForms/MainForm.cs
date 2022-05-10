@@ -52,12 +52,6 @@ namespace ProjectAI.MainForms
         /// </summary>
         private ProjectAI.TrainForms.TrainForm TrainForm;
 
-
-        /// <summary>
-        /// CadImageeSelect Form 호출
-        /// </summary>
-        private CadImageSelect CADForm;
-
         // panelMlogo
         MetroFramework.Controls.MetroPanel mainPanelMlogo = new MetroFramework.Controls.MetroPanel
         {
@@ -261,7 +255,6 @@ namespace ProjectAI.MainForms
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
 
             btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
-            this.CADForm = CadImageSelect.GetInstance();
         }
 
         private void MainFormLoad(object sender, EventArgs e)
@@ -1291,21 +1284,9 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void imageSelectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CADFormSave.m_CadimageViewDictionary.ContainsKey(CADFormSave.projectName))
-                CADFormSave.m_CadimageViewDictionary.Add(CADFormSave.projectName, this.CADForm);
-
-            if (this.CADForm.pictureBox1.Image != null)
-            {
-                this.CADForm.pictureBox1.Image.Dispose();
-                this.CADForm.pictureBox1.Image = null;
-            }
-            if (this.CADForm.pictureBox2.Image != null)
-            {
-                this.CADForm.pictureBox2.Image.Dispose();
-                this.CADForm.pictureBox2.Image = null;
-            }
-
-            this.CADForm.ShowDialog();
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageForm();
         }
     }
 

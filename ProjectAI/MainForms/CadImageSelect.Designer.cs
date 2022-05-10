@@ -267,7 +267,6 @@
             this.Name = "CadImageSelect";
             this.Style = MetroFramework.MetroColorStyle.Green;
             this.Text = "ImageSelect";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CadImageSelect_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);

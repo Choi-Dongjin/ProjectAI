@@ -10,29 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
+using System.IO;
+
 namespace ProjectAI.MainForms
 {
     public partial class CadImageSelect : MetroForm
     {
         public DialogResult selectDialogResult = DialogResult.None;
-
-        /// <summary>
-        /// 싱글톤 패턴 구현
-        /// </summary>
-        public static CadImageSelect CADForm;
-
-        /// <summary>
-        /// 싱글톤 패턴
-        /// </summary>
-        /// <returns></returns>
-        public static CadImageSelect GetInstance()
-        {
-            if (CadImageSelect.CADForm == null)
-            {
-                CadImageSelect.CADForm = new CadImageSelect();
-            }
-            return CadImageSelect.CADForm;
-        }
 
         public CadImageSelect()
         {
@@ -43,6 +27,18 @@ namespace ProjectAI.MainForms
 
         }
 
+
+        /// <summary>
+        /// MainForm에서 CAD image 선택하려고 할 때 또다른 Form을 생성하는데 생성된 Form을 저장하는 변수
+        /// </summary>
+
+        public string OriginImageName; //원본 이름
+
+        public string CADImageName; //CAD 이름
+
+        public string[] OriginImagePath; //주소 + 이름
+
+        public string[] CADImagePath; // 주소 + 이름 
 
         /// <summary>
         /// delegate UpdataFormStyleManager
@@ -58,7 +54,6 @@ namespace ProjectAI.MainForms
         {
             this.DialogResult = DialogResult.OK;
             this.selectDialogResult = DialogResult.OK;
-            WorkSpaceData.m_activeProjectMainger.CADImageAdding();
             this.Close();
         }
 
@@ -68,13 +63,12 @@ namespace ProjectAI.MainForms
             this.selectDialogResult = DialogResult.Cancel;
 
             this.Close();
-            //this.Dispose();
         }
 
         private void PictureBox1Click(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                WorkSpaceData.m_activeProjectMainger.OriginImageFilesSelect();
+                this.OriginImageFilesSelect();
             if (this.pictureBox1.Image != null && this.pictureBox2.Image != null)
                 this.btnOK.Enabled = true;
         }
@@ -82,16 +76,87 @@ namespace ProjectAI.MainForms
         private void PictureBox2Click(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                WorkSpaceData.m_activeProjectMainger.CADImageFilesSelect();
+                this.CADImageFilesSelect();
             if (this.pictureBox1.Image != null && this.pictureBox2.Image != null)
                 this.btnOK.Enabled = true;
         }
 
-        private void CadImageSelect_FormClosing(object sender, FormClosingEventArgs e)
+        /// <summary>
+        /// CAD 이미지와 묶일 이미지 선택
+        /// </summary>
+        public void OriginImageFilesSelect()
         {
-            this.Hide();
-            this.Parent = null;
-            e.Cancel = true;
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = @"\";
+                openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = openFileDialog.SafeFileNames;
+                    string[] filesPath = openFileDialog.FileNames;
+                    string imageName = files[0];
+
+                    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    {
+                        if (WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
+                        {
+                            if (WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                            {
+                               
+                                if (this.pictureBox1.Image != null)
+                                {
+                                    this.pictureBox1.Image.Dispose();
+                                    this.pictureBox1.Image = null;
+                                }
+                                this.OriginImageName = imageName;
+                                this.OriginImagePath = filesPath;
+                                this.pictureBox1.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        /// <summary>
+        /// CAD 이미지 선택
+        /// </summary>
+        public void CADImageFilesSelect()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = @"\";
+                openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = openFileDialog.SafeFileNames;
+                    string[] filesPath = openFileDialog.FileNames;
+                    string imageName = files[0];
+
+                    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    {
+                        if (WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
+                        {
+                            if (WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                            {
+                                if (this.pictureBox2.Image != null)
+                                {
+                                    this.pictureBox2.Image.Dispose();
+                                    this.pictureBox2.Image = null;
+                                }
+                                if (this.CADImagePath != null)
+                                    this.CADImagePath = null;
+                                this.CADImageName = imageName;
+                                this.CADImagePath = filesPath;
+                                this.pictureBox2.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
