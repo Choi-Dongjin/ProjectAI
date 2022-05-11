@@ -2084,7 +2084,6 @@ namespace ProjectAI
                         files = files.Where(condition => condition != files[delIndex]).ToArray();
                         filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
                     }
-
                     if (files.Length == 0) // 파일이 없으면
                         return;
 
@@ -2480,14 +2479,8 @@ namespace ProjectAI
             ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
 
             if (cadImageSelect.ShowDialog() == DialogResult.OK)
-            {
-                //Console.WriteLine(cadImageSelect.OriginImagePath[0]);
-                //Console.WriteLine(cadImageSelect.OriginImageName);
-                //Console.WriteLine(cadImageSelect.CADImagePath[0]);
-                //Console.WriteLine(cadImageSelect.CADImageName);
                 this.CADImageAdding(cadImageSelect);
-            }
-            else //Form 해제
+            else //Form Cancel
             {
                 if (cadImageSelect.pictureBox1.Image != null)
                 {
@@ -2503,109 +2496,35 @@ namespace ProjectAI
                 cadImageSelect.Dispose();
             }
         }
-
-        ///// <summary>
-        ///// CAD 이미지와 묶일 이미지 선택
-        ///// </summary>
-        //public void OriginImageFilesSelect()
-        //{
-        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-        //    {
-        //        openFileDialog.InitialDirectory = @"\";
-        //        openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
-
-        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            string[] files = openFileDialog.SafeFileNames;
-        //            string[] filesPath = openFileDialog.FileNames;
-        //            string imageName = files[0];
-
-        //            if (this.m_activeInnerProjectName != null)
-        //            {                        
-        //                if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
-        //                {
-        //                    if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
-        //                    {
-        //                        ProjectAI.MainForms.CadImageSelect imageViewer = CADFormSave.CadImageSelectForm; //(ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
-
-        //                        if (imageViewer.pictureBox1.Image != null)
-        //                        {
-        //                            imageViewer.pictureBox1.Image.Dispose();
-        //                            imageViewer.pictureBox1.Image = null;
-        //                        }
-        //                        CADFormSave.OriginImageName = imageName;
-        //                        CADFormSave.OriginImagePath = filesPath;
-        //                        imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-        //            }
-        //        }
-        //    }
-        //}
-
-        ///// <summary>
-        ///// CAD 이미지 선택
-        ///// </summary>
-        //public void CADImageFilesSelect()
-        //{
-        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-        //    {
-        //        openFileDialog.InitialDirectory = @"\";
-        //        openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
-
-        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            string[] files = openFileDialog.SafeFileNames;
-        //            string[] filesPath = openFileDialog.FileNames;
-        //            string imageName = files[0];
-
-        //            if (this.m_activeInnerProjectName != null)
-        //            {
-        //                if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
-        //                {
-        //                    if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
-        //                    {
-
-        //                        ProjectAI.MainForms.CadImageSelect imageViewer = CADFormSave.CadImageSelectForm; //(ProjectAI.MainForms.CadImageSelect)CADFormSave.m_CadimageViewDictionary[this.m_activeInnerProjectName];
-
-        //                        if (imageViewer.pictureBox2.Image != null)
-        //                        {
-        //                            imageViewer.pictureBox2.Image.Dispose();
-        //                            imageViewer.pictureBox2.Image = null;
-        //                        }
-        //                        if (CADFormSave.CADImagePath != null)
-        //                            CADFormSave.CADImagePath = null;
-        //                        CADFormSave.CADImagePath = filesPath;
-        //                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-        //            }
-        //        }
-        //    }
-        //}
-
+        
         /// <summary>
         /// 기본 이미지와 CAD이미지를 선택한 후 OK 누를 때 기본 이미지 정보에 CAD이미지의 PATH를 저장하여 JSON에 저장
         /// </summary>
         public void CADImageAdding(CadImageSelect cadImageSelect)
         {
-   
+            string[] OriginFile = new string[1];
+            string[] OriginFilePath = new string[1];
+
             int CheckIndex = -1;
             JObject labeledDatainnerProjectLabelName = new JObject();
-            string file = cadImageSelect.OriginImageName;
-            if (this.m_activeProjectDataImageListDataJObject[file.ToString()] != null)
+            List<int> delIndexs = new List<int>();
+            string[] file = new string[1];
+            file[0] = cadImageSelect.OriginImageName;
+            string[] existFile = new string[1];
+
+            if (this.m_activeProjectDataImageListDataJObject[file[0].ToString()] != null)
             {
                 MetroMessageBox.Show(this.MainForm, "존재하는 이미지 데이터", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 CheckIndex = 0;
+                existFile[0] = file[0];
             }
+
+            // 동일한 이름 데이터 삭제
+            //OriginFile = existFile.Where(condition => condition != existFile[0]).ToArray();
+            //OriginFilePath = cadImageSelect.OriginImagePath.Where(condition => condition != cadImageSelect.OriginImagePath[0]).ToArray();
+
+            //Console.WriteLine(OriginFile[0]);
+            //Console.WriteLine(OriginFilePath[0]);
 
             //this.MainForm.panelstatus.Visible = true;
             int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
@@ -2618,15 +2537,15 @@ namespace ProjectAI
             if (imageList != null)
             {
                 foreach (string data in imageList)
-                {
                     imageListList.Add(data);
-                }
             }
 
-            //imageListList.AddRange(file.ToList());
+            imageListList.AddRange(file.ToList());
             int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageListSetNumber));
 
-            //찾은 이미지와 같은 이미지가 존재하지 않을 때 ImageListData에 이미지 생성
+            string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
+
+            //찾은 이미지와 같은 이미지가 존재하지 않을 겨우
             if (CheckIndex < 0)
             {
                 // Image List Data 값 반영
@@ -2634,15 +2553,15 @@ namespace ProjectAI
                 object imageData = new
                 {
                     int_ImageNumber = imageTotalNumber,
-                    string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, file),
+                    string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, file[0]),
                     Labeled = new JObject() { }
                 };
-                this.m_activeProjectDataImageListDataJObject[file.ToString()] = JObject.FromObject(imageData);
+                this.m_activeProjectDataImageListDataJObject[file[0].ToString()] = JObject.FromObject(imageData);
 
                 //Labeled -> 해당 프로젝트 -> CadImage: 1:1 대응되는 CadImage 정보 확인 
                 labeledDatainnerProjectLabelName = new JObject
                 {
-                    {  "CadImage", Path.Combine(this.m_pathActiveProjectCADImage, cadImageSelect.CADImageName) }
+                    {  "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
                 };
 
                 JObject labeledDatainnerProject = new JObject
@@ -2650,7 +2569,7 @@ namespace ProjectAI
                         { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
                     };
 
-                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file[0]]["Labeled"];
                 labeledData.Merge(labeledDatainnerProject);
             }
             // 같은 이미지가 존재할 경우
@@ -2659,7 +2578,7 @@ namespace ProjectAI
 
                 labeledDatainnerProjectLabelName = new JObject
                 {
-                    {  "CadImage", Path.Combine(this.m_pathActiveProjectCADImage, cadImageSelect.CADImageName) }
+                    {  "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
                 };
 
                 JObject labeledDatainnerProject = new JObject
@@ -2667,7 +2586,7 @@ namespace ProjectAI
                         { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
                     };
 
-                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file[0]]["Labeled"];
                 labeledData.Merge(labeledDatainnerProject);
             }
             // image List 값 반영
@@ -2683,9 +2602,11 @@ namespace ProjectAI
                 {
                     iImageList = imageListList.GetRange(i * imageListSetNumber, imageListList.Count - i * imageListSetNumber);
                 }
-
                 this.m_activeProjectImageListJObject["imageList"][(i + imageListNumber - 1).ToString()] = JArray.FromObject(iImageList.ToArray());
             }
+
+            //CADImage 저장 폴더
+            CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
 
             // OriginImage File IO Task 등록
             customIOManigerFoem.CreateFileCopyList(cadImageSelect.OriginImagePath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
@@ -2700,8 +2621,8 @@ namespace ProjectAI
             this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageListSetNumber;
             this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
 
-            Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
-            Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
             //UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
             this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용

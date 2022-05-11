@@ -109,6 +109,8 @@ namespace ProjectAI.MainForms
                                     this.pictureBox1.Image.Dispose();
                                     this.pictureBox1.Image = null;
                                 }
+                                if (this.OriginImagePath != null)
+                                    this.CADImagePath = null;
                                 this.OriginImageName = imageName;
                                 this.OriginImagePath = filesPath;
                                 this.pictureBox1.Image = CustomIOMainger.LoadBitmap(filesPath[0]);
