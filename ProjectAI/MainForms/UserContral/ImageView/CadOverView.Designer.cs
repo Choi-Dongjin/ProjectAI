@@ -29,19 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.metroTrackBar1 = new MetroFramework.Controls.MetroTrackBar();
             this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = null;
             // 
             // metroPanel1
             // 
-            this.metroPanel1.Controls.Add(this.metroTrackBar1);
             this.metroPanel1.Controls.Add(this.pictureBox1);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbarBarColor = true;
@@ -62,22 +64,9 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(685, 548);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            // 
-            // metroTrackBar1
-            // 
-            this.metroTrackBar1.BackColor = System.Drawing.Color.Transparent;
-            this.metroTrackBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.metroTrackBar1.Location = new System.Drawing.Point(0, 525);
-            this.metroTrackBar1.Name = "metroTrackBar1";
-            this.metroTrackBar1.Size = new System.Drawing.Size(685, 23);
-            this.metroTrackBar1.TabIndex = 3;
-            this.metroTrackBar1.Text = "metroTrackBar1";
-            // 
-            // metroStyleManager1
-            // 
-            this.metroStyleManager1.Owner = null;
             // 
             // CadOverView
             // 
@@ -86,19 +75,17 @@
             this.Controls.Add(this.metroPanel1);
             this.Name = "CadOverView";
             this.Size = new System.Drawing.Size(685, 548);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroTrackBar metroTrackBar1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
+        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

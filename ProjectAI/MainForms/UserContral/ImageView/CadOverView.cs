@@ -16,5 +16,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             InitializeComponent();
         }
+       
     }
 }
