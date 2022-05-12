@@ -267,6 +267,7 @@ namespace ProjectAI.MainForms
         {
             this.MainFormCallUISeting();
             this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
+
         }
 
         /// <summary>
@@ -963,6 +964,7 @@ namespace ProjectAI.MainForms
             {
                 Environment.Exit(1);
             }
+            trayIcon.Dispose();
             // this.Close();
         }
 
@@ -1273,6 +1275,18 @@ namespace ProjectAI.MainForms
         private void metroTile4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// CadImage select 2-image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void imageSelectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageForm();
         }
     }
 
