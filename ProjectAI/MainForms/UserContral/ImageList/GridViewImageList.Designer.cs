@@ -1,0 +1,260 @@
+﻿namespace ProjectAI.MainForms.UserContral.ImageList
+{
+    partial class GridViewImageList
+    {
+        /// <summary> 
+        /// 필수 디자이너 변수입니다.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// 사용 중인 모든 리소스를 정리합니다.
+        /// </summary>
+        /// <param name="disposing">관리되는 리소스를 삭제해야 하면 true이고, 그렇지 않으면 false입니다.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region 구성 요소 디자이너에서 생성한 코드
+
+        /// <summary> 
+        /// 디자이너 지원에 필요한 메서드입니다. 
+        /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridViewImageList));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.ckbMdataGridViewAutoSize = new MetroFramework.Controls.MetroCheckBox();
+            this.tableLayoutImageDataManiger = new System.Windows.Forms.TableLayoutPanel();
+            this.lblImageListpageMid = new System.Windows.Forms.Label();
+            this.lblImageListpage = new System.Windows.Forms.Label();
+            this.btnimagePageReverse = new System.Windows.Forms.Button();
+            this.btnimagePageNext = new System.Windows.Forms.Button();
+            this.lblImageListpageTotal = new System.Windows.Forms.Label();
+            this.gridImageList = new MetroFramework.Controls.MetroGrid();
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutImageDataManiger.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = null;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.ckbMdataGridViewAutoSize, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 29);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // ckbMdataGridViewAutoSize
+            // 
+            this.ckbMdataGridViewAutoSize.AutoSize = true;
+            this.ckbMdataGridViewAutoSize.Checked = true;
+            this.ckbMdataGridViewAutoSize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbMdataGridViewAutoSize.Location = new System.Drawing.Point(3, 3);
+            this.ckbMdataGridViewAutoSize.Name = "ckbMdataGridViewAutoSize";
+            this.ckbMdataGridViewAutoSize.Size = new System.Drawing.Size(129, 14);
+            this.ckbMdataGridViewAutoSize.TabIndex = 0;
+            this.ckbMdataGridViewAutoSize.Text = "Image List Auto Size";
+            this.ckbMdataGridViewAutoSize.UseSelectable = true;
+            // 
+            // tableLayoutImageDataManiger
+            // 
+            this.tableLayoutImageDataManiger.ColumnCount = 7;
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutImageDataManiger.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageMid, 3, 0);
+            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpage, 2, 0);
+            this.tableLayoutImageDataManiger.Controls.Add(this.btnimagePageReverse, 1, 0);
+            this.tableLayoutImageDataManiger.Controls.Add(this.btnimagePageNext, 5, 0);
+            this.tableLayoutImageDataManiger.Controls.Add(this.lblImageListpageTotal, 4, 0);
+            this.tableLayoutImageDataManiger.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutImageDataManiger.Location = new System.Drawing.Point(0, 29);
+            this.tableLayoutImageDataManiger.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutImageDataManiger.Name = "tableLayoutImageDataManiger";
+            this.tableLayoutImageDataManiger.RowCount = 1;
+            this.tableLayoutImageDataManiger.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutImageDataManiger.Size = new System.Drawing.Size(378, 35);
+            this.tableLayoutImageDataManiger.TabIndex = 2;
+            // 
+            // lblImageListpageMid
+            // 
+            this.lblImageListpageMid.AutoSize = true;
+            this.lblImageListpageMid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblImageListpageMid.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblImageListpageMid.Location = new System.Drawing.Point(184, 0);
+            this.lblImageListpageMid.Margin = new System.Windows.Forms.Padding(0);
+            this.lblImageListpageMid.Name = "lblImageListpageMid";
+            this.lblImageListpageMid.Size = new System.Drawing.Size(10, 35);
+            this.lblImageListpageMid.TabIndex = 11;
+            this.lblImageListpageMid.Text = "/";
+            this.lblImageListpageMid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblImageListpage
+            // 
+            this.lblImageListpage.AutoSize = true;
+            this.lblImageListpage.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.lblImageListpage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblImageListpage.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
+            this.lblImageListpage.Location = new System.Drawing.Point(164, 0);
+            this.lblImageListpage.Margin = new System.Windows.Forms.Padding(0);
+            this.lblImageListpage.Name = "lblImageListpage";
+            this.lblImageListpage.Size = new System.Drawing.Size(20, 35);
+            this.lblImageListpage.TabIndex = 10;
+            this.lblImageListpage.Text = "0";
+            this.lblImageListpage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImageListpage.TextChanged += new System.EventHandler(this.LblImageListpageTextChanged);
+            this.lblImageListpage.Click += new System.EventHandler(this.LblImageListpageClick);
+            // 
+            // btnimagePageReverse
+            // 
+            this.btnimagePageReverse.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageReverse.BackgroundImage")));
+            this.btnimagePageReverse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnimagePageReverse.FlatAppearance.BorderSize = 0;
+            this.btnimagePageReverse.Location = new System.Drawing.Point(129, 0);
+            this.btnimagePageReverse.Margin = new System.Windows.Forms.Padding(0);
+            this.btnimagePageReverse.Name = "btnimagePageReverse";
+            this.btnimagePageReverse.Size = new System.Drawing.Size(35, 35);
+            this.btnimagePageReverse.TabIndex = 2;
+            this.btnimagePageReverse.UseVisualStyleBackColor = true;
+            this.btnimagePageReverse.Click += new System.EventHandler(this.BtnimagePageReverseClick);
+            // 
+            // btnimagePageNext
+            // 
+            this.btnimagePageNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnimagePageNext.BackgroundImage")));
+            this.btnimagePageNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnimagePageNext.FlatAppearance.BorderSize = 0;
+            this.btnimagePageNext.Location = new System.Drawing.Point(214, 0);
+            this.btnimagePageNext.Margin = new System.Windows.Forms.Padding(0);
+            this.btnimagePageNext.Name = "btnimagePageNext";
+            this.btnimagePageNext.Size = new System.Drawing.Size(35, 35);
+            this.btnimagePageNext.TabIndex = 3;
+            this.btnimagePageNext.UseVisualStyleBackColor = true;
+            this.btnimagePageNext.Click += new System.EventHandler(this.BtnimagePageNextClick);
+            // 
+            // lblImageListpageTotal
+            // 
+            this.lblImageListpageTotal.AutoSize = true;
+            this.lblImageListpageTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblImageListpageTotal.Font = new System.Drawing.Font("굴림", 10F, System.Drawing.FontStyle.Bold);
+            this.lblImageListpageTotal.Location = new System.Drawing.Point(194, 0);
+            this.lblImageListpageTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.lblImageListpageTotal.Name = "lblImageListpageTotal";
+            this.lblImageListpageTotal.Size = new System.Drawing.Size(20, 35);
+            this.lblImageListpageTotal.TabIndex = 9;
+            this.lblImageListpageTotal.Text = "0";
+            this.lblImageListpageTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImageListpageTotal.TextChanged += new System.EventHandler(this.LblImageListpageTotalTextChanged);
+            // 
+            // gridImageList
+            // 
+            this.gridImageList.AllowUserToAddRows = false;
+            this.gridImageList.AllowUserToResizeRows = false;
+            this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gridImageList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridImageList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.gridImageList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridImageList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridImageList.DefaultCellStyle = dataGridViewCellStyle2;
+            this.gridImageList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridImageList.EnableHeadersVisualStyles = false;
+            this.gridImageList.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.gridImageList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gridImageList.Location = new System.Drawing.Point(0, 64);
+            this.gridImageList.Margin = new System.Windows.Forms.Padding(0);
+            this.gridImageList.Name = "gridImageList";
+            this.gridImageList.ReadOnly = true;
+            this.gridImageList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridImageList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.gridImageList.RowHeadersVisible = false;
+            this.gridImageList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.gridImageList.RowTemplate.Height = 23;
+            this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridImageList.Size = new System.Drawing.Size(378, 686);
+            this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
+            this.gridImageList.TabIndex = 3;
+            this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.gridImageList.UseStyleColors = true;
+            // 
+            // GridViewImageList
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridImageList);
+            this.Controls.Add(this.tableLayoutImageDataManiger);
+            this.Controls.Add(this.tableLayoutPanel2);
+            this.Name = "GridViewImageList";
+            this.Size = new System.Drawing.Size(378, 750);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutImageDataManiger.ResumeLayout(false);
+            this.tableLayoutImageDataManiger.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        public MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutImageDataManiger;
+        private System.Windows.Forms.Label lblImageListpageMid;
+        public System.Windows.Forms.Label lblImageListpage;
+        private System.Windows.Forms.Button btnimagePageReverse;
+        private System.Windows.Forms.Button btnimagePageNext;
+        public System.Windows.Forms.Label lblImageListpageTotal;
+        public MetroFramework.Controls.MetroGrid gridImageList;
+    }
+}

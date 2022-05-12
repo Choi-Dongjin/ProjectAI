@@ -399,6 +399,8 @@ namespace ProjectAI
 
         public PictureBox m_idelPictureBox = new PictureBox();
 
+        public ProjectAI.MainForms.UserContral.ImageList.GridViewImageList m_idelGridViewImageList = new MainForms.UserContral.ImageList.GridViewImageList();
+
         /// <summary>
         /// Classification IdelTrainOptions 관리
         /// </summary>
@@ -411,9 +413,17 @@ namespace ProjectAI
         public Dictionary<string, ProjectAI.MainForms.UserContral.Monitoring.ClassViewer>
             m_classViewerDictionary = new Dictionary<string, MainForms.UserContral.Monitoring.ClassViewer>();
 
-
+        /// <summary>
+        /// 이미지 Viewer 관리
+        /// </summary>
         public Dictionary<string, object>
             m_imageViewDictionary = new Dictionary<string, object>();
+
+        /// <summary>
+        /// 이미지 List 관리
+        /// </summary>
+        public Dictionary<string, object>
+            m_imageListDictionary = new Dictionary<string, object>();
 
 
         #endregion ProjectMainger에 종속된 UserContral 정의
@@ -1603,6 +1613,7 @@ namespace ProjectAI
                         bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
                         bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
                         bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                        bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
 
                         #region panelTrainOptions
                         // panelTrainOptions 설정
@@ -1661,23 +1672,34 @@ namespace ProjectAI
                         #endregion ImageViewer
 
                         #region ImageList
-                        //foreach ()
+                        //foreach ()m_imageListDictionary
+                        // Image Lust 설정
+                        foreach (string activeInnerProjectName in this.m_imageListDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                                {
+                                    alreadyOpenedProjectImageList = true; // 실행되어 있다면 확인용 변수 True로 변경
+                                    break;
+                                }
+                        if (!alreadyOpenedProjectImageList)
+                        {
+                            ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = new MainForms.UserContral.ImageList.GridViewImageList();
+                            gridViewImageList = this.GridViewImageListContralsSetting(gridViewImageList);
+                            this.m_imageListDictionary.Add(this.m_activeInnerProjectName, gridViewImageList);
+                        }
                         #endregion ImageList
 
                         this.ProjectIdleUIRemove(); // IdleUI 삭제
                                                     // panelTrainOptions 설정
-
                         #region 컨트롤 추가
                         this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                         this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
                         this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
+                        this.MainForm.panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageListDictionary[this.m_activeInnerProjectName]);
                         #endregion 컨트롤 추가
-
 
                         this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
                         this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
-
-
 
                         // trainForm 학습 결과 폼
                         TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
@@ -1689,10 +1711,10 @@ namespace ProjectAI
                         Console.WriteLine("Classification");
                         Console.WriteLine("MultiImage");
                     }
-                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "CADIamge")
+                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "CADImage")
                     {
                         Console.WriteLine("Classification");
-                        Console.WriteLine("CADIamge");
+                        Console.WriteLine("CADImage");
                     }
 
                 }
@@ -1760,13 +1782,19 @@ namespace ProjectAI
             // 
             // simpleTwoImageViewer
             // 
-
             simpleTwoImageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             simpleTwoImageViewer.Location = new System.Drawing.Point(0, 0);
             simpleTwoImageViewer.Name = "simpleTwoImageViewer1";
             simpleTwoImageViewer.Size = new System.Drawing.Size(200, 665);
             //simpleTwoImageViewer.TabIndex = 5;
             return simpleTwoImageViewer;
+        }
+
+        private ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageListContralsSetting(ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
+        {
+            gridViewImageList.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridViewImageList.Location = new System.Drawing.Point(0, 0);
+            return gridViewImageList;
         }
 
         public void PrintImage(string imageName)
@@ -1805,7 +1833,6 @@ namespace ProjectAI
                                     {
                                         if (imageViewer.pictureBox2.Image != null)
                                         {
-                                            //imageView = this.m_imageViewDictionary[this.m_activeInnerProjectName]
                                             imageViewer.splitContainer1.Panel2Collapsed = false;
                                         }
                                         else

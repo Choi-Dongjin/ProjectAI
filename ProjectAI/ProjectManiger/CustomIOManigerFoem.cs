@@ -198,8 +198,9 @@ namespace ProjectAI.ProjectManiger
 
                         string fileName = Path.GetFileName(file);
                         string setFilePath = Path.Combine(setPath, fileName);
-
-                        File.Copy(file, setFilePath, true);
+                        
+                        if (file != setFilePath)
+                            File.Copy(file, setFilePath, true);
                     }
                     break;
 

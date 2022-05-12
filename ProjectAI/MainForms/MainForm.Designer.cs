@@ -73,8 +73,8 @@
             this.iclTest = new ProjectAI.MainForms.ImageCountLabel();
             this.iclTrain = new ProjectAI.MainForms.ImageCountLabel();
             this.iclLabeled = new ProjectAI.MainForms.ImageCountLabel();
-            this.panelDataReview = new System.Windows.Forms.Panel();
             this.iclTotal = new ProjectAI.MainForms.ImageCountLabel();
+            this.panelDataReview = new System.Windows.Forms.Panel();
             this.panelTrainOptions = new System.Windows.Forms.Panel();
             this.panelMTrainOptions = new MetroFramework.Controls.MetroPanel();
             this.panelMTrainParameterString = new MetroFramework.Controls.MetroPanel();
@@ -123,6 +123,7 @@
             this.cmsMtryIcon = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -240,6 +241,10 @@
             this.splitContainerImageAndImageList.Location = new System.Drawing.Point(199, 0);
             this.splitContainerImageAndImageList.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainerImageAndImageList.Name = "splitContainerImageAndImageList";
+            // 
+            // splitContainerImageAndImageList.Panel1
+            // 
+            this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
             // 
             // splitContainerImageAndImageList.Panel2
             // 
@@ -593,8 +598,8 @@
             this.tableLayoutDataReview.Controls.Add(this.iclTest, 3, 0);
             this.tableLayoutDataReview.Controls.Add(this.iclTrain, 2, 0);
             this.tableLayoutDataReview.Controls.Add(this.iclLabeled, 1, 0);
-            this.tableLayoutDataReview.Controls.Add(this.panelDataReview, 0, 1);
             this.tableLayoutDataReview.Controls.Add(this.iclTotal, 0, 0);
+            this.tableLayoutDataReview.Controls.Add(this.panelDataReview, 0, 1);
             this.tableLayoutDataReview.Dock = System.Windows.Forms.DockStyle.Right;
             this.tableLayoutDataReview.Location = new System.Drawing.Point(684, 0);
             this.tableLayoutDataReview.Margin = new System.Windows.Forms.Padding(0);
@@ -638,16 +643,6 @@
             this.iclLabeled.Size = new System.Drawing.Size(75, 75);
             this.iclLabeled.TabIndex = 12;
             // 
-            // panelDataReview
-            // 
-            this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
-            this.panelDataReview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDataReview.Location = new System.Drawing.Point(0, 75);
-            this.panelDataReview.Margin = new System.Windows.Forms.Padding(0);
-            this.panelDataReview.Name = "panelDataReview";
-            this.panelDataReview.Size = new System.Drawing.Size(300, 590);
-            this.panelDataReview.TabIndex = 10;
-            // 
             // iclTotal
             // 
             this.iclTotal.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -658,6 +653,16 @@
             this.iclTotal.Name = "iclTotal";
             this.iclTotal.Size = new System.Drawing.Size(75, 75);
             this.iclTotal.TabIndex = 11;
+            // 
+            // panelDataReview
+            // 
+            this.tableLayoutDataReview.SetColumnSpan(this.panelDataReview, 4);
+            this.panelDataReview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDataReview.Location = new System.Drawing.Point(0, 75);
+            this.panelDataReview.Margin = new System.Windows.Forms.Padding(0);
+            this.panelDataReview.Name = "panelDataReview";
+            this.panelDataReview.Size = new System.Drawing.Size(300, 590);
+            this.panelDataReview.TabIndex = 10;
             // 
             // panelTrainOptions
             // 
@@ -1199,11 +1204,22 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(762, 24);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(276, 752);
+            this.panel1.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1038, 795);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelMWorkSpase);
             this.Controls.Add(this.panelstatus);
             this.Controls.Add(this.tableLayoutMainForm);
@@ -1313,11 +1329,11 @@
         private System.Windows.Forms.ToolStripMenuItem imageLabelInfoResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageSetInfoResetToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutDataReview;
-        public ImageCountLabel iclTest;
-        public ImageCountLabel iclTrain;
-        public ImageCountLabel iclLabeled;
+        public ProjectAI.MainForms.ImageCountLabel iclTest;
+        public ProjectAI.MainForms.ImageCountLabel iclTrain;
+        public ProjectAI.MainForms.ImageCountLabel iclLabeled;
+        public ProjectAI.MainForms.ImageCountLabel iclTotal;
         public System.Windows.Forms.Panel panelDataReview;
-        public ImageCountLabel iclTotal;
         private System.Windows.Forms.ToolStripMenuItem trainToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem changeStyleToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
@@ -1340,5 +1356,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         public MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize;
         public MetroFramework.Controls.MetroGrid gridImageList;
+        public System.Windows.Forms.Panel panel1;
     }
 }

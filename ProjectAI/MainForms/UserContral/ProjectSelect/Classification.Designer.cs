@@ -207,10 +207,10 @@
             // btnNoneImage
             // 
             this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
-            this.btnNoneImage.ButtonClickRetrun = "CADIamge";
-            this.btnNoneImage.CustomButtonName = "CAD Iamge";
+            this.btnNoneImage.ButtonClickRetrun = "CADImage";
+            this.btnNoneImage.CustomButtonName = "CAD Image";
             this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnNoneImage.InputLabelText = "CAD Iamge 설명";
+            this.btnNoneImage.InputLabelText = "CAD Image 설명";
             this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
             this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.segmentation150;
             this.btnNoneImage.Name = "btnNoneImage";

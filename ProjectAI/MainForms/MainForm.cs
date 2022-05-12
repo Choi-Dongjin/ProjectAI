@@ -17,7 +17,7 @@ namespace ProjectAI.MainForms
         /// 싱글톤 패턴 구현
         /// </summary>
         private static MainForm mainForm;
-        
+
         /// <summary>
         /// 싱글톤 패턴 Class 호출에 사용
         /// </summary>
@@ -825,7 +825,7 @@ namespace ProjectAI.MainForms
             jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_workSpacDataFilePath, WorkSpaceEarlyData.workSpaceEarlyDataJobject); // Json 파일 저장
 
             int index = 0;
-            foreach(MainForms.WorkSpaceButton editButtonIndex in WorkSpaceEarlyData.m_workSpaceButtons.Values)
+            foreach (MainForms.WorkSpaceButton editButtonIndex in WorkSpaceEarlyData.m_workSpaceButtons.Values)
             {
                 editButtonIndex.WorkSpaceButtonIndex = index;
                 index++;
@@ -1056,7 +1056,7 @@ namespace ProjectAI.MainForms
                     return Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -1219,25 +1219,25 @@ namespace ProjectAI.MainForms
 
             if (number / 1000000 >= 1)
             {
-                size = size + 5*incressValue;
+                size = size + 5 * incressValue;
                 //lblimageCount.Font = new Font(lblimageCountName.Font.Name, 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
                 //Console.WriteLine("8.25F");
             }
             else if (number / 100000 >= 1)
             {
-                size = size + 4*incressValue;
+                size = size + 4 * incressValue;
                 //lblimageCount.Font = new Font(lblimageCountName.Font.Name, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
                 //Console.WriteLine("9.75F");
             }
             else if (number / 10000 >= 1)
             {
-                size = size + 3*incressValue;
+                size = size + 3 * incressValue;
                 //lblimageCount.Font = new Font(lblimageCountName.Font.Name, 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
                 //Console.WriteLine("12F");
             }
             else if (number / 1000 >= 1)
             {
-                size = size + 2*incressValue;
+                size = size + 2 * incressValue;
                 //lblimageCount.Font = new Font(lblimageCountName.Font.Name, 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
                 //Console.WriteLine("15.75F");
             }
