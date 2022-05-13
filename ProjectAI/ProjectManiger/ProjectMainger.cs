@@ -1256,6 +1256,7 @@ namespace ProjectAI
         {
             this.MainForm.panelTrainOptions.Controls.Add(this.m_idleTrainOption); // panelTrainOptions 패널에 m_idleTrainOption 창 적용
             this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add(this.m_idelPictureBox); // 이미지 픽처 박스 초기 모델 적용
+            this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Add(this.m_idelGridViewImageList); // 이미지 픽처 박스 초기 모델 적용
 
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
             this.UISetImageListInfo(); // 이미지 리스트 정보 UI 적용
@@ -1267,17 +1268,18 @@ namespace ProjectAI
         }
 
         /// <summary>
-        /// 적용된 UI ReSet
+        /// 블러와서 적용된 UI ReSet -- Project 컴포넌트가 적용된 상태
+        /// Project 컴포넌트가 적용된 상태에서만 사용 **아니면 관리 디렉토리 검색 방법을 모두 수정
         /// </summary>
         public void ProjectUIRemove()
         {
             ProjectIdleUIRemove();
             InnerProjectUIRemove();
 
-            this.MainForm.gridImageList.Rows.Clear();
+            this.m_idelGridViewImageList.gridImageList.Rows.Clear();
 
-            this.MainForm.lblImageListpage.Text = "1";
-            this.MainForm.lblImageListpageTotal.Text = "1";
+            this.m_idelGridViewImageList.lblImageListpage.Text = "1";
+            this.m_idelGridViewImageList.lblImageListpageTotal.Text = "1";
 
             this.MainForm.iclTotal.ImageCount = "0";
             this.MainForm.iclLabeled.ImageCount = "0";
@@ -1293,6 +1295,8 @@ namespace ProjectAI
             this.MainForm.panelTrainOptions.Controls.Clear();
             this.MainForm.panelDataReview.Controls.Clear();
             this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Clear();
+            this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Clear();
+            //#33
         }
 
         /// <summary>
@@ -1303,6 +1307,8 @@ namespace ProjectAI
             this.MainForm.panelProjectInfo.Controls.Clear();
             this.MainForm.panelDataReview.Controls.Clear();
             this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Clear();
+            this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Clear();
+            //#33
         }
 
         /// <summary>
@@ -1312,8 +1318,8 @@ namespace ProjectAI
         {
             bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             this.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
-            this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
-            this.MainForm.lblImageListpage.Text = this.imageListPage.ToString();
+            this.m_idelGridViewImageList.lblImageListpageTotal.Text = ImageListnumber.ToString();
+            this.m_idelGridViewImageList.lblImageListpage.Text = this.imageListPage.ToString();
             // 선택된 프로젝트가 있으면
             if (this.m_activeInnerProjectName != null && this.m_activeInnerProjectName != "AddProject")
             {
@@ -1332,38 +1338,32 @@ namespace ProjectAI
         {
             #region gridImageList 값 적용 초기화
 
-            this.MainForm.gridImageList.DataSource = null;
-            this.MainForm.gridImageList.Columns.Clear();
-            this.MainForm.gridImageList.Rows.Clear();
-            this.MainForm.gridImageList.Refresh();
+            #region m_idelGridViewImageList 설정
+            this.m_idelGridViewImageList = this.GridViewImageListContralsSetting(this.m_idelGridViewImageList);
+            #endregion m_idelGridViewImageList
 
-            this.MainForm.gridImageList.ColumnCount = 6;
-            this.MainForm.gridImageList.Columns[0].Name = "NO";
-            this.MainForm.gridImageList.Columns[1].Name = "Files Name";
-            this.MainForm.gridImageList.Columns[2].Name = "Set"; //Train Test
-            this.MainForm.gridImageList.Columns[3].Name = "Labeled";
-            this.MainForm.gridImageList.Columns[4].Name = "Prediction";
-            this.MainForm.gridImageList.Columns[5].Name = "Probability";
-
-            bool success = Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
+            Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             //this.m_activeProjectImageListJObject["imageList"];
 
-            this.UISetImageListDataGridview(this.imageListPage);
+            // this.UISetImageListDataGridview(this.imageListPage, this.MainForm.gridImageList, this.MainForm.ckbMdataGridViewAutoSize);
+
+            this.UISetImageListDataGridview(this.imageListPage, this.m_idelGridViewImageList.gridImageList, this.m_idelGridViewImageList.ckbMdataGridViewAutoSize);
+            //#33
 
             #endregion gridImageList 값 적용 초기화
 
-            this.MainForm.lblImageListpage.Text = "1";
-            this.MainForm.lblImageListpageTotal.Text = ImageListnumber.ToString();
+            this.m_idelGridViewImageList.lblImageListpage.Text = "1";
+            this.m_idelGridViewImageList.lblImageListpageTotal.Text = ImageListnumber.ToString();
         }
 
         /// <summary>
         /// 이미지 리스트 페이지 적용 - DataGridview 타입
         /// </summary>
-        private void UISetImageListDataGridview(int page)
+        private void UISetImageListDataGridview(int page, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             try
             {
-                this.MainForm.gridImageList.Rows.Clear();
+                metroGrid.Rows.Clear();
 
                 page = page - 1;
 
@@ -1421,21 +1421,21 @@ namespace ProjectAI
                             this.MainForm.gridImageList.Columns[4].Name = "Probability";
                             */
 
-                            this.MainForm.gridImageList.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
                             if (activeClassColor != null)
-                                this.MainForm.gridImageList.Rows[this.MainForm.gridImageList.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
+                                metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
 
                         }
                     }
                 }
 
                 int size = 0;
-                for (int i = 0; i < this.MainForm.gridImageList.Columns.Count; i++)
+                for (int i = 0; i < metroGrid.Columns.Count; i++)
                 {
-                    size += this.MainForm.gridImageList.Columns[i].Width;
+                    size += metroGrid.Columns[i].Width;
                 }
                 // Data Grid View Size 조정
-                if (this.MainForm.ckbMdataGridViewAutoSize.Checked)
+                if (ckbMdataGridViewAutoSize.Checked)
                 {
                     try
                     {
@@ -1458,11 +1458,11 @@ namespace ProjectAI
         /// 이미지 페이지 이동 Forward
         /// </summary>
         /// <returns></returns>
-        public int ImageListPageNext()
+        public int ImageListPageNext(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
             if (this.imageListPage < imageListnumber)
-                this.UISetImageListDataGridview(++this.imageListPage);
+                this.UISetImageListDataGridview(++this.imageListPage, metroGrid, ckbMdataGridViewAutoSize);
             return imageListPage;
         }
 
@@ -1470,20 +1470,20 @@ namespace ProjectAI
         /// 이미지 페이지 이동 Backward
         /// </summary>
         /// <returns></returns>
-        public int ImageListPageReverse()
+        public int ImageListPageReverse(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             if (this.imageListPage > 1)
-                this.UISetImageListDataGridview(--this.imageListPage);
+                this.UISetImageListDataGridview(--this.imageListPage, metroGrid, ckbMdataGridViewAutoSize);
             return imageListPage;
         }
 
-        public int ImageListPageManual(int page)
+        public int ImageListPageManual(int page, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
             if (page >= 0 && page <= imageListnumber && this.imageListPage != page)
             {
                 this.imageListPage = page;
-                this.UISetImageListDataGridview(this.imageListPage);
+                this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize);
             }
             return imageListPage;
         }
@@ -1677,12 +1677,13 @@ namespace ProjectAI
                     }
                     #endregion ImageList
 
+                    #region ImageViewer
                     if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "SingleImage")
                     {
                         Console.WriteLine("Classification");
                         Console.WriteLine("SingleImage");
                         //SingleImage(button.Name); // 바로 아래 region
-                        #region ImageViewer
+                        
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                             if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1697,21 +1698,34 @@ namespace ProjectAI
                             simpleTwoImageViewer = this.SimpleTwoImageViewerrContralsSetting(simpleTwoImageViewer);
                             this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, simpleTwoImageViewer);
                         }
-                        #endregion ImageViewer
-
                     }
                     else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "MultiImage")
                     {
                         Console.WriteLine("Classification");
                         Console.WriteLine("MultiImage");
+
+                        // ImageViewer 설정
+                        foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                                {
+                                    alreadyOpenedProjectImageViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                                    break;
+                                }
+                        if (!alreadyOpenedProjectImageViewer)
+                        {
+                            ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer simpleTwoImageViewer = new MainForms.UserContral.ImageView.SimpleTwoImageViewer();
+                            simpleTwoImageViewer = this.SimpleTwoImageViewerrContralsSetting(simpleTwoImageViewer);
+                            this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, simpleTwoImageViewer);
+                        }
                     }
-                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                    else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString().Equals("CADImage"))
                     {
                         Console.WriteLine("Classification");
                         Console.WriteLine("CADImage");
                         // CadImage(button.Name); //바로 아래 region
 
-                        #region ImageViewer
+                        
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                             if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1726,22 +1740,56 @@ namespace ProjectAI
                             cadImageViewer = this.CadImageViewerContralsSetting(cadImageViewer);
                             this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, cadImageViewer);
                         }
-                        #endregion ImageViewer
-
+                    }
+                    else
+                    {
+                        Console.WriteLine("Classification");
+                        Console.WriteLine("NoneImageType");
+                        // ImageViewer 설정
+                        foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
+                            if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
+                                if (activeInnerProjectName == button.Name) // 내부 프로젝트 이름이 이미 실행되어 있는지 확인
+                                {
+                                    alreadyOpenedProjectImageViewer = true; // 실행되어 있다면 확인용 변수 True로 변경
+                                    break;
+                                }
+                        if (!alreadyOpenedProjectImageViewer)
+                        {
+                            ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer simpleTwoImageViewer = new MainForms.UserContral.ImageView.SimpleTwoImageViewer();
+                            simpleTwoImageViewer = this.SimpleTwoImageViewerrContralsSetting(simpleTwoImageViewer);
+                            this.m_imageViewDictionary.Add(this.m_activeInnerProjectName, simpleTwoImageViewer);
+                        }
                     }
 
-                        this.ProjectIdleUIRemove(); // IdleUI 삭제
-                                                    // panelTrainOptions 설정
-                        #region 컨트롤 추가
-                        this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
-                        this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
-                        this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
-                        this.MainForm.panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageListDictionary[this.m_activeInnerProjectName]);
-                        #endregion 컨트롤 추가
+                    #endregion ImageViewer
 
-                        this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
-                        this.UISetImageListDataGridview(this.imageListPage); // 이미지 리스트 초기화
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제
+                                                // panelTrainOptions 설정
+                    #region 컨트롤 추가
+                    this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
+                    this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
+                    this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
+                    this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Add((System.Windows.Forms.Control)this.m_imageListDictionary[this.m_activeInnerProjectName]);
+                    #endregion 컨트롤 추가
 
+                    this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
+
+                    #region gridImageList 값 적용 초기화
+                    if (this.m_imageListDictionary[this.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
+                    {
+                        if (this.m_imageListDictionary[this.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
+                        {
+                            Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int innerImageListnumber);
+                            //this.m_activeProjectImageListJObject["imageList"];
+
+                            gridViewImageList.lblImageListpage.Text = this.imageListPage.ToString();
+                            gridViewImageList.lblImageListpageTotal.Text = innerImageListnumber.ToString();
+
+                            this.UISetImageListDataGridview(this.imageListPage, gridViewImageList.gridImageList, gridViewImageList.ckbMdataGridViewAutoSize);
+                        }
+                    }
+                    #endregion gridImageList 값 적용 초기화
+                    //#33
 
                     // trainForm 학습 결과 폼
                     TrainForms.TrainForm trainForm = TrainForms.TrainForm.GetInstance();
@@ -1862,6 +1910,21 @@ namespace ProjectAI
 
         private ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageListContralsSetting(ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
         {
+            gridViewImageList.gridImageList.Rows.Clear();
+
+            gridViewImageList.gridImageList.DataSource = null;
+            gridViewImageList.gridImageList.Columns.Clear();
+            gridViewImageList.gridImageList.Rows.Clear();
+            gridViewImageList.gridImageList.Refresh();
+
+            gridViewImageList.gridImageList.ColumnCount = 6;
+            gridViewImageList.gridImageList.Columns[0].Name = "NO";
+            gridViewImageList.gridImageList.Columns[1].Name = "Files Name";
+            gridViewImageList.gridImageList.Columns[2].Name = "Set"; //Train Test
+            gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
+            gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
+            gridViewImageList.gridImageList.Columns[5].Name = "Probability";
+
             gridViewImageList.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewImageList.Location = new System.Drawing.Point(0, 0);
             return gridViewImageList;
@@ -1959,7 +2022,7 @@ namespace ProjectAI
         /// <summary>
         /// 활성화된 워크스페이스 이미지 추가
         /// </summary>
-        public void ImageFilesAdding()
+        public void ImageFilesAdding(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -2058,7 +2121,7 @@ namespace ProjectAI
 
                     //UI 적용
                     this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
-                    this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+                    this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
 
                     // Json 파일 저장
                     this.JsonDataSave(1);
@@ -2068,7 +2131,7 @@ namespace ProjectAI
             }
         }
 
-        public void ImageFilesAddingWizard()
+        public void ImageFilesAddingWizard(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             this.classEdit.ShowDialog(); // Class Edit 창 띄우기
             DialogResult dialogResult = this.classEdit.selectDialogResult; // 버튼 클릭 결과 가져오기
@@ -2192,7 +2255,7 @@ namespace ProjectAI
                             // Data Grid View 초기화 조건
                             int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
                             if (this.imageListPage == imageListnumber)
-                                this.UISetImageListDataGridview(this.imageListPage);
+                                this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize);
 
                             // Label 정보 적용
                             this.ImageAddingLabeling(files.ToList(), modifyClassName);
@@ -2206,7 +2269,7 @@ namespace ProjectAI
                             this.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
 
                             //UI 적용
-                            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+                            this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
 
                             // Json 파일 저장
                             this.JsonDataSave(0);
@@ -2219,7 +2282,7 @@ namespace ProjectAI
             }
         }
 
-        public void ImageFolderAddingWizard()
+        public void ImageFolderAddingWizard(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             this.classEdit.ShowDialog(); // Class Edit 창 띄우기
             DialogResult dialogResult = this.classEdit.selectDialogResult; // 버튼 클릭 결과 가져오기
@@ -2348,7 +2411,7 @@ namespace ProjectAI
                             // Data Grid View 초기화 조건
                             int imageListnumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"].ToString());
                             if (this.imageListPage == imageListnumber)
-                                this.UISetImageListDataGridview(this.imageListPage);
+                                this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize);
 
                             // Label 정보 적용
                             this.ImageAddingLabeling(files.ToList(), modifyClassName);
@@ -2362,7 +2425,8 @@ namespace ProjectAI
                             this.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
 
                             //UI 적용
-                            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+                            this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
+                            //#33
 
                             // Json 파일 저장
                             this.JsonDataSave(0);
@@ -2380,13 +2444,13 @@ namespace ProjectAI
         /// <summary>
         /// CadImageSelect 폼을 띄우는 함수
         /// </summary>
-        public void CADImageForm()
+        public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
 
             if (cadImageSelect.ShowDialog() == DialogResult.OK)
             {
-                this.CADImageAdding(cadImageSelect);
+                this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);
                 this.CADImageViewerPrintImage(cadImageSelect);
             }
             else //Form Cancel
@@ -2409,7 +2473,7 @@ namespace ProjectAI
         /// <summary>
         /// 기본 이미지와 CAD이미지를 선택한 후 OK 누를 때 기본 이미지 정보에 CAD이미지의 PATH를 저장하여 JSON에 저장
         /// </summary>
-        public void CADImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect)
+        public void CADImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
@@ -2545,7 +2609,7 @@ namespace ProjectAI
             //Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
             //UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
-            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+            this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
 
             // Json 파일 저장
             this.JsonDataSave(0);
@@ -2670,7 +2734,7 @@ namespace ProjectAI
         /// 활성화된 워크스페이스 이미지 제거, MetroGrid 타입
         /// </summary>
         /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
-        public void ImageDel(MetroFramework.Controls.MetroGrid metroGrid)
+        public void ImageDel(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             List<int> delIndexs = new List<int>();
             List<string> delFileNames = new List<string>();
@@ -2787,7 +2851,7 @@ namespace ProjectAI
 
             // UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
-            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+            this.UISetImageListDataGridview(this.imageListPage, metroGrid, ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
 
             // Json 파일 저장
             this.JsonDataSave(0);
@@ -2800,7 +2864,7 @@ namespace ProjectAI
         /// 활성화된 워크스페이스 이미지 제거, DataGridView 타입
         /// </summary>
         /// <param name="metroGrid"> 적용된 이미지 List 관리 컨트롤 </param>
-        public void ImageDel(System.Windows.Forms.DataGridView metroGrid)
+        public void ImageDel(System.Windows.Forms.DataGridView metroGrid, System.Windows.Forms.CheckBox ckbMdataGridViewAutoSize)
         {
             List<int> delIndexs = new List<int>();
             List<string> delFileNames = new List<string>();
@@ -2917,7 +2981,7 @@ namespace ProjectAI
 
             // UI 적용
             this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트
-            this.UISetImageListDataGridview(this.imageListPage); // 이미지 Data Grid View UI적용
+            this.UISetImageListDataGridview(this.imageListPage, (MetroFramework.Controls.MetroGrid)metroGrid, (MetroFramework.Controls.MetroCheckBox)ckbMdataGridViewAutoSize); // 이미지 Data Grid View UI적용
 
             // Json 파일 저장
             this.JsonDataSave(0);

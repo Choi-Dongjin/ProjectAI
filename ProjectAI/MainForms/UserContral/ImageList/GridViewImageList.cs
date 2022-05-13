@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ProjectAI.MainForms.UserContral.ImageList
 {
@@ -38,6 +39,30 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             {
 
             }
+        }
+
+        public string GetSelectImagePath()
+        {
+            string imagePath = null;
+            try
+            {
+                DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+
+                if (data != null)
+                {
+                    return Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+
+            }
+            return imagePath;
         }
 
         private int GetContralSize(double number)
@@ -86,13 +111,13 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         private void BtnimagePageNextClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext().ToString();
+                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageNext(this.gridImageList, this.ckbMdataGridViewAutoSize).ToString();
         }
 
         private void BtnimagePageReverseClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
-                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse().ToString();
+                this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageReverse(this.gridImageList, this.ckbMdataGridViewAutoSize).ToString();
         }
 
         private void LblImageListpageClick(object sender, EventArgs e)
@@ -101,7 +126,7 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             if (mainFormsImageListPage.ShowDialog() == DialogResult.OK)
             {
                 if (WorkSpaceData.m_activeProjectMainger != null)
-                    this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageManual(mainFormsImageListPage.GetPage()).ToString();
+                    this.lblImageListpage.Text = WorkSpaceData.m_activeProjectMainger.ImageListPageManual(mainFormsImageListPage.GetPage(), this.gridImageList, this.ckbMdataGridViewAutoSize).ToString();
             }
         }
 
@@ -121,6 +146,102 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 int controlSize = this.GetContralSize(value);
                 this.tableLayoutImageDataManiger.ColumnStyles[4] = new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, (float)controlSize);
             }
+        }
+
+        private void GridImageListSelectionChanged(object sender, EventArgs e)
+        {
+            if (this.gridImageList.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+                WorkSpaceData.m_activeProjectMainger.PrintImage(data);
+            }
+        }
+
+        private void ImageFilesAddToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                WorkSpaceData.m_activeProjectMainger.ImageFilesAdding(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
+
+        private void ImageSelectToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
+
+        private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImageFilesAddWizardToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.ImageFilesAddingWizard(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
+
+        private void ImageFolderAddWizardToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.ImageFolderAddingWizard(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
+
+        private void ImageLabelingToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageLabeling(this.gridImageList);
+                }
+        }
+
+        private void ImageSetTrainToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageTrainSet(this.gridImageList);
+                }
+        }
+
+        private void ImageSetTestToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageTestSet(this.gridImageList);
+                }
+        }
+
+        private void ImageDeleteToolStripMenuItem1Click(object sender, EventArgs e)
+        {
+            if (MetroFramework.MetroMessageBox.Show(this, "Are you sure you want to delete the image?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (WorkSpaceData.m_activeProjectMainger != null)
+                    WorkSpaceData.m_activeProjectMainger.ImageDel(this.gridImageList, this.ckbMdataGridViewAutoSize);
+            }
+        }
+
+        private void ImageLabelInfoResetToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageLabelInfoReset(this.gridImageList);
+                }
+        }
+
+        private void ImageSetInfoResetToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    WorkSpaceData.m_activeProjectMainger.ImageDataSetInfoReset(this.gridImageList);
+                }
         }
     }
 }

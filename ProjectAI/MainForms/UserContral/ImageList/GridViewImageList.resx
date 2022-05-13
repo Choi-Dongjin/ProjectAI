@@ -120,11 +120,14 @@
   <metadata name="metroStyleManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="cmsMImageListToolKit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>194, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnimagePageReverse.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAMu5JREFUeF7tnQmcHGWdv01AAcFjhUVdWV12BRUvFHUXPAgzk2Ay04FkunOQBBEI
+        DAAACwwBP0AiyAAAMu5JREFUeF7tnQmcHGWdv01AAcFjhUVdWV12BRUvFHUXPAgzk2Ay04FkunOQBBEI
         Z0CuKKCLQVQEFlwIuuKNux64iAdeIJeirLd/ZVEBdxXFFTzQP4qCHLXfSv0qO6l5K1PdXVVd79vP8/k8
         H0Smq97p91f1/c5Mz/TDAAAA+mHO/MU7jU20141OtC+Xv5C3j050Pj463j51dNGi7e3DGsP8+fO3Gp2Y
         PHpsvP0hrfUWrf0u/fNqedbcBZ3d7cMaxT7jnYVa57+Mttrf0Drvjv8Z/3v8/9uHAAAA1MdIq3OQwuh3
@@ -347,7 +350,7 @@
   <data name="btnimagePageNext.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADaISURBVHhe7d17
+        DAAACwwBP0AiyAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADaISURBVHhe7d17
         nB11ff9xElBAvLVQtZWfllZAqbYo1ha0EnY3wWT3BJI9hySQYLiEO5gAUUCLQbQIFCwXbbXalrbWYhEv
         eKXcvFHv/pQfKmB/SosVqmJ/WKrI5fw+kzlDJpv32Z05853L9zuvP54P6qfZmTl7PjPvd5LN7nb9fn8k
         B032lk5Mdf98vNP98vhU94Hov9H/jubq19dt4ZLevnadF5ob7Trvt//eOTHZ/YfxqemTFy9evKP6mDqN

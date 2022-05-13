@@ -1443,54 +1443,117 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
-            string imagePath = mainForm.GetSelectImagePath();
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+            if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
             {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                string imagePath = null;
+                try
                 {
-                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
+                    {
+                        imagePath = GridViewImageList.GetSelectImagePath();
+                    }
                 }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    imagePath = null;
+                }
+                finally
+                {
+                    using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+                    {
+                        dataAugmentationExampleForm.ShowDialog();
+                        if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                        {
+                            maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                        }
+                    }
+                }
+
             }
+
+
         }
         private void DataAugmentationGetValue(string exCase, TextBox maxTextBox)
         {
-            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
-            string imagePath = mainForm.GetSelectImagePath();
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+            string imagePath = null;
+            try
             {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
                 {
-                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    imagePath = GridViewImageList.GetSelectImagePath();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                imagePath = null;
+            }
+            finally
+            {
+                using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+                {
+                    dataAugmentationExampleForm.ShowDialog();
+                    if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                    {
+                        maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    }
                 }
             }
         }
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox minTextBox, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
-            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
-            string imagePath = mainForm.GetSelectImagePath();
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+            string imagePath = null;
+            try
             {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
                 {
-                    minTextBox.Text = dataAugmentationExampleForm.minimumValue;
-                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    imagePath = GridViewImageList.GetSelectImagePath();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                imagePath = null;
+            }
+            finally 
+            {
+                using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+                {
+                    dataAugmentationExampleForm.ShowDialog();
+                    if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                    {
+                        minTextBox.Text = dataAugmentationExampleForm.minimumValue;
+                        maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    }
                 }
             }
         }
         private void DataAugmentationGetValue(string exCase, TextBox minTextBox, TextBox maxTextBox)
         {
-            ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
-            string imagePath = mainForm.GetSelectImagePath();
-            using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+            string imagePath = null;
+            try
             {
-                dataAugmentationExampleForm.ShowDialog();
-                if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
                 {
-                    minTextBox.Text = dataAugmentationExampleForm.minimumValue;
-                    maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    imagePath = GridViewImageList.GetSelectImagePath();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                imagePath = null;
+            }
+            finally
+            {
+                using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
+                {
+                    dataAugmentationExampleForm.ShowDialog();
+                    if (dataAugmentationExampleForm.DialogResultSelected == DialogResult.OK)
+                    {
+                        minTextBox.Text = dataAugmentationExampleForm.minimumValue;
+                        maxTextBox.Text = dataAugmentationExampleForm.maximumValue;
+                    }
                 }
             }
         }

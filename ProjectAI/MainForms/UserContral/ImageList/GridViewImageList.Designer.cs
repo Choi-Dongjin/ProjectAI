@@ -43,15 +43,35 @@
             this.btnimagePageNext = new System.Windows.Forms.Button();
             this.lblImageListpageTotal = new System.Windows.Forms.Label();
             this.gridImageList = new MetroFramework.Controls.MetroGrid();
+            this.cmsMImageListToolKit = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageFilesAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageFolderAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageFilesAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageFolderAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageLabelingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageSetTrainToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageSetTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageDeleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageLabelInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageSetInfoResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutImageDataManiger.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).BeginInit();
+            this.cmsMImageListToolKit.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroStyleManager1
             // 
-            this.metroStyleManager1.Owner = null;
+            this.metroStyleManager1.Owner = this;
             // 
             // tableLayoutPanel2
             // 
@@ -190,6 +210,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gridImageList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridImageList.ContextMenuStrip = this.cmsMImageListToolKit;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -224,6 +245,158 @@
             this.gridImageList.TabIndex = 3;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
+            this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
+            // 
+            // cmsMImageListToolKit
+            // 
+            this.cmsMImageListToolKit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmsMImageListToolKit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cmsMImageListToolKit.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.cmsMImageListToolKit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator11,
+            this.imageFilesAddToolStripMenuItem1,
+            this.imageSelectToolStripMenuItem,
+            this.imageFolderAddToolStripMenuItem1,
+            this.toolStripSeparator14,
+            this.imageFilesAddWizardToolStripMenuItem,
+            this.imageFolderAddWizardToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.imageLabelingToolStripMenuItem1,
+            this.toolStripSeparator8,
+            this.imageSetTrainToolStripMenuItem1,
+            this.imageSetTestToolStripMenuItem1,
+            this.toolStripSeparator9,
+            this.imageDeleteToolStripMenuItem1,
+            this.toolStripSeparator10,
+            this.imageLabelInfoResetToolStripMenuItem,
+            this.imageSetInfoResetToolStripMenuItem,
+            this.toolStripSeparator15});
+            this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 376);
+            this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
+            this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageFilesAddToolStripMenuItem1
+            // 
+            this.imageFilesAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open_source;
+            this.imageFilesAddToolStripMenuItem1.Name = "imageFilesAddToolStripMenuItem1";
+            this.imageFilesAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageFilesAddToolStripMenuItem1.Text = "Image File Add";
+            this.imageFilesAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFilesAddToolStripMenuItem1Click);
+            // 
+            // imageSelectToolStripMenuItem
+            // 
+            this.imageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_source;
+            this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
+            this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageSelectToolStripMenuItem.Text = "Image Select";
+            // 
+            // imageFolderAddToolStripMenuItem1
+            // 
+            this.imageFolderAddToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open2;
+            this.imageFolderAddToolStripMenuItem1.Name = "imageFolderAddToolStripMenuItem1";
+            this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageFolderAddToolStripMenuItem1.Text = "Image Folder Add";
+            this.imageFolderAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFolderAddToolStripMenuItem1Click);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageFilesAddWizardToolStripMenuItem
+            // 
+            this.imageFilesAddWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_sourceWizard;
+            this.imageFilesAddWizardToolStripMenuItem.Name = "imageFilesAddWizardToolStripMenuItem";
+            this.imageFilesAddWizardToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageFilesAddWizardToolStripMenuItem.Text = "Image Files Add Wizard";
+            this.imageFilesAddWizardToolStripMenuItem.Click += new System.EventHandler(this.ImageFilesAddWizardToolStripMenuItemClick);
+            // 
+            // imageFolderAddWizardToolStripMenuItem
+            // 
+            this.imageFolderAddWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open2Wizard;
+            this.imageFolderAddWizardToolStripMenuItem.Name = "imageFolderAddWizardToolStripMenuItem";
+            this.imageFolderAddWizardToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageFolderAddWizardToolStripMenuItem.Text = "Image Folder Add Wizard";
+            this.imageFolderAddWizardToolStripMenuItem.Click += new System.EventHandler(this.ImageFolderAddWizardToolStripMenuItemClick);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageLabelingToolStripMenuItem1
+            // 
+            this.imageLabelingToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.product_development1;
+            this.imageLabelingToolStripMenuItem1.Name = "imageLabelingToolStripMenuItem1";
+            this.imageLabelingToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageLabelingToolStripMenuItem1.Text = "Image Labeling";
+            this.imageLabelingToolStripMenuItem1.Click += new System.EventHandler(this.ImageLabelingToolStripMenuItem1Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageSetTrainToolStripMenuItem1
+            // 
+            this.imageSetTrainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.book;
+            this.imageSetTrainToolStripMenuItem1.Name = "imageSetTrainToolStripMenuItem1";
+            this.imageSetTrainToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageSetTrainToolStripMenuItem1.Text = "Image Set Train";
+            this.imageSetTrainToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTrainToolStripMenuItem1Click);
+            // 
+            // imageSetTestToolStripMenuItem1
+            // 
+            this.imageSetTestToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.completed_task;
+            this.imageSetTestToolStripMenuItem1.Name = "imageSetTestToolStripMenuItem1";
+            this.imageSetTestToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageSetTestToolStripMenuItem1.Text = "Image Set Test";
+            this.imageSetTestToolStripMenuItem1.Click += new System.EventHandler(this.ImageSetTestToolStripMenuItem1Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageDeleteToolStripMenuItem1
+            // 
+            this.imageDeleteToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.delete;
+            this.imageDeleteToolStripMenuItem1.Name = "imageDeleteToolStripMenuItem1";
+            this.imageDeleteToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.imageDeleteToolStripMenuItem1.Text = "Image Delete";
+            this.imageDeleteToolStripMenuItem1.Click += new System.EventHandler(this.ImageDeleteToolStripMenuItem1Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(216, 6);
+            // 
+            // imageLabelInfoResetToolStripMenuItem
+            // 
+            this.imageLabelInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.refresh2;
+            this.imageLabelInfoResetToolStripMenuItem.Name = "imageLabelInfoResetToolStripMenuItem";
+            this.imageLabelInfoResetToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageLabelInfoResetToolStripMenuItem.Text = "Image Label Info Reset";
+            this.imageLabelInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageLabelInfoResetToolStripMenuItemClick);
+            // 
+            // imageSetInfoResetToolStripMenuItem
+            // 
+            this.imageSetInfoResetToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.reset;
+            this.imageSetInfoResetToolStripMenuItem.Name = "imageSetInfoResetToolStripMenuItem";
+            this.imageSetInfoResetToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
+            this.imageSetInfoResetToolStripMenuItem.Text = "Image Set Info Reset";
+            this.imageSetInfoResetToolStripMenuItem.Click += new System.EventHandler(this.ImageSetInfoResetToolStripMenuItemClick);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(216, 6);
             // 
             // GridViewImageList
             // 
@@ -240,6 +413,7 @@
             this.tableLayoutImageDataManiger.ResumeLayout(false);
             this.tableLayoutImageDataManiger.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridImageList)).EndInit();
+            this.cmsMImageListToolKit.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -256,5 +430,24 @@
         private System.Windows.Forms.Button btnimagePageNext;
         public System.Windows.Forms.Label lblImageListpageTotal;
         public MetroFramework.Controls.MetroGrid gridImageList;
+        private MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem imageFilesAddToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageFolderAddToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem imageFilesAddWizardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageFolderAddWizardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem imageLabelingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem imageSetTrainToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem imageSetTestToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem imageDeleteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem imageLabelInfoResetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageSetInfoResetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
     }
 }
