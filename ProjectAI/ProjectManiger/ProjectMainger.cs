@@ -2409,7 +2409,7 @@ namespace ProjectAI
         /// <summary>
         /// 기본 이미지와 CAD이미지를 선택한 후 OK 누를 때 기본 이미지 정보에 CAD이미지의 PATH를 저장하여 JSON에 저장
         /// </summary>
-        public void CADImageAdding(CadImageSelect cadImageSelect)
+        public void CADImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect)
         {
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
@@ -2632,7 +2632,7 @@ namespace ProjectAI
         }
 
 
-        public void CADImageViewerPrintImage(CadImageSelect cadImageSelect)
+        public void CADImageViewerPrintImage(ProjectAI.MainForms.CadImageSelect cadImageSelect)
         {
             if (this.m_activeInnerProjectName != null)
             {
