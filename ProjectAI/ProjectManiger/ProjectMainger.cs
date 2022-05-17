@@ -1683,7 +1683,7 @@ namespace ProjectAI
                         Console.WriteLine("Classification");
                         Console.WriteLine("SingleImage");
                         //SingleImage(button.Name); // 바로 아래 region
-                        
+
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                             if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1724,8 +1724,10 @@ namespace ProjectAI
                         Console.WriteLine("Classification");
                         Console.WriteLine("CADImage");
                         // CadImage(button.Name); //바로 아래 region
+                        ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
 
-                        
+                        gridViewImageList.cmsMImageListToolKit.Items[2].Visible = true;
+
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                             if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1784,7 +1786,6 @@ namespace ProjectAI
 
                             gridViewImageList.lblImageListpage.Text = this.imageListPage.ToString();
                             gridViewImageList.lblImageListpageTotal.Text = innerImageListnumber.ToString();
-
                             this.UISetImageListDataGridview(this.imageListPage, gridViewImageList.gridImageList, gridViewImageList.ckbMdataGridViewAutoSize);
                         }
                     }
@@ -2549,7 +2550,7 @@ namespace ProjectAI
                 //Labeled -> 해당 프로젝트 -> CadImage: 1:1 대응되는 CadImage 정보 확인 
                 labeledDatainnerProjectLabelName = new JObject
                 {
-                    {  "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
+                    { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
                 };
 
                 JObject labeledDatainnerProject = new JObject
@@ -2566,7 +2567,7 @@ namespace ProjectAI
 
                 labeledDatainnerProjectLabelName = new JObject
                 {
-                    {  "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
+                    { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName) }
                 };
 
                 JObject labeledDatainnerProject = new JObject

@@ -295,6 +295,7 @@
             this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
             this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
             this.imageSelectToolStripMenuItem.Text = "Image Select";
+            this.imageSelectToolStripMenuItem.Visible = false;
             this.imageSelectToolStripMenuItem.Click += new System.EventHandler(this.ImageSelectToolStripMenuItemClick);
             // 
             // imageFolderAddToolStripMenuItem1
@@ -431,7 +432,6 @@
         private System.Windows.Forms.Button btnimagePageNext;
         public System.Windows.Forms.Label lblImageListpageTotal;
         public MetroFramework.Controls.MetroGrid gridImageList;
-        private MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem imageFilesAddToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
@@ -450,5 +450,6 @@
         private System.Windows.Forms.ToolStripMenuItem imageLabelInfoResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageSetInfoResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        public MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
     }
 }
