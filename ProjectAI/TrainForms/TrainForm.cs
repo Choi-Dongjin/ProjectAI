@@ -1061,7 +1061,7 @@ namespace ProjectAI.TrainForms
             List<string> imagePathList = new List<string>();
             List<string> imageSetPathList = new List<string>();
 
-            // Couunt
+            // Count
             int progressValueMaxNumber = processJObject["ImageListData"].Count();
             int progressValueCountNumber = 0;
             this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), 0); // Progress Value 설정
@@ -1091,7 +1091,7 @@ namespace ProjectAI.TrainForms
                                 imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass,
                                     System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
 
-                                // class 관리 Lisy에 추가
+                                // class 관리 List에 추가
                                 classNames.Add(imageClass);
                             }
                 }
@@ -1116,7 +1116,7 @@ namespace ProjectAI.TrainForms
                                 imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
                                     System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
 
-                                // class 관리 Lisy에 추가
+                                // class 관리 List에 추가
                                 classNames.Add(imageClass);
                             }
                 }
@@ -1124,13 +1124,24 @@ namespace ProjectAI.TrainForms
                 this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)progressValueCountNumber / (double)progressValueMaxNumber * 100)); // Progress Value 설정
             }
 
-            // 파일 Copy
-            for (int i = 0; i < imagePathList.Count; i++)
+            if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("SingleImage"))
             {
-                System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
-                this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
+                // 파일 Copy
+                for (int i = 0; i < imagePathList.Count; i++)
+                {
+                    System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
+                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
+                }
             }
-
+            else if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("CADImage"))
+            {
+                //Overlay된 파일을 생성
+                for (int i = 0; i < imagePathList.Count; i++)
+                {
+                    
+                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
+                }
+            }
             // DataGridView WaitingforWork 값 수정
             this.SafeDataGridViewProcessStep(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), "EndPreprocess");
 
@@ -2723,6 +2734,9 @@ namespace ProjectAI.TrainForms
                 else if (processImageType == "MultiImage")
                 {
                 }
+                else if (processImageType == "CADImage")
+                {
+                }
             }
 
             if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
@@ -2800,6 +2814,10 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
+                }
+                else if (processImageType == "CADImage")
+                {
+
                 }
             }
 

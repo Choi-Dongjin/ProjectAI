@@ -39,6 +39,7 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
@@ -63,7 +64,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnCancel.OverrideDefault.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.AntiAlias;
-            this.btnCancel.OverrideDefault.Border.Rounding = 20;
+            this.btnCancel.OverrideDefault.Border.Rounding = 20F;
             this.btnCancel.OverrideDefault.Border.Width = 1;
             this.btnCancel.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem;
             this.btnCancel.Size = new System.Drawing.Size(77, 36);
@@ -77,7 +78,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnCancel.StateCommon.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.None;
-            this.btnCancel.StateCommon.Border.Rounding = 20;
+            this.btnCancel.StateCommon.Border.Rounding = 20F;
             this.btnCancel.StateCommon.Border.Width = 1;
             this.btnCancel.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
             this.btnCancel.StateCommon.Content.ShortText.Color2 = System.Drawing.Color.White;
@@ -91,7 +92,7 @@
             this.btnCancel.StatePressed.Border.DrawBorders = ((Krypton.Toolkit.PaletteDrawBorders)((((Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom) 
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
-            this.btnCancel.StatePressed.Border.Rounding = 20;
+            this.btnCancel.StatePressed.Border.Rounding = 20F;
             this.btnCancel.StatePressed.Border.Width = 1;
             this.btnCancel.StateTracking.Back.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(235)))), ((int)(((byte)(52)))));
             this.btnCancel.StateTracking.Back.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(235)))), ((int)(((byte)(52)))));
@@ -102,7 +103,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnCancel.StateTracking.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.AntiAlias;
-            this.btnCancel.StateTracking.Border.Rounding = 20;
+            this.btnCancel.StateTracking.Border.Rounding = 20F;
             this.btnCancel.StateTracking.Border.Width = 1;
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Values.Text = "Cancel";
@@ -124,7 +125,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnOK.OverrideDefault.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.AntiAlias;
-            this.btnOK.OverrideDefault.Border.Rounding = 20;
+            this.btnOK.OverrideDefault.Border.Rounding = 20F;
             this.btnOK.OverrideDefault.Border.Width = 1;
             this.btnOK.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem;
             this.btnOK.Size = new System.Drawing.Size(77, 36);
@@ -138,7 +139,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnOK.StateCommon.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.None;
-            this.btnOK.StateCommon.Border.Rounding = 20;
+            this.btnOK.StateCommon.Border.Rounding = 20F;
             this.btnOK.StateCommon.Border.Width = 1;
             this.btnOK.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
             this.btnOK.StateCommon.Content.ShortText.Color2 = System.Drawing.Color.White;
@@ -152,7 +153,7 @@
             this.btnOK.StatePressed.Border.DrawBorders = ((Krypton.Toolkit.PaletteDrawBorders)((((Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom) 
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
-            this.btnOK.StatePressed.Border.Rounding = 20;
+            this.btnOK.StatePressed.Border.Rounding = 20F;
             this.btnOK.StatePressed.Border.Width = 1;
             this.btnOK.StateTracking.Back.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(235)))), ((int)(((byte)(52)))));
             this.btnOK.StateTracking.Back.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(235)))), ((int)(((byte)(52)))));
@@ -163,7 +164,7 @@
             | Krypton.Toolkit.PaletteDrawBorders.Left) 
             | Krypton.Toolkit.PaletteDrawBorders.Right)));
             this.btnOK.StateTracking.Border.GraphicsHint = Krypton.Toolkit.PaletteGraphicsHint.AntiAlias;
-            this.btnOK.StateTracking.Border.Rounding = 20;
+            this.btnOK.StateTracking.Border.Rounding = 20F;
             this.btnOK.StateTracking.Border.Width = 1;
             this.btnOK.TabIndex = 4;
             this.btnOK.Values.Text = "OK";
@@ -171,6 +172,7 @@
             // 
             // pictureBox1
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.pictureBox1, true);
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.image1;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -186,7 +188,7 @@
             // 
             // metroStyleManager1
             // 
-            this.metroStyleManager1.Owner = null;
+            this.metroStyleManager1.Owner = this;
             // 
             // metroPanel1
             // 
@@ -206,6 +208,7 @@
             // 
             // pictureBox2
             // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.pictureBox2, true);
             this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.image1;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -312,5 +315,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroPanel metroPanel3;
+        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
     }
 }

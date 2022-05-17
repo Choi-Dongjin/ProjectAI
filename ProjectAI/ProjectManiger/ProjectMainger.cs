@@ -2016,6 +2016,11 @@ namespace ProjectAI
                             imageViewer.pictureBox2.Image.Dispose();
                             imageViewer.pictureBox2.Image = null;
                         }
+                        if (imageViewer.cadOverView1.pictureBox1.Image != null)
+                        {
+                            imageViewer.cadOverView1.pictureBox1.Image.Dispose();
+                            imageViewer.cadOverView1.pictureBox1.Image = null;
+                        }
 
                         imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
 
@@ -2027,9 +2032,14 @@ namespace ProjectAI
                             if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"] != null)
                             {
                                 string CADImageName = Path.GetFileName(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
-                                if (this.CADImageFileCheck(CADImageName, CADImageFolder))
-                                    imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
 
+                                if (imageViewer.cadOverView1.Visible == false)
+                                {
+                                    if (this.CADImageFileCheck(CADImageName, CADImageFolder))
+                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                }
+                                else if (imageViewer.cadOverView1.Visible == true)    
+                                    imageViewer.cadOverView1.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
                             }
                         }
                     }
