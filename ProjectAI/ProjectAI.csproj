@@ -251,12 +251,6 @@
     <Compile Include="MainForms\UserContral\ImageView\CadImageViewer.Designer.cs">
       <DependentUpon>CadImageViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForms\UserContral\ImageView\CadOverView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainForms\UserContral\ImageView\CadOverView.Designer.cs">
-      <DependentUpon>CadOverView.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForms\UserContral\ImageList\GridViewImageList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -411,9 +405,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageView\CadImageViewer.resx">
       <DependentUpon>CadImageViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForms\UserContral\ImageView\CadOverView.resx">
-      <DependentUpon>CadOverView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.resx">
       <DependentUpon>SimpleTwoImageViewer.cs</DependentUpon>
