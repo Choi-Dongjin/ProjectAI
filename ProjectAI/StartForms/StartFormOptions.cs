@@ -40,6 +40,8 @@ namespace ProjectAI.StartForms
 
         private readonly JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
 
+        private Size defaultSize = new Size(600, 300);
+
         public StartFormOptions()
         {
             InitializeComponent();
@@ -47,6 +49,10 @@ namespace ProjectAI.StartForms
             this.StyleManager = this.styleManagerStartFormOptions;
             // Forms Calss formStyleManagerHandler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+
+            // 초기 UI SetUP
+            this.Size = this.defaultSize;
+            this.ActiveControl = this.btnMstartOptionsOK;
         }
 
         private void StartFormOptionsLoad(object sender, EventArgs e)
@@ -138,6 +144,47 @@ namespace ProjectAI.StartForms
                     jsonDataManiger.PushJsonObject(folderPath, HardwareInformation.systemHardwareInfoJObject);
                 }
             }
+        }
+
+        private void TogMgpuSettingCheckedChanged(object sender, EventArgs e)
+        {
+            if (togMgpuSetting.Checked)
+            {
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning);
+                if (customMessageBoxOKCancel.ShowDialog().Equals(DialogResult.OK))
+                {
+                    this.GpuSetting();
+                    this.Size = new Size(600, this.defaultSize.Height + this.tlpgpuSetting.Height);
+                }
+                else
+                {
+                    this.togMgpuSetting.Checked = false;
+                }
+            }
+            else
+            {
+                this.Size = this.defaultSize;
+            }
+        }
+
+        private void GpuSetting()
+        {
+            this.tlpSystemOption.RowStyles[5].Height = 210;
+            HardwareInformation.GetHardwareInformation();
+            foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
+            {
+                this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+            }
+        }
+
+        private void CmbMdetectedGPUSelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(this.cmbMdetectedGPU.Text);
+            this.lblMGpuName.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["Name"].ToString();
+            this.txtMAdapterRAM.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["AdapterRAM"].ToString();
+            this.lblMAdapterDACType.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["AdapterDACType"].ToString();
+            this.lblMDriverVersion.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["DriverVersion"].ToString();
+            this.lblVideoProcessor.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["VideoProcessor"].ToString();
         }
     }
 }

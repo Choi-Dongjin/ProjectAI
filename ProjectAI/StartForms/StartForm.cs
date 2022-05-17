@@ -69,8 +69,6 @@ namespace ProjectAI
         private void StartFormShown(object sender, EventArgs e)
         {
             HardwareInformation.GetHardwareInformation();
-            Console.WriteLine(HardwareInformation.systemHardwareInfoJObject.ToString());
-            OpenFileDialog openFileDialog = new OpenFileDialog();
         }
 
         /// <summary>
@@ -193,6 +191,8 @@ namespace ProjectAI
 
             IfStartOptionsChangeComponet(); //Componet 변경사항 적용
             jsonDataManiger.PushJsonObject(ProgramVariables.m_programOptionsFileJsonPath, programOptionsJObject); // Json 파일 저장
+
+            this.ActiveControl = this.buttonStart;
         }
 
         // Componet 변경사항 확인 적용

@@ -1057,6 +1057,7 @@ namespace ProjectAI.TrainForms
             string processSetImagePath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "Image");
 
             // 학습에 사용되는 이미지 리스트 만들기
+            
             List<string> imagePathList = new List<string>();
             List<string> imageSetPathList = new List<string>();
 

@@ -61,6 +61,8 @@ namespace ProjectAI.MainForms
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
 
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+
+            this.ActiveControl = this.btnMOK;
         }
 
         /// <summary>

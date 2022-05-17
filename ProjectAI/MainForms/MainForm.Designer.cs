@@ -536,7 +536,7 @@
             // 
             this.classToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.product_development2;
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(109, 30);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
             // 
@@ -544,7 +544,7 @@
             // 
             this.trainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.deeplearning_view;
             this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
-            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(109, 30);
+            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(188, 30);
             this.trainToolStripMenuItem1.Text = "Train";
             this.trainToolStripMenuItem1.Click += new System.EventHandler(this.TrainToolStripMenuItem1Click);
             // 

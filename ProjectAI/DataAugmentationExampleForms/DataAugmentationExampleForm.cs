@@ -30,6 +30,8 @@ namespace ProjectAI.DataAugmentationExampleForms
             //FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance(); // Forms 관리 Class
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+
+            this.ActiveControl = this.btnMstartOptionsOK;
         }
 
         /// <summary>

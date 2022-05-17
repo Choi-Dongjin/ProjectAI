@@ -44,7 +44,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(367, 450);
             this.Name = "CustomIOManigerFoem";
-            this.Text = "CustomIOManigerFoem";
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
 

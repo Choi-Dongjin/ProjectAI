@@ -124,6 +124,7 @@
             this.ClientSize = new System.Drawing.Size(740, 550);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DataAugmentationExampleForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "1";
             this.Load += new System.EventHandler(this.DataAugmentationExampleFormLoad);
             this.Shown += new System.EventHandler(this.DataAugmentationExampleFormShown);

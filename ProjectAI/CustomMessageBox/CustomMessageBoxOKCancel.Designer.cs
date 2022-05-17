@@ -1,6 +1,6 @@
-﻿namespace ProjectAI
+﻿namespace ProjectAI.CustomMessageBox
 {
-    partial class Form1
+    partial class CustomMessageBoxOKCancel
     {
         /// <summary>
         /// Required designer variable.
@@ -29,18 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomMessageBoxOKCancel));
+            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnMOK = new MetroFramework.Controls.MetroButton();
-            this.btnMC = new MetroFramework.Controls.MetroButton();
+            this.btnMCancel = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
-            this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = this;
             // 
             // tableLayoutPanel1
             // 
@@ -50,7 +54,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnMOK, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnMC, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnMCancel, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 60);
@@ -60,7 +64,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(280, 100);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // pictureBox1
             // 
@@ -79,24 +83,28 @@
             this.btnMOK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnMOK.Location = new System.Drawing.Point(79, 68);
             this.btnMOK.Name = "btnMOK";
             this.btnMOK.Size = new System.Drawing.Size(96, 29);
             this.btnMOK.TabIndex = 0;
             this.btnMOK.Text = "OK";
             this.btnMOK.UseSelectable = true;
+            this.btnMOK.Click += new System.EventHandler(this.BtnMOKClick);
             // 
-            // btnMC
+            // btnMCancel
             // 
-            this.btnMC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnMCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMC.Location = new System.Drawing.Point(181, 68);
-            this.btnMC.Name = "btnMC";
-            this.btnMC.Size = new System.Drawing.Size(96, 29);
-            this.btnMC.TabIndex = 0;
-            this.btnMC.Text = "Cancel";
-            this.btnMC.UseSelectable = true;
+            this.btnMCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnMCancel.Location = new System.Drawing.Point(181, 68);
+            this.btnMCancel.Name = "btnMCancel";
+            this.btnMCancel.Size = new System.Drawing.Size(96, 29);
+            this.btnMCancel.TabIndex = 0;
+            this.btnMCancel.Text = "Cancel";
+            this.btnMCancel.UseSelectable = true;
+            this.btnMCancel.Click += new System.EventHandler(this.BtnMCancelClick);
             // 
             // metroLabel1
             // 
@@ -110,34 +118,31 @@
             this.metroLabel1.Text = "metroLabel1";
             this.metroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // metroStyleManager1
-            // 
-            this.metroStyleManager1.Owner = this;
-            // 
-            // Form1
+            // CustomMessageBoxOKCancel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(320, 180);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "CustomMessageBoxOKCancel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "CustomMessageBoxOKCancel";
+            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private MetroFramework.Controls.MetroButton btnMOK;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        private MetroFramework.Controls.MetroButton btnMC;
+        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private MetroFramework.Controls.MetroButton btnMOK;
+        private MetroFramework.Controls.MetroButton btnMCancel;
         private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }

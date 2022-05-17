@@ -18,7 +18,7 @@ namespace ProjectAI
         /// <summary>
         /// 학습 Batch Size
         /// </summary>
-        public static string m_batchSize = "2";
+        public static string m_batchSize = "16";
 
         public static JObject systemHardwareInfoJObject;
 
@@ -35,6 +35,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("OS 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("Computer Name  -  " + obj["CSName"].ToString());
@@ -47,8 +49,6 @@ namespace ProjectAI
                     Console.WriteLine("OSType  -  " + obj["OSType"]);
                     Console.WriteLine("OtherTypeDescription  -  " + obj["OtherTypeDescription"]);
                     Console.WriteLine("ServicePackMajorVersion  -  " + obj["ServicePackMajorVersion"]);
-
-
 
                     JObject jObject = new JObject
                     {
@@ -63,10 +63,10 @@ namespace ProjectAI
                         ["OtherTypeDescription"] = obj["OtherTypeDescription"]?.ToString(),
                         ["ServicePackMajorVersion"] = obj["ServicePackMajorVersion"]?.ToString()
                     };
-
-                    HardwareInformation.systemHardwareInfoJObject.Add($"OS_{number}", jObject);
+                    infoJObject.Add($"OS_{number}", jObject);
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject.Add($"OS", infoJObject);
             }
 
             // Processors 정보 얻기
@@ -75,6 +75,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("Processors 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("NumberOfProcessors  -  " + obj["NumberOfProcessors"]);
@@ -87,9 +89,11 @@ namespace ProjectAI
                         ["NumberOfLogicalProcessors"] = obj["NumberOfLogicalProcessors"]?.ToString(),
                         ["PCSystemType"] = obj["PCSystemType"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"Processors_{number}"] = jObject;
+                    
+                    infoJObject.Add($"Processors_{number}", jObject);
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject[$"Processors"] = infoJObject;
             }
 
             //CPU 정보 얻기
@@ -98,6 +102,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("CPU 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("NumberOfLogicalProcessors: {0}", Environment.ProcessorCount);
@@ -124,9 +130,10 @@ namespace ProjectAI
                         ["DataWidth"] = obj["DataWidth"]?.ToString(),
                         ["Family"] = obj["Family"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"CPU_{number}"] = jObject;
+                    infoJObject[$"CPU_{number}"] = jObject;
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject["CPU"] = infoJObject;
             }
 
             //GRAPHIC 카드 정보 얻기
@@ -135,11 +142,19 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("GRAPHIC 카드 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
+                    string sAdapterRAM = obj["AdapterRAM"]?.ToString();
+                    if (long.TryParse(sAdapterRAM, out long lAdapterRAM))
+                    {
+                        sAdapterRAM = CustomIOMainger.FormatBytesGB(lAdapterRAM);
+                    }
+
                     Console.WriteLine("Name  -  " + obj["Name"]);
                     Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
-                    Console.WriteLine("AdapterRAM  -  " + obj["AdapterRAM"]);
+                    Console.WriteLine("AdapterRAM  -  " + sAdapterRAM);
                     Console.WriteLine("AdapterDACType  -  " + obj["AdapterDACType"]);
                     Console.WriteLine("Monochrome  -  " + obj["Monochrome"]);
                     Console.WriteLine("InstalledDisplayDrivers  -  " + obj["InstalledDisplayDrivers"]);
@@ -152,7 +167,7 @@ namespace ProjectAI
                     {
                         ["Name"] = obj["Name"]?.ToString(),
                         ["DeviceID"] = obj["DeviceID"]?.ToString(),
-                        ["AdapterRAM"] = obj["AdapterRAM"]?.ToString(),
+                        ["AdapterRAM"] = sAdapterRAM,
                         ["AdapterDACType"] = obj["AdapterDACType"]?.ToString(),
                         ["Monochrome"] = obj["Monochrome"]?.ToString(),
                         ["InstalledDisplayDrivers"] = obj["InstalledDisplayDrivers"]?.ToString(),
@@ -161,9 +176,10 @@ namespace ProjectAI
                         ["VideoArchitecture"] = obj["VideoArchitecture"]?.ToString(),
                         ["VideoMemoryType"] = obj["VideoMemoryType"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"GRAPHIC_{number}"] = jObject;
+                    infoJObject[$"GRAPHIC_{number}"] = jObject;
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject["GRAPHIC"] = infoJObject;
             }
 
             //메모리 정보 얻기
@@ -172,18 +188,24 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("//메모리 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
                 foreach (ManagementObject obj in win32CompSys.Get())
                 {
-                    string memName = obj["totalphysicalmemory"].ToString();
-                    Console.WriteLine(memName);
+                    string sTotalphysicalmemory = obj["totalphysicalmemory"]?.ToString();
+                    if (long.TryParse(sTotalphysicalmemory, out long lTotalphysicalmemory))
+                    {
+                        sTotalphysicalmemory = CustomIOMainger.FormatBytesGB(lTotalphysicalmemory);
+                    }
+                    Console.WriteLine(sTotalphysicalmemory);
 
                     JObject jObject = new JObject()
                     {
-                        ["totalphysicalmemory"] = obj["totalphysicalmemory"]?.ToString()
+                        ["totalphysicalmemory"] = sTotalphysicalmemory
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"MEMORY_{number}"] = jObject;
+                    infoJObject[$"MEMORY_{number}"] = jObject;
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject[$"MEMORY"] = infoJObject;
             }
         }
 

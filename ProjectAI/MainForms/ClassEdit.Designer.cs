@@ -228,6 +228,7 @@
             this.Name = "ClassEdit";
             this.Resizable = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ClassEdit";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClassEditFormClosing);
             this.Load += new System.EventHandler(this.ClassEditLoad);

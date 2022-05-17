@@ -34,6 +34,16 @@ namespace ProjectAI
             return "0 Bytes";
         }
 
+        public static string FormatBytesGB(long bytes)
+        {
+            const int scale = 1024;
+            for (int i = 0; i < 4; i++)
+            {
+                bytes /= scale;
+            }
+            return bytes.ToString();
+        }
+
         /// <summary>
         /// 폴더 유무 확인 및 생성 기존의 폴더가 있으면 true, 없으면 폴더를 만들고 false 반환
         /// </summary>

@@ -20,6 +20,8 @@ namespace ProjectAI
         {
             InitializeComponent();
             this.StyleManager = this.metroStyleManager1;
+
+            this.ActiveControl = this.btnMOK;
         }
 
         public void HderText(string text)
@@ -35,7 +37,7 @@ namespace ProjectAI
 
         public void Textee(string text)
         {
-            this.textBox1.Text = text;
+            //this.textBox1.Text = text;
         }
 
         public void SetMessageBox(MetroColorStyle metroColorStyle, MetroThemeStyle metroThemeStyle, string HderText, string text)

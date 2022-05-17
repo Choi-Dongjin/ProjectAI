@@ -261,13 +261,12 @@ namespace ProjectAI.MainForms
         {
             // this.gridImageList.DoubleBuffered(true);
             this.WorkSpaceEarlyDataSet();
+            this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
         }
 
         private void MainFormShown(object sender, EventArgs e)
         {
             this.MainFormCallUISeting();
-            this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
-
         }
 
         /// <summary>

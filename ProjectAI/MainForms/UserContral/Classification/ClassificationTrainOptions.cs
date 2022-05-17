@@ -291,7 +291,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
              * 2. Image Size
              */
             // Batch Size 설정
-            TrainOptionData.Add(PackingString($"batch_sz |{2}|"));
+            TrainOptionData.Add(PackingString($"batch_sz |{HardwareInformation.m_batchSize}|"));
             // Start Learning rate 설정
             TrainOptionData.Add(PackingString($"lr_0 |{1e-3}|"));
             // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
@@ -320,7 +320,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                  * 2. Image Size
                  */
                 // Batch Size 설정
-                ["int_BatchSize"] = "16",
+                ["int_BatchSize"] = HardwareInformation.m_batchSize,
                 // Start Learning rate 설정
                 ["double_StartLearningrate"] = "1e-3",
                 // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
