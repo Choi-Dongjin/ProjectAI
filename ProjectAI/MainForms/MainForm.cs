@@ -1009,20 +1009,16 @@ namespace ProjectAI.MainForms
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
                     #region 학습 Option Info 가져오기
-
                     JObject trainOptions = new JObject();
                     trainOptions = WorkSpaceData.m_activeProjectMainger.GetTrainInfo(trainOptions);
                     #endregion 학습 Option Info 가져오기
 
                     #region 학습 이미지 정보 가져오기
-
                     JObject trainImageData = new JObject();
-                    trainImageData = WorkSpaceData.m_activeProjectMainger.GetTrainDataClassification(trainImageData);
-
+                    trainImageData = WorkSpaceData.m_activeProjectMainger.GetTrainData(trainImageData);
                     #endregion 학습 이미지 정보 가져오기
 
                     #region 학습 정보 넣어주기
-
                     this.TrainForm.ClassificationPushTrainData(
                         (JObject)trainOptions.DeepClone(),
                         (JObject)trainImageData.DeepClone(),
@@ -1031,7 +1027,6 @@ namespace ProjectAI.MainForms
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString(),
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectName,
                         WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName);
-
                     #endregion 학습 정보 넣어주기
                 }
         }

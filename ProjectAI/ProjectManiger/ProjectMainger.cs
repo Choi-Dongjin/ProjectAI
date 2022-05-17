@@ -4009,6 +4009,7 @@ namespace ProjectAI
         {
             if (this.m_activeInnerProjectTask == "Classification")
             {
+                trainData = this.GetTrainDataClassification(trainData);
             }
             else if (this.m_activeInnerProjectTask == "Segmentation")
             {
@@ -4026,18 +4027,46 @@ namespace ProjectAI
         /// <returns></returns>
         public JObject GetTrainDataClassification(JObject trainData)
         {
-            foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
+            if (this.m_activeInnerProjectInputImageType.Equals("SingleImage"))
             {
-                if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
+                foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
                 {
-                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
+                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
                     {
-                        JObject jObject = new JObject
+                        if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
                         {
-                            ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
-                            ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
-                        };
-                        trainData[imageData.Name] = jObject;
+                            JObject jObject = new JObject
+                            {
+                                ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
+                                ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
+                            };
+                            trainData[imageData.Name] = jObject;
+                        }
+                    }
+                }
+            }
+            else if (this.m_activeInnerProjectInputImageType.Equals("MultiImage"))
+            {
+
+            }
+            else if (this.m_activeInnerProjectInputImageType.Equals("CADImage"))
+            {
+                foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
+                {
+                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
+                    {
+                        if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
+                        {
+                            if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]["CADImage"] != null)
+                            {
+                                JObject jObject = new JObject
+                                {
+                                    ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
+                                    ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
+                                };
+                                trainData[imageData.Name] = jObject;
+                            }
+                        }
                     }
                 }
             }
