@@ -35,7 +35,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.OverlayViewCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.OriginImageLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.cadOverView1 = new ProjectAI.MainForms.UserContral.ImageView.CadOverView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.TrackbarNumber = new System.Windows.Forms.Label();
+            this.TrackBar = new MetroFramework.Controls.MetroTrackBar();
             this.CADImageLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
@@ -45,6 +47,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +83,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.Controls.Add(this.cadOverView1);
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel2.Controls.Add(this.CADImageLabel);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Size = new System.Drawing.Size(826, 648);
@@ -121,14 +124,46 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // cadOverView1
+            // tableLayoutPanel1
             // 
-            this.cadOverView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cadOverView1.Location = new System.Drawing.Point(0, 0);
-            this.cadOverView1.Name = "cadOverView1";
-            this.cadOverView1.Size = new System.Drawing.Size(419, 618);
-            this.cadOverView1.TabIndex = 2;
-            this.cadOverView1.Visible = false;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.TrackbarNumber, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.TrackBar, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 588);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(419, 30);
+            this.tableLayoutPanel1.TabIndex = 4;
+            this.tableLayoutPanel1.Visible = false;
+            // 
+            // TrackbarNumber
+            // 
+            this.TrackbarNumber.AutoSize = true;
+            this.TrackbarNumber.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TrackbarNumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrackbarNumber.Location = new System.Drawing.Point(3, 0);
+            this.TrackbarNumber.Name = "TrackbarNumber";
+            this.TrackbarNumber.Size = new System.Drawing.Size(44, 30);
+            this.TrackbarNumber.TabIndex = 3;
+            this.TrackbarNumber.Text = "0.50";
+            this.TrackbarNumber.Visible = false;
+            // 
+            // TrackBar
+            // 
+            this.TrackBar.BackColor = System.Drawing.Color.Transparent;
+            this.TrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TrackBar.Location = new System.Drawing.Point(53, 3);
+            this.TrackBar.Name = "TrackBar";
+            this.TrackBar.Size = new System.Drawing.Size(363, 24);
+            this.TrackBar.TabIndex = 2;
+            this.TrackBar.Text = "metroTrackBar1";
+            this.TrackBar.Visible = false;
+            this.TrackBar.ValueChanged += new System.EventHandler(this.TrackBarValueChanged);
             // 
             // CADImageLabel
             // 
@@ -171,6 +206,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.ResumeLayout(false);
@@ -186,7 +223,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.SplitContainer splitContainer1;
-        private MetroFramework.Controls.MetroCheckBox OverlayViewCheckBox;
-        public CadOverView cadOverView1;
+        public MetroFramework.Controls.MetroCheckBox OverlayViewCheckBox;
+        private MetroFramework.Controls.MetroTrackBar TrackBar;
+        private System.Windows.Forms.Label TrackbarNumber;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
