@@ -32,13 +32,13 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.components = new System.ComponentModel.Container();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.OriginImage = new System.Windows.Forms.Label();
+            this.OverlayViewCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.OriginImageLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.CADImage = new System.Windows.Forms.Label();
+            this.cadOverView1 = new ProjectAI.MainForms.UserContral.ImageView.CadOverView();
+            this.CADImageLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
-            this.OverlayView = new MetroFramework.Controls.MetroCheckBox();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -73,30 +73,42 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.AutoScroll = true;
-            this.splitContainer1.Panel1.Controls.Add(this.OverlayView);
-            this.splitContainer1.Panel1.Controls.Add(this.OriginImage);
+            this.splitContainer1.Panel1.Controls.Add(this.OverlayViewCheckBox);
+            this.splitContainer1.Panel1.Controls.Add(this.OriginImageLabel);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.Controls.Add(this.CADImage);
+            this.splitContainer1.Panel2.Controls.Add(this.cadOverView1);
+            this.splitContainer1.Panel2.Controls.Add(this.CADImageLabel);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Size = new System.Drawing.Size(826, 648);
             this.splitContainer1.SplitterDistance = 403;
             this.splitContainer1.TabIndex = 2;
             // 
-            // OriginImage
+            // OverlayViewCheckBox
             // 
-            this.OriginImage.BackColor = System.Drawing.Color.Tomato;
-            this.OriginImage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.OriginImage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OriginImage.Location = new System.Drawing.Point(0, 618);
-            this.OriginImage.Name = "OriginImage";
-            this.OriginImage.Size = new System.Drawing.Size(403, 30);
-            this.OriginImage.TabIndex = 1;
-            this.OriginImage.Text = "OriginImage";
-            this.OriginImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.OverlayViewCheckBox.AutoSize = true;
+            this.OverlayViewCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.OverlayViewCheckBox.Name = "OverlayViewCheckBox";
+            this.OverlayViewCheckBox.Size = new System.Drawing.Size(91, 15);
+            this.OverlayViewCheckBox.TabIndex = 2;
+            this.OverlayViewCheckBox.Text = "Overlay View";
+            this.OverlayViewCheckBox.UseSelectable = true;
+            this.OverlayViewCheckBox.CheckedChanged += new System.EventHandler(this.OverlayView_CheckedChanged);
+            // 
+            // OriginImageLabel
+            // 
+            this.OriginImageLabel.BackColor = System.Drawing.Color.Tomato;
+            this.OriginImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.OriginImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OriginImageLabel.Location = new System.Drawing.Point(0, 618);
+            this.OriginImageLabel.Name = "OriginImageLabel";
+            this.OriginImageLabel.Size = new System.Drawing.Size(403, 30);
+            this.OriginImageLabel.TabIndex = 1;
+            this.OriginImageLabel.Text = "OriginImage";
+            this.OriginImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
             // 
@@ -109,17 +121,26 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // CADImage
+            // cadOverView1
             // 
-            this.CADImage.BackColor = System.Drawing.Color.Lime;
-            this.CADImage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CADImage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CADImage.Location = new System.Drawing.Point(0, 618);
-            this.CADImage.Name = "CADImage";
-            this.CADImage.Size = new System.Drawing.Size(419, 30);
-            this.CADImage.TabIndex = 1;
-            this.CADImage.Text = "CADImage";
-            this.CADImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cadOverView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cadOverView1.Location = new System.Drawing.Point(0, 0);
+            this.cadOverView1.Name = "cadOverView1";
+            this.cadOverView1.Size = new System.Drawing.Size(419, 618);
+            this.cadOverView1.TabIndex = 2;
+            this.cadOverView1.Visible = false;
+            // 
+            // CADImageLabel
+            // 
+            this.CADImageLabel.BackColor = System.Drawing.Color.Lime;
+            this.CADImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CADImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CADImageLabel.Location = new System.Drawing.Point(0, 618);
+            this.CADImageLabel.Name = "CADImageLabel";
+            this.CADImageLabel.Size = new System.Drawing.Size(419, 30);
+            this.CADImageLabel.TabIndex = 1;
+            this.CADImageLabel.Text = "CADImage";
+            this.CADImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
             // 
@@ -134,17 +155,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // 
             // metroStyleManager1
             // 
-            this.metroStyleManager1.Owner = null;
-            // 
-            // OverlayView
-            // 
-            this.OverlayView.AutoSize = true;
-            this.OverlayView.Location = new System.Drawing.Point(3, 3);
-            this.OverlayView.Name = "OverlayView";
-            this.OverlayView.Size = new System.Drawing.Size(91, 15);
-            this.OverlayView.TabIndex = 2;
-            this.OverlayView.Text = "Overlay View";
-            this.OverlayView.UseSelectable = true;
+            this.metroStyleManager1.Owner = this;
             // 
             // CadImageViewer
             // 
@@ -169,13 +180,13 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         #endregion
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private System.Windows.Forms.Label OriginImage;
-        private System.Windows.Forms.Label CADImage;
+        private System.Windows.Forms.Label OriginImageLabel;
+        private System.Windows.Forms.Label CADImageLabel;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
         public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.SplitContainer splitContainer1;
-        private MetroFramework.Controls.MetroCheckBox OverlayView;
+        private MetroFramework.Controls.MetroCheckBox OverlayViewCheckBox;
+        public CadOverView cadOverView1;
     }
 }

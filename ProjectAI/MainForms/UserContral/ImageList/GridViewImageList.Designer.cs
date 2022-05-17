@@ -272,7 +272,7 @@
             this.imageSetInfoResetToolStripMenuItem,
             this.toolStripSeparator15});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 376);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 398);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
@@ -295,6 +295,7 @@
             this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
             this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
             this.imageSelectToolStripMenuItem.Text = "Image Select";
+            this.imageSelectToolStripMenuItem.Click += new System.EventHandler(this.ImageSelectToolStripMenuItemClick);
             // 
             // imageFolderAddToolStripMenuItem1
             // 

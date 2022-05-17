@@ -32,9 +32,13 @@
             this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
+            this.TrackBar = new MetroFramework.Controls.MetroTrackBar();
+            this.TrackbarNumber = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
+            this.metroPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,6 +48,7 @@
             // 
             // metroPanel1
             // 
+            this.metroPanel1.Controls.Add(this.metroPanel2);
             this.metroPanel1.Controls.Add(this.pictureBox1);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbarBarColor = true;
@@ -57,9 +62,47 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
+            // metroPanel2
+            // 
+            this.metroPanel2.Controls.Add(this.TrackBar);
+            this.metroPanel2.Controls.Add(this.TrackbarNumber);
+            this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.metroPanel2.HorizontalScrollbarBarColor = true;
+            this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.HorizontalScrollbarSize = 10;
+            this.metroPanel2.Location = new System.Drawing.Point(0, 525);
+            this.metroPanel2.Name = "metroPanel2";
+            this.metroPanel2.Size = new System.Drawing.Size(685, 23);
+            this.metroPanel2.TabIndex = 3;
+            this.metroPanel2.VerticalScrollbarBarColor = true;
+            this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.VerticalScrollbarSize = 10;
+            // 
+            // TrackBar
+            // 
+            this.TrackBar.BackColor = System.Drawing.Color.Transparent;
+            this.TrackBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.TrackBar.Location = new System.Drawing.Point(40, 0);
+            this.TrackBar.Name = "TrackBar";
+            this.TrackBar.Size = new System.Drawing.Size(645, 23);
+            this.TrackBar.TabIndex = 0;
+            this.TrackBar.Text = "metroTrackBar1";
+            this.TrackBar.ValueChanged += new System.EventHandler(this.TrackBarValueChanged);
+            // 
+            // TrackbarNumber
+            // 
+            this.TrackbarNumber.AutoSize = true;
+            this.TrackbarNumber.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TrackbarNumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrackbarNumber.Location = new System.Drawing.Point(0, 0);
+            this.TrackbarNumber.Name = "TrackbarNumber";
+            this.TrackbarNumber.Size = new System.Drawing.Size(40, 21);
+            this.TrackbarNumber.TabIndex = 1;
+            this.TrackbarNumber.Text = "0.50";
+            // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2;
+            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
@@ -77,6 +120,8 @@
             this.Size = new System.Drawing.Size(685, 548);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.metroPanel1.ResumeLayout(false);
+            this.metroPanel2.ResumeLayout(false);
+            this.metroPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -86,6 +131,9 @@
         private MetroFramework.Components.MetroStyleExtender metroStyleExtender1;
         private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        private MetroFramework.Controls.MetroTrackBar TrackBar;
+        private System.Windows.Forms.Label TrackbarNumber;
+        private MetroFramework.Controls.MetroPanel metroPanel2;
     }
 }
