@@ -164,16 +164,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 WorkSpaceData.m_activeProjectMainger.ImageFilesAdding(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
-        private void ImageSelectToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            if (WorkSpaceData.m_activeProjectMainger != null)
-                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                {
-                    DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
-                    string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
-                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
-                }
-        }
 
         private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
@@ -248,5 +238,24 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 }
         }
 
+        //CAD 이미지가 들어가 있는 경우 CADImageForm
+        private void CADImageSelectToolStripMenuItemCADImageClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                {
+                    DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                    string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
+                }
+        }
+
+        //CAD 이미지를 새로 넣을 경우 CADImageForm
+        private void CADImageSelectToolStripMenuItemInitImageClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADInitImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
     }
 }

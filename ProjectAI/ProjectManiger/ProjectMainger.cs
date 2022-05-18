@@ -2448,14 +2448,45 @@ namespace ProjectAI
 
         #region CAD Image 관련 함수
         /// <summary>
-        /// CadImageSelect 폼을 띄우는 함수
+        /// CadImageSelect - CAD Image Select 폼을 띄우는 함수
+        /// </summary>
+        public void CADInitImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
+        {
+            ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
+
+            if (cadImageSelect.ShowDialog() == DialogResult.OK)
+            {
+                this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);
+                this.CADImageViewerPrintImage(cadImageSelect);
+            }
+            else //Form Cancel
+            {
+                if (cadImageSelect.pictureBox1.Image != null)
+                {
+                    cadImageSelect.pictureBox1.Image.Dispose();
+                    cadImageSelect.pictureBox1.Image = null;
+                }
+                if (cadImageSelect.pictureBox2.Image != null)
+                {
+                    cadImageSelect.pictureBox2.Image.Dispose();
+                    cadImageSelect.pictureBox2.Image = null;
+                }
+                cadImageSelect.Close();
+                cadImageSelect.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// CadImageSelect - CAD Image Select 폼을 띄우는 함수
         /// </summary>
         public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string imageName)
         {
             ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
-            cadImageSelect.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-            if (!this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"].ToString().Equals("{}"))
-                cadImageSelect.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+            if (this.m_activeProjectDataImageListDataJObject.ToString().Contains(imageName))
+                cadImageSelect.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+            if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"].ToString().Contains(this.m_activeInnerProjectName))
+                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName].ToString().Contains("CADImage"))
+                    cadImageSelect.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
             if (cadImageSelect.ShowDialog() == DialogResult.OK)
             {
                 this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);
