@@ -2450,11 +2450,12 @@ namespace ProjectAI
         /// <summary>
         /// CadImageSelect 폼을 띄우는 함수
         /// </summary>
-        public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string cellSelectName)
+        public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string imageName)
         {
             ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
-            cadImageSelect.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, cellSelectName));
-
+            cadImageSelect.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+            if (!this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"].ToString().Equals("{}"))
+                cadImageSelect.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
             if (cadImageSelect.ShowDialog() == DialogResult.OK)
             {
                 this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);

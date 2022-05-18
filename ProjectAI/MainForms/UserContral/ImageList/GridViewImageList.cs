@@ -13,7 +13,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 {
     public partial class GridViewImageList : UserControl
     {
-        private string cellSelectName;
         FormsManiger formsManiger = FormsManiger.GetInstance();
 
         public GridViewImageList()
@@ -170,12 +169,9 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
-                    if (this.gridImageList.SelectedRows.Count > 0)
-                    {
-                        DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
-                        cellSelectName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
-                    }
-                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, cellSelectName);
+                    DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                    string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
                 }
         }
 
