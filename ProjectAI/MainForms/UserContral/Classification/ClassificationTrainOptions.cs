@@ -2025,7 +2025,5 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
 
         }
-
-
     }
 }

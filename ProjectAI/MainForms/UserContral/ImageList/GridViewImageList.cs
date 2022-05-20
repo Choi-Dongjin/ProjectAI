@@ -65,6 +65,25 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             return imagePath;
         }
 
+        public string GetSelectImageName()
+        {
+            string imageName = null;
+            try
+            {
+                DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                imageName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+
+            }
+            return imageName;
+        }
+
         private int GetContralSize(double number)
         {
             int size = 30;
@@ -244,5 +263,27 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 }
         }
 
+        private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)
+        {
+            int size = 0;
+            for (int i = 0; i < this.gridImageList.Columns.Count; i++)
+            {
+                size += this.gridImageList.Columns[i].Width;
+            }
+            // Data Grid View Size 조정
+            if (ckbMdataGridViewAutoSize.Checked)
+            {
+                try
+                {
+                    MainForm mainForm = MainForm.GetInstance();
+                    if (mainForm.splitContainerImageAndImageList.Width - size > 0)
+                        mainForm.splitContainerImageAndImageList.SplitterDistance = mainForm.splitContainerImageAndImageList.Width - size;
+                }
+                catch
+                {
+
+                }
+            }
+        }
     }
 }

@@ -580,6 +580,10 @@ namespace ProjectAI
         /// 선택한 내부 모델 이름
         /// </summary>
         public string m_avtiveinnerModelsName;
+        /// <summary>
+        /// 히트맵 이미지 리스트
+        /// </summary>
+        public string[] m_activeInnerModelsHeatMapImageList;
 
         /*
          * m_activeProjectImageListJObject;
@@ -1295,8 +1299,9 @@ namespace ProjectAI
         /// </summary>
         public void ProjectUIRemove()
         {
-            ProjectIdleUIRemove();
-            InnerProjectUIRemove();
+            this.ProjectIdleUIRemove(); // UI 초기화
+            this.InnerProjectUIRemove(); // 내부 프로젝트 초기화
+            this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
 
             this.m_idelGridViewImageList.gridImageList.Rows.Clear();
 
@@ -1319,6 +1324,16 @@ namespace ProjectAI
             this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Clear();
             this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Clear();
             //#33
+        }
+
+        /// <summary>
+        /// 이전 Inner Project에서 사용된 Train Model 정보 초기화
+        /// </summary>
+        private void InnerProjectDataReset()
+        {
+            this.m_avtiveModelsName = null;
+            this.m_avtiveinnerModelsName = null;
+            this.m_activeInnerModelsHeatMapImageList = null;
         }
 
         /// <summary>
@@ -1637,10 +1652,10 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString();
                     this.m_activeInnerProjectInputImageType = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString();
 
-                        bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
 
                     #region panelTrainOptions
                     // panelTrainOptions 설정
@@ -1787,8 +1802,9 @@ namespace ProjectAI
 
                     #endregion ImageViewer
 
-                    this.ProjectIdleUIRemove(); // IdleUI 삭제
-                                                // panelTrainOptions 설정
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제 // panelTrainOptions 설정
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
+
                     #region 컨트롤 추가
                     this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
@@ -1825,6 +1841,7 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = "Segmentation";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
                 {
@@ -1832,6 +1849,7 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = "ObjectDetection";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
                 }
             }
         }
@@ -1975,10 +1993,9 @@ namespace ProjectAI
                                 {
                                     try
                                     {
-                                        string geatMapPath = Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
-                                        string[] heatmapImageArray = CustomIOMainger.DirFileSerch(geatMapPath, "Name").ToArray();
-                                        string strFindValue2 = Array.Find(heatmapImageArray, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
-                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(geatMapPath, strFindValue2));
+                                        string heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
+                                        string heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
+                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
                                     }
                                     catch (Exception ex)
                                     {
@@ -2034,8 +2051,20 @@ namespace ProjectAI
                                     if (this.CADImageFileCheck(CADImageName, CADImageFolder))
                                         imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
                                 }
-                                else if (imageViewer.OverlayViewCheckBox.Checked == true)    
-                                    imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+                                else if (imageViewer.OverlayViewCheckBox.Checked == true)
+                                {
+                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+
+                                    string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
+                                    string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
+
+                                    Bitmap orignaBitmapImagel = CustomIOMainger.LoadBitmap(orignalImagePath);
+                                    Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
+
+                                    Bitmap overlayBitmapImage = imageViewer.OverlayImagePrint(orignaBitmapImagel, cadBitmapImage);
+                                    imageViewer.pictureBox2.Image = overlayBitmapImage;
+                                }
+                                   
                             }
                         }
                     }
@@ -2044,6 +2073,10 @@ namespace ProjectAI
                 {
                     this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
                 }
+            }
+            else
+            {
+                this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
             }
         }
         

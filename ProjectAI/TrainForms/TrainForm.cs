@@ -3604,6 +3604,9 @@ namespace ProjectAI.TrainForms
 
                 WorkSpaceData.m_activeProjectMainger.m_avtiveModelsName = selectModelName;
                 WorkSpaceData.m_activeProjectMainger.m_avtiveinnerModelsName = innerModelList[e.RowIndex];
+
+                string heatMapPath = System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModel, WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName, selectModelName, "heatmap", innerModelList[e.RowIndex]);
+                WorkSpaceData.m_activeProjectMainger.m_activeInnerModelsHeatMapImageList = CustomIOMainger.DirFileSerch(heatMapPath, "Name").ToArray();
             }
         }
     }

@@ -536,7 +536,7 @@
             // 
             this.classToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.product_development2;
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(109, 30);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItemClick);
             // 
@@ -544,7 +544,7 @@
             // 
             this.trainToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.deeplearning_view;
             this.trainToolStripMenuItem1.Name = "trainToolStripMenuItem1";
-            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(188, 30);
+            this.trainToolStripMenuItem1.Size = new System.Drawing.Size(109, 30);
             this.trainToolStripMenuItem1.Text = "Train";
             this.trainToolStripMenuItem1.Click += new System.EventHandler(this.TrainToolStripMenuItem1Click);
             // 
@@ -562,7 +562,7 @@
             // 
             this.trainToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.deep_learning;
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
             // 
@@ -570,14 +570,14 @@
             // 
             this.changeStyleToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.memphis_style;
             this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
-            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
             this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
             this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
             // 
             // hiddenToolStripMenuItem
             // 
             this.hiddenToolStripMenuItem.Name = "hiddenToolStripMenuItem";
-            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
             this.hiddenToolStripMenuItem.Text = "Hidden";
             this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
             // 

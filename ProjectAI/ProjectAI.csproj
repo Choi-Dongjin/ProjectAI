@@ -42,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -257,6 +258,12 @@
     <Compile Include="MainForms\UserContral\ImageList\GridViewImageList.Designer.cs">
       <DependentUpon>GridViewImageList.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\imageViewerInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainForms\UserContral\ImageView\imageViewerInfo.Designer.cs">
+      <DependentUpon>imageViewerInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -405,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageView\CadImageViewer.resx">
       <DependentUpon>CadImageViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForms\UserContral\ImageView\imageViewerInfo.resx">
+      <DependentUpon>imageViewerInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\UserContral\ImageView\SimpleTwoImageViewer.resx">
       <DependentUpon>SimpleTwoImageViewer.cs</DependentUpon>

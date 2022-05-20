@@ -99,18 +99,19 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.OverlayViewCheckBox.TabIndex = 2;
             this.OverlayViewCheckBox.Text = "Overlay View";
             this.OverlayViewCheckBox.UseSelectable = true;
-            this.OverlayViewCheckBox.CheckedChanged += new System.EventHandler(this.OverlayView_CheckedChanged);
+            this.OverlayViewCheckBox.CheckedChanged += new System.EventHandler(this.OverlayViewCheckedChanged);
             // 
             // OriginImageLabel
             // 
             this.OriginImageLabel.BackColor = System.Drawing.Color.Tomato;
             this.OriginImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.OriginImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OriginImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OriginImageLabel.Location = new System.Drawing.Point(0, 618);
             this.OriginImageLabel.Name = "OriginImageLabel";
             this.OriginImageLabel.Size = new System.Drawing.Size(403, 30);
             this.OriginImageLabel.TabIndex = 1;
-            this.OriginImageLabel.Text = "OriginImage";
+            this.OriginImageLabel.Text = "Origin Image";
             this.OriginImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
@@ -169,12 +170,13 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // 
             this.CADImageLabel.BackColor = System.Drawing.Color.Lime;
             this.CADImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CADImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CADImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CADImageLabel.Location = new System.Drawing.Point(0, 618);
             this.CADImageLabel.Name = "CADImageLabel";
             this.CADImageLabel.Size = new System.Drawing.Size(419, 30);
             this.CADImageLabel.TabIndex = 1;
-            this.CADImageLabel.Text = "CADImage";
+            this.CADImageLabel.Text = "CAD Image";
             this.CADImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
