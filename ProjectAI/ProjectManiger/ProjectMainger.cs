@@ -1726,7 +1726,7 @@ namespace ProjectAI
                         // CadImage(button.Name); //바로 아래 region
                         ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
 
-                        gridViewImageList.cmsMImageListToolKit.Items[2].Visible = true;
+                        gridViewImageList.cmsMImageListToolKit.Items[4].Visible = true;
 
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
