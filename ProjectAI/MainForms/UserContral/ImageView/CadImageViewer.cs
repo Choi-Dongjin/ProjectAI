@@ -111,8 +111,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     return;
                 }
                 this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-               CustomImageProcess.DeltaE(this.originImage, CADImage);
-              //  Console.WriteLine("HI");
+                //CustomImageProcess.Getssim(this.originImage, CADImage); //Scalar 값
+                //double psnr = CustomImageProcess.OverlayImageCompare(this.originImage, CADImage);
             }
             else
                 this.pictureBox2.Image = null;

@@ -28,7 +28,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="OverlayImage"></param>
         /// <param name="OriginOverlayImage"></param>
         /// <returns></returns>
-        public static Mat Getssim(Mat OverlayImage, Mat OriginOverlayImage)
+        public static Scalar Getssim(Mat OverlayImage, Mat OriginOverlayImage)
         {
             const double C1 = 6.5025, C2 = 58.5225;
             MatType d = MatType.CV_32F;
@@ -76,11 +76,12 @@ namespace ProjectAI.ProjectManiger
             Cv2.Divide(t3, t1, ssim_map); // ssim_map = t3/t1
 
             Scalar mssim = Cv2.Mean(ssim_map);
-
+            Console.Write("ssim");
+            Console.WriteLine(mssim);
             //SSIMResult result = new SSIMResult();
             //result.diff = ssim_map; // 두 사진의 차이
             //result.mssim = mssim; // BGRA의 4개 채널의 차이값으로 0-1, 1에 가까울수록 가까움
-            return ssim_map;
+            return mssim;
         }
 
         /// <summary>
