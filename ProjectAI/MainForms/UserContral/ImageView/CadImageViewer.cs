@@ -91,21 +91,17 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.imgName = imageName;
             this.CADImgName = CADImageName;
             this.CADImgFolder = CADImageFolder;
-            try
-            {
-                this.originImage = Cv2.ImRead(Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectImage, imageName), ImreadModes.AnyDepth | ImreadModes.AnyColor);
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-                return;
-            }
-            this.CADImage = new Mat(originImage.Size(), MatType.CV_8UC3);
-            this.OverlayImage = new Mat(originImage.Size(), MatType.CV_8UC3);
+
+            OpenCvSharp.Size pictureBox1Size = new OpenCvSharp.Size(this.pictureBox1.Size.Width, this.pictureBox1.Size.Height);
+
+            this.originImage = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)this.pictureBox1.Image);
+            this.CADImage = new Mat(pictureBox1Size, MatType.CV_8UC1);
+            this.OverlayImage = new Mat(pictureBox1Size, MatType.CV_8UC3);
             if (WorkSpaceData.m_activeProjectMainger.CADImageFileCheck(CADImageName, CADImageFolder))
             {
                 CADImage = Cv2.ImRead(WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["CADImage"].ToString(),
-                    ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                    ImreadModes.AnyDepth  | ImreadModes.Color);
+                Console.WriteLine( CADImage.Channels());
                 try
                 {
                     Cv2.AddWeighted(originImage, 0.5, CADImage, 0.5, 0, OverlayImage);
@@ -116,6 +112,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     return;
                 }
                 this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
+                //CustomImageProcess.Getssim(this.originImage, CADImage); //Scalar 값
+                //double psnr = CustomImageProcess.OverlayImageCompare(this.originImage, CADImage);
             }
             else
                 this.pictureBox2.Image = null;

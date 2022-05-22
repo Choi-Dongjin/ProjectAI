@@ -306,6 +306,7 @@
     <Compile Include="MainForms\MakeWorkSpaceForm.Designer.cs">
       <DependentUpon>MakeWorkSpaceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProjectManiger\CustomImageProcess.cs" />
     <Compile Include="ProjectManiger\CustomIOMainger.cs" />
     <Compile Include="ProjectManiger\CustomIOManigerFoem.cs">
       <SubType>Form</SubType>

@@ -183,12 +183,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 WorkSpaceData.m_activeProjectMainger.ImageFilesAdding(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
-        private void ImageSelectToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            if (WorkSpaceData.m_activeProjectMainger != null)
-                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize);
-        }
 
         private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
         {
@@ -261,6 +255,15 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 {
                     WorkSpaceData.m_activeProjectMainger.ImageDataSetInfoReset(this.gridImageList);
                 }
+        }
+
+
+        //CAD 이미지를 새로 넣을 경우 CADImageForm
+        private void CADImageSelectToolStripMenuItemInitImageClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADInitImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
         private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)

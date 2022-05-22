@@ -1763,7 +1763,7 @@ namespace ProjectAI
                         // CadImage(button.Name); //바로 아래 region
                         ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
 
-                        gridViewImageList.cmsMImageListToolKit.Items[2].Visible = true;
+                        gridViewImageList.cmsMImageListToolKit.Items[4].Visible = true;
 
                         // ImageViewer 설정
                         foreach (string activeInnerProjectName in this.m_imageViewDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
@@ -2503,12 +2503,45 @@ namespace ProjectAI
 
         #region CAD Image 관련 함수
         /// <summary>
-        /// CadImageSelect 폼을 띄우는 함수
+        /// CadImageSelect - CAD Image Select 폼을 띄우는 함수
         /// </summary>
-        public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
+        public void CADInitImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
             ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
 
+            if (cadImageSelect.ShowDialog() == DialogResult.OK)
+            {
+                this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);
+                this.CADImageViewerPrintImage(cadImageSelect);
+            }
+            else //Form Cancel
+            {
+                if (cadImageSelect.pictureBox1.Image != null)
+                {
+                    cadImageSelect.pictureBox1.Image.Dispose();
+                    cadImageSelect.pictureBox1.Image = null;
+                }
+                if (cadImageSelect.pictureBox2.Image != null)
+                {
+                    cadImageSelect.pictureBox2.Image.Dispose();
+                    cadImageSelect.pictureBox2.Image = null;
+                }
+                cadImageSelect.Close();
+                cadImageSelect.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// CadImageSelect - CAD Image Select 폼을 띄우는 함수
+        /// </summary>
+        public void CADImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string imageName)
+        {
+            ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect();
+            if (this.m_activeProjectDataImageListDataJObject.ToString().Contains(imageName))
+                cadImageSelect.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+            if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"].ToString().Contains(this.m_activeInnerProjectName))
+                if (this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName].ToString().Contains("CADImage"))
+                    cadImageSelect.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
             if (cadImageSelect.ShowDialog() == DialogResult.OK)
             {
                 this.CADImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize);
