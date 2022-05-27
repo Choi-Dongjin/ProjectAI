@@ -292,6 +292,7 @@ namespace ProjectAI
     /// </summary>
     public struct WorkSpaceEarlyData
     {
+
         /// <summary>
         /// workSpaceEarlyData Jobject 관리
         /// </summary>
@@ -376,7 +377,6 @@ namespace ProjectAI
     public class ProjectContral
     {
         #region ProjectMainger에 종속된 Forms 정의
-
         /// <summary>
         /// 프로젝트 선택 폼
         /// </summary>
@@ -619,6 +619,13 @@ namespace ProjectAI
         /// Logo Panel
         /// </summary>
         public MetroFramework.Controls.MetroPanel panelLogo;
+
+
+        /// <summary>
+        /// OriginImage와 CADImage 1:1비교해서 JSON파일로 쓸 때 0부터 index를 찾지말고 index를 저장하고 다음 index부터 찾음
+        /// </summary>
+        int searchIndex = 0;
+
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -2709,9 +2716,26 @@ namespace ProjectAI
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
 
-            string[] files = cadImageSelect.OriginImageName;
-            string[] filesPath = cadImageSelect.OriginImagePath;
-            string[] SameFiles = cadImageSelect.OriginImageName;
+            int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count;
+            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
+            string[] files = new string[OriginRowsCount];
+            string[] SameFiles = new string[OriginRowsCount];
+            string[] filesPath = new string[OriginRowsCount];
+            string[] CADImagePath = new string[CADRowsCount];
+            
+            int maxValue = OriginRowsCount > CADRowsCount ? OriginRowsCount:CADRowsCount;
+            for (int i = 0; i < maxValue; i++)
+            {
+                if (i < OriginRowsCount)
+                {
+                    files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                    filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
+                    SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                }
+                if (i < CADRowsCount)
+                    CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
+            }
+
             int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
             List<int> FileIndexs = new List<int>();
@@ -2779,6 +2803,7 @@ namespace ProjectAI
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
             // Image List Data 값 반영
+            searchIndex = 0;
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -2795,7 +2820,7 @@ namespace ProjectAI
             {
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
-
+            
                 // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
@@ -2823,8 +2848,8 @@ namespace ProjectAI
             this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageeListSetNumber;
             this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
 
-            Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
-            Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
 
             // Dataset 적용
             if (dataSet.Equals("Train"))
@@ -2867,17 +2892,24 @@ namespace ProjectAI
         }
 
 
+        /// <summary>
+        /// JObject에 "CADImage" 정보 넣기
+        /// </summary>
+        /// <param name="cadImageSelect"></param>
+        /// <param name="labeledDatainnerProjectLabelName"></param>
+        /// <param name="CADImageFolder"></param>
+        /// <param name="file"></param>
         private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
             string ConvertName = "";
             int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
-            for (int j = 0; j < CADRowsCount; j++)
+            for (searchIndex = 0; searchIndex < CADRowsCount; searchIndex++)
             {
-                if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[j].Cells[1].Value.ToString(), file)) != "")
+                if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString(), file)) != "")
                 {
                     labeledDatainnerProjectLabelName = new JObject
                         {
-                            { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[j].Cells[1].Value.ToString()) }
+                            { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString()) }
                         };
                     JObject labeledDatainnerProject = new JObject
                         {
@@ -2889,6 +2921,7 @@ namespace ProjectAI
                 }
             }
         }
+
 
         /// <summary>
         /// 기존에 있던 CAD Image와 중복 이름일 때 선택지 (덮어쓰기 or 취소)

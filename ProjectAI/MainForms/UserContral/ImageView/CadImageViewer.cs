@@ -103,7 +103,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 Console.WriteLine( CADImage.Channels());
                 try
                 {
-                    Cv2.AddWeighted(originImage, 0.5, CADImage, 0.5, 0, OverlayImage);
+                    double value = this.outputRate * (double)this.TrackBar.Value;
+                    double alpha = 1 - value;
+                    double beta = value;
+                    Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                 }
                 catch (OpenCVException e)
                 {
