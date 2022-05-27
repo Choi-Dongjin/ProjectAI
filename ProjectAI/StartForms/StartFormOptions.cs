@@ -88,8 +88,11 @@ namespace ProjectAI.StartForms
 
         private void BtnMstartOptionsApplyClick(object sender, EventArgs e)
         {
-            ProgramEntryPointVariables.m_language = cmbMoptionLanguage.Text;
+            if (this.togMgpuSetting.Checked)
+                if (!this.GPURAMSetup())
+                    return;
 
+            ProgramEntryPointVariables.m_language = cmbMoptionLanguage.Text;
             FormsManiger.m_startFormOptionsManagerHandler(); // StartFormOptions 변경사항 반영
         }
 
@@ -102,10 +105,38 @@ namespace ProjectAI.StartForms
 
         private void BtnMstartOptionsOKClick(object sender, EventArgs e)
         {
-            BtnMstartOptionsApplyClick(sender, e);
+            if (this.togMgpuSetting.Checked)
+                if (!this.GPURAMSetup())
+                    return;
+
+            FormsManiger.m_startFormOptionsManagerHandler(); // StartFormOptions 변경사항 반영
+            this.BtnMstartOptionsApplyClick(sender, e);
             //Hiding the window, because closing it makes the window unaccessible.
             this.Hide();
             this.Parent = null;
+        }
+
+        private bool GPURAMSetup()
+        {
+            if (this.togMgpuSetting.Checked)
+            {
+                if (double.TryParse(this.txtMAdapterRAM.Text, out double gpuRAM))
+                {
+                    HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][cmbMdetectedGPU.Text]["AdapterRAM"] = this.txtMAdapterRAM.Text;
+                    HardwareInformation.systemHardwareInfoJObject["GRAPHIC"]["AdapterRAM"] = this.txtMAdapterRAM.Text;
+                    //jsonDataManiger.PushJsonObject();/
+                    this.jsonDataManiger.PushJsonObject(ProgramVariables.m_programHardwareInformation, HardwareInformation.systemHardwareInfoJObject);
+
+                    return true;
+                }
+                else
+                {
+                    string messText = "GPU 설정 정보에 오류가 발생하였습니다. \n 프로그램을 재부팅 한뒤 GPU Setpu을 Reset 해주세요.";
+                    ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, messText);
+                    customMessageBoxOKCancel.ShowDialog();
+                }
+            }
+            return false;
         }
 
         private void BtnMoptionResetClick(object sender, EventArgs e)
@@ -150,7 +181,8 @@ namespace ProjectAI.StartForms
         {
             if (togMgpuSetting.Checked)
             {
-                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning);
+                string messText = "GPU Setting을 임의로 수정하면 치명적인 문제가 발생할 수 있습니다.";
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning, messText);
                 if (customMessageBoxOKCancel.ShowDialog().Equals(DialogResult.OK))
                 {
                     this.GpuSetting();
@@ -170,10 +202,35 @@ namespace ProjectAI.StartForms
         private void GpuSetting()
         {
             this.tlpSystemOption.RowStyles[5].Height = 210;
-            HardwareInformation.GetHardwareInformation();
-            foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
+            try
             {
-                this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+                this.cmbMdetectedGPU.Items.Clear();
+                foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
+                {
+                    if (!gpuName.Name.Equals("AdapterRAM"))
+                        this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+                }
+            }
+            catch
+            {
+                HardwareInformation.GetHardwareInformation();
+                if (HardwareInformation.systemHardwareInfoJObject["GRAPHIC"] != null)
+                {
+                    this.cmbMdetectedGPU.Items.Clear();
+                    foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
+                    {
+                        this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+                    }
+                }
+                else
+                {
+                    ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, "GpuSetting Error");
+                    customMessageBoxOKCancel.ShowDialog();
+                }
+            }
+            finally
+            {
+
             }
         }
 
@@ -185,6 +242,24 @@ namespace ProjectAI.StartForms
             this.lblMAdapterDACType.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["AdapterDACType"].ToString();
             this.lblMDriverVersion.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["DriverVersion"].ToString();
             this.lblVideoProcessor.Text = HardwareInformation.systemHardwareInfoJObject["GRAPHIC"][this.cmbMdetectedGPU.Text]["VideoProcessor"].ToString();
+        }
+
+        private void BtnMResetGPUInfoClick(object sender, EventArgs e)
+        {
+            HardwareInformation.GetHardwareInformation();
+            this.cmbMdetectedGPU.Items.Clear();
+            if (HardwareInformation.systemHardwareInfoJObject["GRAPHIC"] != null)
+            {
+                foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
+                {
+                    this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+                }
+            }
+            else
+            {
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, "하드웨어 정보 읽기 실패");
+                customMessageBoxOKCancel.ShowDialog();
+            }
         }
     }
 }

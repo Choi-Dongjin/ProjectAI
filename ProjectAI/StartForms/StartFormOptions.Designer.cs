@@ -42,6 +42,7 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.togMgpuSetting = new MetroFramework.Controls.MetroToggle();
             this.tlpgpuSetting = new System.Windows.Forms.TableLayoutPanel();
+            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.cmbMdetectedGPU = new MetroFramework.Controls.MetroComboBox();
@@ -54,6 +55,7 @@
             this.lblMDriverVersion = new MetroFramework.Controls.MetroLabel();
             this.lblVideoProcessor = new MetroFramework.Controls.MetroLabel();
             this.txtMAdapterRAM = new MetroFramework.Controls.MetroTextBox();
+            this.btnMResetGPUInfo = new MetroFramework.Controls.MetroButton();
             this.tableLayoutStartOptionMain = new System.Windows.Forms.TableLayoutPanel();
             this.btnMstartOptionsOK = new MetroFramework.Controls.MetroButton();
             this.btnMstartOptionsCancel = new MetroFramework.Controls.MetroButton();
@@ -149,19 +151,26 @@
             // 
             resources.ApplyResources(this.tlpgpuSetting, "tlpgpuSetting");
             this.tlpSystemOption.SetColumnSpan(this.tlpgpuSetting, 3);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel4, 0, 0);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel5, 0, 1);
-            this.tlpgpuSetting.Controls.Add(this.cmbMdetectedGPU, 2, 0);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel6, 0, 2);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel7, 0, 3);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel8, 0, 4);
-            this.tlpgpuSetting.Controls.Add(this.metroLabel10, 0, 5);
-            this.tlpgpuSetting.Controls.Add(this.lblMGpuName, 2, 1);
-            this.tlpgpuSetting.Controls.Add(this.lblMAdapterDACType, 2, 3);
-            this.tlpgpuSetting.Controls.Add(this.lblMDriverVersion, 2, 4);
-            this.tlpgpuSetting.Controls.Add(this.lblVideoProcessor, 2, 5);
-            this.tlpgpuSetting.Controls.Add(this.txtMAdapterRAM, 2, 2);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel9, 0, 0);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel4, 0, 1);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel5, 0, 2);
+            this.tlpgpuSetting.Controls.Add(this.cmbMdetectedGPU, 2, 1);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel6, 0, 3);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel7, 0, 4);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel8, 0, 5);
+            this.tlpgpuSetting.Controls.Add(this.metroLabel10, 0, 6);
+            this.tlpgpuSetting.Controls.Add(this.lblMGpuName, 2, 2);
+            this.tlpgpuSetting.Controls.Add(this.lblMAdapterDACType, 2, 4);
+            this.tlpgpuSetting.Controls.Add(this.lblMDriverVersion, 2, 5);
+            this.tlpgpuSetting.Controls.Add(this.lblVideoProcessor, 2, 6);
+            this.tlpgpuSetting.Controls.Add(this.txtMAdapterRAM, 2, 3);
+            this.tlpgpuSetting.Controls.Add(this.btnMResetGPUInfo, 2, 0);
             this.tlpgpuSetting.Name = "tlpgpuSetting";
+            // 
+            // metroLabel9
+            // 
+            resources.ApplyResources(this.metroLabel9, "metroLabel9");
+            this.metroLabel9.Name = "metroLabel9";
             // 
             // metroLabel4
             // 
@@ -251,6 +260,14 @@
             this.txtMAdapterRAM.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtMAdapterRAM.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
+            // btnMResetGPUInfo
+            // 
+            resources.ApplyResources(this.btnMResetGPUInfo, "btnMResetGPUInfo");
+            this.btnMResetGPUInfo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnMResetGPUInfo.Name = "btnMResetGPUInfo";
+            this.btnMResetGPUInfo.UseSelectable = true;
+            this.btnMResetGPUInfo.Click += new System.EventHandler(this.BtnMResetGPUInfoClick);
+            // 
             // tableLayoutStartOptionMain
             // 
             resources.ApplyResources(this.tableLayoutStartOptionMain, "tableLayoutStartOptionMain");
@@ -335,5 +352,7 @@
         private MetroFramework.Controls.MetroLabel lblMDriverVersion;
         private MetroFramework.Controls.MetroLabel lblVideoProcessor;
         private MetroFramework.Controls.MetroTextBox txtMAdapterRAM;
+        private MetroFramework.Controls.MetroLabel metroLabel9;
+        private MetroFramework.Controls.MetroButton btnMResetGPUInfo;
     }
 }

@@ -17,8 +17,6 @@ using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
 
-using OpenCvSharp;
-
 namespace ProjectAI.TrainForms
 {
     public partial class TrainForm : Form
@@ -1173,43 +1171,72 @@ namespace ProjectAI.TrainForms
             }
             else if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("CADImage"))
             {
-                Mat orignalImage;
-                Mat cadImage;
-
+                Bitmap orignalImage;
+                Bitmap cadImage;
+                
                 //Overlay된 파일을 생성
                 for (int i = 0; i < imageNameList.Count; i++)
                 {
                     orignalImage = null;
                     cadImage = null;
-                    // Orignal Image 읽어오기
+
                     try
                     {
-                        Bitmap bitmap = CustomIOMainger.LoadBitmap(imagePathList[i]);
-                        orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                        orignalImage = CustomIOMainger.LoadBitmap(imagePathList[i]);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        orignalImage = OpenCvSharp.Cv2.ImRead(imagePathList[i], ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                        orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(imagePathList[i], OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
                     }
 
                     // CAD Image 읽어오기
                     try
                     {
                         string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
-                        Bitmap bitmap = CustomIOMainger.LoadBitmap(cadImagePath);
-                        cadImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                        cadImage = CustomIOMainger.LoadBitmap(cadImagePath);
                     }
                     catch (Exception ex)
                     {
                         string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
                         Console.WriteLine(ex);
-                        cadImage = OpenCvSharp.Cv2.ImRead(cadImagePath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                        cadImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(cadImagePath, OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
                     }
 
-                    Cv2.AddWeighted(orignalImage, 0.5, cadImage, 0.5, 0, orignalImage);
+                    ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]);
 
-                    Cv2.ImWrite(imageSetPathList[i], orignalImage);
+                    //orignalImage = null;
+                    //cadImage = null;
+                    //// Orignal Image 읽어오기
+                    //try
+                    //{
+                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(imagePathList[i]);
+                    //    orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    Console.WriteLine(ex);
+                    //    orignalImage = OpenCvSharp.Cv2.ImRead(imagePathList[i], ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                    //}
+
+                    //// CAD Image 읽어오기
+                    //try
+                    //{
+                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(cadImagePath);
+                    //    cadImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                    //    Console.WriteLine(ex);
+                    //    cadImage = OpenCvSharp.Cv2.ImRead(cadImagePath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                    //}
+
+                    //Cv2.AddWeighted(orignalImage, 0.5, cadImage, 0.5, 0, orignalImage);
+
+                    //Cv2.ImWrite(imageSetPathList[i], orignalImage);
+
                     this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imageNameList.Count - 1) * 100)); // Progress Value 설정
                 }
             }
@@ -2804,9 +2831,11 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
                 else if (processImageType == "CADImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
             }
 
@@ -2885,10 +2914,12 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
+
                 }
                 else if (processImageType == "CADImage")
                 {
-
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
             }
 
@@ -3271,7 +3302,7 @@ namespace ProjectAI.TrainForms
                         //string processType = this.dgvMProcessing.Rows[e.RowIndex].Cells[1].Value.ToString();
                         //string processImageType = this.dgvMProcessing.Rows[e.RowIndex].Cells[2].Value.ToString();
                         //string processStep = this.dgvMProcessing.Rows[e.RowIndex].Cells[3].Value.ToString();
-
+                        
                         // 1. 작업 접근 코드 가져오기
                         string processAccesscode = metroGrid.Rows[e.RowIndex].Cells[4].Value.ToString();
 
@@ -3410,10 +3441,15 @@ namespace ProjectAI.TrainForms
 
                 // Class Info
                 List<string> classNameList = new List<string>();
-                foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+
+                if (modelInfo["TrainProcessInfo"]["string_array_classList"] != null)
                 {
-                    classNameList.Add(className);
+                    foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+                    {
+                        classNameList.Add(className);
+                    }
                 }
+
 
                 // 6. Contral 정보 적용
                 if (networkModel.Equals("SynapseNet_Classification_18"))

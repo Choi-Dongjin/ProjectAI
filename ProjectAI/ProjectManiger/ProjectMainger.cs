@@ -15,17 +15,13 @@ namespace ProjectAI
     /// </summary>
     public struct HardwareInformation
     {
-        /// <summary>
-        /// 학습 Batch Size
-        /// </summary>
-        public static string m_batchSize = "16";
 
         public static JObject systemHardwareInfoJObject;
 
         /// <summary>
         /// Hardware Information 하드웨어 정보 가져오기
         /// </summary>
-        public static void GetHardwareInformation()
+        public static JObject GetHardwareInformation()
         {
             HardwareInformation.systemHardwareInfoJObject = new JObject();
 
@@ -143,11 +139,12 @@ namespace ProjectAI
                 Console.WriteLine("GRAPHIC 카드 정보 얻기");
                 int number = 1;
                 JObject infoJObject = new JObject();
+                string ramNVIDIA = null;
 
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     string sAdapterRAM = obj["AdapterRAM"]?.ToString();
-                    if (long.TryParse(sAdapterRAM, out long lAdapterRAM))
+                    if (double.TryParse(sAdapterRAM, out double lAdapterRAM))
                     {
                         sAdapterRAM = CustomIOMainger.FormatBytesGB(lAdapterRAM);
                     }
@@ -162,6 +159,11 @@ namespace ProjectAI
                     Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
                     Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
                     Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
+
+                    if (obj["Name"].ToString().ToUpper().Contains("NVIDIA"))
+                    {
+                        ramNVIDIA = sAdapterRAM;
+                    }
 
                     JObject jObject = new JObject()
                     {
@@ -179,6 +181,14 @@ namespace ProjectAI
                     infoJObject[$"GRAPHIC_{number}"] = jObject;
                     number++;
                 }
+
+                if (ramNVIDIA == null)
+                {
+                    string messText = "A supported GPU card does not exist. \n An error occurs when using training GPU-related tasks.";
+                    ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, messText);
+                }
+
+                infoJObject["AdapterRAM"] = ramNVIDIA;
                 HardwareInformation.systemHardwareInfoJObject["GRAPHIC"] = infoJObject;
             }
 
@@ -192,7 +202,7 @@ namespace ProjectAI
                 foreach (ManagementObject obj in win32CompSys.Get())
                 {
                     string sTotalphysicalmemory = obj["totalphysicalmemory"]?.ToString();
-                    if (long.TryParse(sTotalphysicalmemory, out long lTotalphysicalmemory))
+                    if (double.TryParse(sTotalphysicalmemory, out double lTotalphysicalmemory))
                     {
                         sTotalphysicalmemory = CustomIOMainger.FormatBytesGB(lTotalphysicalmemory);
                     }
@@ -207,11 +217,11 @@ namespace ProjectAI
                 }
                 HardwareInformation.systemHardwareInfoJObject[$"MEMORY"] = infoJObject;
             }
-        }
 
-        public static void SettingValuebyGPUValue()
-        {
-            //HardwareInformation.m_batchSize = 
+            JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
+            jsonDataManiger.PushJsonObject(ProgramVariables.m_programHardwareInformation, HardwareInformation.systemHardwareInfoJObject);
+
+            return HardwareInformation.systemHardwareInfoJObject;
         }
     }
 
@@ -262,6 +272,8 @@ namespace ProjectAI
 
         public static string m_programOptionsFileJsonPath = Path.Combine(ProgramVariables.m_programOptionsSpacePath, "options " + m_programVersion + ".Json");
 
+        public static string m_programHardwareInformation = Path.Combine(ProgramVariables.m_programOptionsSpacePath, "HardwareInformation " + m_programVersion + ".Json");
+
         /// <summary>
         /// log 경로
         /// </summary>
@@ -281,7 +293,7 @@ namespace ProjectAI
         /// <summary>
         /// 프로그램 버전 기본값
         /// </summary>
-        public static string ProgramSpacePathDefalt { get { return Path.Combine(ProgramEntryPointVariables.m_programEntryOptionsSpacePath, @"SynapseNet\SynapseNet" + " " + m_programVersion); } }
+        public static string ProgramSpacePathDefalt { get { return Path.Combine(ProgramVariables.m_programApplicationDataPath, @"SynapseNet\SynapseNet" + " " + m_programVersion); } }
 
         /// <summary>
         /// 프로그램 기본 경로 기본값
@@ -1357,6 +1369,7 @@ namespace ProjectAI
             this.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
             this.m_idelGridViewImageList.lblImageListpageTotal.Text = ImageListnumber.ToString();
             this.m_idelGridViewImageList.lblImageListpage.Text = this.imageListPage.ToString();
+
             // 선택된 프로젝트가 있으면
             if (this.m_activeInnerProjectName != null && this.m_activeInnerProjectName != "AddProject")
             {
@@ -1711,6 +1724,7 @@ namespace ProjectAI
                         ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = new MainForms.UserContral.ImageList.GridViewImageList();
                         gridViewImageList = this.GridViewImageListContralsSetting(gridViewImageList);
                         this.m_imageListDictionary.Add(this.m_activeInnerProjectName, gridViewImageList);
+                        WorkSpaceData.m_activeProjectMainger.m_imageNumberChangeUpdater += gridViewImageList.imageTotalNumberUpdate;
                     }
                     #endregion ImageList
 
@@ -2035,8 +2049,8 @@ namespace ProjectAI
                             imageViewer.pictureBox2.Image = null;
                         }
 
-                        imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-
+                        //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                        imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
 
                         string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
@@ -2046,25 +2060,29 @@ namespace ProjectAI
                             {
                                 string CADImageName = Path.GetFileName(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
 
-                                if (imageViewer.OverlayViewCheckBox.Checked == false)
+                                if (imageViewer.OverlayViewCheckBox.Checked)
                                 {
-                                    if (this.CADImageFileCheck(CADImageName, CADImageFolder))
-                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
-                                }
-                                else if (imageViewer.OverlayViewCheckBox.Checked == true)
-                                {
-                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
-
                                     string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
                                     string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
 
-                                    Bitmap orignaBitmapImagel = CustomIOMainger.LoadBitmap(orignalImagePath);
                                     Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
+                                    imageViewer.PrintOverlayImage(cadBitmapImage);
 
-                                    Bitmap overlayBitmapImage = imageViewer.OverlayImagePrint(orignaBitmapImagel, cadBitmapImage);
-                                    imageViewer.pictureBox2.Image = overlayBitmapImage;
+                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
+                                    // imageViewer.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignaBitmapImagel, cadBitmapImage, 0.8);
                                 }
-                                   
+                                else
+                                {
+                                    if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
+                                    {
+                                        string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
+                                        //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                        imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(cadImagePath));
+                                    }
+                                    //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
+                                    //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                }
                             }
                         }
                     }
@@ -3893,15 +3911,16 @@ namespace ProjectAI
             // 4. 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             #region 라벨링 정보 수정 적용하기 ActiveProjectInfo
-
             // Active Project Info 변경
             int activeProjectInfoImageLabeledNumber = 0;
-            foreach (string className in this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName]["string_array_classList"])
-                if (className != null || className == "")
-                    activeProjectInfoImageLabeledNumber += Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][className]["int_classImageTotalNumber"]);
+            if (this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName] != null)
+            {
+                foreach (string className in this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName]["string_array_classList"])
+                    if (className != null || className == "")
+                        activeProjectInfoImageLabeledNumber += Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][className]["int_classImageTotalNumber"]);
 
-            this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
-
+                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
+            }
             #endregion 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             // Json 파일 저장

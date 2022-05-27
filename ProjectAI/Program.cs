@@ -92,16 +92,18 @@ namespace ProjectAI
         public static void IfProgramEntryPointOptionsChange()
         {
             JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // JsonDataManiger 호출
-
+            // #33
             string language = ProgramEntryPointVariables.m_language;
-            string corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath.ToString();
+            string corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
 
-            JObject programEntryPoint = jsonDataManiger.GetJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, ProgramEntryPointOptionsDataIntegrityCheck); // programEntryPointOptions Json 파일 읽고 무결성 검사
-            JObject programEntryPointOptions = (JObject)programEntryPoint["programEntryPointOptions"]; //  programEntryPointOptions 객체 있음을 확인
+            //JObject programEntryPoint = jsonDataManiger.GetJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, ProgramEntryPointOptionsDataIntegrityCheck); // programEntryPointOptions Json 파일 읽고 무결성 검사
+            //JObject programEntryPointOptions = (JObject)programEntryPoint["programEntryPointOptions"]; //  programEntryPointOptions 객체 있음을 확인
+
+            JObject programEntryPoint = ProgramEntryPointOptionsDefaltSetting();
 
             // 값 반영
-            programEntryPointOptions["string_m_language"] = language;
-            programEntryPointOptions["string_m_classificationPath"] = corePath;
+            programEntryPoint["programEntryPointOptions"]["string_m_language"] = language;
+            programEntryPoint["programEntryPointOptions"]["string_m_classificationPath"] = corePath;
 
             // 옵션 추가시 작성
             jsonDataManiger.PushJsonObject(ProgramEntryPointVariables.m_programEntryOptionsFileJsonPath, programEntryPoint); // Json 파일 저장

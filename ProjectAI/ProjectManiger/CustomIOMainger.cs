@@ -35,14 +35,15 @@ namespace ProjectAI
             return "0 Bytes";
         }
 
-        public static string FormatBytesGB(long bytes)
+        public static string FormatBytesGB(double bytes)
         {
             const int scale = 1024;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 bytes /= scale;
             }
-            return bytes.ToString();
+
+            return String.Format("{0:0.0000}", bytes);
         }
 
         /// <summary>

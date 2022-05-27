@@ -211,7 +211,7 @@
             this.tclMProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tclMProcess.Location = new System.Drawing.Point(10, 20);
             this.tclMProcess.Name = "tclMProcess";
-            this.tclMProcess.SelectedIndex = 2;
+            this.tclMProcess.SelectedIndex = 0;
             this.tclMProcess.Size = new System.Drawing.Size(551, 772);
             this.tclMProcess.TabIndex = 2;
             this.tclMProcess.UseSelectable = true;

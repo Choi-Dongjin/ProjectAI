@@ -54,6 +54,7 @@ namespace ProjectAI
             //formsManiger.StartFormOptionsManagerHandlerEnrollment();
 
             StartProgramChackSetOptions(); // StartForm 시작전 프로그램 기본 파일, 폴더, 설정 변수 확인, 적용 생성
+            StartProgramHardwareInformation();
             StartFormStartComponentSeting(); // StartForm 시작전 Component에 기본 값 설정
         }
 
@@ -68,7 +69,8 @@ namespace ProjectAI
 
         private void StartFormShown(object sender, EventArgs e)
         {
-            HardwareInformation.GetHardwareInformation();
+
+            // HardwareInformation.GetHardwareInformation();
         }
 
         /// <summary>
@@ -128,6 +130,27 @@ namespace ProjectAI
             }
         }
 
+        private void StartProgramHardwareInformation()
+        {
+            if (CustomIOMainger.DirChackExistsAndCreate(ProgramVariables.m_programOptionsSpacePath))
+            {
+                if (jsonDataManiger.JsonChackFileAndCreate(ProgramVariables.m_programHardwareInformation))
+                {
+                    HardwareInformation.systemHardwareInfoJObject = jsonDataManiger.GetJsonObject(ProgramVariables.m_programHardwareInformation);
+                }
+                else
+                {
+                    HardwareInformation.GetHardwareInformation();
+                    jsonDataManiger.PushJsonObject(ProgramVariables.m_programHardwareInformation, HardwareInformation.systemHardwareInfoJObject);
+                }
+            }
+            else
+            {
+                HardwareInformation.GetHardwareInformation();
+                jsonDataManiger.PushJsonObject(ProgramVariables.m_programHardwareInformation, HardwareInformation.systemHardwareInfoJObject);
+            }
+        }
+
         /// <summary>
         /// ProgramStartOptions -JObject 다시 만들고 기본값으로 설정
         /// </summary>
@@ -176,6 +199,7 @@ namespace ProjectAI
         /// </summary>
         public void IfStartOptionsChange()
         {
+            // Start Options
             JObject programOptionsJObject = jsonDataManiger.GetJsonObject(ProgramVariables.m_programOptionsFileJsonPath, ProgramOptionsDataIntegrityCheck); // programOptions Json 파일 읽고 무결성 검사
             JObject programStartPathOptions = (JObject)programOptionsJObject["programStartPathOptions"]; //  programEntryPointOptions 객체 있음을 확인
 
@@ -193,6 +217,8 @@ namespace ProjectAI
             jsonDataManiger.PushJsonObject(ProgramVariables.m_programOptionsFileJsonPath, programOptionsJObject); // Json 파일 저장
 
             this.ActiveControl = this.buttonStart;
+
+            // Entry Point Options
         }
 
         // Componet 변경사항 확인 적용

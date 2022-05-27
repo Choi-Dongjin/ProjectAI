@@ -707,32 +707,37 @@ namespace ProjectAI.MainForms
 
         private void TsmProjectWorkSpaceTestButtonClick(object sender, EventArgs e)
         {
-            //panelstatus.Visible = panelstatus.Visible == true ? false : true;
-            //Console.WriteLine();
-            //splitContainer1.Panel2Collapsed = splitContainer1.Panel2Collapsed ? false : true;
-            //Console.WriteLine($"splitContainer1.Panel2Collapsed: {splitContainer1.Panel2Collapsed}");
-            //pictureBox2.Visible = splitContainer1.Panel2Collapsed ? false : true;
-            //Console.WriteLine($"pictureBox2.Visible: {pictureBox2.Visible}");
-            if (WorkSpaceData.m_activeProjectMainger != null)
-                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                {
-                    // WorkSpaceData.m_activeProjectMainger.ImageFolderAddingWizard(this.gridImageList, this.ckbMdataGridViewAutoSize);
-                }
-            //Form1 form1 = new Form1();
-            //form1.SetMessageBox(MetroColorStyle.Red, formsManiger.m_StyleManager.Theme, "ERROR", "Calss Info 데이터 없음 초기화");
-            //form1.ShowDialog();
-            //this.TrainForm.Show();
-        }
+            //Bitmap makedBitmapImage = ProjectAI.CustomIOMainger.LoadBitmap(@"C:\ImageData\cadimage\makedBitmapImage.jpg");
+            //Bitmap targetBitmapImage = ProjectAI.CustomIOMainger.LoadBitmap(@"C:\ImageData\cadimage\targetBitmapImage.jpg");
+            //double[,,] ratioArray = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageGetOverlayRatio(makedBitmapImage, targetBitmapImage);
 
+            ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning, "Warning");
+            customMessageBoxOKCancel.ShowDialog();
+
+            ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel1 = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, "Error");
+            customMessageBoxOKCancel1.ShowDialog();
+
+            ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel2 = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Stop, "Stop");
+            customMessageBoxOKCancel2.ShowDialog();
+
+            ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel3 = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Question, "Question");
+            customMessageBoxOKCancel3.ShowDialog();
+
+            customMessageBoxOKCancel.Dispose();
+            customMessageBoxOKCancel1.Dispose();
+            customMessageBoxOKCancel2.Dispose();
+            customMessageBoxOKCancel3.Dispose();
+        }
         private void ToolStripMenuItem1Click(object sender, EventArgs e)
         {
-            if (WorkSpaceData.m_activeProjectMainger != null)
-                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-                {
-                    JObject jObject = new JObject();
-                    WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].GetTrainOptions(jObject);
-                    jsonDataManiger.PushJsonObject(@"C:\Users\USER\AppData\Roaming\SynapseNet\SynapseNet 0.1\workspaces\Test.Json", jObject);
-                }
+            //if (WorkSpaceData.m_activeProjectMainger != null)
+            //    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+            //    {
+            //        JObject jObject = new JObject();
+            //        WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].GetTrainOptions(jObject);
+            //        jsonDataManiger.PushJsonObject(@"C:\Users\USER\AppData\Roaming\SynapseNet\SynapseNet 0.1\workspaces\Test.Json", jObject);
+            //    }
+            ProjectAI.ProjectManiger.CustomImageProcess.CalculateDeltaE1();
         }
 
         private void TsmProjectAllWorkSpaceSaveClick(object sender, EventArgs e)

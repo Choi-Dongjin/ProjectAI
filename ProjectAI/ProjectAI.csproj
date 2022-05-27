@@ -33,7 +33,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -45,13 +45,15 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\RunFiles\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -567,6 +569,17 @@
     <None Include="Resources\deeplearning-view.png" />
     <None Include="Resources\shutdown.png" />
     <None Include="Resources\synapseimaging.png" />
+    <None Include="Resources\border1DG.png" />
+    <None Include="Resources\border1G.png" />
+    <None Include="Resources\border1R.png" />
+    <None Include="Resources\Error1Test.gif" />
+    <None Include="Resources\Error2Test.gif" />
+    <None Include="Resources\Question1Test.gif" />
+    <None Include="Resources\Question2Test.gif" />
+    <None Include="Resources\Stop1Test.gif" />
+    <None Include="Resources\Warning1Test.gif" />
+    <None Include="Resources\Warning2Test.gif" />
+    <None Include="Resources\Error2TestW.gif" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup>
