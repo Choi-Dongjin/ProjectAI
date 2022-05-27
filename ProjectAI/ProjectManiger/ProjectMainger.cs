@@ -2781,42 +2781,20 @@ namespace ProjectAI
             // Image List Data 값 반영
             for (int i = 0; i < files.Length; i++)
             {
-                if (!(files.Length == 0) && (newSameFiles.Length == 0)) // 새로운 이미지가 있고, 같은 이름의 파일이 없을 때 (새로운 이미지만 들어왔을 때)
+                imageTotalNumber++;
+                object imageData = new
                 {
-                    imageTotalNumber++;
-                    object imageData = new
-                    {
-                        int_ImageNumber = imageTotalNumber,
-                        string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
-                        Labeled = new JObject() { }
-                    };
-                    this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                    WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
-                }
-                else if (!(files.Length == 0) && !(newSameFiles.Length == 0)) // 새로운 이미지가 있고, 같은 이름의 파일이 있는데 같은 이름의 파일에 CADimage가 없을 때
-                {
-                    imageTotalNumber++;
-                    object imageData = new
-                    {
-                        int_ImageNumber = imageTotalNumber,
-                        string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
-                        Labeled = new JObject() { }
-                    };
-                    this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                    WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]); //새로운 이미지
-                    if (i < newSameFiles.Length)
-                        WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]); //같은 이름의 이미지인데 CADimage가 없을 때
-                }               
-                else if ((files.Length == 0) && !(newSameFiles.Length == 0)) //새로운 이미지가 없고 같은 이미지에 CADimage가 없을 때 
-                {
-                    if (i < newSameFiles.Length)
-                        WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
-                }
+                    int_ImageNumber = imageTotalNumber,
+                    string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
+                    Labeled = new JObject() { }
+                };
+                this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
             }
-            //for (int i = 0; i < newSameFiles.Length; i++)
-            //{
-            //    WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
-            //}
+            for (int i = 0; i < newSameFiles.Length; i++)
+            {
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+            }
 
                 // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
