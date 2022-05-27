@@ -96,52 +96,122 @@ namespace ProjectAI.ProjectManiger
             return psnr;
         }
 
-        /// <summary>
-        /// DeltaE
-        /// </summary>
-        /// <param name="OverlayImage"></param> 프로그램 안에서 Overlay된 image
-        /// <param name="OriginOverlayImage"></param> 외부에서 Overlay된 image
-        /// <returns></returns>
-        public static int DeltaE(Mat OverlayImage, Mat OriginOverlayImage)
+        public class Lab
         {
-            //Mat zFillMat = Mat.Zeros(OverlayImage.Size(), MatType.CV_8UC1);
+            public double L;
+            public double a;
+            public double b;
+        }
 
-            ////OverlayImage의 BGR 나누기
-            //Mat[] OverlayBGR = new Mat[3];
-            //OverlayBGR = Cv2.Split(OverlayImage);
-            //Mat[] OverlayR = { zFillMat, zFillMat, OverlayBGR[2] };
-            //Mat[] OverlayG = { zFillMat, OverlayBGR[1], zFillMat };
-            //Mat[] OverlayB = { OverlayBGR[0], zFillMat, zFillMat };
-            //Cv2.Merge(OverlayR, OverlayBGR[2]);
-            //Cv2.Merge(OverlayG, OverlayBGR[1]);
-            //Cv2.Merge(OverlayB, OverlayBGR[0]);
+        public static double Deg2Rad(double deg)
+        {
+	        return (deg * (3.141592 / 180.0));
+        }
+
+        public static double Rad2Deg(double rad)
+        {
+	        return ((180.0 / 3.141592) * rad);
+        }
+
+        public static double CalculateDeltaE(Lab Make, Lab Target)
+        {
+            const double KL = 1, KC = 1, KH = 1;
+            double deg360InRad = Deg2Rad(360.0);
+            double deg180InRad = Deg2Rad(180.0);
+            const double pow25To7 = 6103515625.0;
+
+            double BarLPrime = (Make.L + Target.L) / 2.0;
+            double C1 = Math.Sqrt((Make.a * Make.a) + (Make.b * Make.b));
+            double C2 = Math.Sqrt((Target.a * Target.a) + (Target.b * Target.b));
+            double BarC = (C1 + C2) / 2.0;
+            double G = 0.5 * (1 - Math.Sqrt(Math.Pow(BarC, 7) / (Math.Pow(BarC, 7) + pow25To7)));
+            double a1Prime = Make.a * (1.0 + G);
+            double a2Prime = Target.a * (1.0 + G);
+            double C1Prime = Math.Sqrt((a1Prime * a1Prime) + (Make.b * Make.b));
+            double C2Prime = Math.Sqrt((a2Prime * a2Prime) + (Target.b * Target.b));
+            double BarCPrime = (C1Prime + C2Prime) / 2.0;
+
+            //h1'
+            double h1Prime;
+            if (Make.b == 0 && a1Prime == 0)
+                h1Prime = 0.0;
+            else
+            {
+                h1Prime = Math.Atan2(Make.b, a1Prime);
+                if (h1Prime < 0)
+                    h1Prime += deg360InRad;
+            }
+
+            //h2'
+            double h2Prime;
+            if (Target.b == 0 && a1Prime == 0)
+                h2Prime = 0.0;
+            else
+            {
+                h2Prime = Math.Atan2(Target.b, a2Prime);
+                if (h2Prime < 0)
+                    h2Prime += deg360InRad;
+            }
+
+            double BarHPrime, hPrimeSum = h1Prime + h2Prime;
+            double CPrimeProduct = C1Prime * C2Prime;
+            if (CPrimeProduct == 0)
+                BarHPrime = hPrimeSum;
+            else
+            {
+                if (Math.Abs(h1Prime - h2Prime) <= deg180InRad)
+                    BarHPrime = hPrimeSum / 2.0;
+                else
+                {
+                    if (hPrimeSum < deg360InRad)
+                        BarHPrime = (hPrimeSum + deg360InRad) / 2.0;
+                    else
+                        BarHPrime = (hPrimeSum - deg360InRad) / 2.0;
+                }
+            }
+
+            double T = 1.0 - 
+                0.17 * Math.Cos(BarHPrime - Deg2Rad(30.0)) + 
+                0.24 * Math.Cos(2.0 * BarHPrime) + 
+                0.32 * Math.Cos(3.0 * BarHPrime + Deg2Rad(6.0)) - 
+                0.20 * Math.Cos(4.0 * BarHPrime - Deg2Rad(63.0));
+
+            //△h'
+            double DeltahPrime;
+            if (CPrimeProduct == 0)
+                DeltahPrime = 0;
+            else
+            {
+                DeltahPrime = h2Prime - h1Prime;
+                if (DeltahPrime < -deg180InRad)
+                    DeltahPrime += deg360InRad;
+                else if (DeltahPrime > deg180InRad)
+                    DeltahPrime -= deg360InRad;
+            }
+
+            //△H'
+            double DeltaHPrime = 2.0 * Math.Sqrt(CPrimeProduct) * Math.Sin(DeltahPrime / 2.0);
+
+            //△θ
+            double DeltaTheta = Deg2Rad(30.0) * Math.Exp(-Math.Pow((BarHPrime - Deg2Rad(275.0)) / Deg2Rad(25), 2.0));
 
 
-            ////OriginOverlayImage의 BGR 나누기
-            //Mat[] OriginOverlayBGR = new Mat[3];
-            //OriginOverlayBGR = Cv2.Split(OriginOverlayImage);
-            //Mat[] OriginOverlayR = { zFillMat, zFillMat, OriginOverlayBGR[2] };
-            //Mat[] OriginOverlayG = { zFillMat, OriginOverlayBGR[1], zFillMat };
-            //Mat[] OriginOverlayB = { OriginOverlayBGR[0], zFillMat, zFillMat };
-            //Cv2.Merge(OriginOverlayR, OriginOverlayBGR[2]);
-            //Cv2.Merge(OriginOverlayG, OriginOverlayBGR[1]);
-            //Cv2.Merge(OriginOverlayB, OriginOverlayBGR[0]);
+            double DeltaLPrime = Target.L - Make.L;
+            double DeltaCPrime = C2Prime - C1Prime;
+            double SL = 1 + (0.015 * Math.Pow(BarLPrime - 50.0, 2.0)/ Math.Sqrt(20 + Math.Pow(BarLPrime - 50.0, 2.0)));
+            double SC = 1 + 0.045 * BarCPrime;
+            double SH = 1 + 0.015 * BarCPrime * T;
+            double RC = 2 * Math.Sqrt(Math.Pow(BarC, 7.0) / (Math.Pow(BarC, 7.0) + pow25To7));
+            double RT = -RC * Math.Sin(2.0 * DeltaTheta);
 
-            //Cv2.ImShow("Red", OverlayBGR[2]);
-            //Cv2.ImShow("Green", OverlayBGR[1]);
-            //Cv2.ImShow("Blue", OverlayBGR[0]);
-
-            return 1;
-            //return 100 * (int)(
-            //    1.0 - ((double)(
-            //        Math.Abs(OverlayBGR[2] - OriginOverlayBGR[2]) +
-            //        Math.Abs(OverlayBGR[1] - OriginOverlayBGR[1]) +
-            //        Math.Abs(OverlayBGR[0] - OriginOverlayBGR[0])
-            //    ) / (256.0 * 3))
-            //);
+            //△E
+            double DeltaE = Math.Sqrt(
+                    Math.Pow((DeltaLPrime / (KL*SL)), 2.0) +
+                    Math.Pow((DeltaCPrime / (KC*SC)), 2.0) +
+                    Math.Pow((DeltaHPrime / (KH*SH)), 2.0) + 
+                    RT * DeltaCPrime * DeltaHPrime / (KC*SC*KH*SH)
+                );
+            return DeltaE;
         }
     }
-
-
-
 }

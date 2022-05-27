@@ -258,5 +258,12 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
                 }
         }
+
+        private void CADImageMultiSelectToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageMultiSelect(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
     }
 }
