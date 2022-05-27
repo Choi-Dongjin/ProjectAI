@@ -2899,29 +2899,45 @@ namespace ProjectAI
         /// <param name="labeledDatainnerProjectLabelName"></param>
         /// <param name="CADImageFolder"></param>
         /// <param name="file"></param>
+        //private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
+        //{
+        //    string ConvertName = "";
+        //    int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
+        //    for (searchIndex = 0; searchIndex < CADRowsCount; searchIndex++)
+        //    {
+        //        if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString(), file)) != "")
+        //        {
+        //            labeledDatainnerProjectLabelName = new JObject
+        //                {
+        //                    { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString()) }
+        //                };
+        //            JObject labeledDatainnerProject = new JObject
+        //                {
+        //                    { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+        //                };
+        //            JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+        //            labeledData.Merge(labeledDatainnerProject);
+        //            return;
+        //        }
+        //    }
+        //}
         private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
-            string ConvertName = "";
-            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
-            for (searchIndex = 0; searchIndex < CADRowsCount; searchIndex++)
+            string MatchingName = cadImageSelect.CADGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
+            if (MatchingName != null)
             {
-                if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString(), file)) != "")
+                labeledDatainnerProjectLabelName = new JObject
                 {
-                    labeledDatainnerProjectLabelName = new JObject
-                        {
-                            { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString()) }
-                        };
-                    JObject labeledDatainnerProject = new JObject
-                        {
-                            { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
-                        };
-                    JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
-                    labeledData.Merge(labeledDatainnerProject);
-                    return;
-                }
+                    { "CADImage", Path.Combine(CADImageFolder, MatchingName) }
+                };
+                JObject labeledDatainnerProject = new JObject
+                {
+                    { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+                };
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                labeledData.Merge(labeledDatainnerProject);
             }
         }
-
 
         /// <summary>
         /// 기존에 있던 CAD Image와 중복 이름일 때 선택지 (덮어쓰기 or 취소)

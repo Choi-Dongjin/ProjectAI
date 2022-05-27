@@ -23,8 +23,6 @@ namespace ProjectAI.MainForms
         bool GridViewCheck = false;
         int firstOriginInputdata = -1;
         int firstCADInputdata = -1;
-        Image OriginTempImage;
-        Image CADTempImage;
 
         public string imageTempName;
         public CadImageSelect()
@@ -57,6 +55,9 @@ namespace ProjectAI.MainForms
         public string[] CADImageName; //CAD 이름
         public string[] CADImagePath; // 주소 + 이름 
 
+
+        public List<string> OriginGridList = new List<string>(); // OriginImage를 저장해놓은 list
+        public List<string> CADGridList = new List<string>(); // CADImage를 저장해놓은 list
         /// <summary>
         /// delegate UpdataFormStyleManager
         /// </summary>
@@ -242,6 +243,7 @@ namespace ProjectAI.MainForms
                     if (check)
                     {
                         this.OriginGridView.Rows.Add(OriginNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                        OriginGridList.Add(files[i]);
                         OriginNum++;
                     }
                 }
@@ -259,6 +261,7 @@ namespace ProjectAI.MainForms
                     if (check)
                     {
                         this.CADGridView.Rows.Add(CADNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                        CADGridList.Add(files[i]);
                         CADNum++;
                     }
                 }
@@ -394,6 +397,19 @@ namespace ProjectAI.MainForms
             if (string.Compare(result, CmpName) == 0)
                 return result + GridClassifyName;
             return "";
+        }
+
+        public string NameUnderbarParsing(string FileName)
+        {
+            //variable
+            string result = "";
+
+            string[] SplitFileName = FileName.Split(new string[] { "_", "." }, StringSplitOptions.RemoveEmptyEntries); //이름 | .jpg
+
+            int Fcount = SplitFileName.Count();
+            for (int i = 0; i < Fcount - 2; i++)
+                result += SplitFileName[i] + "_"; //이름_
+            return result;
         }
 
         public int NameParsingCompare(string NameInGrid, string FileName)
