@@ -51,6 +51,7 @@
             this.imageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cADImageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cADImageSelectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cADImageMultiSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.imageFilesAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -306,12 +307,14 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
+            this.toolStripSeparator1.Visible = false;
             // 
             // imageSelectToolStripMenuItem
             // 
             this.imageSelectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cADImageSelectToolStripMenuItem,
-            this.cADImageSelectToolStripMenuItem1});
+            this.cADImageSelectToolStripMenuItem1,
+            this.cADImageMultiSelectToolStripMenuItem});
             this.imageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_source;
             this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
             this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
@@ -332,10 +335,18 @@
             this.cADImageSelectToolStripMenuItem1.Text = "CAD Image Select";
             this.cADImageSelectToolStripMenuItem1.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
             // 
+            // cADImageMultiSelectToolStripMenuItem
+            // 
+            this.cADImageMultiSelectToolStripMenuItem.Name = "cADImageMultiSelectToolStripMenuItem";
+            this.cADImageMultiSelectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cADImageMultiSelectToolStripMenuItem.Text = "CAD Image Wizard";
+            this.cADImageMultiSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
+            // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             this.toolStripSeparator14.Size = new System.Drawing.Size(216, 6);
+            this.toolStripSeparator14.Visible = false;
             // 
             // imageFilesAddWizardToolStripMenuItem
             // 
@@ -460,9 +471,7 @@
         public MetroFramework.Controls.MetroGrid gridImageList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem imageFilesAddToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageFolderAddToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripMenuItem imageFilesAddWizardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageFolderAddWizardToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -479,6 +488,9 @@
         public MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
         private System.Windows.Forms.ToolStripMenuItem cADImageSelectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cADImageSelectToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem cADImageMultiSelectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
     }
 }
