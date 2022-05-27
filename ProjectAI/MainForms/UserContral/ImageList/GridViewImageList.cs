@@ -83,7 +83,7 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             return imageName;
         }
 
-        public void imageTotalNumberUpdate()
+        public void ImageTotalNumberUpdate()
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
             {
@@ -282,6 +282,12 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
                     WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
                 }
+        }
+        private void CADImageMultiSelectToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageMultiSelect(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
         private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)

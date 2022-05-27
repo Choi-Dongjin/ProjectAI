@@ -533,6 +533,26 @@ namespace ProjectAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Loading1Test {
+            get {
+                object obj = ResourceManager.GetObject("Loading1Test", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Loading2Test {
+            get {
+                object obj = ResourceManager.GetObject("Loading2Test", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap logoBX2DeepLearningStudio {
             get {
                 object obj = ResourceManager.GetObject("logoBX2DeepLearningStudio", resourceCulture);
