@@ -2716,12 +2716,12 @@ namespace ProjectAI
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
 
-            int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count;
-            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
-            string[] files = new string[OriginRowsCount];
-            string[] SameFiles = new string[OriginRowsCount];
-            string[] filesPath = new string[OriginRowsCount];
-            string[] CADImagePath = new string[CADRowsCount];
+            int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
+            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
+            string[] files = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지 관리
+            string[] SameFiles = new string[OriginRowsCount]; // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
+            string[] filesPath = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지의 FullPath
+            string[] CADImagePath = new string[CADRowsCount]; // CAD 기준, 이미지 FullPath
             
             int maxValue = OriginRowsCount > CADRowsCount ? OriginRowsCount:CADRowsCount;
             for (int i = 0; i < maxValue; i++)
@@ -2738,7 +2738,7 @@ namespace ProjectAI
 
             int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
-            List<int> FileIndexs = new List<int>();
+            List<int> FileIndexs = new List<int>(); //이름은 있는데 CADImage 매칭이 안된 Image들
             for (int i = 0; i < countNumber; i++)
             {
                 if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()] != null)
@@ -2750,7 +2750,7 @@ namespace ProjectAI
                         if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName] != null)
                         {
                             if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName]["CADImage"] == null)
-                                FileIndexs.Add(i); //이름은 있는데 CADImage 매칭이 안된 Image들
+                                FileIndexs.Add(i);
                         }
                         else if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName] == null)
                             FileIndexs.Add(i);
@@ -2765,7 +2765,7 @@ namespace ProjectAI
                 filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
             }
             int num = FileIndexs.Count;
-            string[] newSameFiles = new string[num];
+            string[] newSameFiles = new string[num]; // 이름은 있는데 CADImage 매칭이 안된 Image, Labeled 안에 프로젝트 이름이 없는 Image를 담는 string[]
             int c = -1;
             if (num > 0)
             {
@@ -2841,7 +2841,7 @@ namespace ProjectAI
             // File IO Task 등록
             customIOManigerFoem.CreateFileCopyList(filesPath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                                                     MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
-            customIOManigerFoem.CreateFileCopyList(cadImageSelect.CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+            customIOManigerFoem.CreateFileCopyList(CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                      MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);

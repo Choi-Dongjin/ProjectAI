@@ -165,11 +165,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         }
 
 
-        private void ImageFolderAddToolStripMenuItem1Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ImageFilesAddWizardToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
