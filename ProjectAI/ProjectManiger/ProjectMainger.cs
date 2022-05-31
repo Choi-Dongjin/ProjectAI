@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
+using OpenCvSharp;
 
 namespace ProjectAI
 {
@@ -624,7 +625,7 @@ namespace ProjectAI
         /// <summary>
         /// OriginImage와 CADImage 1:1비교해서 JSON파일로 쓸 때 0부터 index를 찾지말고 index를 저장하고 다음 index부터 찾음
         /// </summary>
-        int searchIndex = 0;
+        //int searchIndex = 0;
 
 
         /// <summary>
@@ -2566,7 +2567,7 @@ namespace ProjectAI
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
 
-            int CheckIndex = 1;
+            int CheckIndex = 1; // 같은 이미지가 있는지 확인하는 변수
             JObject labeledDatainnerProjectLabelName = new JObject();
             List<int> delIndexs = new List<int>();
             string[] file = new string[1];
@@ -2712,6 +2713,7 @@ namespace ProjectAI
         /// </summary>
         public void CADMultiImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
+            //#35 UI로 묶여져 있는 변수들을 만들어진 List로 관리해야 함
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
@@ -2803,7 +2805,7 @@ namespace ProjectAI
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
             // Image List Data 값 반영
-            searchIndex = 0;
+            //searchIndex = 0;
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -4351,6 +4353,23 @@ namespace ProjectAI
                 }
             }
             return trainData;
+        }
+
+        public Image ZoomIn(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            //MessageBox.Show("mouse wheel test : zoom in");
+            //Cv2.ImShow("dst", OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBox.Image));
+            imageZoomInOut.ratio *= 1.1;
+            Bitmap bm = new Bitmap(pictureBox.Image, Convert.ToInt32(pictureBox.Image.Width * imageZoomInOut.ratio), Convert.ToInt32(pictureBox.Image.Height * imageZoomInOut.ratio));
+            Graphics gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+           // Bitmap bm =new Bitmap(pictureBox.Image);
+            return bm;
+        }
+        public void ZoomOut(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            //MessageBox.Show("mouse wheel test : zoom out");
+            imageZoomInOut.ratio *= 0.9F;
         }
     }
 }
