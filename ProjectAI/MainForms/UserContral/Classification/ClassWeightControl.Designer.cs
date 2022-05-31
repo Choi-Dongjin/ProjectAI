@@ -52,7 +52,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.txtWeight, 2, 0);
@@ -75,7 +75,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(265, 23);
+            this.panel1.Location = new System.Drawing.Point(264, 23);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(120, 1);
@@ -88,7 +88,7 @@
             this.panel2.Location = new System.Drawing.Point(34, 23);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(227, 1);
+            this.panel2.Size = new System.Drawing.Size(226, 1);
             this.panel2.TabIndex = 3;
             // 
             // txtWeight
@@ -97,7 +97,7 @@
             this.txtWeight.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtWeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtWeight.Font = new System.Drawing.Font("Noto Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWeight.Location = new System.Drawing.Point(265, 0);
+            this.txtWeight.Location = new System.Drawing.Point(264, 0);
             this.txtWeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.txtWeight.Name = "txtWeight";
             this.txtWeight.Size = new System.Drawing.Size(120, 18);
@@ -126,7 +126,7 @@
             this.lblMClassName.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.lblMClassName.Location = new System.Drawing.Point(35, 0);
             this.lblMClassName.Name = "lblMClassName";
-            this.lblMClassName.Size = new System.Drawing.Size(225, 21);
+            this.lblMClassName.Size = new System.Drawing.Size(224, 21);
             this.lblMClassName.TabIndex = 64;
             this.lblMClassName.Text = "metroLabel2";
             this.lblMClassName.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -136,7 +136,7 @@
             // 
             this.btnMWeightSub.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMWeightSub.Highlight = true;
-            this.btnMWeightSub.Location = new System.Drawing.Point(389, 2);
+            this.btnMWeightSub.Location = new System.Drawing.Point(388, 2);
             this.btnMWeightSub.Margin = new System.Windows.Forms.Padding(2);
             this.btnMWeightSub.Name = "btnMWeightSub";
             this.tableLayoutPanel1.SetRowSpan(this.btnMWeightSub, 2);
@@ -149,11 +149,11 @@
             // 
             this.btnMWeightAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMWeightAdd.Highlight = true;
-            this.btnMWeightAdd.Location = new System.Drawing.Point(411, 2);
+            this.btnMWeightAdd.Location = new System.Drawing.Point(410, 2);
             this.btnMWeightAdd.Margin = new System.Windows.Forms.Padding(2);
             this.btnMWeightAdd.Name = "btnMWeightAdd";
             this.tableLayoutPanel1.SetRowSpan(this.btnMWeightAdd, 2);
-            this.btnMWeightAdd.Size = new System.Drawing.Size(20, 18);
+            this.btnMWeightAdd.Size = new System.Drawing.Size(21, 18);
             this.btnMWeightAdd.TabIndex = 65;
             this.btnMWeightAdd.UseSelectable = true;
             this.btnMWeightAdd.Click += new System.EventHandler(this.BtnMWeightAddClick);

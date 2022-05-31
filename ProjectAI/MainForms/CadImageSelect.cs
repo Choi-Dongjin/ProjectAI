@@ -202,6 +202,8 @@ namespace ProjectAI.MainForms
             {
                 for (int i = 0; i < files.Length; i++)
                 {
+                    Console.WriteLine($"{i}: {files[i]}");
+
                     bool check = true;
                     var items = this.OriginGridView.Rows.Cast<DataGridViewRow>()
                         .Where(row => row.Cells[1].Value.ToString() == files[i]);
@@ -284,7 +286,7 @@ namespace ProjectAI.MainForms
                         if ((ConvertName = NameParsing(CADGridView.Rows[i].Cells[1].Value.ToString(), FileName)) != "")// 이름_CAD -> 이름_NG or 이름_OK 로 변환
                         {
                             this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(CADGridView.Rows[i].Cells[2].Value.ToString(), ConvertName));
-                            CADGridView.FirstDisplayedScrollingRowIndex = i;
+                            // CADGridView.FirstDisplayedScrollingRowIndex = i;
                             CADGridView.Refresh();
                             CADGridView.CurrentCell = CADGridView.Rows[i].Cells[0];
                             CADGridView.Rows[i].Cells[1].Selected = true;
@@ -319,7 +321,7 @@ namespace ProjectAI.MainForms
                         if ((ConvertName = NameParsing(OriginGridView.Rows[i].Cells[1].Value.ToString(), FileName)) != "")// 이름_CAD -> 이름_NG or 이름_OK 로 변환
                         {
                             this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(OriginGridView.Rows[i].Cells[2].Value.ToString(), ConvertName));
-                            OriginGridView.FirstDisplayedScrollingRowIndex = i;
+                            // OriginGridView.FirstDisplayedScrollingRowIndex = i;
                             OriginGridView.Refresh();
                             OriginGridView.CurrentCell = OriginGridView.Rows[i].Cells[0];
                             OriginGridView.Rows[i].Cells[1].Selected = true;
