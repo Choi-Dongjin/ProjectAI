@@ -16,17 +16,13 @@ namespace ProjectAI
     /// </summary>
     public struct HardwareInformation
     {
-        /// <summary>
-        /// 학습 Batch Size
-        /// </summary>
-        public static string m_batchSize = "2";
 
         public static JObject systemHardwareInfoJObject;
 
         /// <summary>
         /// Hardware Information 하드웨어 정보 가져오기
         /// </summary>
-        public static void GetHardwareInformation()
+        public static JObject GetHardwareInformation()
         {
             HardwareInformation.systemHardwareInfoJObject = new JObject();
 
@@ -36,6 +32,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("OS 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("Computer Name  -  " + obj["CSName"].ToString());
@@ -48,8 +46,6 @@ namespace ProjectAI
                     Console.WriteLine("OSType  -  " + obj["OSType"]);
                     Console.WriteLine("OtherTypeDescription  -  " + obj["OtherTypeDescription"]);
                     Console.WriteLine("ServicePackMajorVersion  -  " + obj["ServicePackMajorVersion"]);
-
-
 
                     JObject jObject = new JObject
                     {
@@ -64,10 +60,10 @@ namespace ProjectAI
                         ["OtherTypeDescription"] = obj["OtherTypeDescription"]?.ToString(),
                         ["ServicePackMajorVersion"] = obj["ServicePackMajorVersion"]?.ToString()
                     };
-
-                    HardwareInformation.systemHardwareInfoJObject.Add($"OS_{number}", jObject);
+                    infoJObject.Add($"OS_{number}", jObject);
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject.Add($"OS", infoJObject);
             }
 
             // Processors 정보 얻기
@@ -76,6 +72,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("Processors 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("NumberOfProcessors  -  " + obj["NumberOfProcessors"]);
@@ -88,9 +86,11 @@ namespace ProjectAI
                         ["NumberOfLogicalProcessors"] = obj["NumberOfLogicalProcessors"]?.ToString(),
                         ["PCSystemType"] = obj["PCSystemType"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"Processors_{number}"] = jObject;
+                    
+                    infoJObject.Add($"Processors_{number}", jObject);
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject[$"Processors"] = infoJObject;
             }
 
             //CPU 정보 얻기
@@ -99,6 +99,8 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("CPU 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     Console.WriteLine("NumberOfLogicalProcessors: {0}", Environment.ProcessorCount);
@@ -125,9 +127,10 @@ namespace ProjectAI
                         ["DataWidth"] = obj["DataWidth"]?.ToString(),
                         ["Family"] = obj["Family"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"CPU_{number}"] = jObject;
+                    infoJObject[$"CPU_{number}"] = jObject;
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject["CPU"] = infoJObject;
             }
 
             //GRAPHIC 카드 정보 얻기
@@ -136,11 +139,20 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("GRAPHIC 카드 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
+                string ramNVIDIA = null;
+
                 foreach (ManagementObject obj in searcher.Get())
                 {
+                    string sAdapterRAM = obj["AdapterRAM"]?.ToString();
+                    if (double.TryParse(sAdapterRAM, out double lAdapterRAM))
+                    {
+                        sAdapterRAM = CustomIOMainger.FormatBytesGB(lAdapterRAM);
+                    }
+
                     Console.WriteLine("Name  -  " + obj["Name"]);
                     Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
-                    Console.WriteLine("AdapterRAM  -  " + obj["AdapterRAM"]);
+                    Console.WriteLine("AdapterRAM  -  " + sAdapterRAM);
                     Console.WriteLine("AdapterDACType  -  " + obj["AdapterDACType"]);
                     Console.WriteLine("Monochrome  -  " + obj["Monochrome"]);
                     Console.WriteLine("InstalledDisplayDrivers  -  " + obj["InstalledDisplayDrivers"]);
@@ -149,11 +161,16 @@ namespace ProjectAI
                     Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
                     Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
 
+                    if (obj["Name"].ToString().ToUpper().Contains("NVIDIA"))
+                    {
+                        ramNVIDIA = sAdapterRAM;
+                    }
+
                     JObject jObject = new JObject()
                     {
                         ["Name"] = obj["Name"]?.ToString(),
                         ["DeviceID"] = obj["DeviceID"]?.ToString(),
-                        ["AdapterRAM"] = obj["AdapterRAM"]?.ToString(),
+                        ["AdapterRAM"] = sAdapterRAM,
                         ["AdapterDACType"] = obj["AdapterDACType"]?.ToString(),
                         ["Monochrome"] = obj["Monochrome"]?.ToString(),
                         ["InstalledDisplayDrivers"] = obj["InstalledDisplayDrivers"]?.ToString(),
@@ -162,9 +179,18 @@ namespace ProjectAI
                         ["VideoArchitecture"] = obj["VideoArchitecture"]?.ToString(),
                         ["VideoMemoryType"] = obj["VideoMemoryType"]?.ToString()
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"GRAPHIC_{number}"] = jObject;
+                    infoJObject[$"GRAPHIC_{number}"] = jObject;
                     number++;
                 }
+
+                if (ramNVIDIA == null)
+                {
+                    string messText = "A supported GPU card does not exist. \n An error occurs when using training GPU-related tasks.";
+                    ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, messText);
+                }
+
+                infoJObject["AdapterRAM"] = ramNVIDIA;
+                HardwareInformation.systemHardwareInfoJObject["GRAPHIC"] = infoJObject;
             }
 
             //메모리 정보 얻기
@@ -173,24 +199,30 @@ namespace ProjectAI
                 Console.WriteLine("");
                 Console.WriteLine("//메모리 정보 얻기");
                 int number = 1;
+                JObject infoJObject = new JObject();
                 foreach (ManagementObject obj in win32CompSys.Get())
                 {
-                    string memName = obj["totalphysicalmemory"].ToString();
-                    Console.WriteLine(memName);
+                    string sTotalphysicalmemory = obj["totalphysicalmemory"]?.ToString();
+                    if (double.TryParse(sTotalphysicalmemory, out double lTotalphysicalmemory))
+                    {
+                        sTotalphysicalmemory = CustomIOMainger.FormatBytesGB(lTotalphysicalmemory);
+                    }
+                    Console.WriteLine(sTotalphysicalmemory);
 
                     JObject jObject = new JObject()
                     {
-                        ["totalphysicalmemory"] = obj["totalphysicalmemory"]?.ToString()
+                        ["totalphysicalmemory"] = sTotalphysicalmemory
                     };
-                    HardwareInformation.systemHardwareInfoJObject[$"MEMORY_{number}"] = jObject;
+                    infoJObject[$"MEMORY_{number}"] = jObject;
                     number++;
                 }
+                HardwareInformation.systemHardwareInfoJObject[$"MEMORY"] = infoJObject;
             }
-        }
 
-        public static void SettingValuebyGPUValue()
-        {
-            //HardwareInformation.m_batchSize = 
+            JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance();
+            jsonDataManiger.PushJsonObject(ProgramVariables.m_programHardwareInformation, HardwareInformation.systemHardwareInfoJObject);
+
+            return HardwareInformation.systemHardwareInfoJObject;
         }
     }
 
@@ -241,6 +273,8 @@ namespace ProjectAI
 
         public static string m_programOptionsFileJsonPath = Path.Combine(ProgramVariables.m_programOptionsSpacePath, "options " + m_programVersion + ".Json");
 
+        public static string m_programHardwareInformation = Path.Combine(ProgramVariables.m_programOptionsSpacePath, "HardwareInformation " + m_programVersion + ".Json");
+
         /// <summary>
         /// log 경로
         /// </summary>
@@ -260,7 +294,7 @@ namespace ProjectAI
         /// <summary>
         /// 프로그램 버전 기본값
         /// </summary>
-        public static string ProgramSpacePathDefalt { get { return Path.Combine(ProgramEntryPointVariables.m_programEntryOptionsSpacePath, @"SynapseNet\SynapseNet" + " " + m_programVersion); } }
+        public static string ProgramSpacePathDefalt { get { return Path.Combine(ProgramVariables.m_programApplicationDataPath, @"SynapseNet\SynapseNet" + " " + m_programVersion); } }
 
         /// <summary>
         /// 프로그램 기본 경로 기본값
@@ -559,6 +593,10 @@ namespace ProjectAI
         /// 선택한 내부 모델 이름
         /// </summary>
         public string m_avtiveinnerModelsName;
+        /// <summary>
+        /// 히트맵 이미지 리스트
+        /// </summary>
+        public string[] m_activeInnerModelsHeatMapImageList;
 
         /*
          * m_activeProjectImageListJObject;
@@ -1281,8 +1319,9 @@ namespace ProjectAI
         /// </summary>
         public void ProjectUIRemove()
         {
-            ProjectIdleUIRemove();
-            InnerProjectUIRemove();
+            this.ProjectIdleUIRemove(); // UI 초기화
+            this.InnerProjectUIRemove(); // 내부 프로젝트 초기화
+            this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
 
             this.m_idelGridViewImageList.gridImageList.Rows.Clear();
 
@@ -1308,6 +1347,16 @@ namespace ProjectAI
         }
 
         /// <summary>
+        /// 이전 Inner Project에서 사용된 Train Model 정보 초기화
+        /// </summary>
+        private void InnerProjectDataReset()
+        {
+            this.m_avtiveModelsName = null;
+            this.m_avtiveinnerModelsName = null;
+            this.m_activeInnerModelsHeatMapImageList = null;
+        }
+
+        /// <summary>
         /// InnerProjectUI 적용된 부분 삭제
         /// </summary>
         public void InnerProjectUIRemove()
@@ -1328,6 +1377,7 @@ namespace ProjectAI
             this.MainForm.iclTotal.ImageCount = this.m_activeProjectImageListJObject["int_imageTotalNumber"].ToString();
             this.m_idelGridViewImageList.lblImageListpageTotal.Text = ImageListnumber.ToString();
             this.m_idelGridViewImageList.lblImageListpage.Text = this.imageListPage.ToString();
+
             // 선택된 프로젝트가 있으면
             if (this.m_activeInnerProjectName != null && this.m_activeInnerProjectName != "AddProject")
             {
@@ -1623,10 +1673,10 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString();
                     this.m_activeInnerProjectInputImageType = this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString();
 
-                        bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
-                        bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectClassification = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectClassViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectImageViewer = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
+                    bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
 
                     #region panelTrainOptions
                     // panelTrainOptions 설정
@@ -1682,6 +1732,7 @@ namespace ProjectAI
                         ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList = new MainForms.UserContral.ImageList.GridViewImageList();
                         gridViewImageList = this.GridViewImageListContralsSetting(gridViewImageList);
                         this.m_imageListDictionary.Add(this.m_activeInnerProjectName, gridViewImageList);
+                        WorkSpaceData.m_activeProjectMainger.m_imageNumberChangeUpdater += gridViewImageList.ImageTotalNumberUpdate;
                     }
                     #endregion ImageList
 
@@ -1783,8 +1834,9 @@ namespace ProjectAI
 
                     #endregion ImageViewer
 
-                    this.ProjectIdleUIRemove(); // IdleUI 삭제
-                                                // panelTrainOptions 설정
+                    this.ProjectIdleUIRemove(); // IdleUI 삭제 // panelTrainOptions 설정
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
+
                     #region 컨트롤 추가
                     this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
@@ -1821,6 +1873,7 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = "Segmentation";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
                 }
                 else if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProject"].ToString() == "ObjectDetection")
                 {
@@ -1828,6 +1881,7 @@ namespace ProjectAI
                     this.m_activeInnerProjectTask = "ObjectDetection";
 
                     this.ProjectIdleUIRemove(); // IdleUI 삭제
+                    this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
                 }
             }
         }
@@ -1971,10 +2025,9 @@ namespace ProjectAI
                                 {
                                     try
                                     {
-                                        string geatMapPath = Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
-                                        string[] heatmapImageArray = CustomIOMainger.DirFileSerch(geatMapPath, "Name").ToArray();
-                                        string strFindValue2 = Array.Find(heatmapImageArray, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
-                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(geatMapPath, strFindValue2));
+                                        string heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
+                                        string heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
+                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
                                     }
                                     catch (Exception ex)
                                     {
@@ -2014,8 +2067,8 @@ namespace ProjectAI
                             imageViewer.pictureBox2.Image = null;
                         }
 
-                        imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-
+                        //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                        imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
 
                         string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
@@ -2025,13 +2078,29 @@ namespace ProjectAI
                             {
                                 string CADImageName = Path.GetFileName(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
 
-                                if (imageViewer.OverlayViewCheckBox.Checked == false)
+                                if (imageViewer.OverlayViewCheckBox.Checked)
                                 {
-                                    if (this.CADImageFileCheck(CADImageName, CADImageFolder))
-                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                    string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
+                                    string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
+
+                                    Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
+                                    imageViewer.PrintOverlayImage(cadBitmapImage);
+
+                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
+                                    // imageViewer.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignaBitmapImagel, cadBitmapImage, 0.8);
                                 }
-                                else if (imageViewer.OverlayViewCheckBox.Checked == true)    
-                                    imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+                                else
+                                {
+                                    if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
+                                    {
+                                        string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
+                                        //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                        imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(cadImagePath));
+                                    }
+                                    //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
+                                    //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                }
                             }
                         }
                     }
@@ -2040,6 +2109,10 @@ namespace ProjectAI
                 {
                     this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
                 }
+            }
+            else
+            {
+                this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
             }
         }
         
@@ -2535,27 +2608,31 @@ namespace ProjectAI
         /// </summary>
         public void CADMultiImageForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
-            ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(1);
-   
-            if (cadImageSelect.ShowDialog() == DialogResult.OK)
+            using (ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(1))
             {
-                this.CADMultiImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize, modifyClassName, dataSet);
-                this.CADImageViewerPrintImage(cadImageSelect);
-            }
-            else //Form Cancel
-            {
-                if (cadImageSelect.pictureBox1.Image != null)
+                cadImageSelect.ShowDialog();
+                Console.WriteLine(cadImageSelect.DialogResult);
+
+                if (cadImageSelect.DialogResult == DialogResult.OK)
                 {
-                    cadImageSelect.pictureBox1.Image.Dispose();
-                    cadImageSelect.pictureBox1.Image = null;
+                    this.CADMultiImageAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize, modifyClassName, dataSet);
+                    this.CADImageViewerPrintImage(cadImageSelect);
                 }
-                if (cadImageSelect.pictureBox2.Image != null)
+                else //Form Cancel
                 {
-                    cadImageSelect.pictureBox2.Image.Dispose();
-                    cadImageSelect.pictureBox2.Image = null;
+                    if (cadImageSelect.pictureBox1.Image != null)
+                    {
+                        cadImageSelect.pictureBox1.Image.Dispose();
+                        cadImageSelect.pictureBox1.Image = null;
+                    }
+                    if (cadImageSelect.pictureBox2.Image != null)
+                    {
+                        cadImageSelect.pictureBox2.Image.Dispose();
+                        cadImageSelect.pictureBox2.Image = null;
+                    }
+                    //cadImageSelect.Close();
+                    //cadImageSelect.Dispose();
                 }
-                cadImageSelect.Close();
-                cadImageSelect.Dispose();
             }
         }
 
@@ -4142,15 +4219,16 @@ namespace ProjectAI
             // 4. 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             #region 라벨링 정보 수정 적용하기 ActiveProjectInfo
-
             // Active Project Info 변경
             int activeProjectInfoImageLabeledNumber = 0;
-            foreach (string className in this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName]["string_array_classList"])
-                if (className != null || className == "")
-                    activeProjectInfoImageLabeledNumber += Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][className]["int_classImageTotalNumber"]);
+            if (this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName] != null)
+            {
+                foreach (string className in this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName]["string_array_classList"])
+                    if (className != null || className == "")
+                        activeProjectInfoImageLabeledNumber += Convert.ToInt32(this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName][className]["int_classImageTotalNumber"]);
 
-            this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
-
+                this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
+            }
             #endregion 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             // Json 파일 저장
@@ -4320,6 +4398,7 @@ namespace ProjectAI
         {
             if (this.m_activeInnerProjectTask == "Classification")
             {
+                trainData = this.GetTrainDataClassification(trainData);
             }
             else if (this.m_activeInnerProjectTask == "Segmentation")
             {
@@ -4337,18 +4416,46 @@ namespace ProjectAI
         /// <returns></returns>
         public JObject GetTrainDataClassification(JObject trainData)
         {
-            foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
+            if (this.m_activeInnerProjectInputImageType.Equals("SingleImage"))
             {
-                if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
+                foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
                 {
-                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
+                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
                     {
-                        JObject jObject = new JObject
+                        if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
                         {
-                            ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
-                            ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
-                        };
-                        trainData[imageData.Name] = jObject;
+                            JObject jObject = new JObject
+                            {
+                                ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
+                                ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
+                            };
+                            trainData[imageData.Name] = jObject;
+                        }
+                    }
+                }
+            }
+            else if (this.m_activeInnerProjectInputImageType.Equals("MultiImage"))
+            {
+
+            }
+            else if (this.m_activeInnerProjectInputImageType.Equals("CADImage"))
+            {
+                foreach (JProperty imageData in (JToken)this.m_activeProjectDataImageListDataJObject)
+                {
+                    if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"] != null)
+                    {
+                        if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName] != null)
+                        {
+                            if (this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]["CADImage"] != null)
+                            {
+                                JObject jObject = new JObject
+                                {
+                                    ["string_ImagePath"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["string_ImagePath"],
+                                    ["Labeled"] = this.m_activeProjectDataImageListDataJObject[imageData.Name]["Labeled"][this.m_activeInnerProjectName]
+                                };
+                                trainData[imageData.Name] = jObject;
+                            }
+                        }
                     }
                 }
             }

@@ -103,6 +103,7 @@
             this.ckbMdataGridViewAutoSize.TabIndex = 0;
             this.ckbMdataGridViewAutoSize.Text = "Image List Auto Size";
             this.ckbMdataGridViewAutoSize.UseSelectable = true;
+            this.ckbMdataGridViewAutoSize.CheckedChanged += new System.EventHandler(this.CkbMdataGridViewAutoSizeCheckedChanged);
             // 
             // tableLayoutImageDataManiger
             // 
@@ -322,14 +323,14 @@
             // cADImageSelectToolStripMenuItem
             // 
             this.cADImageSelectToolStripMenuItem.Name = "cADImageSelectToolStripMenuItem";
-            this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.cADImageSelectToolStripMenuItem.Text = "Init Image Select";
             this.cADImageSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
             // 
             // cADImageSelectToolStripMenuItem1
             // 
             this.cADImageSelectToolStripMenuItem1.Name = "cADImageSelectToolStripMenuItem1";
-            this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(172, 22);
             this.cADImageSelectToolStripMenuItem1.Text = "CAD Image Select";
             this.cADImageSelectToolStripMenuItem1.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
             // 

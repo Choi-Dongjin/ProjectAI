@@ -28,9 +28,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClassificationTrainOptions));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -128,8 +128,8 @@
             this.panelMBrightnessToolTip = new MetroFramework.Controls.MetroPanel();
             this.panelMGaussianNoiseToolTip = new MetroFramework.Controls.MetroPanel();
             this.tilMContrast = new MetroFramework.Controls.MetroTile();
-            this.tilMGradation = new MetroFramework.Controls.MetroTile();
             this.tilMGradationRGB = new MetroFramework.Controls.MetroTile();
+            this.tilMGradation = new MetroFramework.Controls.MetroTile();
             this.tlpContinualLearning = new System.Windows.Forms.TableLayoutPanel();
             this.lblMContinualLearning = new MetroFramework.Controls.MetroLabel();
             this.togMContinualLearning = new MetroFramework.Controls.MetroToggle();
@@ -137,7 +137,6 @@
             this.dgvMContinualLearning = new MetroFramework.Controls.MetroGrid();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panelMClassWeight = new MetroFramework.Controls.MetroPanel();
-            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.lblMClassWeight = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblMInstantEvaluate = new MetroFramework.Controls.MetroLabel();
@@ -150,6 +149,7 @@
             this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
+            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.metroPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1619,18 +1619,6 @@
             this.tilMContrast.UseSelectable = true;
             this.tilMContrast.Click += new System.EventHandler(this.TilMContrastClick);
             // 
-            // tilMGradation
-            // 
-            this.tilMGradation.ActiveControl = null;
-            this.tilMGradation.Enabled = false;
-            this.tilMGradation.Location = new System.Drawing.Point(201, 141);
-            this.tilMGradation.Margin = new System.Windows.Forms.Padding(1);
-            this.tilMGradation.Name = "tilMGradation";
-            this.tilMGradation.Size = new System.Drawing.Size(18, 18);
-            this.tilMGradation.TabIndex = 11;
-            this.tilMGradation.UseSelectable = true;
-            this.tilMGradation.Click += new System.EventHandler(this.TilMGradationClick);
-            // 
             // tilMGradationRGB
             // 
             this.tilMGradationRGB.ActiveControl = null;
@@ -1642,6 +1630,18 @@
             this.tilMGradationRGB.TabIndex = 10;
             this.tilMGradationRGB.UseSelectable = true;
             this.tilMGradationRGB.Click += new System.EventHandler(this.TilMGradationRGBClick);
+            // 
+            // tilMGradation
+            // 
+            this.tilMGradation.ActiveControl = null;
+            this.tilMGradation.Enabled = false;
+            this.tilMGradation.Location = new System.Drawing.Point(201, 141);
+            this.tilMGradation.Margin = new System.Windows.Forms.Padding(1);
+            this.tilMGradation.Name = "tilMGradation";
+            this.tilMGradation.Size = new System.Drawing.Size(18, 18);
+            this.tilMGradation.TabIndex = 11;
+            this.tilMGradation.UseSelectable = true;
+            this.tilMGradation.Click += new System.EventHandler(this.TilMGradationClick);
             // 
             // tlpContinualLearning
             // 
@@ -1706,22 +1706,22 @@
             this.dgvMContinualLearning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMContinualLearning.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvMContinualLearning.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMContinualLearning.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvMContinualLearning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMContinualLearning.EnableHeadersVisualStyles = false;
             this.dgvMContinualLearning.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -1731,14 +1731,14 @@
             this.dgvMContinualLearning.Name = "dgvMContinualLearning";
             this.dgvMContinualLearning.ReadOnly = true;
             this.dgvMContinualLearning.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMContinualLearning.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvMContinualLearning.RowHeadersVisible = false;
             this.dgvMContinualLearning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMContinualLearning.RowTemplate.Height = 23;
@@ -1787,25 +1787,6 @@
             this.panelMClassWeight.VerticalScrollbarBarColor = true;
             this.panelMClassWeight.VerticalScrollbarHighlightOnWheel = false;
             this.panelMClassWeight.VerticalScrollbarSize = 10;
-            // 
-            // classWeightControl1
-            // 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
-            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
-            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.classWeightControl1.ClassName = "metroLabel2";
-            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
-            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
-            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.classWeightControl1.Name = "classWeightControl1";
-            this.classWeightControl1.Number = 1;
-            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
-            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
-            this.classWeightControl1.TabIndex = 2;
-            this.classWeightControl1.Weight = 100;
             // 
             // lblMClassWeight
             // 
@@ -1944,6 +1925,25 @@
             this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroToolTip1.StyleManager = null;
             this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // classWeightControl1
+            // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
+            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
+            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.classWeightControl1.ClassName = "metroLabel2";
+            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
+            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
+            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.classWeightControl1.Name = "classWeightControl1";
+            this.classWeightControl1.Number = 1;
+            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
+            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
+            this.classWeightControl1.TabIndex = 2;
+            this.classWeightControl1.Weight = 100;
             // 
             // ClassificationTrainOptions
             // 

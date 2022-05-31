@@ -60,7 +60,6 @@
             // PanelMainLogo
             // 
             this.PanelMainLogo.BackColor = System.Drawing.Color.Transparent;
-            this.PanelMainLogo.BackgroundImage = global::ProjectAI.Properties.Resources.iconlogoB_X2;
             resources.ApplyResources(this.PanelMainLogo, "PanelMainLogo");
             this.PanelMainLogo.HorizontalScrollbarBarColor = true;
             this.PanelMainLogo.HorizontalScrollbarHighlightOnWheel = false;

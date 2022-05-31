@@ -1057,6 +1057,7 @@ namespace ProjectAI.TrainForms
             string processSetImagePath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "Image");
 
             // 학습에 사용되는 이미지 리스트 만들기
+            List<string> imageNameList = new List<string>();
             List<string> imagePathList = new List<string>();
             List<string> imageSetPathList = new List<string>();
 
@@ -1072,11 +1073,15 @@ namespace ProjectAI.TrainForms
                 if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"] != null)
                 {
                     if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"].ToString(), out bool trainActivate))
+                    {
                         if (trainActivate)
                             if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
                             {
                                 // 이미지 Class 가져오기
                                 string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
+
+                                // 이미지 이름 추가
+                                imageNameList.Add(imageInfo.Name);
 
                                 // 이미지 위치 추가
                                 imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
@@ -1093,6 +1098,35 @@ namespace ProjectAI.TrainForms
                                 // class 관리 List에 추가
                                 classNames.Add(imageClass);
                             }
+                    }
+                    if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
+                    {
+                        if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"].ToString(), out bool testActivate))
+                            if (testActivate)
+                                if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
+                                {
+                                    // 이미지 Class 가져오기
+                                    string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
+
+                                    // 이미지 이름 추가
+                                    imageNameList.Add(imageInfo.Name);
+
+                                    // 이미지 위치 추가
+                                    imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
+
+                                    // Set Image 위치 폴더 있는지 확인
+                                    if (CustomIOMainger.DirChackCreateName(imageClass))
+                                        CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass));
+                                    else
+                                        break;
+                                    //이미지 Set Path 추가
+                                    imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
+                                        System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
+
+                                    // class 관리 List에 추가
+                                    classNames.Add(imageClass);
+                                }
+                    }
                 }
                 else if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
                 {
@@ -1102,6 +1136,9 @@ namespace ProjectAI.TrainForms
                             {
                                 // 이미지 Class 가져오기
                                 string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
+
+                                // 이미지 이름 추가
+                                imageNameList.Add(imageInfo.Name);
 
                                 // 이미지 위치 추가
                                 imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
@@ -1126,7 +1163,7 @@ namespace ProjectAI.TrainForms
             if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("SingleImage"))
             {
                 // 파일 Copy
-                for (int i = 0; i < imagePathList.Count; i++)
+                for (int i = 0; i < imageNameList.Count; i++)
                 {
                     System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
                     this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
@@ -1134,11 +1171,73 @@ namespace ProjectAI.TrainForms
             }
             else if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("CADImage"))
             {
+                Bitmap orignalImage;
+                Bitmap cadImage;
+                
                 //Overlay된 파일을 생성
-                for (int i = 0; i < imagePathList.Count; i++)
+                for (int i = 0; i < imageNameList.Count; i++)
                 {
-                    
-                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
+                    orignalImage = null;
+                    cadImage = null;
+
+                    try
+                    {
+                        orignalImage = CustomIOMainger.LoadBitmap(imagePathList[i]);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(imagePathList[i], OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
+                    }
+
+                    // CAD Image 읽어오기
+                    try
+                    {
+                        string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                        cadImage = CustomIOMainger.LoadBitmap(cadImagePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                        Console.WriteLine(ex);
+                        cadImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(cadImagePath, OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
+                    }
+
+                    ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]);
+
+                    //orignalImage = null;
+                    //cadImage = null;
+                    //// Orignal Image 읽어오기
+                    //try
+                    //{
+                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(imagePathList[i]);
+                    //    orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    Console.WriteLine(ex);
+                    //    orignalImage = OpenCvSharp.Cv2.ImRead(imagePathList[i], ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                    //}
+
+                    //// CAD Image 읽어오기
+                    //try
+                    //{
+                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(cadImagePath);
+                    //    cadImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                    //    Console.WriteLine(ex);
+                    //    cadImage = OpenCvSharp.Cv2.ImRead(cadImagePath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
+                    //}
+
+                    //Cv2.AddWeighted(orignalImage, 0.5, cadImage, 0.5, 0, orignalImage);
+
+                    //Cv2.ImWrite(imageSetPathList[i], orignalImage);
+
+                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imageNameList.Count - 1) * 100)); // Progress Value 설정
                 }
             }
             // DataGridView WaitingforWork 값 수정
@@ -2732,9 +2831,11 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
                 else if (processImageType == "CADImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
             }
 
@@ -2813,10 +2914,12 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processImageType == "MultiImage")
                 {
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
+
                 }
                 else if (processImageType == "CADImage")
                 {
-
+                    corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
                 }
             }
 
@@ -3199,7 +3302,7 @@ namespace ProjectAI.TrainForms
                         //string processType = this.dgvMProcessing.Rows[e.RowIndex].Cells[1].Value.ToString();
                         //string processImageType = this.dgvMProcessing.Rows[e.RowIndex].Cells[2].Value.ToString();
                         //string processStep = this.dgvMProcessing.Rows[e.RowIndex].Cells[3].Value.ToString();
-
+                        
                         // 1. 작업 접근 코드 가져오기
                         string processAccesscode = metroGrid.Rows[e.RowIndex].Cells[4].Value.ToString();
 
@@ -3338,10 +3441,15 @@ namespace ProjectAI.TrainForms
 
                 // Class Info
                 List<string> classNameList = new List<string>();
-                foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+
+                if (modelInfo["TrainProcessInfo"]["string_array_classList"] != null)
                 {
-                    classNameList.Add(className);
+                    foreach (string className in modelInfo["TrainProcessInfo"]["string_array_classList"])
+                    {
+                        classNameList.Add(className);
+                    }
                 }
+
 
                 // 6. Contral 정보 적용
                 if (networkModel.Equals("SynapseNet_Classification_18"))
@@ -3532,6 +3640,9 @@ namespace ProjectAI.TrainForms
 
                 WorkSpaceData.m_activeProjectMainger.m_avtiveModelsName = selectModelName;
                 WorkSpaceData.m_activeProjectMainger.m_avtiveinnerModelsName = innerModelList[e.RowIndex];
+
+                string heatMapPath = System.IO.Path.Combine(WorkSpaceData.m_activeProjectMainger.m_pathActiveProjectModel, WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName, selectModelName, "heatmap", innerModelList[e.RowIndex]);
+                WorkSpaceData.m_activeProjectMainger.m_activeInnerModelsHeatMapImageList = CustomIOMainger.DirFileSerch(heatMapPath, "Name").ToArray();
             }
         }
     }

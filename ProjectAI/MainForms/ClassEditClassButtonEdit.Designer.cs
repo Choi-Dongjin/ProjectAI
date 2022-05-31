@@ -186,6 +186,7 @@
             this.Padding = new System.Windows.Forms.Padding(20, 30, 20, 20);
             this.Resizable = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ClassEditClassButtonEdit";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClassEditClassButtonEditFormClosing);
             this.Load += new System.EventHandler(this.ClassEditClassButtonEditLoad);

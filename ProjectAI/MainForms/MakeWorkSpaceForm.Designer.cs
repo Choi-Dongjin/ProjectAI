@@ -164,6 +164,7 @@
             this.Controls.Add(this.tableLayoutStartOptionMain);
             this.Name = "MakeWorkSpaceForm";
             this.Resizable = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "WorkSpace";
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMakeWorkSpaceForm)).EndInit();
             this.tableLayoutStartOptionMain.ResumeLayout(false);

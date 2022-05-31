@@ -290,8 +290,19 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
              * 1. Batch Size
              * 2. Image Size
              */
+
+            double.TryParse(HardwareInformation.systemHardwareInfoJObject["GRAPHIC"]["AdapterRAM"].ToString(),out double gpuRAM);
+            int batchSize = this.GetAutoBatchSize(gpuRAM, this.GetImageSize());
+            if (!(batchSize > 1))
+            {
+                string messText = "The set GPU Memory is too small. \n There may be a problem with the program operation.";
+
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning, messText);
+                customMessageBoxOKCancel.ShowDialog();
+            }
+
             // Batch Size 설정
-            TrainOptionData.Add(PackingString($"batch_sz |{2}|"));
+            TrainOptionData.Add(PackingString($"batch_sz |{batchSize}|"));
             // Start Learning rate 설정
             TrainOptionData.Add(PackingString($"lr_0 |{1e-3}|"));
             // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
@@ -311,6 +322,16 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         /// <returns> 속성값이 추가된 TrainOptionData 추가되는 Key 값은 BringTrainOptionAuto </returns>
         public JObject BringTrainOptionAuto(JObject TrainOptionData)
         {
+            double.TryParse(HardwareInformation.systemHardwareInfoJObject["GRAPHIC"]["AdapterRAM"].ToString(), out double gpuRAM);
+            int batchSize = this.GetAutoBatchSize(gpuRAM, this.GetImageSize());
+            if (!(batchSize > 1))
+            {
+                string messText = "The set GPU Memory is too small. \n There may be a problem with the program operation.";
+
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning, messText);
+                customMessageBoxOKCancel.ShowDialog();
+            }
+
             JObject jObject = new JObject
             {
                 // BringTrainOptionAuto 옵션 -> 전문가 옵션 활성화시 수정이 가능하도록 수정 요망 #11
@@ -320,7 +341,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                  * 2. Image Size
                  */
                 // Batch Size 설정
-                ["int_BatchSize"] = "16",
+                ["int_BatchSize"] = batchSize,
                 // Start Learning rate 설정
                 ["double_StartLearningrate"] = "1e-3",
                 // Loss up Patience delta ratio ( Loss 증가 delta값 비율 설정 )설정
@@ -335,6 +356,44 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             TrainOptionData["TrainOptionAuto"] = jObject;
 
             return TrainOptionData;
+        }
+
+        private int GetAutoBatchSize(double graphicAdapterRAM, int imageSize)
+        {
+            // #33
+            int batchSize = 0;
+
+            double y = graphicAdapterRAM;
+            
+            double a = 0;
+            double b = 0;
+
+            // Network Model 설정
+            if (cbbManetworkModel.Text == "Small")
+            {
+                a = 2E-09 * Math.Pow(imageSize, 3) + 2E-06 * Math.Pow(imageSize, 2) - 0.0005 * imageSize + 0.121;
+                b = -2E-08 * Math.Pow(imageSize, 3) + 3E-05 * Math.Pow(imageSize, 2) - 0.0089 * imageSize + 3.1546;
+            }
+            else if (cbbManetworkModel.Text == "Medium")
+            {
+                a = -2E-09 * Math.Pow(imageSize, 3) + 5E-06 * Math.Pow(imageSize, 2) + 0.0006 * imageSize - 0.063;
+                b = 1E-08 * Math.Pow(imageSize, 3) - 1E-05 * Math.Pow(imageSize, 2) + 0.003 * imageSize + 2.2645;
+            }
+            else if (cbbManetworkModel.Text == "Large")
+            {
+                a = 1E-05 * Math.Pow(imageSize, 2) + 0.0016 * imageSize - 0.1417;
+                b = 1E-05 * Math.Pow(imageSize, 2) - 0.0063 * imageSize + 3.3052;
+            }
+            else if (cbbManetworkModel.Text == "Extra Large")
+            {
+                a = 4E-05 * Math.Pow(imageSize, 1.9256);
+                b = 1.2123 * Math.Pow(imageSize, 0.1447);
+            }
+
+            double x = (y - b) / a;
+            batchSize = (int)x;
+
+            return batchSize;
         }
 
         /// <summary>
@@ -1028,15 +1087,39 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         private JObject BringImageOption(JObject imageOptions)
         {
+            int imageSize = 0;
+            int imageChannel = 3;
+
+            imageSize = this.GetImageSize();
+
+            if (imageSize == 0)
+                imageSize = 256;
+
             JObject jObject = new JObject
             {
-                ["int_imageChannel"] = 3,
-                ["int_imageSize"] = 256
+                ["int_imageChannel"] = imageChannel,
+                ["int_imageSize"] = imageSize
             };
 
             // Image Option 정보 가져오기
             imageOptions["ImageOption"] = jObject;
             return imageOptions;
+        }
+
+        private int GetImageSize()
+        {
+            int imageSize = 0;
+            foreach (JProperty imageData in (JToken)WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject)
+            {
+                // #33
+                Bitmap image = CustomIOMainger.LoadBitmap(imageData.Value["string_ImagePath"].ToString());
+                if (image.Width.Equals(image.Height))
+                {
+                    imageSize = image.Width;
+                    break;
+                }
+            }
+            return imageSize;
         }
 
         #endregion 이미지 설정 옵션
@@ -2025,7 +2108,5 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
 
         }
-
-
     }
 }

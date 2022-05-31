@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectAI
 {
@@ -32,6 +33,17 @@ namespace ProjectAI
                 max /= scale;
             }
             return "0 Bytes";
+        }
+
+        public static string FormatBytesGB(double bytes)
+        {
+            const int scale = 1024;
+            for (int i = 0; i < 3; i++)
+            {
+                bytes /= scale;
+            }
+
+            return String.Format("{0:0.0000}", bytes);
         }
 
         /// <summary>
@@ -400,19 +412,9 @@ namespace ProjectAI
             }
         }
 
-        //private static string FirstCharToLower2(string str)
-        //{
-        //    ReadOnlySpan<char> rSpan = str.AsSpan();
-        //    ReadOnlySpan<char> rHeadSpan = rSpan.Slice(0, 1);
-        //    ReadOnlySpan<char> rTailSpan = rSpan.Slice(1);
-
-        //    Span<char> destSpan = stackalloc char[str.Length];
-        //    Span<char> destTailSpan = destSpan.Slice(1);
-
-        //    rHeadSpan.ToLowerInvariant(destSpan);
-        //    rTailSpan.CopyTo(destTailSpan);
-
-        //    return destSpan.ToString();
-        //}
+        public static JObject BitmapToJObject(Bitmap bitmap)
+        {
+            return null;
+        }
     }
 }

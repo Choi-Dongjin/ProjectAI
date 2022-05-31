@@ -18,7 +18,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         public GridViewImageList()
         {
             InitializeComponent();
-
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
         }
 
@@ -63,6 +62,33 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 
             }
             return imagePath;
+        }
+
+        public string GetSelectImageName()
+        {
+            string imageName = null;
+            try
+            {
+                DataGridViewRow row = gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                imageName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+
+            }
+            return imageName;
+        }
+
+        public void ImageTotalNumberUpdate()
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+            {
+                this.lblImageListpageTotal.Text = WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_ImageListnumber"].ToString(); 
+            }
         }
 
         private int GetContralSize(double number)
@@ -233,7 +259,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 }
         }
 
-
         //CAD 이미지를 새로 넣을 경우 CADImageForm
         private void CADImageSelectToolStripMenuItemInitImageClick(object sender, EventArgs e)
         {
@@ -253,12 +278,36 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
                 }
         }
-
         private void CADImageMultiSelectToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                     WorkSpaceData.m_activeProjectMainger.CADImageMultiSelect(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
+
+        private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)
+        {
+            int size = 0;
+            for (int i = 0; i < this.gridImageList.Columns.Count; i++)
+            {
+                size += this.gridImageList.Columns[i].Width;
+            }
+            // Data Grid View Size 조정
+            if (ckbMdataGridViewAutoSize.Checked)
+            {
+                try
+                {
+                    MainForm mainForm = MainForm.GetInstance();
+                    if (mainForm.splitContainerImageAndImageList.Width - size > 0)
+                        mainForm.splitContainerImageAndImageList.SplitterDistance = mainForm.splitContainerImageAndImageList.Width - size;
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        
     }
 }

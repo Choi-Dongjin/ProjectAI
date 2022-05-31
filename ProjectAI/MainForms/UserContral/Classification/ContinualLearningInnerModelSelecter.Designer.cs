@@ -301,6 +301,7 @@
             this.Padding = new System.Windows.Forms.Padding(20, 30, 20, 20);
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ContinualLearningInnerModelSelecter";
             this.Load += new System.EventHandler(this.ContinualLearningInnerModelSelecterLoad);
             this.Shown += new System.EventHandler(this.ContinualLearningInnerModelSelecterShown);
