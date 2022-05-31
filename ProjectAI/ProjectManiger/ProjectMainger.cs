@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
+using OpenCvSharp;
 
 namespace ProjectAI
 {
@@ -326,6 +327,7 @@ namespace ProjectAI
     /// </summary>
     public struct WorkSpaceEarlyData
     {
+
         /// <summary>
         /// workSpaceEarlyData Jobject 관리
         /// </summary>
@@ -410,7 +412,6 @@ namespace ProjectAI
     public class ProjectContral
     {
         #region ProjectMainger에 종속된 Forms 정의
-
         /// <summary>
         /// 프로젝트 선택 폼
         /// </summary>
@@ -657,6 +658,13 @@ namespace ProjectAI
         /// Logo Panel
         /// </summary>
         public MetroFramework.Controls.MetroPanel panelLogo;
+
+
+        /// <summary>
+        /// OriginImage와 CADImage 1:1비교해서 JSON파일로 쓸 때 0부터 index를 찾지말고 index를 저장하고 다음 index부터 찾음
+        /// </summary>
+        //int searchIndex = 0;
+
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -2636,7 +2644,7 @@ namespace ProjectAI
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
 
-            int CheckIndex = 1;
+            int CheckIndex = 1; // 같은 이미지가 있는지 확인하는 변수
             JObject labeledDatainnerProjectLabelName = new JObject();
             List<int> delIndexs = new List<int>();
             string[] file = new string[1];
@@ -2782,16 +2790,34 @@ namespace ProjectAI
         /// </summary>
         public void CADMultiImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
+            //#35 UI로 묶여져 있는 변수들을 만들어진 List로 관리해야 함
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
 
-            string[] files = cadImageSelect.OriginImageName;
-            string[] filesPath = cadImageSelect.OriginImagePath;
-            string[] SameFiles = cadImageSelect.OriginImageName;
+            int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
+            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
+            string[] files = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지 관리
+            string[] SameFiles = new string[OriginRowsCount]; // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
+            string[] filesPath = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지의 FullPath
+            string[] CADImagePath = new string[CADRowsCount]; // CAD 기준, 이미지 FullPath
+            
+            int maxValue = OriginRowsCount > CADRowsCount ? OriginRowsCount:CADRowsCount;
+            for (int i = 0; i < maxValue; i++)
+            {
+                if (i < OriginRowsCount)
+                {
+                    files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                    filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
+                    SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                }
+                if (i < CADRowsCount)
+                    CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
+            }
+
             int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
-            List<int> FileIndexs = new List<int>();
+            List<int> FileIndexs = new List<int>(); //이름은 있는데 CADImage 매칭이 안된 Image들
             for (int i = 0; i < countNumber; i++)
             {
                 if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()] != null)
@@ -2803,7 +2829,7 @@ namespace ProjectAI
                         if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName] != null)
                         {
                             if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName]["CADImage"] == null)
-                                FileIndexs.Add(i); //이름은 있는데 CADImage 매칭이 안된 Image들
+                                FileIndexs.Add(i);
                         }
                         else if (this.m_activeProjectDataImageListDataJObject[files[i].ToString()]["Labeled"][this.m_activeInnerProjectName] == null)
                             FileIndexs.Add(i);
@@ -2818,7 +2844,7 @@ namespace ProjectAI
                 filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
             }
             int num = FileIndexs.Count;
-            string[] newSameFiles = new string[num];
+            string[] newSameFiles = new string[num]; // 이름은 있는데 CADImage 매칭이 안된 Image, Labeled 안에 프로젝트 이름이 없는 Image를 담는 string[]
             int c = -1;
             if (num > 0)
             {
@@ -2856,6 +2882,7 @@ namespace ProjectAI
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
             // Image List Data 값 반영
+            //searchIndex = 0;
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -2872,7 +2899,7 @@ namespace ProjectAI
             {
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
-
+            
                 // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
@@ -2893,15 +2920,15 @@ namespace ProjectAI
             // File IO Task 등록
             customIOManigerFoem.CreateFileCopyList(filesPath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                                                     MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
-            customIOManigerFoem.CreateFileCopyList(cadImageSelect.CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+            customIOManigerFoem.CreateFileCopyList(CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                      MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
             this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageeListSetNumber;
             this.m_activeProjectImageListJObject["int_imageTotalNumber"] = imageTotalNumber;
 
-            Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
-            Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectImageListJObject.ToString());
+            //Console.WriteLine(this.m_activeProjectDataImageListDataJObject.ToString());
 
             // Dataset 적용
             if (dataSet.Equals("Train"))
@@ -2944,26 +2971,50 @@ namespace ProjectAI
         }
 
 
+        /// <summary>
+        /// JObject에 "CADImage" 정보 넣기
+        /// </summary>
+        /// <param name="cadImageSelect"></param>
+        /// <param name="labeledDatainnerProjectLabelName"></param>
+        /// <param name="CADImageFolder"></param>
+        /// <param name="file"></param>
+        //private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
+        //{
+        //    string ConvertName = "";
+        //    int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
+        //    for (searchIndex = 0; searchIndex < CADRowsCount; searchIndex++)
+        //    {
+        //        if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString(), file)) != "")
+        //        {
+        //            labeledDatainnerProjectLabelName = new JObject
+        //                {
+        //                    { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[searchIndex].Cells[1].Value.ToString()) }
+        //                };
+        //            JObject labeledDatainnerProject = new JObject
+        //                {
+        //                    { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+        //                };
+        //            JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+        //            labeledData.Merge(labeledDatainnerProject);
+        //            return;
+        //        }
+        //    }
+        //}
         private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
-            string ConvertName = "";
-            int CADRowsCount = cadImageSelect.CADGridView.Rows.Count;
-            for (int j = 0; j < CADRowsCount; j++)
+            string MatchingName = cadImageSelect.CADGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
+            if (MatchingName != null)
             {
-                if ((ConvertName = cadImageSelect.NameParsing(cadImageSelect.CADGridView.Rows[j].Cells[1].Value.ToString(), file)) != "")
+                labeledDatainnerProjectLabelName = new JObject
                 {
-                    labeledDatainnerProjectLabelName = new JObject
-                        {
-                            { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADGridView.Rows[j].Cells[1].Value.ToString()) }
-                        };
-                    JObject labeledDatainnerProject = new JObject
-                        {
-                            { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
-                        };
-                    JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
-                    labeledData.Merge(labeledDatainnerProject);
-                    return;
-                }
+                    { "CADImage", Path.Combine(CADImageFolder, MatchingName) }
+                };
+                JObject labeledDatainnerProject = new JObject
+                {
+                    { this.m_activeInnerProjectName, labeledDatainnerProjectLabelName}
+                };
+                JObject labeledData = (JObject)this.m_activeProjectDataImageListDataJObject[file]["Labeled"];
+                labeledData.Merge(labeledDatainnerProject);
             }
         }
 
@@ -4409,6 +4460,23 @@ namespace ProjectAI
                 }
             }
             return trainData;
+        }
+
+        public Image ZoomIn(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            //MessageBox.Show("mouse wheel test : zoom in");
+            //Cv2.ImShow("dst", OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBox.Image));
+            imageZoomInOut.ratio *= 1.1;
+            Bitmap bm = new Bitmap(pictureBox.Image, Convert.ToInt32(pictureBox.Image.Width * imageZoomInOut.ratio), Convert.ToInt32(pictureBox.Image.Height * imageZoomInOut.ratio));
+            Graphics gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+           // Bitmap bm =new Bitmap(pictureBox.Image);
+            return bm;
+        }
+        public void ZoomOut(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            //MessageBox.Show("mouse wheel test : zoom out");
+            imageZoomInOut.ratio *= 0.9F;
         }
     }
 }

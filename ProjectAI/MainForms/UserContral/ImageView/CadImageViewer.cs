@@ -24,12 +24,64 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private string imgName;
         private string CADImgName;
         private string CADImgFolder;
+
+        private bool bIsClick = false;
+
+        public struct ImageZoomInOut
+        {
+            public double ratio;
+            public System.Drawing.Point imgPoint; //마우스 포인터를 저장할 Point 변수 (확대축소의 중심이 되는 부분 저장)
+            public Rectangle convertImage;
+            public System.Drawing.Point pntMouseClick;
+
+        }
+        
+        public ImageZoomInOut image1ZoomInOut;
+        public ImageZoomInOut image2ZoomInOut;
+
         public CadImageViewer()
         {
             InitializeComponent();
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
-            this.UpdataFormStyleManager(formsManiger.m_StyleManager);
+            pictureBox1.MouseWheel += new MouseEventHandler(PictureBox1MouseWheel);
+            pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
+            SetImageZoomInout(image1ZoomInOut, this.pictureBox1);
+            SetImageZoomInout(image2ZoomInOut, this.pictureBox2);
+        }
+        public void SetImageZoomInout(ImageZoomInOut imageZoomInOut, PictureBox pictureBox)
+        {
+            imageZoomInOut.ratio = 1.0F;
+            //imageZoomInOut.imgPoint = new System.Drawing.Point(pictureBox.Width / 2, pictureBox.Height / 2); // 중심
+            //imageZoomInOut.imgRect = new Rectangle(0, 0, pictureBox.Width, pictureBox.Height);
+            //imageZoomInOut.picX = this.pictureBox1.Size.Width;
+            //imageZoomInOut.picY = this.pictureBox1.Size.Height;
+        }
+
+
+        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
+            {
+                //Cv2.ImShow("dst", OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)this.pictureBox1.Image));
+                this.pictureBox1.Image = WorkSpaceData.m_activeProjectMainger.ZoomIn(this.pictureBox1, image1ZoomInOut);
+            }
+            else
+            {
+                WorkSpaceData.m_activeProjectMainger.ZoomOut(this.pictureBox1, image1ZoomInOut);
+            }
+        }
+
+        private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
+            {
+                WorkSpaceData.m_activeProjectMainger.ZoomIn(this.pictureBox2, image2ZoomInOut);
+            }
+            else
+            {
+                WorkSpaceData.m_activeProjectMainger.ZoomOut(this.pictureBox2, image2ZoomInOut);
+            }
         }
 
         private void UpdataFormStyleManager(MetroStyleManager m_StyleManager)
@@ -134,7 +186,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 Console.WriteLine( CADImage.Channels());
                 try
                 {
-                    Cv2.AddWeighted(originImage, 0.5, CADImage, 0.5, 0, OverlayImage);
+                    double value = this.outputRate * (double)this.TrackBar.Value;
+                    double alpha = 1 - value;
+                    double beta = value;
+                    Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                 }
                 catch (OpenCVException e)
                 {
@@ -187,5 +242,50 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 GC.Collect();
             }
         }
+
+        private void PictureBox1MouseMove(object sender, MouseEventArgs e)
+        {
+            if (bIsClick)
+            {
+                //image1ZoomInOut.imgPoint.X = image1ZoomInOut.imgPoint.X + e.X - image1ZoomInOut.pntMouseClick.X;
+                //image1ZoomInOut.imgPoint.Y = image1ZoomInOut.imgPoint.Y + e.Y - image1ZoomInOut.pntMouseClick.Y;
+
+                //if (image1ZoomInOut.imgPoint.X > 0)
+                //{
+                //    image1ZoomInOut.imgPoint.X = 0;
+                //}
+                //if (image1ZoomInOut.imgPoint.Y > 0)
+                //{
+                //    image1ZoomInOut.imgPoint.Y = 0;
+                //}
+
+                //if (image1ZoomInOut.imgPoint.X + this.pictureBox1.Image.Width < image1ZoomInOut.picX)
+                //{
+                //    image1ZoomInOut.imgPoint.X = image1ZoomInOut.picX - this.pictureBox1.Image.Width;
+                //}
+                //if (image1ZoomInOut.imgPoint.Y + this.pictureBox1.Image.Height < image1ZoomInOut.picY)
+                //{
+                //    image1ZoomInOut.imgPoint.Y = image1ZoomInOut.picY - this.pictureBox1.Image.Height;
+                //}
+
+                //image1ZoomInOut.pntMouseClick = e.Location;
+
+                //pictureBox1.Invalidate();
+            }
+        }
+
+        private void PictureBox1MouseDown(object sender, MouseEventArgs e)
+        {
+            bIsClick = true;
+
+            image1ZoomInOut.pntMouseClick.X = e.X;
+            image1ZoomInOut.pntMouseClick.Y = e.Y;
+        }
+
+        private void PictureBox1MouseUp(object sender, MouseEventArgs e)
+        {
+            bIsClick = false;
+        }
+
     }
 }

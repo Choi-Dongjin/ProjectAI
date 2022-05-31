@@ -301,7 +301,6 @@
             this.imageFolderAddToolStripMenuItem1.Name = "imageFolderAddToolStripMenuItem1";
             this.imageFolderAddToolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
             this.imageFolderAddToolStripMenuItem1.Text = "Image Folder Add";
-            this.imageFolderAddToolStripMenuItem1.Click += new System.EventHandler(this.ImageFolderAddToolStripMenuItem1Click);
             // 
             // toolStripSeparator1
             // 

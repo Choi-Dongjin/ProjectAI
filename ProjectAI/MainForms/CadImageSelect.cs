@@ -23,8 +23,6 @@ namespace ProjectAI.MainForms
         bool GridViewCheck = false;
         int firstOriginInputdata = -1;
         int firstCADInputdata = -1;
-        Image OriginTempImage;
-        Image CADTempImage;
 
         public string imageTempName;
         public CadImageSelect()
@@ -57,6 +55,9 @@ namespace ProjectAI.MainForms
         public string[] CADImageName; //CAD 이름
         public string[] CADImagePath; // 주소 + 이름 
 
+
+        public List<string> OriginGridList = new List<string>(); // OriginImage를 저장해놓은 list
+        public List<string> CADGridList = new List<string>(); // CADImage를 저장해놓은 list
         /// <summary>
         /// delegate UpdataFormStyleManager
         /// </summary>
@@ -108,7 +109,7 @@ namespace ProjectAI.MainForms
                 openFileDialog.InitialDirectory = @"\";
                 openFileDialog.Filter = "그림 파일 (*.jpg, *.png, *.bmp) | *.jpg; *.png; *.bmp; | 모든 파일 (*.*) | *.*;";
                 openFileDialog.Multiselect = true;
-
+                openFileDialog.RestoreDirectory = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string[] files = openFileDialog.SafeFileNames;
@@ -133,11 +134,24 @@ namespace ProjectAI.MainForms
                                 this.imageTempName = files[0];
                                 if (GridViewCheck)// Wizard
                                 {
+                                    int index = 0;
                                     this.OriginGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-                                    this.pictureBox1.Image = OriginTempImage;
-                                    if (OriginTempImage != null)
-                                        OriginTempImage.Dispose();
-                                    GridInputData(true, files, filesPath);
+                                    this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
+
+                                    #region GridView에 데이터 Add와 최신 데이터파일로 cell 이동
+                                    int beforeOriginRowsCount = OriginGridView.Rows.Count;
+                                    GridInputData(true, files, filesPath); // GridView에 데이터 Add
+                                    int afterOriginRowsCount = OriginGridView.Rows.Count;
+                                    if (beforeOriginRowsCount == afterOriginRowsCount)
+                                        index = beforeOriginRowsCount - 1;
+                                    else
+                                        index = beforeOriginRowsCount;
+                                    Console.WriteLine(index);
+                                    OriginGridView.FirstDisplayedScrollingRowIndex = index;
+                                    OriginGridView.Refresh();
+                                    OriginGridView.CurrentCell = OriginGridView.Rows[index].Cells[0];
+                                    OriginGridView.Rows[index].Cells[1].Selected = true;
+                                    #endregion
                                 }
                                 else
                                     this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
@@ -181,11 +195,23 @@ namespace ProjectAI.MainForms
                                 this.CADImagePath = filesPath;
                                 if (GridViewCheck) // Wizard
                                 {
+                                    int index = 0;
                                     this.CADGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-                                    this.pictureBox2.Image = CADTempImage;
-                                    if (CADTempImage != null)
-                                        CADTempImage.Dispose();
-                                    GridInputData(false, files, filesPath);
+                                    this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
+
+                                    #region GridView에 데이터 추가, 최신 데이터파일로 cell 이동
+                                    int beforeCADRowsCount = CADGridView.Rows.Count;
+                                    GridInputData(false, files, filesPath); // GridView에 데이터 추가
+                                    int afterCADRowsCount = CADGridView.Rows.Count;
+                                    if (afterCADRowsCount == beforeCADRowsCount)
+                                        index = beforeCADRowsCount - 1;
+                                    else
+                                        index = beforeCADRowsCount;
+                                    CADGridView.FirstDisplayedScrollingRowIndex = index;
+                                    CADGridView.Refresh();
+                                    CADGridView.CurrentCell = CADGridView.Rows[index].Cells[0];
+                                    CADGridView.Rows[index].Cells[1].Selected = true;
+                                    #endregion
                                 }
                                 else
                                     this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));                              
@@ -196,28 +222,34 @@ namespace ProjectAI.MainForms
             }
         }
 
+        /// <summary>
+        /// GridView에 데이터 Add
+        /// </summary>
+        /// <param name="gridCheck"></param> Origin인지 CAD인지 판별
+        /// <param name="files"></param> 파일 이름
+        /// <param name="filesPath"></param> 파일의 전체경로
         private void GridInputData(bool gridCheck, string[] files, string[] filesPath)
         {
-            if (gridCheck)
+            if (gridCheck) //OriginImage
             {
                 for (int i = 0; i < files.Length; i++)
                 {
                     Console.WriteLine($"{i}: {files[i]}");
 
                     bool check = true;
-                    var items = this.OriginGridView.Rows.Cast<DataGridViewRow>()
-                        .Where(row => row.Cells[1].Value.ToString() == files[i]);
+                    var items = this.OriginGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
 
                     foreach (DataGridViewRow row in items)
                         check = false;
                     if (check)
                     {
                         this.OriginGridView.Rows.Add(OriginNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                        OriginGridList.Add(files[i]);
                         OriginNum++;
                     }
                 }
             }
-            else
+            else //CADImage
             {
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -230,6 +262,7 @@ namespace ProjectAI.MainForms
                     if (check)
                     {
                         this.CADGridView.Rows.Add(CADNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                        CADGridList.Add(files[i]);
                         CADNum++;
                     }
                 }
@@ -241,10 +274,6 @@ namespace ProjectAI.MainForms
             GridViewCheck = true;
             
             //OriginGridView Setup
-            this.OriginGridView.DataSource = null;
-            this.OriginGridView.Columns.Clear();
-            this.OriginGridView.Rows.Clear();
-            this.OriginGridView.Refresh();
             this.OriginGridView.ColumnCount = 3;
             this.OriginGridView.Columns[0].Name = "No";
             this.OriginGridView.Columns[1].Name = "File Name";
@@ -254,10 +283,6 @@ namespace ProjectAI.MainForms
             this.OriginGridView.Columns["File Path"].HeaderText = "File Path";
 
             //CADGridView Setup
-            this.CADGridView.DataSource = null;
-            this.CADGridView.Columns.Clear();
-            this.CADGridView.Rows.Clear();
-            this.CADGridView.Refresh();
             this.CADGridView.ColumnCount = 3;
             this.CADGridView.Columns[0].Name = "No";
             this.CADGridView.Columns[1].Name = "File Name";
@@ -276,7 +301,7 @@ namespace ProjectAI.MainForms
                 string FileName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = FileName
                 string FilePath = row.Cells[2].Value.ToString(); // row의 컬럼(Cells[0]) = FilePath
                 this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
-                OriginTempImage = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
+                //OriginTempImage = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
                 if (this.pictureBox2.Image != null)
                 {
                     firstOriginInputdata++;
@@ -286,10 +311,10 @@ namespace ProjectAI.MainForms
                         if ((ConvertName = NameParsing(CADGridView.Rows[i].Cells[1].Value.ToString(), FileName)) != "")// 이름_CAD -> 이름_NG or 이름_OK 로 변환
                         {
                             this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(CADGridView.Rows[i].Cells[2].Value.ToString(), ConvertName));
-                            // CADGridView.FirstDisplayedScrollingRowIndex = i;
+                            // 다른 GridView에서 같은 이름인 cell을 찾아 선택
                             CADGridView.Refresh();
                             CADGridView.CurrentCell = CADGridView.Rows[i].Cells[0];
-                            CADGridView.Rows[i].Cells[1].Selected = true;
+                            CADGridView.Rows[i].Cells[0].Selected = true;
                             return;
                         }
                     }
@@ -311,7 +336,7 @@ namespace ProjectAI.MainForms
                 string FileName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = FileName
                 string FilePath = row.Cells[2].Value.ToString(); // row의 컬럼(Cells[0]) = FilePath
                 this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
-                CADTempImage = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
+                //CADTempImage = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
                 if (this.pictureBox1.Image != null)
                 {
                     firstCADInputdata++;
@@ -321,10 +346,10 @@ namespace ProjectAI.MainForms
                         if ((ConvertName = NameParsing(OriginGridView.Rows[i].Cells[1].Value.ToString(), FileName)) != "")// 이름_CAD -> 이름_NG or 이름_OK 로 변환
                         {
                             this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(OriginGridView.Rows[i].Cells[2].Value.ToString(), ConvertName));
-                            // OriginGridView.FirstDisplayedScrollingRowIndex = i;
+                            // 다른 GridView에서 같은 이름인 cell을 찾아 선택
                             OriginGridView.Refresh();
                             OriginGridView.CurrentCell = OriginGridView.Rows[i].Cells[0];
-                            OriginGridView.Rows[i].Cells[1].Selected = true;
+                            OriginGridView.Rows[i].Cells[0].Selected = true;
                             return;
                         }
                     }
@@ -373,6 +398,45 @@ namespace ProjectAI.MainForms
             return "";
         }
 
+        public string NameUnderbarParsing(string FileName)
+        {
+            //#34 __일 때 문제 있음
+            //variable
+            string result = "";
+            string[] SplitFileName = FileName.Split(new string[] { "_", "." }, StringSplitOptions.RemoveEmptyEntries); //이름 | .jpg
+
+            int Fcount = SplitFileName.Count();
+            for (int i = 0; i < Fcount - 2; i++)
+                result += SplitFileName[i] + "_"; //이름_
+            return result;
+        }
+
+        public int NameParsingCompare(string NameInGrid, string FileName)
+        {
+            //variable
+            string result = "";
+            string CmpName = "";
+
+            string GridClassifyName;
+
+            //GridName
+            string[] GridClassify = NameInGrid.Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries); // 이름 | CAD, NG, OK (+ .확장자)
+            int GridClassifyCount = GridClassify.Count();
+            GridClassifyName = GridClassify[GridClassifyCount - 1];  // CAD, NG, OK (+ .확장자)
+
+            string[] SplitFileName = FileName.Split(new string[] { "_", "." }, StringSplitOptions.RemoveEmptyEntries); //이름 | .jpg
+            string[] SplitGridName = NameInGrid.Split(new string[] { "_", "." }, StringSplitOptions.RemoveEmptyEntries); //이름 |.jpg
+
+            int Fcount = SplitFileName.Count();
+            for (int i = 0; i < Fcount - 2; i++)
+                result += SplitFileName[i] + "_"; //이름_  Target
+
+            int Gcount = SplitGridName.Count();
+            for (int i = 0; i < Gcount - 2; i++)
+                CmpName += SplitGridName[i] + "_"; //이름_  circuit
+
+            return (string.Compare(result, CmpName));
+        }
 
         /// <summary>
         /// cell column Sort
@@ -403,11 +467,6 @@ namespace ProjectAI.MainForms
                 e.SortResult = string.Compare(e.CellValue1.ToString(), e.CellValue2.ToString());
 
             e.Handled = true;
-        }
-
-        private void CADGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
