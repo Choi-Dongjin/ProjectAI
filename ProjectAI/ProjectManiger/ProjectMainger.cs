@@ -4461,22 +4461,5 @@ namespace ProjectAI
             }
             return trainData;
         }
-
-        public Image ZoomIn(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
-        {
-            //MessageBox.Show("mouse wheel test : zoom in");
-            //Cv2.ImShow("dst", OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBox.Image));
-            imageZoomInOut.ratio *= 1.1;
-            Bitmap bm = new Bitmap(pictureBox.Image, Convert.ToInt32(pictureBox.Image.Width * imageZoomInOut.ratio), Convert.ToInt32(pictureBox.Image.Height * imageZoomInOut.ratio));
-            Graphics gpu = Graphics.FromImage(bm);
-            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-           // Bitmap bm =new Bitmap(pictureBox.Image);
-            return bm;
-        }
-        public void ZoomOut(PictureBox pictureBox, ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
-        {
-            //MessageBox.Show("mouse wheel test : zoom out");
-            imageZoomInOut.ratio *= 0.9F;
-        }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -529,8 +530,69 @@ namespace ProjectAI.ProjectManiger
                 Console.WriteLine(dDeltaE);
             }
         }
+
+
+        public static void ImageZoom(ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoom)
+        {
+            int x = imageZoom.mouseMovePoint.X;
+            int y = imageZoom.mouseMovePoint.Y;
+
+            double dPixelX = (imageZoom.iHorzScrollBarPos + x + imageZoom.dCompensationX) / imageZoom.dNewScale;
+            double dPixelY = (imageZoom.iVertScrollBarPos + y + imageZoom.dCompensationY) / imageZoom.dNewScale;
+            imageZoom.dNewScale = imageZoom.dInitialScale * Math.Pow(imageZoom.dScaleRatio, imageZoom.iScaleTimes);
+
+            if (imageZoom.iScaleTimes != 0)
+            {
+                int iW = imageZoom.iOrgW;
+                int iH = imageZoom.iOrgH;
+                imageZoom.iHorzScrollBarRange_Max = (int)(imageZoom.dNewScale * iW - imageZoom.dInitialScale * iW);
+                imageZoom.iVertScrollBarRange_Max = (int)(imageZoom.dNewScale * iH - imageZoom.dInitialScale * iH);
+                int iBarPosX = (int)(dPixelX * imageZoom.dNewScale - x + 0.5);
+                int iBarPosY = (int)(dPixelY * imageZoom.dNewScale - y + 0.5);
+                SetHorzBarPos(iBarPosX, ref imageZoom);
+                SetVertBarPos(iBarPosY, ref imageZoom);
+                imageZoom.dCompensationX = -iBarPosX + (dPixelX * imageZoom.dNewScale - x);
+                imageZoom.dCompensationY = -iBarPosY + (dPixelY * imageZoom.dNewScale - y);
+            }
+            else
+            {
+                imageZoom.iHorzScrollBarPos = 0;
+                imageZoom.iVertScrollBarPos = 0;
+            }
+        }
+
+        public static void ImageMove(ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoom)
+        {
+            int x = imageZoom.mouseMovePoint.X;
+            int y = imageZoom.mouseMovePoint.Y;
+            int RbuttonOffsetX = x - imageZoom.ptRButtonDown.X;
+            int RbuttonOffsetY = y - imageZoom.ptRButtonDown.Y;
+            int iBarPosX = imageZoom.iHorzScrollBarPos_copy - RbuttonOffsetX;
+            SetHorzBarPos(iBarPosX, ref imageZoom);
+
+            int iBarPosY = imageZoom.iVertScrollBarPos_copy - RbuttonOffsetY;
+            SetVertBarPos(iBarPosY, ref imageZoom);
+        }
+
+
+        public static void SetHorzBarPos(int ipos, ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            if (ipos > imageZoomInOut.iHorzScrollBarRange_Max)
+                imageZoomInOut.iHorzScrollBarPos = imageZoomInOut.iHorzScrollBarRange_Max;
+            else if (ipos < 0)
+                imageZoomInOut.iHorzScrollBarPos = imageZoomInOut.iHorzScrollBarRange_Min;
+            else
+                imageZoomInOut.iHorzScrollBarPos = ipos;
+        }
+
+        public static void SetVertBarPos(int ipos, ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
+        {
+            if (ipos > imageZoomInOut.iVertScrollBarRange_Max)
+                imageZoomInOut.iVertScrollBarPos = imageZoomInOut.iVertScrollBarRange_Max;
+            else if (ipos < 0)
+                imageZoomInOut.iVertScrollBarPos = imageZoomInOut.iVertScrollBarRange_Min;
+            else
+                imageZoomInOut.iVertScrollBarPos = ipos;
+        }
     }
-
-
-
 }
