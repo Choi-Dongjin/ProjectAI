@@ -285,6 +285,13 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     WorkSpaceData.m_activeProjectMainger.CADImageMultiSelect(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
+        private void CADImageForderWizardToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (WorkSpaceData.m_activeProjectMainger != null)
+                if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
+                    WorkSpaceData.m_activeProjectMainger.CADImageFolderSelect(this.gridImageList, this.ckbMdataGridViewAutoSize);
+        }
+
         private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)
         {
             int size = 0;
@@ -307,7 +314,5 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 }
             }
         }
-
-        
     }
 }

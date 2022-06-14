@@ -26,17 +26,16 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private string imgName;
         private string CADImgName;
         private string CADImgFolder;
-
+        public Rectangle ROI;
         private Bitmap tempPic1;
         private Bitmap tempPic2;
 
-        public struct ImageZoomInOut
-        {
+        //pictureBox Zoom
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox3;
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox4;
 
-            public System.Drawing.Point mouseMovePoint;
-            public System.Drawing.Point rectangleCenterPoint;
-            public Rectangle ROI;
-        }
 
         public struct RectanglePaint
         {
@@ -55,20 +54,19 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             public int Height;
         }
 
-        public ImageZoomInOut image1ZoomInOut;
-        public ImageZoomInOut image2ZoomInOut;
-
         public RectanglePaint regionSelect1;
         public RectanglePaint regionSelect2;
 
         public CadImageViewer()
         {
             InitializeComponent();
+            this.imageToolUseingPictureBox1 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox1);
+            this.imageToolUseingPictureBox2 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox2);
+            this.imageToolUseingPictureBox3 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox3);
+            this.imageToolUseingPictureBox4 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox4);
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
             OverlayUISetUp();
-            pictureBox1.MouseWheel += new MouseEventHandler(PictureBox1MouseWheel);
-            //pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
   
             SetRectangle(regionSelect1);
             SetRectangle(regionSelect2);
@@ -91,11 +89,15 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             {
                 this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
                 this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                this.pictureBox3.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                this.pictureBox4.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
             }
             else // Dark로 변경시 진입
             {
                 this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
                 this.pictureBox2.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                this.pictureBox3.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                this.pictureBox4.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
             }
 
             this.metroStyleManager1.Style = m_StyleManager.Style;
@@ -106,44 +108,25 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             this.tempPic1 = originImage;
             this.bitmapOriginImage = originImage;
-            this.pictureBox1.Image = originImage;
+            //this.pictureBox1.Image = originImage;
+            this.BitmapImageInput1(originImage);
         }
 
         public void PrintCADImage(Bitmap cadImage)
         {
             this.tempPic2 = cadImage;
             this.bitmapCADImage = cadImage;
-            this.pictureBox2.Image = cadImage;
+            //this.pictureBox2.Image = cadImage;
+            this.BitmapImageInput2(cadImage);
         }
 
         public void PrintOverlayImage(Bitmap cadImage)
         {
             this.bitmapCADImage = cadImage;
-            this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
-            
+            //this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
+            this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate));
         }
 
-        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
-            {
-
-            }
-            else
-            {
-            }
-        }
-
-        private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
-            {
-
-            }
-            else
-            {
-            }
-        }
 
 
         /// <summary>
@@ -289,7 +272,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         /// <param name="e"></param>
         private void PictureBox1MouseMove(object sender, MouseEventArgs e)
         {
-            this.image1ZoomInOut.mouseMovePoint = e.Location;
             if (this.regionSelect1.leftClick)
                 this.regionSelect1.endPoint = e.Location;
             this.pictureBox1.Refresh();
@@ -310,9 +292,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 
                 Rectangle rectangle = GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint);
  
-                this.image1ZoomInOut.ROI = rectangle;
+                this.ROI = rectangle;
                 //this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
-                //this.pictureBox1.Image = ProjectAI.ProjectManiger.CustomImageProcess.CropImage(this.pictureBox1.Image, image1ZoomInOut.ROI); //Crop버튼을 클릭했을 때 if문으로 활성화
             }
             this.pictureBox1.Cursor = Cursors.Default;
         }
@@ -335,7 +316,24 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         private void PictureBox1MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.pictureBox1.Image = tempPic1;
+            BitmapImageInput1(tempPic1);
+        }
+
+        public void BitmapImageInput1(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
+        }
+        public void BitmapImageInput2(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
+        }
+        public void BitmapImageInput3(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox3.InputBitmapImage(bitmap);
+        }
+        public void BitmapImageInput4(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox4.InputBitmapImage(bitmap);
         }
     }
 }

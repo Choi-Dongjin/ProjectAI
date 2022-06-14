@@ -583,6 +583,12 @@
     <None Include="Resources\Error2TestW.gif" />
     <None Include="Resources\pcb_board_origin.png" />
     <None Include="Resources\pcb-board.gif" />
+    <None Include="Resources\folderCAD.bmp" />
+    <None Include="Resources\CADimage.png" />
+    <None Include="Resources\CADWizard.png" />
+    <None Include="Resources\folderCAD.png" />
+    <None Include="Resources\Initimage.png" />
+    <None Include="Resources\CADfolder.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup>

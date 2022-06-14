@@ -382,4 +382,16 @@
   <data name="pcb_board_origin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pcb_board_origin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CADimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CADimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CADWizard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CADWizard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Initimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Initimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CADfolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CADfolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
