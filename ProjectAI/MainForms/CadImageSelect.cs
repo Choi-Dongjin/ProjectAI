@@ -255,8 +255,7 @@ namespace ProjectAI.MainForms
                 {
                     Console.WriteLine($"{i}: {files[i]}");
                     bool check = true;
-                    var items = this.CADGridView.Rows.Cast<DataGridViewRow>()
-                        .Where(row => row.Cells[1].Value.ToString() == files[i]);
+                    var items = this.CADGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
 
                     foreach (DataGridViewRow row in items)
                         check = false;
@@ -299,14 +298,15 @@ namespace ProjectAI.MainForms
             {
                 string ConvertName;
                 DataGridViewRow row = this.OriginGridView.SelectedRows[0]; //선택된 Row 값 가져옴.
-                string FileName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = FileName
-                string FilePath = row.Cells[2].Value.ToString(); // row의 컬럼(Cells[0]) = FilePath
+                string FileName = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[1]) = FileName
+                string FilePath = row.Cells[2].Value.ToString(); // row의 컬럼(Cells[2]) = FilePath
                 this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
                 //OriginTempImage = CustomIOMainger.LoadBitmap(Path.Combine(FilePath, FileName));
                 if (this.pictureBox2.Image != null)
                 {
                     firstOriginInputdata++;
                     int CADRowsCount = CADGridView.Rows.Count;
+
                     for (int i = 0; i < CADRowsCount; i++)
                     {
                         if ((ConvertName = NameParsing(CADGridView.Rows[i].Cells[1].Value.ToString(), FileName)) != "")// 이름_CAD -> 이름_NG or 이름_OK 로 변환

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -533,8 +535,32 @@ namespace ProjectAI.ProjectManiger
                 Console.WriteLine(dDeltaE);
             }
         }
+
+
+
+        public static Bitmap CropImage(Image image, Rectangle ROI)
+        {
+            try
+            {
+                Bitmap bmpImage = new Bitmap(ROI.Width, ROI.Height);
+                using (Graphics graphics = Graphics.FromImage(bmpImage))
+                {
+                    graphics.CompositingMode = CompositingMode.SourceCopy;
+                    graphics.CompositingQuality = CompositingQuality.HighQuality;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    graphics.DrawImage(image, -ROI.X, -ROI.Y);
+                    return bmpImage;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                GC.Collect();
+            }
+            Bitmap exbmpImage = new Bitmap(image);
+            return exbmpImage;
+        }
     }
-
-
-
 }

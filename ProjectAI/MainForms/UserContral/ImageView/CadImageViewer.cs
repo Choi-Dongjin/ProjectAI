@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using MetroFramework.Components;
 using System.IO;
 using OpenCvSharp;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ProjectAI.MainForms.UserContral.ImageView
 {
@@ -25,49 +27,62 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private string CADImgName;
         private string CADImgFolder;
 
-        private bool bIsClick = false;
+        private Bitmap tempPic1;
+        private Bitmap tempPic2;
 
         public struct ImageZoomInOut
         {
-            public double ratio;
-            public System.Drawing.Point imgPoint; //마우스 포인터를 저장할 Point 변수 (확대축소의 중심이 되는 부분 저장)
-            public Rectangle convertImage;
-            public System.Drawing.Point pntMouseClick;
 
+            public System.Drawing.Point mouseMovePoint;
+            public System.Drawing.Point rectangleCenterPoint;
+            public Rectangle ROI;
         }
-        
+
+        public struct RectanglePaint
+        {
+            public bool selectingArea;
+            public System.Drawing.Point startPoint;
+            public System.Drawing.Point endPoint;
+            public System.Drawing.Point imageMovePoint;
+            public bool leftClick;
+            public bool rightClick;
+        }
+
+        public struct RectSize
+        {
+            public System.Drawing.Point pos;
+            public int Width; 
+            public int Height;
+        }
+
         public ImageZoomInOut image1ZoomInOut;
         public ImageZoomInOut image2ZoomInOut;
+
+        public RectanglePaint regionSelect1;
+        public RectanglePaint regionSelect2;
 
         public CadImageViewer()
         {
             InitializeComponent();
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
+            OverlayUISetUp();
             pictureBox1.MouseWheel += new MouseEventHandler(PictureBox1MouseWheel);
-            pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
-            SetImageZoomInout(image1ZoomInOut, this.pictureBox1);
-            SetImageZoomInout(image2ZoomInOut, this.pictureBox2);
+            //pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
+  
+            SetRectangle(regionSelect1);
+            SetRectangle(regionSelect2);
         }
-        public void SetImageZoomInout(ImageZoomInOut imageZoomInOut, PictureBox pictureBox)
+
+
+
+        private void SetRectangle(RectanglePaint regionSelect)
         {
-            imageZoomInOut.ratio = 1.0F;
-            //imageZoomInOut.imgPoint = new System.Drawing.Point(pictureBox.Width / 2, pictureBox.Height / 2); // 중심
-            //imageZoomInOut.imgRect = new Rectangle(0, 0, pictureBox.Width, pictureBox.Height);
-            //imageZoomInOut.picX = this.pictureBox1.Size.Width;
-            //imageZoomInOut.picY = this.pictureBox1.Size.Height;
+            regionSelect.selectingArea = false;
+            regionSelect.leftClick = false;
+            regionSelect.rightClick = false;
         }
 
-
-        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
-        {
-
-        }
 
         private void UpdataFormStyleManager(MetroStyleManager m_StyleManager)
         {
@@ -89,64 +104,73 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         public void PrintOrignalImage(Bitmap originImage)
         {
-            this.bitmapOriginImage = originImage;
+            this.tempPic1 = originImage;
+            this.BitmapOriginImage = originImage;
             this.pictureBox1.Image = originImage;
         }
 
         public void PrintCADImage(Bitmap cadImage)
         {
-            this.bitmapCADImage = cadImage;
+            this.tempPic2 = cadImage;
+            this.BitmapCADImage = cadImage;
             this.pictureBox2.Image = cadImage;
         }
 
         public void PrintOverlayImage(Bitmap cadImage)
         {
-            this.bitmapCADImage = cadImage;
-            this.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
+            this.BitmapCADImage = cadImage;
+            this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, this.TrackBar.Value * this.outputRate);
             
         }
 
-        private void OverlayViewCheckedChanged(object sender, EventArgs e)
+        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
         {
-            if (OverlayViewCheckBox.Checked)
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
             {
-                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
-                {
-                    string selectImagePath = gridViewImageList.GetSelectImageName();
 
-                    this.CADImageLabel.BackColor = System.Drawing.Color.ForestGreen;
-                    this.CADImageLabel.Text = "OverlayImage";
-
-                    this.lblMCADImage.Text = "OverlayImage";
-                    this.panelMCADImage.BackgroundImage = global::ProjectAI.Properties.Resources.border1DG;
-
-                    this.TrackBar.Visible = true;
-                    this.TrackbarNumber.Visible = true;
-                    this.tableLayoutPanel1.Visible = true;
-                    this.OverlayUISetUp();
-                    WorkSpaceData.m_activeProjectMainger.PrintImage(selectImagePath);
-                }
             }
             else
             {
-                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
-                {
-                    string selectImagePath = gridViewImageList.GetSelectImageName();
-                    
-                    this.CADImageLabel.BackColor = System.Drawing.Color.Lime;
-                    this.CADImageLabel.Text = "CADImage";
-
-                    this.lblMCADImage.Text = "CADImage";
-                    this.panelMCADImage.BackgroundImage = global::ProjectAI.Properties.Resources.border1G;
-
-                    this.TrackBar.Visible = false;
-                    this.TrackbarNumber.Visible = false;
-                    this.tableLayoutPanel1.Visible = false;
-                    WorkSpaceData.m_activeProjectMainger.PrintImage(selectImagePath);
-                }
             }
         }
 
+        private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
+            {
+
+            }
+            else
+            {
+            }
+        }
+
+
+        /// <summary>
+        /// 사각형 구하기
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
+        private Rectangle GetRectangle(System.Drawing.Point point1, System.Drawing.Point point2)
+        {
+            int x = Math.Min(point1.X, point2.X);
+            int y = Math.Min(point1.Y, point2.Y);
+
+            int width = Math.Abs(point1.X - point2.X);
+            int height = Math.Abs(point1.Y - point2.Y);
+
+            return new Rectangle(x, y, width, height);
+        }
+
+        private System.Drawing.Point GetRectangleCenterPoint(Rectangle region)
+        {
+            System.Drawing.Point centerPoint = new System.Drawing.Point((region.X + region.Width / 2), (region.Y + region.Height / 2));
+            return centerPoint;
+        }
+
+
+        # region 예전코드
         /// <summary>
         /// 원본이미지와 CAD이미지를 Overlay한다.
         /// </summary>
@@ -187,9 +211,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             else
                 this.pictureBox2.Image = null;
         }
+        #endregion
 
         /// <summary>
-        /// 
+        /// TrackBar Setting
         /// </summary>
         public void OverlayUISetUp()
         {
@@ -212,13 +237,14 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             {
                 if (this.bitmapCADImage != null)
                 {
+                    Console.WriteLine((double)this.TrackBar.Value);
                     double value = this.outputRate * (double)this.TrackBar.Value;
                     //double alpha = 1 - value;
                     //double beta = value;
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    this.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value);
+                    this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, value);
                 }
             }
             catch (Exception ex)
@@ -228,49 +254,88 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             }
         }
 
+
+        /// <summary>
+        /// 마우스 클릭 시
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PictureBox1MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+                this.regionSelect1.selectingArea = true;
+                this.regionSelect1.leftClick = true;
+                this.regionSelect1.startPoint = e.Location;
+                this.regionSelect1.endPoint = e.Location;
+
+                this.pictureBox1.Cursor = Cursors.Cross;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                this.regionSelect1.rightClick = true;
+                this.pictureBox1.Cursor = Cursors.Hand;
+            }
+            this.pictureBox1.Refresh();
+
+        }
+
+
+        /// <summary>
+        /// 마우스 이동
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PictureBox1MouseMove(object sender, MouseEventArgs e)
         {
-            if (bIsClick)
+            this.image1ZoomInOut.mouseMovePoint = e.Location;
+            if (this.regionSelect1.leftClick)
+                this.regionSelect1.endPoint = e.Location;
+            this.pictureBox1.Refresh();
+
+        }
+
+        /// <summary>
+        /// 마우스 클릭을 땠을 때
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PictureBox1MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
             {
-                //image1ZoomInOut.imgPoint.X = image1ZoomInOut.imgPoint.X + e.X - image1ZoomInOut.pntMouseClick.X;
-                //image1ZoomInOut.imgPoint.Y = image1ZoomInOut.imgPoint.Y + e.Y - image1ZoomInOut.pntMouseClick.Y;
+                this.regionSelect1.selectingArea = false;
+                this.regionSelect1.leftClick = false;
+                
+                Rectangle rectangle = GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint);
+ 
+                this.image1ZoomInOut.ROI = rectangle;
+                //this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
+                this.pictureBox1.Image = ProjectAI.ProjectManiger.CustomImageProcess.CropImage(this.pictureBox1.Image, image1ZoomInOut.ROI); //Crop버튼을 클릭했을 때 if문으로 활성화
+            }
+            this.pictureBox1.Cursor = Cursors.Default;
+        }
 
-                //if (image1ZoomInOut.imgPoint.X > 0)
-                //{
-                //    image1ZoomInOut.imgPoint.X = 0;
-                //}
-                //if (image1ZoomInOut.imgPoint.Y > 0)
-                //{
-                //    image1ZoomInOut.imgPoint.Y = 0;
-                //}
+        private void PictureBox1Paint(object sender, PaintEventArgs e)
+        {
+            if (this.regionSelect1.selectingArea)
+            {
+                using (Pen pen = new Pen(Color.GreenYellow, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint));
 
-                //if (image1ZoomInOut.imgPoint.X + this.pictureBox1.Image.Width < image1ZoomInOut.picX)
-                //{
-                //    image1ZoomInOut.imgPoint.X = image1ZoomInOut.picX - this.pictureBox1.Image.Width;
-                //}
-                //if (image1ZoomInOut.imgPoint.Y + this.pictureBox1.Image.Height < image1ZoomInOut.picY)
-                //{
-                //    image1ZoomInOut.imgPoint.Y = image1ZoomInOut.picY - this.pictureBox1.Image.Height;
-                //}
+                    pen.Color = Color.Green;
+                    pen.DashPattern = new float[] { 5, 5 };
 
-                //image1ZoomInOut.pntMouseClick = e.Location;
-
-                //pictureBox1.Invalidate();
+                    e.Graphics.DrawRectangle(pen, GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint));
+                }
             }
         }
 
-        private void PictureBox1MouseDown(object sender, MouseEventArgs e)
+        private void PictureBox1MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            bIsClick = true;
-
-            image1ZoomInOut.pntMouseClick.X = e.X;
-            image1ZoomInOut.pntMouseClick.Y = e.Y;
+            this.pictureBox1.Image = tempPic1;
         }
-
-        private void PictureBox1MouseUp(object sender, MouseEventArgs e)
-        {
-            bIsClick = false;
-        }
-
     }
 }

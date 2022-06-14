@@ -2066,6 +2066,16 @@ namespace ProjectAI
                             imageViewer.pictureBox2.Image.Dispose();
                             imageViewer.pictureBox2.Image = null;
                         }
+                        if (imageViewer.pictureBox3.Image != null)
+                        {
+                            imageViewer.pictureBox3.Image.Dispose();
+                            imageViewer.pictureBox3.Image = null;
+                        }
+                        if (imageViewer.pictureBox4.Image != null)
+                        {
+                            imageViewer.pictureBox4.Image.Dispose();
+                            imageViewer.pictureBox4.Image = null;
+                        }
 
                         //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
                         imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
@@ -2078,29 +2088,24 @@ namespace ProjectAI
                             {
                                 string CADImageName = Path.GetFileName(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
 
-                                if (imageViewer.OverlayViewCheckBox.Checked)
-                                {
-                                    string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
-                                    string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
+                                
+                                string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
+                                string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
 
-                                    Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
-                                    imageViewer.PrintOverlayImage(cadBitmapImage);
+                                Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
+                                imageViewer.PrintOverlayImage(cadBitmapImage);
 
-                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
-                                    // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
-                                    // imageViewer.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignaBitmapImagel, cadBitmapImage, 0.8);
-                                }
-                                else
+                                // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
+                                // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
+                                // imageViewer.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignaBitmapImagel, cadBitmapImage, 0.8);
+                                
+                                if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
                                 {
-                                    if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
-                                    {
-                                        string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
-                                        //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
-                                        imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(cadImagePath));
-                                    }
-                                    //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
                                     //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
+                                    imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(cadImagePath));
                                 }
+                                //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
+                                //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
                             }
                         }
                     }

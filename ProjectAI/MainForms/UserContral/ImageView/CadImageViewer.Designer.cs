@@ -30,37 +30,43 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panelMOrignalImage = new MetroFramework.Controls.MetroPanel();
-            this.lblMOriginImage = new MetroFramework.Controls.MetroLabel();
-            this.OverlayViewCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.OriginImageLabel = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panelMCADImage = new MetroFramework.Controls.MetroPanel();
-            this.lblMCADImage = new MetroFramework.Controls.MetroLabel();
-            this.CADImageLabel = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
+            this.HitmapImageLabel = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
+            this.OverlayImageLabel = new System.Windows.Forms.Label();
             this.TrackbarNumber = new System.Windows.Forms.Label();
             this.TrackBar = new MetroFramework.Controls.MetroTrackBar();
-            this.metroPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.panelMOrignalImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panelMCADImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
+            this.CADImageLabel = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
+            this.OriginImageLabel = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
+            this.metroPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.metroPanel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.metroPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.metroPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.metroPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // metroStyleManager1
+            // 
+            this.metroStyleManager1.Owner = this;
             // 
             // metroPanel1
             // 
-            this.metroPanel1.Controls.Add(this.splitContainer1);
+            this.metroPanel1.Controls.Add(this.tableLayoutPanel1);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
@@ -73,144 +79,158 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // splitContainer1
+            // tableLayoutPanel1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.metroPanel5, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.metroPanel4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.metroPanel3, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.metroPanel2, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(826, 648);
+            this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // splitContainer1.Panel1
+            // metroPanel5
             // 
-            this.splitContainer1.Panel1.AutoScroll = true;
-            this.splitContainer1.Panel1.Controls.Add(this.panelMOrignalImage);
-            this.splitContainer1.Panel1.Controls.Add(this.OverlayViewCheckBox);
-            this.splitContainer1.Panel1.Controls.Add(this.OriginImageLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            this.metroPanel5.Controls.Add(this.HitmapImageLabel);
+            this.metroPanel5.Controls.Add(this.pictureBox4);
+            this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroPanel5.HorizontalScrollbarBarColor = true;
+            this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.HorizontalScrollbarSize = 10;
+            this.metroPanel5.Location = new System.Drawing.Point(416, 327);
+            this.metroPanel5.Name = "metroPanel5";
+            this.metroPanel5.Size = new System.Drawing.Size(407, 318);
+            this.metroPanel5.TabIndex = 3;
+            this.metroPanel5.VerticalScrollbarBarColor = true;
+            this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.VerticalScrollbarSize = 10;
             // 
-            // splitContainer1.Panel2
+            // HitmapImageLabel
             // 
-            this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Panel2.Controls.Add(this.panelMCADImage);
-            this.splitContainer1.Panel2.Controls.Add(this.CADImageLabel);
-            this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(826, 648);
-            this.splitContainer1.SplitterDistance = 403;
-            this.splitContainer1.TabIndex = 2;
+            this.HitmapImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HitmapImageLabel.AutoSize = true;
+            this.HitmapImageLabel.BackColor = System.Drawing.Color.Coral;
+            this.HitmapImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HitmapImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HitmapImageLabel.ForeColor = System.Drawing.Color.White;
+            this.HitmapImageLabel.Location = new System.Drawing.Point(0, 298);
+            this.HitmapImageLabel.Name = "HitmapImageLabel";
+            this.HitmapImageLabel.Size = new System.Drawing.Size(105, 20);
+            this.HitmapImageLabel.TabIndex = 6;
+            this.HitmapImageLabel.Text = "Hitmap Image";
+            this.HitmapImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panelMOrignalImage
+            // pictureBox4
             // 
-            this.panelMOrignalImage.BackgroundImage = global::ProjectAI.Properties.Resources.border1R;
-            this.panelMOrignalImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMOrignalImage.Controls.Add(this.lblMOriginImage);
-            this.panelMOrignalImage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelMOrignalImage.HorizontalScrollbarBarColor = true;
-            this.panelMOrignalImage.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelMOrignalImage.HorizontalScrollbarSize = 10;
-            this.panelMOrignalImage.Location = new System.Drawing.Point(0, 584);
-            this.panelMOrignalImage.Margin = new System.Windows.Forms.Padding(0);
-            this.panelMOrignalImage.Name = "panelMOrignalImage";
-            this.panelMOrignalImage.Size = new System.Drawing.Size(403, 34);
-            this.panelMOrignalImage.TabIndex = 6;
-            this.panelMOrignalImage.UseCustomBackColor = true;
-            this.panelMOrignalImage.VerticalScrollbarBarColor = true;
-            this.panelMOrignalImage.VerticalScrollbarHighlightOnWheel = false;
-            this.panelMOrignalImage.VerticalScrollbarSize = 10;
+            this.pictureBox4.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox4.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(407, 318);
+            this.pictureBox4.TabIndex = 3;
+            this.pictureBox4.TabStop = false;
             // 
-            // lblMOriginImage
+            // metroPanel4
             // 
-            this.lblMOriginImage.BackColor = System.Drawing.Color.Transparent;
-            this.lblMOriginImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMOriginImage.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.lblMOriginImage.Location = new System.Drawing.Point(0, 0);
-            this.lblMOriginImage.Name = "lblMOriginImage";
-            this.lblMOriginImage.Size = new System.Drawing.Size(403, 34);
-            this.lblMOriginImage.TabIndex = 2;
-            this.lblMOriginImage.Text = "Origin Image";
-            this.lblMOriginImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblMOriginImage.UseCustomBackColor = true;
+            this.metroPanel4.Controls.Add(this.OverlayImageLabel);
+            this.metroPanel4.Controls.Add(this.TrackbarNumber);
+            this.metroPanel4.Controls.Add(this.TrackBar);
+            this.metroPanel4.Controls.Add(this.pictureBox3);
+            this.metroPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroPanel4.HorizontalScrollbarBarColor = true;
+            this.metroPanel4.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel4.HorizontalScrollbarSize = 10;
+            this.metroPanel4.Location = new System.Drawing.Point(3, 327);
+            this.metroPanel4.Name = "metroPanel4";
+            this.metroPanel4.Size = new System.Drawing.Size(407, 318);
+            this.metroPanel4.TabIndex = 2;
+            this.metroPanel4.VerticalScrollbarBarColor = true;
+            this.metroPanel4.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel4.VerticalScrollbarSize = 10;
             // 
-            // OverlayViewCheckBox
+            // OverlayImageLabel
             // 
-            this.OverlayViewCheckBox.AutoSize = true;
-            this.OverlayViewCheckBox.Location = new System.Drawing.Point(3, 3);
-            this.OverlayViewCheckBox.Name = "OverlayViewCheckBox";
-            this.OverlayViewCheckBox.Size = new System.Drawing.Size(91, 15);
-            this.OverlayViewCheckBox.TabIndex = 2;
-            this.OverlayViewCheckBox.Text = "Overlay View";
-            this.OverlayViewCheckBox.UseSelectable = true;
-            this.OverlayViewCheckBox.CheckedChanged += new System.EventHandler(this.OverlayViewCheckedChanged);
+            this.OverlayImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.OverlayImageLabel.AutoSize = true;
+            this.OverlayImageLabel.BackColor = System.Drawing.Color.ForestGreen;
+            this.OverlayImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OverlayImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OverlayImageLabel.ForeColor = System.Drawing.Color.White;
+            this.OverlayImageLabel.Location = new System.Drawing.Point(0, 275);
+            this.OverlayImageLabel.Name = "OverlayImageLabel";
+            this.OverlayImageLabel.Size = new System.Drawing.Size(105, 20);
+            this.OverlayImageLabel.TabIndex = 5;
+            this.OverlayImageLabel.Text = "Overlay Image";
+            this.OverlayImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // OriginImageLabel
+            // TrackbarNumber
             // 
-            this.OriginImageLabel.BackColor = System.Drawing.Color.Tomato;
-            this.OriginImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.OriginImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OriginImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OriginImageLabel.Location = new System.Drawing.Point(0, 618);
-            this.OriginImageLabel.Name = "OriginImageLabel";
-            this.OriginImageLabel.Size = new System.Drawing.Size(403, 30);
-            this.OriginImageLabel.TabIndex = 1;
-            this.OriginImageLabel.Text = "Origin Image";
-            this.OriginImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.TrackbarNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TrackbarNumber.AutoSize = true;
+            this.TrackbarNumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrackbarNumber.Location = new System.Drawing.Point(102, 275);
+            this.TrackbarNumber.Name = "TrackbarNumber";
+            this.TrackbarNumber.Size = new System.Drawing.Size(40, 21);
+            this.TrackbarNumber.TabIndex = 7;
+            this.TrackbarNumber.Text = "0.50";
             // 
-            // pictureBox1
+            // TrackBar
             // 
-            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(403, 648);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseUp);
+            this.TrackBar.BackColor = System.Drawing.Color.Transparent;
+            this.TrackBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.TrackBar.Location = new System.Drawing.Point(0, 298);
+            this.TrackBar.Name = "TrackBar";
+            this.TrackBar.Size = new System.Drawing.Size(407, 20);
+            this.TrackBar.TabIndex = 6;
+            this.TrackBar.Text = "metroTrackBar1";
+            this.TrackBar.ValueChanged += new System.EventHandler(this.TrackBarValueChanged);
             // 
-            // panelMCADImage
+            // pictureBox3
             // 
-            this.panelMCADImage.BackColor = System.Drawing.Color.Transparent;
-            this.panelMCADImage.BackgroundImage = global::ProjectAI.Properties.Resources.border1G;
-            this.panelMCADImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMCADImage.Controls.Add(this.lblMCADImage);
-            this.panelMCADImage.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelMCADImage.HorizontalScrollbarBarColor = true;
-            this.panelMCADImage.HorizontalScrollbarHighlightOnWheel = false;
-            this.panelMCADImage.HorizontalScrollbarSize = 10;
-            this.panelMCADImage.Location = new System.Drawing.Point(0, 584);
-            this.panelMCADImage.Margin = new System.Windows.Forms.Padding(0);
-            this.panelMCADImage.Name = "panelMCADImage";
-            this.panelMCADImage.Size = new System.Drawing.Size(419, 34);
-            this.panelMCADImage.TabIndex = 5;
-            this.panelMCADImage.UseCustomBackColor = true;
-            this.panelMCADImage.VerticalScrollbarBarColor = true;
-            this.panelMCADImage.VerticalScrollbarHighlightOnWheel = false;
-            this.panelMCADImage.VerticalScrollbarSize = 10;
+            this.pictureBox3.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(407, 318);
+            this.pictureBox3.TabIndex = 3;
+            this.pictureBox3.TabStop = false;
             // 
-            // lblMCADImage
+            // metroPanel3
             // 
-            this.lblMCADImage.BackColor = System.Drawing.Color.Transparent;
-            this.lblMCADImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMCADImage.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.lblMCADImage.Location = new System.Drawing.Point(0, 0);
-            this.lblMCADImage.Name = "lblMCADImage";
-            this.lblMCADImage.Size = new System.Drawing.Size(419, 34);
-            this.lblMCADImage.TabIndex = 2;
-            this.lblMCADImage.Text = "CAD Image";
-            this.lblMCADImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblMCADImage.UseCustomBackColor = true;
+            this.metroPanel3.Controls.Add(this.CADImageLabel);
+            this.metroPanel3.Controls.Add(this.pictureBox2);
+            this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroPanel3.HorizontalScrollbarBarColor = true;
+            this.metroPanel3.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel3.HorizontalScrollbarSize = 10;
+            this.metroPanel3.Location = new System.Drawing.Point(416, 3);
+            this.metroPanel3.Name = "metroPanel3";
+            this.metroPanel3.Size = new System.Drawing.Size(407, 318);
+            this.metroPanel3.TabIndex = 1;
+            this.metroPanel3.VerticalScrollbarBarColor = true;
+            this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel3.VerticalScrollbarSize = 10;
             // 
             // CADImageLabel
             // 
+            this.CADImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CADImageLabel.AutoSize = true;
             this.CADImageLabel.BackColor = System.Drawing.Color.Lime;
-            this.CADImageLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.CADImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CADImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CADImageLabel.Location = new System.Drawing.Point(0, 618);
+            this.CADImageLabel.ForeColor = System.Drawing.Color.White;
+            this.CADImageLabel.Location = new System.Drawing.Point(0, 298);
             this.CADImageLabel.Name = "CADImageLabel";
-            this.CADImageLabel.Size = new System.Drawing.Size(419, 30);
-            this.CADImageLabel.TabIndex = 1;
+            this.CADImageLabel.Size = new System.Drawing.Size(85, 20);
+            this.CADImageLabel.TabIndex = 4;
             this.CADImageLabel.Text = "CAD Image";
             this.CADImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -220,55 +240,55 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(419, 648);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.Size = new System.Drawing.Size(407, 318);
+            this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
-            // metroStyleManager1
+            // metroPanel2
             // 
-            this.metroStyleManager1.Owner = this;
+            this.metroPanel2.Controls.Add(this.OriginImageLabel);
+            this.metroPanel2.Controls.Add(this.pictureBox1);
+            this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroPanel2.HorizontalScrollbarBarColor = true;
+            this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.HorizontalScrollbarSize = 10;
+            this.metroPanel2.Location = new System.Drawing.Point(3, 3);
+            this.metroPanel2.Name = "metroPanel2";
+            this.metroPanel2.Size = new System.Drawing.Size(407, 318);
+            this.metroPanel2.TabIndex = 0;
+            this.metroPanel2.VerticalScrollbarBarColor = true;
+            this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel2.VerticalScrollbarSize = 10;
             // 
-            // tableLayoutPanel1
+            // OriginImageLabel
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.TrackbarNumber, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.TrackBar, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 554);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(419, 30);
-            this.tableLayoutPanel1.TabIndex = 6;
-            this.tableLayoutPanel1.Visible = false;
+            this.OriginImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.OriginImageLabel.AutoSize = true;
+            this.OriginImageLabel.BackColor = System.Drawing.Color.Tomato;
+            this.OriginImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OriginImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OriginImageLabel.ForeColor = System.Drawing.Color.White;
+            this.OriginImageLabel.Location = new System.Drawing.Point(0, 298);
+            this.OriginImageLabel.Name = "OriginImageLabel";
+            this.OriginImageLabel.Size = new System.Drawing.Size(96, 20);
+            this.OriginImageLabel.TabIndex = 3;
+            this.OriginImageLabel.Text = "Origin Image";
+            this.OriginImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TrackbarNumber
+            // pictureBox1
             // 
-            this.TrackbarNumber.AutoSize = true;
-            this.TrackbarNumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TrackbarNumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrackbarNumber.Location = new System.Drawing.Point(3, 0);
-            this.TrackbarNumber.Name = "TrackbarNumber";
-            this.TrackbarNumber.Size = new System.Drawing.Size(44, 30);
-            this.TrackbarNumber.TabIndex = 3;
-            this.TrackbarNumber.Text = "0.50";
-            this.TrackbarNumber.Visible = false;
-            // 
-            // TrackBar
-            // 
-            this.TrackBar.BackColor = System.Drawing.Color.Transparent;
-            this.TrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TrackBar.Location = new System.Drawing.Point(53, 3);
-            this.TrackBar.Name = "TrackBar";
-            this.TrackBar.Size = new System.Drawing.Size(363, 24);
-            this.TrackBar.TabIndex = 2;
-            this.TrackBar.Text = "metroTrackBar1";
-            this.TrackBar.Visible = false;
-            this.TrackBar.ValueChanged += new System.EventHandler(this.TrackBarValueChanged);
+            this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(407, 318);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1Paint);
+            this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDoubleClick);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseUp);
             // 
             // CadImageViewer
             // 
@@ -277,39 +297,42 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.Controls.Add(this.metroPanel1);
             this.Name = "CadImageViewer";
             this.Size = new System.Drawing.Size(826, 648);
-            this.metroPanel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.panelMOrignalImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panelMCADImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
+            this.metroPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.metroPanel5.ResumeLayout(false);
+            this.metroPanel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.metroPanel4.ResumeLayout(false);
+            this.metroPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.metroPanel3.ResumeLayout(false);
+            this.metroPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.metroPanel2.ResumeLayout(false);
+            this.metroPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
+        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
         private MetroFramework.Controls.MetroPanel metroPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroPanel metroPanel5;
+        public System.Windows.Forms.PictureBox pictureBox4;
+        private MetroFramework.Controls.MetroPanel metroPanel4;
+        public System.Windows.Forms.PictureBox pictureBox3;
+        private MetroFramework.Controls.MetroPanel metroPanel3;
+        public System.Windows.Forms.PictureBox pictureBox2;
+        private MetroFramework.Controls.MetroPanel metroPanel2;
+        public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label OriginImageLabel;
         private System.Windows.Forms.Label CADImageLabel;
-        private MetroFramework.Components.MetroStyleManager metroStyleManager1;
-        public System.Windows.Forms.PictureBox pictureBox1;
-        public System.Windows.Forms.PictureBox pictureBox2;
-        public System.Windows.Forms.SplitContainer splitContainer1;
-        public MetroFramework.Controls.MetroCheckBox OverlayViewCheckBox;
-        private MetroFramework.Controls.MetroPanel panelMCADImage;
-        private MetroFramework.Controls.MetroLabel lblMCADImage;
-        private MetroFramework.Controls.MetroPanel panelMOrignalImage;
-        private MetroFramework.Controls.MetroLabel lblMOriginImage;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label OverlayImageLabel;
+        private System.Windows.Forms.Label HitmapImageLabel;
+        private MetroFramework.Controls.MetroTrackBar TrackBar;
         private System.Windows.Forms.Label TrackbarNumber;
-        public MetroFramework.Controls.MetroTrackBar TrackBar;
     }
 }
