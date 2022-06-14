@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -532,67 +533,30 @@ namespace ProjectAI.ProjectManiger
         }
 
 
-        public static void ImageZoom(ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoom)
+
+        public static Bitmap CropImage(Image image, Rectangle ROI)
         {
-            int x = imageZoom.mouseMovePoint.X;
-            int y = imageZoom.mouseMovePoint.Y;
-
-            double dPixelX = (imageZoom.iHorzScrollBarPos + x + imageZoom.dCompensationX) / imageZoom.dNewScale;
-            double dPixelY = (imageZoom.iVertScrollBarPos + y + imageZoom.dCompensationY) / imageZoom.dNewScale;
-            imageZoom.dNewScale = imageZoom.dInitialScale * Math.Pow(imageZoom.dScaleRatio, imageZoom.iScaleTimes);
-
-            if (imageZoom.iScaleTimes != 0)
+            try
             {
-                int iW = imageZoom.iOrgW;
-                int iH = imageZoom.iOrgH;
-                imageZoom.iHorzScrollBarRange_Max = (int)(imageZoom.dNewScale * iW - imageZoom.dInitialScale * iW);
-                imageZoom.iVertScrollBarRange_Max = (int)(imageZoom.dNewScale * iH - imageZoom.dInitialScale * iH);
-                int iBarPosX = (int)(dPixelX * imageZoom.dNewScale - x + 0.5);
-                int iBarPosY = (int)(dPixelY * imageZoom.dNewScale - y + 0.5);
-                SetHorzBarPos(iBarPosX, ref imageZoom);
-                SetVertBarPos(iBarPosY, ref imageZoom);
-                imageZoom.dCompensationX = -iBarPosX + (dPixelX * imageZoom.dNewScale - x);
-                imageZoom.dCompensationY = -iBarPosY + (dPixelY * imageZoom.dNewScale - y);
+                Bitmap bmpImage = new Bitmap(ROI.Width, ROI.Height);
+                using (Graphics graphics = Graphics.FromImage(bmpImage))
+                {
+                    graphics.CompositingMode = CompositingMode.SourceCopy;
+                    graphics.CompositingQuality = CompositingQuality.HighQuality;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    graphics.DrawImage(image, -ROI.X, -ROI.Y);
+                    return bmpImage;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                imageZoom.iHorzScrollBarPos = 0;
-                imageZoom.iVertScrollBarPos = 0;
+                Console.WriteLine(ex);
+                GC.Collect();
             }
-        }
-
-        public static void ImageMove(ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoom)
-        {
-            int x = imageZoom.mouseMovePoint.X;
-            int y = imageZoom.mouseMovePoint.Y;
-            int RbuttonOffsetX = x - imageZoom.ptRButtonDown.X;
-            int RbuttonOffsetY = y - imageZoom.ptRButtonDown.Y;
-            int iBarPosX = imageZoom.iHorzScrollBarPos_copy - RbuttonOffsetX;
-            SetHorzBarPos(iBarPosX, ref imageZoom);
-
-            int iBarPosY = imageZoom.iVertScrollBarPos_copy - RbuttonOffsetY;
-            SetVertBarPos(iBarPosY, ref imageZoom);
-        }
-
-
-        public static void SetHorzBarPos(int ipos, ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
-        {
-            if (ipos > imageZoomInOut.iHorzScrollBarRange_Max)
-                imageZoomInOut.iHorzScrollBarPos = imageZoomInOut.iHorzScrollBarRange_Max;
-            else if (ipos < 0)
-                imageZoomInOut.iHorzScrollBarPos = imageZoomInOut.iHorzScrollBarRange_Min;
-            else
-                imageZoomInOut.iHorzScrollBarPos = ipos;
-        }
-
-        public static void SetVertBarPos(int ipos, ref ProjectAI.MainForms.UserContral.ImageView.CadImageViewer.ImageZoomInOut imageZoomInOut)
-        {
-            if (ipos > imageZoomInOut.iVertScrollBarRange_Max)
-                imageZoomInOut.iVertScrollBarPos = imageZoomInOut.iVertScrollBarRange_Max;
-            else if (ipos < 0)
-                imageZoomInOut.iVertScrollBarPos = imageZoomInOut.iVertScrollBarRange_Min;
-            else
-                imageZoomInOut.iVertScrollBarPos = ipos;
+            Bitmap exbmpImage = new Bitmap(image);
+            return exbmpImage;
         }
     }
 }

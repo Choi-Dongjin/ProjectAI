@@ -32,42 +32,12 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         public struct ImageZoomInOut
         {
-            public double dInitialScale;
-            public double dNewScale;
-            public double dScaleRatio;
-            public double dCompensationX;
-            public double dCompensationY;
-            public int iScaleTimes;
-            public int iMaxScaleTimes;
-            public int iMinScaleTimes;
 
-            public int iOrgW;
-            public int iOrgH;
             public System.Drawing.Point mouseMovePoint;
-            public System.Drawing.Point ptRButtonDown;
             public System.Drawing.Point rectangleCenterPoint;
             public Rectangle ROI;
-
-            public int iHorzScrollBarPos;
-            public int iVertScrollBarPos;
-            public int iHorzScrollBarPos_copy;
-            public int iVertScrollBarPos_copy;
-
-            public int iHorzScrollBarRange_Min;
-            public int iHorzScrollBarRange_Max;
-            public int iVertScrollBarRange_Min;
-            public int iVertScrollBarRange_Max;
-            public RectSize size;
-
-
-            //3차 회선 보간법
-            public double p1;
-            double p2;
-            double p3;
-            double p4;
-            double v;
-
         }
+
         public struct RectanglePaint
         {
             public bool selectingArea;
@@ -99,37 +69,12 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             OverlayUISetUp();
             pictureBox1.MouseWheel += new MouseEventHandler(PictureBox1MouseWheel);
             //pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
-            SetImageZoomInout(ref image1ZoomInOut);
-            SetImageZoomInout(ref image2ZoomInOut);
+  
             SetRectangle(regionSelect1);
             SetRectangle(regionSelect2);
         }
 
-        public void SetImageZoomInout(ref ImageZoomInOut imageZoomInOut)
-        {
-            imageZoomInOut.iScaleTimes = 0;
-            imageZoomInOut.iMaxScaleTimes = 10;
-            imageZoomInOut.iMinScaleTimes = 0;
-            imageZoomInOut.dCompensationX = 0;
-            imageZoomInOut.dCompensationY = 0;
-            imageZoomInOut.dInitialScale = 1;
-            imageZoomInOut.dNewScale = 1;
-            imageZoomInOut.dScaleRatio = 1.25;
 
-            imageZoomInOut.iOrgW = 0;
-            imageZoomInOut.iOrgH = 0;
-
-            imageZoomInOut.iHorzScrollBarPos = 0;
-            imageZoomInOut.iVertScrollBarPos = 0;
-
-            imageZoomInOut.iHorzScrollBarRange_Min = 0;
-            imageZoomInOut.iHorzScrollBarRange_Max = 1;
-            imageZoomInOut.iVertScrollBarRange_Min = 0;
-            imageZoomInOut.iVertScrollBarRange_Max = 1;
-
-            SetInitScale(ref imageZoomInOut, 0.8);
-
-        }
 
         private void SetRectangle(RectanglePaint regionSelect)
         {
@@ -137,165 +82,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             regionSelect.leftClick = false;
             regionSelect.rightClick = false;
         }
-
-        public void SetInitScale(ref ImageZoomInOut imageZoomInOut, double dScale)
-        {
-            if (dScale <= 0)
-                return;
-
-            imageZoomInOut.dInitialScale = dScale;
-            imageZoomInOut.dNewScale = dScale;
-        }
-
-        //public static Bitmap ResizeImage(Image image, ImageZoomInOut imageZoomInOut)
-        //{
-        //    var destRect = new Rectangle(imageZoomInOut.size.pos.X, imageZoomInOut.size.pos.Y, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
-        //    var destImage = new Bitmap(image.Width, image.Height);
-
-
-        //    destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-        //    using (Graphics graphics = Graphics.FromImage(destImage))
-        //    {
-        //        graphics.CompositingMode = CompositingMode.SourceCopy;
-        //        graphics.CompositingQuality = CompositingQuality.HighQuality;
-        //        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-        //        graphics.SmoothingMode = SmoothingMode.HighQuality;
-        //        graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-        //        using (var wrapMode = new ImageAttributes())
-        //        {
-        //            wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-        //            graphics.DrawImage(image, destRect, 0, 0, imageZoomInOut.size.Width, imageZoomInOut.size.Height, GraphicsUnit.Pixel, wrapMode);
-        //        }
-        //    }
-        //    return destImage;
-        //}
-
-        public  Bitmap ResizeImage(Image image, ImageZoomInOut imageZoomInOut)
-        {
-            var destRect = imageZoomInOut.ROI;
-            var destImage = new Bitmap(image.Width, image.Height);
-
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (Graphics graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    int pointX = this.pictureBox1.Width / 2 + destRect.Width / 2;
-                    int pointY = this.pictureBox1.Height / 2 + destRect.Height / 2;
-
-                    graphics.DrawImage(image, destRect, pointX, pointY, destRect.Width, destRect.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-            return destImage;
-        }
-
-
-        //public static Bitmap Zoompicture(Image image, ImageZoomInOut imageZoomInOut)
-        //{
-        //    var destRect = new Rectangle(imageZoomInOut.size.pos.X, imageZoomInOut.size.pos.Y, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
-        //    Bitmap bm = new Bitmap(image, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
-        //    bm.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-        //    Graphics gpu = Graphics.FromImage(bm);
-        //    gpu.CompositingMode = CompositingMode.SourceCopy;
-        //    gpu.CompositingQuality = CompositingQuality.HighQuality;
-        //    gpu.InterpolationMode = InterpolationMode.HighQualityBicubic;
-        //    gpu.SmoothingMode = SmoothingMode.HighQuality;
-        //    gpu.PixelOffsetMode = PixelOffsetMode.HighQuality;
-        //    return bm;
-        //}
-
-
-
-
-        //private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
-        //{
-        //    this.pictureBox1.Image = tempPic1;
-        //    if ((e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0) && (image1ZoomInOut.iScaleTimes != image1ZoomInOut.iMaxScaleTimes))
-        //        image1ZoomInOut.iScaleTimes++;
-        //    else if ((e.Delta * SystemInformation.MouseWheelScrollLines / 120 < 0) && (image1ZoomInOut.iScaleTimes != image1ZoomInOut.iMinScaleTimes))
-        //        image1ZoomInOut.iScaleTimes--;
-
-        //    if (image1ZoomInOut.iScaleTimes == 0)
-        //        image1ZoomInOut.dCompensationX = image1ZoomInOut.dCompensationY = 0;
-        //    Console.Write("image1ZoomInOut.iScaleTimes: ");
-        //    Console.WriteLine(image1ZoomInOut.iScaleTimes);
-        //    image1ZoomInOut.iOrgW = this.pictureBox1.Width;
-        //    image1ZoomInOut.iOrgH = this.pictureBox1.Height;
-        //    ProjectAI.ProjectManiger.CustomImageProcess.ImageZoom(ref image1ZoomInOut);
-        //    image1ZoomInOut.size.pos = new System.Drawing.Point(image1ZoomInOut.iHorzScrollBarPos, image1ZoomInOut.iVertScrollBarPos);
-        //    image1ZoomInOut.size.Width = (int)(this.pictureBox1.Image.Width * image1ZoomInOut.dNewScale);
-        //    image1ZoomInOut.size.Height = (int)(this.pictureBox1.Image.Height * image1ZoomInOut.dNewScale);
-        //    Console.WriteLine(image1ZoomInOut.size.pos.X);
-        //    Console.WriteLine(image1ZoomInOut.size.pos.Y);
-        //    if (image1ZoomInOut.iScaleTimes > 0)
-        //        this.pictureBox1.Image = Zoompicture(this.pictureBox1.Image, image1ZoomInOut);
-        //    else if (image1ZoomInOut.iScaleTimes <= 0)
-        //        this.pictureBox1.Image = tempPic1;
-        //}
-
-        //private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
-        //{
-        //    if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
-        //    {
-        //        WorkSpaceData.m_activeProjectMainger.ZoomIn(this.pictureBox2, image2ZoomInOut);
-
-        //    }
-        //    else
-        //    {
-        //        WorkSpaceData.m_activeProjectMainger.ZoomOut(this.pictureBox2, image2ZoomInOut);
-        //    }
-        //}
-
-        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
-        {
-            this.pictureBox1.Image = tempPic1;
-            if ((e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0) && (image1ZoomInOut.iScaleTimes != image1ZoomInOut.iMaxScaleTimes))
-                image1ZoomInOut.iScaleTimes++;
-            else if ((e.Delta * SystemInformation.MouseWheelScrollLines / 120 < 0) && (image1ZoomInOut.iScaleTimes != image1ZoomInOut.iMinScaleTimes))
-                image1ZoomInOut.iScaleTimes--;
-
-            if (image1ZoomInOut.iScaleTimes == 0)
-                image1ZoomInOut.dCompensationX = image1ZoomInOut.dCompensationY = 0;
-            Console.Write("image1ZoomInOut.iScaleTimes: ");
-            Console.WriteLine(image1ZoomInOut.iScaleTimes);
-            image1ZoomInOut.iOrgW = this.pictureBox1.Width;
-            image1ZoomInOut.iOrgH = this.pictureBox1.Height;
-            ProjectAI.ProjectManiger.CustomImageProcess.ImageZoom(ref image1ZoomInOut);
-            image1ZoomInOut.size.pos = new System.Drawing.Point(image1ZoomInOut.iHorzScrollBarPos, image1ZoomInOut.iVertScrollBarPos);
-            image1ZoomInOut.size.Width = (int)(this.pictureBox1.Image.Width * image1ZoomInOut.dNewScale);
-            image1ZoomInOut.size.Height = (int)(this.pictureBox1.Image.Height * image1ZoomInOut.dNewScale);
-            Console.WriteLine(image1ZoomInOut.size.pos.X);
-            Console.WriteLine(image1ZoomInOut.size.pos.Y);
-            //if (image1ZoomInOut.iScaleTimes > 0)
-                //this.pictureBox1.Image = Zoompicture(this.pictureBox1.Image, image1ZoomInOut);
-            //else if (image1ZoomInOut.iScaleTimes <= 0)
-            //    this.pictureBox1.Image = tempPic1;
-        }
-
-        //public static Bitmap Zoompicture(Image image, ImageZoomInOut imageZoomInOut)
-        //{
-        //    var destRect = new Rectangle(imageZoomInOut.size.pos.X, imageZoomInOut.size.pos.Y, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
-        //    Bitmap bm = ProjectAI.ProjectManiger.CustomImageProcess.ResizeCubic(image, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
- 
-        //     Graphics gpu = Graphics.FromImage(bm);
-        //    gpu.CompositingMode = CompositingMode.SourceCopy;
-        //    gpu.CompositingQuality = CompositingQuality.HighQuality; 
-        //    gpu.InterpolationMode = InterpolationMode.HighQualityBicubic;
-        //    gpu.SmoothingMode = SmoothingMode.HighQuality;
-        //    gpu.PixelOffsetMode = PixelOffsetMode.HighQuality;
-        //    return bm;
-        //}
 
 
         private void UpdataFormStyleManager(MetroStyleManager m_StyleManager)
@@ -336,6 +122,29 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, this.TrackBar.Value * this.outputRate);
             
         }
+
+        private void PictureBox1MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
+            {
+
+            }
+            else
+            {
+            }
+        }
+
+        private void PictureBox2MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta * SystemInformation.MouseWheelScrollLines / 120 > 0)
+            {
+
+            }
+            else
+            {
+            }
+        }
+
 
         /// <summary>
         /// 사각형 구하기
@@ -405,7 +214,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         #endregion
 
         /// <summary>
-        /// 
+        /// TrackBar Setting
         /// </summary>
         public void OverlayUISetUp()
         {
@@ -453,6 +262,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         /// <param name="e"></param>
         private void PictureBox1MouseDown(object sender, MouseEventArgs e)
         {
+
             if (e.Button == MouseButtons.Left)
             {
                 this.regionSelect1.selectingArea = true;
@@ -465,7 +275,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             else if (e.Button == MouseButtons.Right)
             {
                 this.regionSelect1.rightClick = true;
-                this.image1ZoomInOut.ptRButtonDown = e.Location;
                 this.pictureBox1.Cursor = Cursors.Hand;
             }
             this.pictureBox1.Refresh();
@@ -481,12 +290,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private void PictureBox1MouseMove(object sender, MouseEventArgs e)
         {
             this.image1ZoomInOut.mouseMovePoint = e.Location;
-            //Console.Write("X: ");
-            //Console.WriteLine(e.X);
-            //Console.Write("Y: ");
-            //Console.WriteLine(e.Y);
-            this.image1ZoomInOut.iHorzScrollBarPos_copy = this.image1ZoomInOut.iHorzScrollBarPos;
-            this.image1ZoomInOut.iVertScrollBarPos_copy = this.image1ZoomInOut.iVertScrollBarPos;
             if (this.regionSelect1.leftClick)
                 this.regionSelect1.endPoint = e.Location;
             this.pictureBox1.Refresh();
@@ -506,17 +309,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 this.regionSelect1.leftClick = false;
                 
                 Rectangle rectangle = GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint);
-                Console.Write("X: ");
-                Console.WriteLine(rectangle.X);
-                Console.Write("Y: ");
-                Console.WriteLine(rectangle.Y);
-                Console.Write("Width: ");
-                Console.WriteLine(rectangle.Width);
-                Console.Write("Height: ");
-                Console.WriteLine(rectangle.Height);
+ 
                 this.image1ZoomInOut.ROI = rectangle;
-                this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
-                this.pictureBox1.Image = ResizeImage(this.pictureBox1.Image, image1ZoomInOut); //ROI를 클릭했을 때 if문으로 바꿔야 함
+                //this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
+                this.pictureBox1.Image = ProjectAI.ProjectManiger.CustomImageProcess.CropImage(this.pictureBox1.Image, image1ZoomInOut.ROI); //Crop버튼을 클릭했을 때 if문으로 활성화
             }
             this.pictureBox1.Cursor = Cursors.Default;
         }
@@ -539,7 +335,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         private void PictureBox1MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.image1ZoomInOut.iScaleTimes = 0;
             this.pictureBox1.Image = tempPic1;
         }
     }
