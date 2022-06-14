@@ -237,6 +237,8 @@ namespace ProjectAI.MainForms
             {
                 for (int i = 0; i < files.Length; i++)
                 {
+                    Console.WriteLine($"{i}: {files[i]}");
+
                     bool check = true;
                     var items = this.OriginGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
 
@@ -255,6 +257,7 @@ namespace ProjectAI.MainForms
             {
                 for (int i = 0; i < files.Length; i++)
                 {
+                    Console.WriteLine($"{i}: {files[i]}");
                     bool check = true;
                     var items = this.CADGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
 

@@ -34,8 +34,14 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// <summary>
         /// 버튼 클릭 이벤트 헨들러 BtnMactiveButton Click EvnetHandler
         /// </summary>
-        [Description("Active Button"), Category("Custom Button")]
+        [Description("Click Evnet"), Category("Custom Button")]
         public event EventHandler BtnMactiveButtonClickEvnetHandler;
+
+        [Description("Enter Button"), Category("Custom Button")]
+        public event EventHandler BtnMactiveButtonEnterEvnetHandler;
+
+        [Description("Leave Button"), Category("Custom Button")]
+        public event EventHandler BtnMactiveButtonLeaveEvnetHandler;
 
         /// <summary>
         /// 버튼 클릭 이벤트 헨들러 BtnMactiveButton Click EvnetHandler
@@ -74,6 +80,18 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         {
             if (this.BtnMactiveButtonClickEvnetHandler != null)
                 BtnMactiveButtonClickEvnetHandler(sender, e);
+        }
+
+        public void BtnMmouseEnter(object sender, EventArgs e)
+        {
+            if (this.BtnMactiveButtonEnterEvnetHandler != null)
+                BtnMactiveButtonEnterEvnetHandler(sender, e);
+        }
+
+        public void BtnMmouseLeave(object sender, EventArgs e)
+        {
+            if (this.BtnMactiveButtonLeaveEvnetHandler != null)
+                BtnMactiveButtonLeaveEvnetHandler(sender, e);
         }
 
         /// <summary>
@@ -138,6 +156,11 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             this.metroButton.Click += new System.EventHandler(this.BtnMactiveButtonClick);
             // btnMactiveButton Click에 이벤트 등록
             this.metroButton.Click += BtnMactiveButtonClickEvent;
+
+            // 마우스 진입 확인
+            this.metroButton.MouseEnter += this.BtnMmouseEnter;
+            // 마우스 나가기 확인
+            this.metroButton.MouseLeave += this.BtnMmouseLeave;
         }
 
         /// <summary>

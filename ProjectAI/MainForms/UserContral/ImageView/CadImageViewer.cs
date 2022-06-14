@@ -20,8 +20,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private Mat originImage;
         private Mat CADImage;
         private Mat OverlayImage;
-        private Bitmap BitmapOriginImage = null;
-        private Bitmap BitmapCADImage = null;
+        private Bitmap bitmapOriginImage = null;
+        private Bitmap bitmapCADImage = null;
         private double outputRate;
         private string imgName;
         private string CADImgName;
@@ -105,21 +105,21 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         public void PrintOrignalImage(Bitmap originImage)
         {
             this.tempPic1 = originImage;
-            this.BitmapOriginImage = originImage;
+            this.bitmapOriginImage = originImage;
             this.pictureBox1.Image = originImage;
         }
 
         public void PrintCADImage(Bitmap cadImage)
         {
             this.tempPic2 = cadImage;
-            this.BitmapCADImage = cadImage;
+            this.bitmapCADImage = cadImage;
             this.pictureBox2.Image = cadImage;
         }
 
         public void PrintOverlayImage(Bitmap cadImage)
         {
-            this.BitmapCADImage = cadImage;
-            this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, this.TrackBar.Value * this.outputRate);
+            this.bitmapCADImage = cadImage;
+            this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
             
         }
 
@@ -235,7 +235,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             try
             {
-                if (this.BitmapCADImage != null)
+                if (this.bitmapCADImage != null)
                 {
                     Console.WriteLine((double)this.TrackBar.Value);
                     double value = this.outputRate * (double)this.TrackBar.Value;
@@ -244,7 +244,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, value);
+                    this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value);
                 }
             }
             catch (Exception ex)
