@@ -56,18 +56,27 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
 
             // btnSingleImage Click에 이벤트 함수 등록
             this.btnSingleImage.BtnMactiveButtonClickEvnetHandler += BtnSingleImageClickEvent;
+            this.btnSingleImage.BtnMactiveButtonEnterEvnetHandler += BtnSingleImageEnterEvent;
+            this.btnSingleImage.BtnMactiveButtonLeaveEvnetHandler += BtnSingleImageLeaveEvent;
             // TxtSingleImage Click에 이벤트 함수 등록
             this.btnSingleImage.TxtMTextBoxClickEvnetHandler += TxtSingleImageClickEvent;
 
+            
             // btnMultiImage Click에 이벤트 함수 등록
             this.btnMultiImage.BtnMactiveButtonClickEvnetHandler += BtnMultiImageClickEvent;
+            this.btnMultiImage.BtnMactiveButtonEnterEvnetHandler += BtnMultiImageEnterEvent;
+            this.btnMultiImage.BtnMactiveButtonLeaveEvnetHandler += BtnMultiImageLeaveEvent;
             // TxtMultiImage Click에 이벤트 함수 등록
             this.btnMultiImage.TxtMTextBoxClickEvnetHandler += TxtMultiImageClickEvent;
 
+
             // btnNoneImage Click에 이벤트 함수 등록
             this.btnNoneImage.BtnMactiveButtonClickEvnetHandler += BtnNoneClickEvent;
+            this.btnNoneImage.BtnMactiveButtonEnterEvnetHandler += BtnNoneEnterEvent;
+            this.btnNoneImage.BtnMactiveButtonLeaveEvnetHandler += BtnNoneLeaveEvent;
             // TxtMNoneImage Click에 이벤트 함수 등록
             this.btnNoneImage.TxtMTextBoxClickEvnetHandler += TxtNoneClickEvent;
+
 
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             this.UpdataFormStyleManager(formsManiger.m_StyleManager);
@@ -159,6 +168,15 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             }
         }
 
+        public void BtnSingleImageEnterEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
+        }
+        public void BtnSingleImageLeaveEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
+        }
+
         /// <summary>
         /// TxtSingleImage Click EvnetHandler 함수
         /// </summary>
@@ -185,6 +203,14 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                 this.DisableButton(sender);
                 BtnMultiImageClickEvnetHandler(sender, e);
             }
+        }
+        public void BtnMultiImageEnterEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
+        }
+        public void BtnMultiImageLeaveEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
         }
 
         /// <summary>
@@ -213,6 +239,14 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
                 this.DisableButton(sender);
                 BtnNoneClickEvnetHandler(sender, e);
             }
+        }
+        public void BtnNoneEnterEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
+        }
+        public void BtnNoneLeaveEvent(Object sender, EventArgs e)
+        {
+            Console.WriteLine("TestEvent");
         }
 
         /// <summary>

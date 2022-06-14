@@ -90,6 +90,10 @@ namespace ProjectAI.ProjectManiger
         /// <returns></returns>
         public unsafe static Bitmap BitmapImageOverlay24bppRgb(Bitmap orignaBitmapImagel, Bitmap cadBitmapImage, double ratio)
         {
+            if (cadBitmapImage == null || orignaBitmapImagel == null)
+                return null;
+
+            //cadBitmapImage = CustomIOMainger.LoadBitmap(@"G:\Z2b_이미지\icon\pcb-board2.png");
             Bitmap overlayData = new System.Drawing.Bitmap(orignaBitmapImagel.Width, orignaBitmapImagel.Height);
             BitmapData pBitmapOrigmnalData = orignaBitmapImagel.LockBits(new Rectangle(0, 0, orignaBitmapImagel.Width, orignaBitmapImagel.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
             BitmapData pBitmapCadImageData = cadBitmapImage.LockBits(new Rectangle(0, 0, cadBitmapImage.Width, cadBitmapImage.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);

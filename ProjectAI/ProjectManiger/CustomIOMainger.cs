@@ -107,16 +107,21 @@ namespace ProjectAI
             }
 
             DirectoryInfo di = new DirectoryInfo(dirPath);
-            if (fileNameModeBool)
-                foreach (FileInfo fileInfo in di.GetFiles())
-                {
-                    fileList.Add(fileInfo.FullName);
-                }
-            else
+            if (di.Exists)
             {
-                foreach (FileInfo fileInfo in di.GetFiles())
+                if (fileNameModeBool)
                 {
-                    fileList.Add(fileInfo.Name);
+                    foreach (FileInfo fileInfo in di.GetFiles())
+                    {
+                        fileList.Add(fileInfo.FullName);
+                    }
+                }
+                else
+                {
+                    foreach (FileInfo fileInfo in di.GetFiles())
+                    {
+                        fileList.Add(fileInfo.Name);
+                    }
                 }
             }
             return fileList;
