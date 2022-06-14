@@ -96,6 +96,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             InitializeComponent();
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
+            OverlayUISetUp();
             pictureBox1.MouseWheel += new MouseEventHandler(PictureBox1MouseWheel);
             //pictureBox2.MouseWheel += new MouseEventHandler(PictureBox2MouseWheel);
             SetImageZoomInout(ref image1ZoomInOut);
@@ -276,25 +277,25 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             image1ZoomInOut.size.Height = (int)(this.pictureBox1.Image.Height * image1ZoomInOut.dNewScale);
             Console.WriteLine(image1ZoomInOut.size.pos.X);
             Console.WriteLine(image1ZoomInOut.size.pos.Y);
-            if (image1ZoomInOut.iScaleTimes > 0)
-                this.pictureBox1.Image = Zoompicture(this.pictureBox1.Image, image1ZoomInOut);
-            else if (image1ZoomInOut.iScaleTimes <= 0)
-                this.pictureBox1.Image = tempPic1;
+            //if (image1ZoomInOut.iScaleTimes > 0)
+                //this.pictureBox1.Image = Zoompicture(this.pictureBox1.Image, image1ZoomInOut);
+            //else if (image1ZoomInOut.iScaleTimes <= 0)
+            //    this.pictureBox1.Image = tempPic1;
         }
 
-        public static Bitmap Zoompicture(Image image, ImageZoomInOut imageZoomInOut)
-        {
-            var destRect = new Rectangle(imageZoomInOut.size.pos.X, imageZoomInOut.size.pos.Y, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
-            Bitmap bm = ProjectAI.ProjectManiger.CustomImageProcess.ResizeCubic(image, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
+        //public static Bitmap Zoompicture(Image image, ImageZoomInOut imageZoomInOut)
+        //{
+        //    var destRect = new Rectangle(imageZoomInOut.size.pos.X, imageZoomInOut.size.pos.Y, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
+        //    Bitmap bm = ProjectAI.ProjectManiger.CustomImageProcess.ResizeCubic(image, imageZoomInOut.size.Width, imageZoomInOut.size.Height);
  
-             Graphics gpu = Graphics.FromImage(bm);
-            gpu.CompositingMode = CompositingMode.SourceCopy;
-            gpu.CompositingQuality = CompositingQuality.HighQuality;
-            gpu.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            gpu.SmoothingMode = SmoothingMode.HighQuality;
-            gpu.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            return bm;
-        }
+        //     Graphics gpu = Graphics.FromImage(bm);
+        //    gpu.CompositingMode = CompositingMode.SourceCopy;
+        //    gpu.CompositingQuality = CompositingQuality.HighQuality; 
+        //    gpu.InterpolationMode = InterpolationMode.HighQualityBicubic;
+        //    gpu.SmoothingMode = SmoothingMode.HighQuality;
+        //    gpu.PixelOffsetMode = PixelOffsetMode.HighQuality;
+        //    return bm;
+        //}
 
 
         private void UpdataFormStyleManager(MetroStyleManager m_StyleManager)
@@ -331,9 +332,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         public void PrintOverlayImage(Bitmap cadImage)
         {
-            this.tempPic2 = cadImage;
             this.BitmapCADImage = cadImage;
-            this.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, this.TrackBar.Value * this.outputRate);
+            this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, this.TrackBar.Value * this.outputRate);
             
         }
 
@@ -361,40 +361,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         }
 
 
-        private void OverlayViewCheckedChanged(object sender, EventArgs e)
-        {
-            if (OverlayViewCheckBox.Checked)
-            {
-                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
-                {
-                    string selectImagePath = gridViewImageList.GetSelectImageName();
-
-                    this.CADImageLabel.BackColor = System.Drawing.Color.ForestGreen;
-                    this.CADImageLabel.Text = "OverlayImage";
-
-                    this.TrackBar.Visible = true;
-                    this.TrackbarNumber.Visible = true;
-                    this.tableLayoutPanel1.Visible = true;
-                    this.OverlayUISetUp();
-                    WorkSpaceData.m_activeProjectMainger.PrintImage(selectImagePath);
-                }
-            }
-            else
-            {
-                if (WorkSpaceData.m_activeProjectMainger.m_imageListDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
-                {
-                    string selectImagePath = gridViewImageList.GetSelectImageName();
-                    
-                    this.CADImageLabel.BackColor = System.Drawing.Color.Lime;
-                    this.CADImageLabel.Text = "CADImage";
-
-                    this.TrackBar.Visible = false;
-                    this.TrackbarNumber.Visible = false;
-                    this.tableLayoutPanel1.Visible = false;
-                    WorkSpaceData.m_activeProjectMainger.PrintImage(selectImagePath);
-                }
-            }
-        }
         # region 예전코드
         /// <summary>
         /// 원본이미지와 CAD이미지를 Overlay한다.
@@ -462,13 +428,14 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             {
                 if (this.BitmapCADImage != null)
                 {
+                    Console.WriteLine((double)this.TrackBar.Value);
                     double value = this.outputRate * (double)this.TrackBar.Value;
                     //double alpha = 1 - value;
                     //double beta = value;
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    this.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, value);
+                    this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.BitmapOriginImage, this.BitmapCADImage, value);
                 }
             }
             catch (Exception ex)
