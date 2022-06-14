@@ -15,9 +15,13 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 {
     public partial class SimpleTwoImageViewer : UserControl
     {
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
+        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
         public SimpleTwoImageViewer()
         {
             InitializeComponent();
+            this.imageToolUseingPictureBox1 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox1);
+            this.imageToolUseingPictureBox2 = new ProjectManiger.ImageToolUseingPictureBox(this.pictureBox2);
 
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
@@ -40,6 +44,15 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
             this.metroStyleManager1.Style = styleManager.Style;
             this.metroStyleManager1.Theme = styleManager.Theme;
+        }
+
+        public void BitmapImageInput1(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
+        }
+        public void BitmapImageInput2(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
         }
     }
 }

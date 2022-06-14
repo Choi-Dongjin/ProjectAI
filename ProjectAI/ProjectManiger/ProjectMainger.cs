@@ -2016,7 +2016,8 @@ namespace ProjectAI
                             imageViewer.pictureBox1.Image = null;
                         imageViewer.pictureBox2.Image = null;
 
-                        imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                        //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+                        imageViewer.BitmapImageInput1(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
                         try
                         {
                             if (this.m_avtiveModelsName != null)
@@ -2027,7 +2028,8 @@ namespace ProjectAI
                                     {
                                         string heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
                                         string heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
-                                        imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
+                                        //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
+                                        imageViewer.BitmapImageInput2(CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage)));
                                     }
                                     catch (Exception ex)
                                     {
