@@ -312,7 +312,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
  
                 this.image1ZoomInOut.ROI = rectangle;
                 //this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
-                this.pictureBox1.Image = ProjectAI.ProjectManiger.CustomImageProcess.CropImage(this.pictureBox1.Image, image1ZoomInOut.ROI); //Crop버튼을 클릭했을 때 if문으로 활성화
+                //this.pictureBox1.Image = ProjectAI.ProjectManiger.CustomImageProcess.CropImage(this.pictureBox1.Image, image1ZoomInOut.ROI); //Crop버튼을 클릭했을 때 if문으로 활성화
             }
             this.pictureBox1.Cursor = Cursors.Default;
         }

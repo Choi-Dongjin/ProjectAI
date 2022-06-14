@@ -56,8 +56,11 @@ namespace ProjectAI.MainForms
         public string[] CADImagePath; // 주소 + 이름 
 
 
-        public List<string> OriginGridList = new List<string>(); // OriginImage를 저장해놓은 list
-        public List<string> CADGridList = new List<string>(); // CADImage를 저장해놓은 list
+        public List<string> OriginNameGridList = new List<string>(); // OriginImage 이름을 저장해놓은 list
+        public List<string> OriginAddressGridList = new List<string>(); // OriginImage 주소를 저장해놓은 list
+
+        public List<string> CADNameGridList = new List<string>(); // CADImage 이름 저장해놓은 list
+        public List<string> CADAddressGridList = new List<string>(); // CADImage 주소를 저장해놓은 list
         /// <summary>
         /// delegate UpdataFormStyleManager
         /// </summary>
@@ -242,7 +245,8 @@ namespace ProjectAI.MainForms
                     if (check)
                     {
                         this.OriginGridView.Rows.Add(OriginNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
-                        OriginGridList.Add(files[i]);
+                        OriginNameGridList.Add(files[i]);
+                        OriginAddressGridList.Add(filesPath[i]);
                         OriginNum++;
                     }
                 }
@@ -259,7 +263,8 @@ namespace ProjectAI.MainForms
                     if (check)
                     {
                         this.CADGridView.Rows.Add(CADNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
-                        CADGridList.Add(files[i]);
+                        CADNameGridList.Add(files[i]);
+                        CADAddressGridList.Add(filesPath[i]);
                         CADNum++;
                     }
                 }
