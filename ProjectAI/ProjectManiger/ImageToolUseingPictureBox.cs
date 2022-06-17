@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -15,6 +16,9 @@ namespace ProjectAI.ProjectManiger
         private Point mousePoint = new Point(0, 0);
         private Point mousePointLeftMouseDown = new Point(0, 0);
         private Point mousePointLeftMouseDownMove = new Point(0, 0);
+
+        private Point mousePointRightMouseDown = new Point(0, 0);
+        private Point mousePointRightMouseDownMove = new Point(0, 0);
 
         private PictureBox pictureBox;
         private HScrollBar hScrollBar;
@@ -107,7 +111,7 @@ namespace ProjectAI.ProjectManiger
             pictureBox.AllowDrop = true;
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void PictureBoxImagePaint(object sender, PaintEventArgs e)
         {
             if (this.imgBitmap != null)
             {
@@ -135,7 +139,7 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        private void pictureBox1_MouseWheel(object sender, MouseEventArgs e)
+        private void PictureBoxMouseWheel(object sender, MouseEventArgs e)
         {
             if (this.imgBitmap != null)
             {
@@ -174,13 +178,13 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        public void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        public void PictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
             //Console.WriteLine($"X: {-(this.this.imgRect.X / this.zoomRatio) + (e.X / this.zoomRatio)}");
             //Console.WriteLine($"Y: {-(this.this.imgRect.Y / this.zoomRatio) + (e.Y / this.zoomRatio)}");
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
         {
             this.mousePoint = e.Location;
 
@@ -207,13 +211,20 @@ namespace ProjectAI.ProjectManiger
             this.pictureBox.Invalidate();
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void PictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 this.mousePointLeftMouseDown = e.Location;
                 this.mousePointLeftMouseDownMove.X = this.imgRect.X;
                 this.mousePointLeftMouseDownMove.Y = this.imgRect.Y;
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                this.mousePointRightMouseDown = e.Location;
+                this.mousePointRightMouseDownMove.X = this.imgRect.X;
+                this.mousePointRightMouseDownMove.Y = this.imgRect.Y;
             }
         }
 

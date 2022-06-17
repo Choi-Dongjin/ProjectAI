@@ -8,15 +8,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 {
     public partial class CadImageViewer : UserControl
     {
-        private Mat originImage;
-        private Mat CADImage;
-        private Mat OverlayImage;
+
         private Bitmap bitmapOriginImage = null;
         private Bitmap bitmapCADImage = null;
         private double outputRate;
-        private string imgName;
-        private string CADImgName;
-        private string CADImgFolder;
         public Rectangle ROI;
         private Bitmap tempPic1;
         private Bitmap tempPic2;
@@ -36,13 +31,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             public System.Drawing.Point imageMovePoint;
             public bool leftClick;
             public bool rightClick;
-        }
-
-        public struct RectSize
-        {
-            public System.Drawing.Point pos;
-            public int Width;
-            public int Height;
         }
 
         public RectanglePaint regionSelect1;
@@ -108,9 +96,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.BitmapImageInput2(cadImage);
         }
 
-        public void PrintOverlayImage(Bitmap cadImage)
+        public void PrintOverlayImage()
         {
-            this.bitmapCADImage = cadImage;
+            //this.bitmapCADImage = cadImage;
             //this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
             this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate));
         }
@@ -138,49 +126,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             return centerPoint;
         }
 
-        # region 예전코드
-
-        /// <summary>
-        /// 원본이미지와 CAD이미지를 Overlay한다.
-        /// </summary>
-        /// <param name="imageName"></param>
-        /// <param name="CADImageName"></param>
-        /// <param name="CADImageFolder"></param>
-        public void OverlayImagePrint(string imageName, string CADImageName, string CADImageFolder)
-        {
-            this.imgName = imageName;
-            this.CADImgName = CADImageName;
-            this.CADImgFolder = CADImageFolder;
-
-            OpenCvSharp.Size pictureBox1Size = new OpenCvSharp.Size(this.pictureBox1.Size.Width, this.pictureBox1.Size.Height);
-
-            this.originImage = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)this.pictureBox1.Image);
-            this.CADImage = new Mat(pictureBox1Size, MatType.CV_8UC1);
-            this.OverlayImage = new Mat(pictureBox1Size, MatType.CV_8UC3);
-            if (WorkSpaceData.m_activeProjectMainger.CADImageFileCheck(CADImageName, CADImageFolder))
-            {
-                CADImage = Cv2.ImRead(WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["CADImage"].ToString(),
-                    ImreadModes.AnyDepth | ImreadModes.Color);
-                Console.WriteLine(CADImage.Channels());
-                try
-                {
-                    double value = this.outputRate * (double)this.TrackBar.Value;
-                    double alpha = 1 - value;
-                    double beta = value;
-                    Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
-                }
-                catch (OpenCVException e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-            }
-            else
-                this.pictureBox2.Image = null;
-        }
-
-        #endregion
 
         /// <summary>
         /// TrackBar Setting
@@ -212,8 +157,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    //this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value);
-                    this.imageToolUseingPictureBox3.InputBitmapImage(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value), false);
+                    this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value), false);
                 }
             }
             catch (Exception ex)
@@ -309,10 +253,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
         }
-
-        public void BitmapImageInput3(Bitmap bitmap)
+        public void BitmapImageInput3(Bitmap bitmap, bool b1 = true)
         {
-            this.imageToolUseingPictureBox3.InputBitmapImage(bitmap);
+            this.imageToolUseingPictureBox3.InputBitmapImage(bitmap, b1);
         }
 
         public void BitmapImageInput4(Bitmap bitmap)

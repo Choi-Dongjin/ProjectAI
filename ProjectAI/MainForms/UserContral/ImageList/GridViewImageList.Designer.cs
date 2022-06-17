@@ -48,13 +48,14 @@
             this.imageFilesAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.imageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.cADImageSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cADImageSelectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cADImageMultiSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cADImageForderWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.imageFilesAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageFolderAddWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -265,7 +266,7 @@
             this.imageFilesAddToolStripMenuItem1,
             this.imageFolderAddToolStripMenuItem1,
             this.toolStripSeparator1,
-            this.imageSelectToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.toolStripSeparator14,
             this.imageFilesAddWizardToolStripMenuItem,
             this.imageFolderAddWizardToolStripMenuItem,
@@ -310,27 +311,30 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
             // 
-            // imageSelectToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            this.imageSelectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator4,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
             this.toolStripSeparator2,
-            this.cADImageSelectToolStripMenuItem,
-            this.cADImageSelectToolStripMenuItem1,
-            this.cADImageMultiSelectToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.cADImageForderWizardToolStripMenuItem});
-            this.imageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.open_source;
-            this.imageSelectToolStripMenuItem.Name = "imageSelectToolStripMenuItem";
-            this.imageSelectToolStripMenuItem.Size = new System.Drawing.Size(219, 30);
-            this.imageSelectToolStripMenuItem.Text = "Image CAD Select";
-            this.imageSelectToolStripMenuItem.Visible = false;
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5,
+            this.toolStripSeparator5});
+            this.toolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.open_source;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(219, 30);
+            this.toolStripMenuItem1.Text = "Image CAD Select";
+            this.toolStripMenuItem1.Visible = false;
             // 
-            // toolStripSeparator2
+            // toolStripSeparator4
             // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(246, 6);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
             // 
-            // cADImageSelectToolStripMenuItem
+            // toolStripMenuItem2
             // 
             this.cADImageSelectToolStripMenuItem.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
             this.cADImageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.Initimage;
@@ -338,30 +342,58 @@
             this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.cADImageSelectToolStripMenuItem.Text = "Init Image Select";
             this.cADImageSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
+            this.toolStripMenuItem2.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
+            this.toolStripMenuItem2.Image = global::ProjectAI.Properties.Resources.Initimage;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem2.Text = "Init Image Select";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
             // 
-            // cADImageSelectToolStripMenuItem1
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Image = global::ProjectAI.Properties.Resources.CADimage;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem3.Text = "CAD Image Select";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
+            // 
+            // toolStripSeparator2
             // 
             this.cADImageSelectToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.CADimage;
             this.cADImageSelectToolStripMenuItem1.Name = "cADImageSelectToolStripMenuItem1";
             this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(241, 22);
             this.cADImageSelectToolStripMenuItem1.Text = "CAD Image Select";
             this.cADImageSelectToolStripMenuItem1.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
             // 
-            // cADImageMultiSelectToolStripMenuItem
+            // toolStripMenuItem4
             // 
+            this.toolStripMenuItem4.Image = global::ProjectAI.Properties.Resources.CADWizard;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem4.Text = "CAD Image Files Add Wizard";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
             this.cADImageMultiSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADWizard;
             this.cADImageMultiSelectToolStripMenuItem.Name = "cADImageMultiSelectToolStripMenuItem";
             this.cADImageMultiSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.cADImageMultiSelectToolStripMenuItem.Text = "CAD Image Files Add Wizard";
             this.cADImageMultiSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
             // 
-            // toolStripSeparator3
+            // toolStripMenuItem5
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(238, 6);
+            this.toolStripMenuItem5.Image = global::ProjectAI.Properties.Resources.CADfolder;
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem5.Text = "CAD Image Forder Add Wizard";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.CADImageForderWizardToolStripMenuItemClick);
             // 
-            // cADImageForderWizardToolStripMenuItem
+            // toolStripSeparator5
             // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(246, 6);
             this.cADImageForderWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADfolder;
             this.cADImageForderWizardToolStripMenuItem.Name = "cADImageForderWizardToolStripMenuItem";
             this.cADImageForderWizardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
@@ -513,14 +545,15 @@
         private System.Windows.Forms.ToolStripMenuItem imageSetInfoResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         public MetroFramework.Controls.MetroContextMenu cmsMImageListToolKit;
-        private System.Windows.Forms.ToolStripMenuItem cADImageSelectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cADImageSelectToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem cADImageMultiSelectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imageSelectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem cADImageForderWizardToolStripMenuItem;
     }
 }
