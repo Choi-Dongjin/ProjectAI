@@ -8,6 +8,8 @@ using System.Linq;
 using System.Management;
 using System.Windows.Forms;
 using OpenCvSharp;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ProjectAI
 {
@@ -2080,6 +2082,7 @@ namespace ProjectAI
                         }
 
                         //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
+         
                         imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
 
                         string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
@@ -2095,7 +2098,6 @@ namespace ProjectAI
                                 string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
 
                                 Bitmap cadBitmapImage = CustomIOMainger.LoadBitmap(cadImagePath);
-                                imageViewer.PrintOverlayImage(cadBitmapImage);
 
                                 // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
                                 // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
@@ -2104,8 +2106,9 @@ namespace ProjectAI
                                 if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
                                 {
                                     //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
-                                    imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(cadImagePath));
+                                    imageViewer.PrintCADImage(cadBitmapImage);
                                 }
+                                imageViewer.PrintOverlayImage();
                                 //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
                                 //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
                             }
@@ -2648,7 +2651,7 @@ namespace ProjectAI
         /// </summary>
         public void CADImageFolderForm(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
-            using (ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(1))
+            using (ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(2))
             {
                 cadImageSelect.ShowDialog();
                 Console.WriteLine(cadImageSelect.DialogResult);
@@ -2806,6 +2809,7 @@ namespace ProjectAI
                 customIOManigerFoem.CreateFileCopyList(cadImageSelect.CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                       MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             }
+            CustomIOMainger.FileIODelay(20); // 10ms
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
             this.m_activeProjectImageListJObject["int_imageeListSetnumber"] = imageListSetNumber;
@@ -2839,41 +2843,42 @@ namespace ProjectAI
             string[] SameFiles = new string[OriginRowsCount]; // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
             string[] filesPath = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지의 FullPath
             string[] CADImagePath = new string[CADRowsCount]; // CAD 기준, 이미지 FullPath
-            
-            int loop = -1;
-            //for (int i = 0; i < maxValue; i++)
+
+            int maxValue = OriginRowsCount > CADRowsCount ? OriginRowsCount : CADRowsCount;
+            for (int i = 0; i < maxValue; i++)
+            {
+                if (i < OriginRowsCount)
+                {
+                    files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                    filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
+                    SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                }
+                if (i < CADRowsCount)
+                    CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
+            }
+            //int loop = -1;
+            //foreach (string fileName in cadImageSelect.OriginNameGridList)
             //{
-            //    if (i < OriginRowsCount)
-            //    {
-            //        files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
-            //        filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
-            //        SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
-            //    }
-            //    if (i < CADRowsCount)
-            //        CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
+            //    loop++;
+            //    files[loop] = fileName;
+            //    SameFiles[loop] = fileName;
+
             //}
-            foreach (string fileName in cadImageSelect.OriginNameGridList)
-            {
-                loop++;
-                files[loop] = fileName;
-                SameFiles[loop] = fileName;
+            //loop = -1;
+            //foreach (string address in cadImageSelect.OriginAddressGridList)
+            //{
+            //    loop++;
+            //    filesPath[loop] = address;
+            //}
+            //loop = -1;
 
-            }
-            loop = -1;
-            foreach (string address in cadImageSelect.OriginAddressGridList)
-            {
-                loop++;
-                filesPath[loop] = address;
-            }
-            loop = -1;
+            //foreach (string fileFullPath in cadImageSelect.CADAddressGridList)
+            //{
+            //    loop++;
+            //    CADImagePath[loop] = fileFullPath;
+            //}
 
-            foreach (string fileFullPath in cadImageSelect.CADAddressGridList)
-            {
-                loop++;
-                CADImagePath[loop] = fileFullPath;
-            }
-
-                int countNumber = files.Length;
+            int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
             List<int> FileIndexs = new List<int>(); //이름은 있는데 CADImage 매칭이 안된 Image들
             for (int i = 0; i < countNumber; i++)
@@ -3046,37 +3051,17 @@ namespace ProjectAI
             string[] filesPath = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지의 FullPath
             string[] CADImagePath = new string[CADRowsCount]; // CAD 기준, 이미지 FullPath
 
-            int loop = -1;
-            //for (int i = 0; i < maxValue; i++)
-            //{
-            //    if (i < OriginRowsCount)
-            //    {
-            //        files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
-            //        filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
-            //        SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
-            //    }
-            //    if (i < CADRowsCount)
-            //        CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
-            //}
-            foreach (string fileName in cadImageSelect.OriginNameGridList)
+            int maxValue = OriginRowsCount > CADRowsCount ? OriginRowsCount : CADRowsCount;
+            for (int i = 0; i < maxValue; i++)
             {
-                loop++;
-                files[loop] = fileName;
-                SameFiles[loop] = fileName;
-
-            }
-            loop = -1;
-            foreach (string address in cadImageSelect.OriginAddressGridList)
-            {
-                loop++;
-                filesPath[loop] = address;
-            }
-            loop = -1;
-
-            foreach (string fileFullPath in cadImageSelect.CADAddressGridList)
-            {
-                loop++;
-                CADImagePath[loop] = fileFullPath;
+                if (i < OriginRowsCount)
+                {
+                    files[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                    filesPath[i] = Path.Combine(cadImageSelect.OriginGridView.Rows[i].Cells[2].Value.ToString(), files[i]);
+                    SameFiles[i] = cadImageSelect.OriginGridView.Rows[i].Cells[1].Value.ToString();
+                }
+                if (i < CADRowsCount)
+                    CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
             }
 
             int countNumber = files.Length;
@@ -3157,11 +3142,13 @@ namespace ProjectAI
                     Labeled = new JObject() { }
                 };
                 this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+                Task task = Task.Run(() => WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]));
+                task.Wait();
             }
             for (int i = 0; i < newSameFiles.Length; i++)
             {
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+                Task task = Task.Run(() => WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]));
+                task.Wait();
             }
 
             // image List 값 반영
@@ -3280,6 +3267,7 @@ namespace ProjectAI
                 labeledData.Merge(labeledDatainnerProject);
             }
         }
+
 
         /// <summary>
         /// 기존에 있던 CAD Image와 중복 이름일 때 선택지 (덮어쓰기 or 취소)

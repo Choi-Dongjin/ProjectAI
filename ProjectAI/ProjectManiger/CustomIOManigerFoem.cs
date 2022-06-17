@@ -336,5 +336,34 @@ namespace ProjectAI.ProjectManiger
         {
             Task.Run(() => CustomIOMainger.DirDelete(Path));
         }
+
+        #region CAD Image Progress Task
+        public void CreateCADFileCopyList(List<string> files, string setPath, int fileCopyListSet, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object WorkInProgressName = null)
+        {
+            //this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName)
+            lock (taskFileIOactivateCodeList)
+            {
+                taskFileIOactivateCodeList.Add(1);
+                taskFileIOFilesList.Add(files);
+                setPathList.Add(setPath);
+                fileCopyListSetList.Add(fileCopyListSet);
+                prograssBarList.Add(prograssBar);
+                labelWorkInProgressNumberList.Add(labelWorkInProgressNumber);
+                labelTotalProgressNumberList.Add(labelTotalProgressNumber);
+                workInIOStatusList.Add(workInIOStatus);
+                workInProgressNameList.Add(WorkInProgressName);
+            }
+
+            if (this.taskFileIO == null)
+            {
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
+            }
+            else if (this.taskFileIO.Status == TaskStatus.RanToCompletion)
+            {
+                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
+            }
+        }
+
+        #endregion
     }
 }

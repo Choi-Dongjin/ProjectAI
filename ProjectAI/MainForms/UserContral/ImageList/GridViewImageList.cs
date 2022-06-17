@@ -273,9 +273,13 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             if (WorkSpaceData.m_activeProjectMainger != null)
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
-                    DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
-                    string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
-                    WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
+                    try
+                    {
+                        DataGridViewRow row = this.gridImageList.SelectedRows[0]; //선택된 Row 값 가져옴.
+                        string data = row.Cells[1].Value.ToString(); // row의 컬럼(Cells[0]) = name
+                        WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
+                    }
+                    catch { }
                 }
         }
         private void CADImageMultiSelectToolStripMenuItemClick(object sender, EventArgs e)

@@ -7,7 +7,7 @@ using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using System.Drawing.Drawing2D;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -22,6 +22,9 @@ namespace ProjectAI.ProjectManiger
         private Point mousePoint = new Point(0, 0);
         private Point mousePointLeftMouseDown = new Point(0, 0);
         private Point mousePointLeftMouseDownMove = new Point(0, 0);
+
+        private Point mousePointRightMouseDown = new Point(0, 0);
+        private Point mousePointRightMouseDownMove = new Point(0, 0);
 
         private PictureBox pictureBox;
 
@@ -42,17 +45,19 @@ namespace ProjectAI.ProjectManiger
             pictureBox.Invalidate();
         }
 
-        public void InputBitmapImage(Bitmap bitmap)
+        public void InputBitmapImage(Bitmap bitmap, bool b1 = true)
         {
-            this.imgBitmap = bitmap;
-
-            this.zoomRatio = this.OutRatio(this.imgBitmap.Width, this.imgBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
-
-            this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
-
-            this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
-
-            this.pictureBox.Invalidate();
+            if (bitmap != null)
+            {
+                this.imgBitmap = bitmap;
+                if (b1)
+                {
+                    this.zoomRatio = this.OutRatio(this.imgBitmap.Width, this.imgBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
+                    this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
+                    this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
+                }
+                this.pictureBox.Invalidate();
+            }
         }
 
         public void ImputImageNull()
@@ -62,15 +67,15 @@ namespace ProjectAI.ProjectManiger
 
         private void PictureBoxEvent(PictureBox pictureBox)
         {
-            pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            pictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseWheel);
-            pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBoxImagePaint);
+            pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseMove);
+            pictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseWheel);
+            pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDown);
             //pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
-            pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDoubleClick);
+            pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDoubleClick);
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void PictureBoxImagePaint(object sender, PaintEventArgs e)
         {
             if (this.imgBitmap != null)
             {
@@ -90,7 +95,7 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        private void pictureBox1_MouseWheel(object sender, MouseEventArgs e)
+        private void PictureBoxMouseWheel(object sender, MouseEventArgs e)
         {
             if (this.imgBitmap != null)
             {
@@ -123,13 +128,13 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        public void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        public void PictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
             //Console.WriteLine($"X: {-(this.this.imgRect.X / this.zoomRatio) + (e.X / this.zoomRatio)}");
             //Console.WriteLine($"Y: {-(this.this.imgRect.Y / this.zoomRatio) + (e.Y / this.zoomRatio)}");
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
         {
             if (this.imgBitmap != null)
             {
@@ -152,18 +157,28 @@ namespace ProjectAI.ProjectManiger
                     if (Math.Abs(this.imgRect.Y) >= Math.Abs(this.imgRect.Height - this.pictureBox.Height))
                         this.imgRect.Y = -(this.imgRect.Height - this.pictureBox.Height);
                 }
+                if (e.Button == MouseButtons.Right)
+                {  
 
+                }
                 this.pictureBox.Invalidate();
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void PictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 this.mousePointLeftMouseDown = e.Location;
                 this.mousePointLeftMouseDownMove.X = this.imgRect.X;
                 this.mousePointLeftMouseDownMove.Y = this.imgRect.Y;
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                this.mousePointRightMouseDown = e.Location;
+                this.mousePointRightMouseDownMove.X = this.imgRect.X;
+                this.mousePointRightMouseDownMove.Y = this.imgRect.Y;
             }
         }
 
