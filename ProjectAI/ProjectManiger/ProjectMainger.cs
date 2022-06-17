@@ -666,7 +666,7 @@ namespace ProjectAI
         /// OriginImage와 CADImage 1:1비교해서 JSON파일로 쓸 때 0부터 index를 찾지말고 index를 저장하고 다음 index부터 찾음
         /// </summary>
         //int searchIndex = 0;
-
+        public List<string> CADImageSaveList = new List<string>();
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -2837,6 +2837,10 @@ namespace ProjectAI
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
 
+            //CAD image에 담긴 요소 초기화
+            if (CADImageSaveList.Count != 0)
+                CADImageSaveList.RemoveAll(x => true);
+
             int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
             int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
             string[] files = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지 관리
@@ -2983,7 +2987,7 @@ namespace ProjectAI
             // File IO Task 등록
             customIOManigerFoem.CreateFileCopyList(filesPath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                                                     MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
-            customIOManigerFoem.CreateFileCopyList(CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+            customIOManigerFoem.CreateFileCopyList(CADImageSaveList.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                      MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
@@ -3043,6 +3047,10 @@ namespace ProjectAI
             //CADImage 저장 폴더
             CustomIOMainger.DirChackExistsAndCreate(Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName));
             JObject labeledDatainnerProjectLabelName = new JObject();
+
+            //CAD image에 담긴 요소 초기화
+            if (CADImageSaveList.Count != 0)
+                CADImageSaveList.RemoveAll(x => true);
 
             int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
             int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
@@ -3130,6 +3138,8 @@ namespace ProjectAI
             //CADImage를 저장할 폴더 명
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
+            //CADImage가 있는 폴더
+            string CADFolder = cadImageSelect.CADGridView.Rows[0].Cells[2].Value.ToString();
             // Image List Data 값 반영
             //searchIndex = 0;
             for (int i = 0; i < files.Length; i++)
@@ -3142,15 +3152,15 @@ namespace ProjectAI
                     Labeled = new JObject() { }
                 };
                 this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                Task task = Task.Run(() => WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]));
-                task.Wait();
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+                
             }
             for (int i = 0; i < newSameFiles.Length; i++)
             {
-                Task task = Task.Run(() => WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]));
-                task.Wait();
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
 
+ 
             // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
@@ -3171,7 +3181,7 @@ namespace ProjectAI
             // File IO Task 등록
             customIOManigerFoem.CreateFileCopyList(filesPath.ToList(), this.m_pathActiveProjectImage, ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                                                     MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
-            customIOManigerFoem.CreateFileCopyList(CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
+            customIOManigerFoem.CreateFileCopyList(CADImageSaveList.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                      MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             // 변경된 값 반영
             this.m_activeProjectImageListJObject["int_ImageListnumber"] = (totalImageListnumber + imageListNumber - 1);
@@ -3255,6 +3265,7 @@ namespace ProjectAI
             string MatchingName = cadImageSelect.CADNameGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
             if (MatchingName != null)
             {
+                CADImageSaveList.Add(Path.Combine(Path.GetDirectoryName(cadImageSelect.CADAddressGridList[0].ToString()), MatchingName));
                 labeledDatainnerProjectLabelName = new JObject
                 {
                     { "CADImage", Path.Combine(CADImageFolder, MatchingName) }
