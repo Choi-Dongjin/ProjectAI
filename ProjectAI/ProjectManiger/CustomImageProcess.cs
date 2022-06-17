@@ -95,37 +95,53 @@ namespace ProjectAI.ProjectManiger
             BitmapData pBitmapCadImageData = cadBitmapImage.LockBits(new Rectangle(0, 0, cadBitmapImage.Width, cadBitmapImage.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
             BitmapData pBitmapOverlayImageData = overlayData.LockBits(new Rectangle(0, 0, overlayData.Width, overlayData.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            byte* ptr0 = (byte*)pBitmapOrigmnalData.Scan0;
-            byte* ptr1 = (byte*)pBitmapCadImageData.Scan0;
-            byte* ptr2 = (byte*)pBitmapOverlayImageData.Scan0;
-
-            int iorignalStride = pBitmapOrigmnalData.Stride;
-            int icadStride = pBitmapCadImageData.Stride;
-            int ioverlayStride = pBitmapOverlayImageData.Stride;
-
-            int iHeight = orignaBitmapImagel.Height;
-            int iWidth = orignaBitmapImagel.Width * 3;
-
-            for (int h = 0; h < iHeight; h++)
+            try
             {
-                for (int w = 0; w < iWidth; w += 3)
+                byte* ptr0 = (byte*)pBitmapOrigmnalData.Scan0;
+                byte* ptr1 = (byte*)pBitmapCadImageData.Scan0;
+                byte* ptr2 = (byte*)pBitmapOverlayImageData.Scan0;
+
+                int iorignalStride = pBitmapOrigmnalData.Stride;
+                int icadStride = pBitmapCadImageData.Stride;
+                int ioverlayStride = pBitmapOverlayImageData.Stride;
+
+                int iHeight = orignaBitmapImagel.Height;
+                int iWidth = orignaBitmapImagel.Width * 3;
+
+                for (int h = 0; h < iHeight; h++)
                 {
-                    byte orignalBlue = *(ptr0 + (h * iorignalStride) + w);
-                    byte orignalGreen = *(ptr0 + (h * iorignalStride) + 1 + w);
-                    byte orignalRed = *(ptr0 + (h * iorignalStride) + 2 + w);
+                    for (int w = 0; w < iWidth; w += 3)
+                    {
+                        byte orignalBlue = *(ptr0 + (h * iorignalStride) + w);
+                        byte orignalGreen = *(ptr0 + (h * iorignalStride) + 1 + w);
+                        byte orignalRed = *(ptr0 + (h * iorignalStride) + 2 + w);
 
-                    byte cadBlue = *(ptr1 + (h * icadStride) + w);
-                    byte cadGreen = *(ptr1 + (h * icadStride) + 1 + w);
-                    byte cadRed = *(ptr1 + (h * icadStride) + 2 + w);
+                        byte cadBlue = *(ptr1 + (h * icadStride) + w);
+                        byte cadGreen = *(ptr1 + (h * icadStride) + 1 + w);
+                        byte cadRed = *(ptr1 + (h * icadStride) + 2 + w);
 
-                    *(ptr2 + (h * ioverlayStride) + w) = (Byte)(orignalBlue * ratio + cadBlue * (1 - ratio));
-                    *(ptr2 + (h * ioverlayStride) + 1 + w) = (Byte)(orignalGreen * ratio + cadGreen * (1 - ratio));
-                    *(ptr2 + (h * ioverlayStride) + 2 + w) = (Byte)(orignalRed * ratio + cadRed * (1 - ratio));
+                        *(ptr2 + (h * ioverlayStride) + w) = (Byte)(orignalBlue * ratio + cadBlue * (1 - ratio));
+                        *(ptr2 + (h * ioverlayStride) + 1 + w) = (Byte)(orignalGreen * ratio + cadGreen * (1 - ratio));
+                        *(ptr2 + (h * ioverlayStride) + 2 + w) = (Byte)(orignalRed * ratio + cadRed * (1 - ratio));
+                    }
                 }
             }
-            orignaBitmapImagel.UnlockBits(pBitmapOrigmnalData);
-            cadBitmapImage.UnlockBits(pBitmapCadImageData);
-            overlayData.UnlockBits(pBitmapOverlayImageData);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    orignaBitmapImagel.UnlockBits(pBitmapOrigmnalData);
+                    cadBitmapImage.UnlockBits(pBitmapCadImageData);
+                    overlayData.UnlockBits(pBitmapOverlayImageData);
+                }
+                catch
+                {
+                }
+            }
 
             return overlayData;
         }

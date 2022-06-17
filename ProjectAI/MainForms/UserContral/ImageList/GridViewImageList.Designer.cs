@@ -336,12 +336,6 @@
             // 
             // toolStripMenuItem2
             // 
-            this.cADImageSelectToolStripMenuItem.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
-            this.cADImageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.Initimage;
-            this.cADImageSelectToolStripMenuItem.Name = "cADImageSelectToolStripMenuItem";
-            this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.cADImageSelectToolStripMenuItem.Text = "Init Image Select";
-            this.cADImageSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
             this.toolStripMenuItem2.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
             this.toolStripMenuItem2.Image = global::ProjectAI.Properties.Resources.Initimage;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -359,11 +353,6 @@
             // 
             // toolStripSeparator2
             // 
-            this.cADImageSelectToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.CADimage;
-            this.cADImageSelectToolStripMenuItem1.Name = "cADImageSelectToolStripMenuItem1";
-            this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(241, 22);
-            this.cADImageSelectToolStripMenuItem1.Text = "CAD Image Select";
-            this.cADImageSelectToolStripMenuItem1.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
             // 
@@ -374,16 +363,9 @@
             this.toolStripMenuItem4.Size = new System.Drawing.Size(249, 30);
             this.toolStripMenuItem4.Text = "CAD Image Files Add Wizard";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
-            this.cADImageMultiSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADWizard;
-            this.cADImageMultiSelectToolStripMenuItem.Name = "cADImageMultiSelectToolStripMenuItem";
-            this.cADImageMultiSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.cADImageMultiSelectToolStripMenuItem.Text = "CAD Image Files Add Wizard";
-            this.cADImageMultiSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
             // 
             // toolStripMenuItem5
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(238, 6);
             this.toolStripMenuItem5.Image = global::ProjectAI.Properties.Resources.CADfolder;
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(249, 30);
@@ -394,11 +376,6 @@
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(246, 6);
-            this.cADImageForderWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADfolder;
-            this.cADImageForderWizardToolStripMenuItem.Name = "cADImageForderWizardToolStripMenuItem";
-            this.cADImageForderWizardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.cADImageForderWizardToolStripMenuItem.Text = "CAD Image Forder Add Wizard";
-            this.cADImageForderWizardToolStripMenuItem.Click += new System.EventHandler(this.CADImageForderWizardToolStripMenuItemClick);
             // 
             // toolStripSeparator14
             // 
