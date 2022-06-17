@@ -1,13 +1,12 @@
 ﻿using MetroFramework;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
-using OpenCvSharp;
 
 namespace ProjectAI
 {
@@ -16,7 +15,6 @@ namespace ProjectAI
     /// </summary>
     public struct HardwareInformation
     {
-
         public static JObject systemHardwareInfoJObject;
 
         /// <summary>
@@ -86,7 +84,7 @@ namespace ProjectAI
                         ["NumberOfLogicalProcessors"] = obj["NumberOfLogicalProcessors"]?.ToString(),
                         ["PCSystemType"] = obj["PCSystemType"]?.ToString()
                     };
-                    
+
                     infoJObject.Add($"Processors_{number}", jObject);
                     number++;
                 }
@@ -327,7 +325,6 @@ namespace ProjectAI
     /// </summary>
     public struct WorkSpaceEarlyData
     {
-
         /// <summary>
         /// workSpaceEarlyData Jobject 관리
         /// </summary>
@@ -404,7 +401,6 @@ namespace ProjectAI
         /// </summary>
         public static bool m_workSpaceSave = false;
     }
-    
 
     /// <summary>
     /// WorkSpace 가 호출되면 호출되는 Class,각 WorkSpace의 데이터 관리
@@ -412,6 +408,7 @@ namespace ProjectAI
     public class ProjectContral
     {
         #region ProjectMainger에 종속된 Forms 정의
+
         /// <summary>
         /// 프로젝트 선택 폼
         /// </summary>
@@ -421,7 +418,6 @@ namespace ProjectAI
         /// Class 편집 폼
         /// </summary>
         public MainForms.ClassEdit classEdit = new MainForms.ClassEdit();
-
 
         #endregion ProjectMainger에 종속된 Forms 정의
 
@@ -461,7 +457,6 @@ namespace ProjectAI
         /// </summary>
         public Dictionary<string, object>
             m_imageListDictionary = new Dictionary<string, object>();
-
 
         #endregion ProjectMainger에 종속된 UserContral 정의
 
@@ -589,10 +584,12 @@ namespace ProjectAI
         /// 선택한 모델
         /// </summary>
         public string m_avtiveModelsName;
+
         /// <summary>
         /// 선택한 내부 모델 이름
         /// </summary>
         public string m_avtiveinnerModelsName;
+
         /// <summary>
         /// 히트맵 이미지 리스트
         /// </summary>
@@ -659,12 +656,10 @@ namespace ProjectAI
         /// </summary>
         public MetroFramework.Controls.MetroPanel panelLogo;
 
-
         /// <summary>
         /// OriginImage와 CADImage 1:1비교해서 JSON파일로 쓸 때 0부터 index를 찾지말고 index를 저장하고 다음 index부터 찾음
         /// </summary>
         //int searchIndex = 0;
-
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -1247,14 +1242,13 @@ namespace ProjectAI
 
         #endregion 각 설정 초기화
 
-
-
         /// <summary>
         /// Idle UI Consrals 셋업, 컴포넌트 정의 과정
         /// </summary>
         private void ActiveProjectIdleContralsSetting()
         {
             #region TrainOption 설정
+
             this.MainForm.styleExtenderMainForm.SetApplyMetroTheme(this.m_idleTrainOption, true);
             this.m_idleTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_idleTrainOption.Location = new System.Drawing.Point(0, 0);
@@ -1262,9 +1256,11 @@ namespace ProjectAI
             this.m_idleTrainOption.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
             //this.m_idleTrainOption.Name = "sts";
             //this.m_idleTrainOption.TabIndex = 0;
+
             #endregion TrainOption 설정
 
             #region m_idelPictureBox 설정
+
             if (this.formsManiger.m_isDarkMode) // 밝은 모드
             {
                 this.m_idelPictureBox.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
@@ -1279,7 +1275,8 @@ namespace ProjectAI
             this.m_idelPictureBox.Name = "pictureBox1";
             this.m_idelPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.m_idelPictureBox.TabStop = false;
-            #endregion m_idelPictureBox
+
+            #endregion m_idelPictureBox 설정
         }
 
         /// <summary>
@@ -1397,8 +1394,10 @@ namespace ProjectAI
             #region gridImageList 값 적용 초기화
 
             #region m_idelGridViewImageList 설정
+
             this.m_idelGridViewImageList = this.GridViewImageListContralsSetting(this.m_idelGridViewImageList);
-            #endregion m_idelGridViewImageList
+
+            #endregion m_idelGridViewImageList 설정
 
             Int32.TryParse(m_activeProjectImageListJObject["int_ImageListnumber"].ToString(), out int ImageListnumber);
             //this.m_activeProjectImageListJObject["imageList"];
@@ -1482,7 +1481,6 @@ namespace ProjectAI
                             metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
                             if (activeClassColor != null)
                                 metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
-
                         }
                     }
                 }
@@ -1498,17 +1496,15 @@ namespace ProjectAI
                     try
                     {
                         if (this.MainForm.splitContainerImageAndImageList.Width - size > 0)
-                            this.MainForm.splitContainerImageAndImageList.SplitterDistance = this.MainForm.splitContainerImageAndImageList.Width - size;
+                            this.MainForm.splitContainerImageAndImageList.SplitterDistance = this.MainForm.splitContainerImageAndImageList.Width - size - 5;
                     }
                     catch
                     {
-
                     }
                 }
             }
             catch
             {
-
             }
         }
 
@@ -1679,6 +1675,7 @@ namespace ProjectAI
                     bool alreadyOpenedProjectImageList = false; // Classification 내부 프로젝트가 실행되고 있는지 확인용 변수
 
                     #region panelTrainOptions
+
                     // panelTrainOptions 설정
                     foreach (string activeInnerProjectName in this.m_classificationTrainOptionDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                         if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1698,9 +1695,11 @@ namespace ProjectAI
 
                         this.m_classificationTrainOptionDictionary.Add(this.m_activeInnerProjectName, m_classificationTrainOptionl); // 관리 Dictionary에 추가
                     } // 처음 실행된 내부 프로젝트 라면
+
                     #endregion panelTrainOptions
 
                     #region panelDataReview
+
                     // panelDataReview 설정
                     foreach (string activeInnerProjectName in this.m_classViewerDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
                         if (activeInnerProjectName != null || activeInnerProjectName != "") // 내부 프로젝트 이름 확인 필터
@@ -1715,9 +1714,11 @@ namespace ProjectAI
                         this.m_classInfoChangeUpdater += classViewer.UpdateClassInfo; // Class 업데이터 등록
                         this.m_classViewerDictionary.Add(this.m_activeInnerProjectName, classViewer); // 관리 Dictionary에 추가
                     }
+
                     #endregion panelDataReview
 
                     #region ImageList
+
                     //foreach ()m_imageListDictionary
                     // Image Lust 설정
                     foreach (string activeInnerProjectName in this.m_imageListDictionary.Keys) // 이미 실행된 내부 프로젝트인지 확인
@@ -1734,9 +1735,11 @@ namespace ProjectAI
                         this.m_imageListDictionary.Add(this.m_activeInnerProjectName, gridViewImageList);
                         WorkSpaceData.m_activeProjectMainger.m_imageNumberChangeUpdater += gridViewImageList.ImageTotalNumberUpdate;
                     }
+
                     #endregion ImageList
 
                     #region ImageViewer
+
                     if (this.m_activeProjectInfoJObject["string_projectListInfo"][button.Name]["string_selectProjectInputDataType"].ToString() == "SingleImage")
                     {
                         Console.WriteLine("Classification");
@@ -1838,15 +1841,18 @@ namespace ProjectAI
                     this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
 
                     #region 컨트롤 추가
+
                     this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
                     this.MainForm.splitContainerImageAndImageList.Panel1.Controls.Add((System.Windows.Forms.Control)this.m_imageViewDictionary[this.m_activeInnerProjectName]);
                     this.MainForm.splitContainerImageAndImageList.Panel2.Controls.Add((System.Windows.Forms.Control)this.m_imageListDictionary[this.m_activeInnerProjectName]);
+
                     #endregion 컨트롤 추가
 
                     this.m_imageNumberChangeUpdater(); // 이미지 개수 정보 업데이트 // 이미지 번호 정보 초기화
 
                     #region gridImageList 값 적용 초기화
+
                     if (this.m_imageListDictionary[this.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList GridViewImageList)
                     {
                         if (this.m_imageListDictionary[this.m_activeInnerProjectName] is ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList)
@@ -1859,7 +1865,9 @@ namespace ProjectAI
                             this.UISetImageListDataGridview(this.imageListPage, gridViewImageList.gridImageList, gridViewImageList.ckbMdataGridViewAutoSize);
                         }
                     }
+
                     #endregion gridImageList 값 적용 초기화
+
                     //#33
 
                     // trainForm 학습 결과 폼
@@ -1912,28 +1920,28 @@ namespace ProjectAI
             //this.splitContainer1.Panel2.SuspendLayout();
             //this.splitContainer1.SuspendLayout();
             //this.splitContainerImageAndImageList.Panel1.Controls.Add(this.splitContainer1);
-            //// 
+            ////
             //// splitContainer1
-            //// 
+            ////
             //this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             //this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             //this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             //this.splitContainer1.Name = "splitContainer1";
-            //// 
+            ////
             //// splitContainer1.Panel1
-            //// 
+            ////
             //this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
-            //// 
+            ////
             //// splitContainer1.Panel2
-            //// 
+            ////
             //this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             //this.splitContainer1.Panel2Collapsed = true;
             //this.splitContainer1.Size = new System.Drawing.Size(200, 665);
             //this.splitContainer1.SplitterDistance = 25;
             //this.splitContainer1.TabIndex = 4;
-            // 
+            //
             // simpleTwoImageViewer
-            // 
+            //
             simpleTwoImageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             simpleTwoImageViewer.Location = new System.Drawing.Point(0, 0);
             simpleTwoImageViewer.Name = "simpleTwoImageViewer1";
@@ -1950,28 +1958,28 @@ namespace ProjectAI
             //this.splitContainer1.Panel2.SuspendLayout();
             //this.splitContainer1.SuspendLayout();
             //this.splitContainerImageAndImageList.Panel1.Controls.Add(this.splitContainer1);
-            //// 
+            ////
             //// splitContainer1
-            //// 
+            ////
             //this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             //this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             //this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             //this.splitContainer1.Name = "splitContainer1";
-            //// 
+            ////
             //// splitContainer1.Panel1
-            //// 
+            ////
             //this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
-            //// 
+            ////
             //// splitContainer1.Panel2
-            //// 
+            ////
             //this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             //this.splitContainer1.Panel2Collapsed = true;
             //this.splitContainer1.Size = new System.Drawing.Size(200, 665);
             //this.splitContainer1.SplitterDistance = 25;
             //this.splitContainer1.TabIndex = 4;
-            // 
+            //
             // simpleTwoImageViewer
-            // 
+            //
 
             cadImageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             cadImageViewer.Location = new System.Drawing.Point(0, 0);
@@ -2090,7 +2098,6 @@ namespace ProjectAI
                             {
                                 string CADImageName = Path.GetFileName(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
 
-                                
                                 string orignalImagePath = Path.Combine(this.m_pathActiveProjectImage, imageName);
                                 string cadImagePath = this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString();
 
@@ -2100,7 +2107,7 @@ namespace ProjectAI
                                 // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder);
                                 // imageViewer.OverlayImagePrint(imageName, CADImageName, CADImageFolder); // bitmap overlay로 처리 변경
                                 // imageViewer.pictureBox2.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignaBitmapImagel, cadBitmapImage, 0.8);
-                                
+
                                 if (File.Exists(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString()))
                                 {
                                     //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
@@ -2122,7 +2129,7 @@ namespace ProjectAI
                 this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
             }
         }
-        
+
         /// <summary>
         /// 활성화된 워크스페이스 이미지 추가
         /// </summary>
@@ -2177,7 +2184,7 @@ namespace ProjectAI
                             imageListList.Add(data);
                         }
                     }
-                    
+
                     imageListList.AddRange(files.ToList());
                     int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageeListSetNumber));
 
@@ -2523,7 +2530,7 @@ namespace ProjectAI
                             // 5. 변경된 UI 적용
                             this.m_imageNumberChangeUpdater?.Invoke(); // 이미지 개수 정보 업데이트
                                                                        //this.UISetImageListDataGridview(this.imageListPage);
-                            // 6. 저장 버튼 활성화
+                                                                       // 6. 저장 버튼 활성화
                             this.SaveEnabled(); // 저장 활성화
                             this.SaveButoonChacked(); // 저장 버튼 확인
                             this.m_classInfoChangeUpdater?.Invoke(); // Class 정보 관련 사항 업데이트
@@ -2541,10 +2548,10 @@ namespace ProjectAI
                     }
                 }
             }
-
         }
 
         #region CAD Image 관련 함수
+
         /// <summary>
         /// CadImageSelect - CAD Image Select 폼을 띄우는 함수
         /// </summary>
@@ -2696,14 +2703,12 @@ namespace ProjectAI
                 CheckIndex = 0;
             }
 
-
             //this.MainForm.panelstatus.Visible = true;
             int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
             int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
             int imageListSetNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageeListSetnumber"]);
             JObject imageListJObject = (JObject)this.m_activeProjectImageListJObject["imageList"];
             JArray imageList = (JArray)imageListJObject[(imageListNumber - 1).ToString()];
-
 
             List<string> imageListList = new List<string>();
             if (imageList != null)
@@ -2716,18 +2721,14 @@ namespace ProjectAI
             if (CheckIndex == 1)
                 imageListList.AddRange(file.ToList());
 
-
-
             int totalImageListnumber = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(imageListList.Count) / imageListSetNumber));
 
             //CADImage를 저장할 폴더 명
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
-
             //CADImage가 저장된 폴더 내의 이미지 이름 확인
             if (this.CADImageNameCheck(cadImageSelect.CADImageName[0], CADImageFolder))
-                return ;
-   
+                return;
 
             //찾은 이미지와 같은 이미지가 존재하지 않을 겨우
             if (CheckIndex > 0)
@@ -2742,7 +2743,7 @@ namespace ProjectAI
                 };
                 this.m_activeProjectDataImageListDataJObject[file[0].ToString()] = JObject.FromObject(imageData);
 
-                //Labeled -> 해당 프로젝트 -> CadImage: 1:1 대응되는 CadImage 정보 확인 
+                //Labeled -> 해당 프로젝트 -> CadImage: 1:1 대응되는 CadImage 정보 확인
                 labeledDatainnerProjectLabelName = new JObject
                 {
                     { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName[0]) }
@@ -2759,7 +2760,6 @@ namespace ProjectAI
             // 같은 이미지가 존재할 경우
             else if (CheckIndex == 0)
             {
-
                 labeledDatainnerProjectLabelName = new JObject
                 {
                     { "CADImage", Path.Combine(CADImageFolder, cadImageSelect.CADImageName[0]) }
@@ -2800,7 +2800,7 @@ namespace ProjectAI
                 customIOManigerFoem.CreateFileCopyList(cadImageSelect.CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
                       MainForm.pgbMfileIOstatus, MainForm.lblMwaorkInNumber, MainForm.lblMtotalNumber, MainForm.lblMIOStatus, MainForm.lblMworkInFileName);
             }
-            else if(CheckIndex == 0) // 같은 이미지가 존재할 경우 CADImage만 저장
+            else if (CheckIndex == 0) // 같은 이미지가 존재할 경우 CADImage만 저장
             {
                 // CADImage File IO Task 등록
                 customIOManigerFoem.CreateFileCopyList(cadImageSelect.CADImagePath.ToList(), Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName), ProjectManiger.CustomIOManigerFoem.FileCopyListSet.PathToPath,
@@ -2823,6 +2823,7 @@ namespace ProjectAI
             this.JsonDataSave(2);
             this.JsonDataSave(3);
         }
+
         /// <summary>
         /// 많은 이미지를 선택하고 OK 누를 때 OriginImage와 CADImage가 1:1매칭으로 전부 등록된다. 1:1이 안되면 안되는 채로 OriginImage가 저장
         /// </summary>
@@ -2839,7 +2840,7 @@ namespace ProjectAI
             string[] SameFiles = new string[OriginRowsCount]; // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
             string[] filesPath = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지의 FullPath
             string[] CADImagePath = new string[CADRowsCount]; // CAD 기준, 이미지 FullPath
-            
+
             int loop = -1;
             //for (int i = 0; i < maxValue; i++)
             //{
@@ -2857,7 +2858,6 @@ namespace ProjectAI
                 loop++;
                 files[loop] = fileName;
                 SameFiles[loop] = fileName;
-
             }
             loop = -1;
             foreach (string address in cadImageSelect.OriginAddressGridList)
@@ -2873,7 +2873,7 @@ namespace ProjectAI
                 CADImagePath[loop] = fileFullPath;
             }
 
-                int countNumber = files.Length;
+            int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
             List<int> FileIndexs = new List<int>(); //이름은 있는데 CADImage 매칭이 안된 Image들
             for (int i = 0; i < countNumber; i++)
@@ -2914,7 +2914,6 @@ namespace ProjectAI
             }
             if (files.Length == 0 && newSameFiles.Length == 0) // 파일이 없으면
                 return;
-
 
             int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
             int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
@@ -2957,8 +2956,8 @@ namespace ProjectAI
             {
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
-            
-                // image List 값 반영
+
+            // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
                 List<string> iImageList;
@@ -3028,7 +3027,6 @@ namespace ProjectAI
             this.JsonDataSave(3);
         }
 
-
         /// <summary>
         /// Folder 내에 있는 이미지를 바로 반영하여 넣어줍니다.
         /// </summary>
@@ -3063,7 +3061,6 @@ namespace ProjectAI
                 loop++;
                 files[loop] = fileName;
                 SameFiles[loop] = fileName;
-
             }
             loop = -1;
             foreach (string address in cadImageSelect.OriginAddressGridList)
@@ -3120,7 +3117,6 @@ namespace ProjectAI
             }
             if (files.Length == 0 && newSameFiles.Length == 0) // 파일이 없으면
                 return;
-
 
             int imageTotalNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_imageTotalNumber"]);
             int imageListNumber = Convert.ToInt32(this.m_activeProjectImageListJObject["int_ImageListnumber"]);
@@ -3319,7 +3315,6 @@ namespace ProjectAI
             return false;
         }
 
-
         /// <summary>
         /// MainForm에서 CADImage View할 때 파일의 유무 확인
         /// </summary>
@@ -3357,15 +3352,14 @@ namespace ProjectAI
             return false;
         }
 
-
         public void CADImageViewerPrintImage(ProjectAI.MainForms.CadImageSelect cadImageSelect)
         {
             if (this.m_activeInnerProjectName != null)
             {
                 if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProject"].ToString() == "Classification")
                 {
-                   if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
-                   {
+                    if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
+                    {
                         ProjectAI.MainForms.UserContral.ImageView.CadImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.CadImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
                         if (imageViewer.pictureBox1.Image != null)
                             imageViewer.pictureBox1.Image = null;
@@ -3376,9 +3370,7 @@ namespace ProjectAI
 
                         imageViewer.BitmapImageInput1(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, cadImageSelect.imageTempName)));
                         imageViewer.BitmapImageInput2(CustomIOMainger.LoadBitmap(Path.Combine(CADImageFolder, cadImageSelect.CADImageName[0])));
-
-                   }
-                   
+                    }
                 }
             }
             else
@@ -3386,7 +3378,6 @@ namespace ProjectAI
                 this.m_idelPictureBox.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, cadImageSelect.OriginImageName[0]));
             }
         }
-
 
         public void CADImageMultiSelect(MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize)
         {
@@ -3431,8 +3422,6 @@ namespace ProjectAI
         }
 
         #endregion CAD Image 관련 함수
-
-
 
         /// <summary>
         /// 활성화된 워크스페이스 이미지 제거, MetroGrid 타입
@@ -3879,7 +3868,7 @@ namespace ProjectAI
         }
 
         /// <summary>
-        /// 이미지 라벨링을 위한 함수 
+        /// 이미지 라벨링을 위한 함수
         /// </summary>
         /// <param name="dataFileList"></param>
         /// <param name="modifyClassName"></param>
@@ -4162,7 +4151,6 @@ namespace ProjectAI
             if (dataFileList.Count == 0) // 이미지 데이터가 없으면
                 return; // 함수 종료
 
-
             // 2. 선택한 이미지 데이터 Train Status 정보 가져오기
             int imageTrainNumber = Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTrainNumber"]); // imageTestNumber 값 가져오기
 
@@ -4360,7 +4348,6 @@ namespace ProjectAI
             if (dataFileList.Count == 0) // 선택된 이미지 데이터가 없으면
                 return; // 함수 종료
 
-
             // 2. 선택한 이미지 데이터 Test Status 정보 가져오기
             int imageTestNumber = Convert.ToInt32(this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageTestNumber"]); // imageTestNumber 값 가져오기
 
@@ -4503,6 +4490,7 @@ namespace ProjectAI
             // 4. 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             #region 라벨링 정보 수정 적용하기 ActiveProjectInfo
+
             // Active Project Info 변경
             int activeProjectInfoImageLabeledNumber = 0;
             if (this.m_activeProjectCalssInfoJObject[this.m_activeInnerProjectName] != null)
@@ -4513,6 +4501,7 @@ namespace ProjectAI
 
                 this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["int_imageLabeledNumber"] = activeProjectInfoImageLabeledNumber; // 데이터 activeProjectInfo에 적용
             }
+
             #endregion 라벨링 정보 수정 적용하기 ActiveProjectInfo
 
             // Json 파일 저장
@@ -4720,7 +4709,6 @@ namespace ProjectAI
             }
             else if (this.m_activeInnerProjectInputImageType.Equals("MultiImage"))
             {
-
             }
             else if (this.m_activeInnerProjectInputImageType.Equals("CADImage"))
             {

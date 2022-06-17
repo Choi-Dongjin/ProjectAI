@@ -204,7 +204,6 @@
             // gridImageList
             // 
             this.gridImageList.AllowUserToAddRows = false;
-            this.gridImageList.AllowUserToResizeRows = false;
             this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gridImageList.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -250,10 +249,11 @@
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridImageList.Size = new System.Drawing.Size(378, 686);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
-            this.gridImageList.TabIndex = 3;
+            this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
             this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
+            this.gridImageList.Resize += new System.EventHandler(this.GridImageListResize);
             // 
             // cmsMImageListToolKit
             // 
@@ -281,7 +281,7 @@
             this.imageSetInfoResetToolStripMenuItem,
             this.toolStripSeparator15});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 404);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 382);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
@@ -328,14 +328,14 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
             // 
             // cADImageSelectToolStripMenuItem
             // 
             this.cADImageSelectToolStripMenuItem.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
             this.cADImageSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.Initimage;
             this.cADImageSelectToolStripMenuItem.Name = "cADImageSelectToolStripMenuItem";
-            this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(249, 30);
+            this.cADImageSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.cADImageSelectToolStripMenuItem.Text = "Init Image Select";
             this.cADImageSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
             // 
@@ -343,7 +343,7 @@
             // 
             this.cADImageSelectToolStripMenuItem1.Image = global::ProjectAI.Properties.Resources.CADimage;
             this.cADImageSelectToolStripMenuItem1.Name = "cADImageSelectToolStripMenuItem1";
-            this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(249, 30);
+            this.cADImageSelectToolStripMenuItem1.Size = new System.Drawing.Size(241, 22);
             this.cADImageSelectToolStripMenuItem1.Text = "CAD Image Select";
             this.cADImageSelectToolStripMenuItem1.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
             // 
@@ -351,20 +351,20 @@
             // 
             this.cADImageMultiSelectToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADWizard;
             this.cADImageMultiSelectToolStripMenuItem.Name = "cADImageMultiSelectToolStripMenuItem";
-            this.cADImageMultiSelectToolStripMenuItem.Size = new System.Drawing.Size(249, 30);
+            this.cADImageMultiSelectToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.cADImageMultiSelectToolStripMenuItem.Text = "CAD Image Files Add Wizard";
             this.cADImageMultiSelectToolStripMenuItem.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(238, 6);
             // 
             // cADImageForderWizardToolStripMenuItem
             // 
             this.cADImageForderWizardToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.CADfolder;
             this.cADImageForderWizardToolStripMenuItem.Name = "cADImageForderWizardToolStripMenuItem";
-            this.cADImageForderWizardToolStripMenuItem.Size = new System.Drawing.Size(249, 30);
+            this.cADImageForderWizardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.cADImageForderWizardToolStripMenuItem.Text = "CAD Image Forder Add Wizard";
             this.cADImageForderWizardToolStripMenuItem.Click += new System.EventHandler(this.CADImageForderWizardToolStripMenuItemClick);
             // 
@@ -472,6 +472,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "GridViewImageList";
             this.Size = new System.Drawing.Size(378, 750);
+            this.Resize += new System.EventHandler(this.GridViewImageList_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

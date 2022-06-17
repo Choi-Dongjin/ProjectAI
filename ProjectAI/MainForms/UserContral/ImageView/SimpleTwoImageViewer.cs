@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using MetroFramework.Components;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using MetroFramework.Components;
-using Newtonsoft.Json.Linq;
 
 namespace ProjectAI.MainForms.UserContral.ImageView
 {
     public partial class SimpleTwoImageViewer : UserControl
     {
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
+
         public SimpleTwoImageViewer()
         {
             InitializeComponent();
@@ -50,6 +42,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
         }
+
         public void BitmapImageInput2(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);

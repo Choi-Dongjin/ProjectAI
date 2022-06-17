@@ -1,13 +1,9 @@
 ﻿using OpenCvSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -27,7 +23,6 @@ namespace ProjectAI.ProjectManiger
             Mat image1 = new Mat(), image2 = new Mat();
             OverlayImage.ConvertTo(image1, d);
             OriginOverlayImage.ConvertTo(image2, d);
-
 
             Mat image1_2 = image1.Mul(image1); // image1^2
             Mat image2_2 = image2.Mul(image2); // image2^2
@@ -78,7 +73,6 @@ namespace ProjectAI.ProjectManiger
         /// <param name="OriginOverlayImage"></param>
         public static double OverlayImageCompare(Mat OverlayImage, Mat OriginOverlayImage)
         {
-
             double psnr = Cv2.PSNR(OverlayImage, OriginOverlayImage);
             return psnr;
         }
@@ -90,7 +84,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="cadBitmapImage"> 겹칠 이미지 </param>
         /// <param name="ratio"> 오버레이 이미지 원본 비율  </param>
         /// <returns></returns>
-        public unsafe static Bitmap BitmapImageOverlay24bppRgb(Bitmap orignaBitmapImagel, Bitmap cadBitmapImage, double ratio)
+        public static unsafe Bitmap BitmapImageOverlay24bppRgb(Bitmap orignaBitmapImagel, Bitmap cadBitmapImage, double ratio)
         {
             if (cadBitmapImage == null || orignaBitmapImagel == null)
                 return null;
@@ -141,7 +135,7 @@ namespace ProjectAI.ProjectManiger
         /// </summary>
         /// <param name="makedBitmapImage"> 만들어진 이미지 </param>
         /// <param name="targetBitmapImage"> 대상 이미지 </param>
-        public unsafe static double[,,] BitmapImageGetOverlayRatio(Bitmap makedBitmapImage, Bitmap targetBitmapImage)
+        public static unsafe double[,,] BitmapImageGetOverlayRatio(Bitmap makedBitmapImage, Bitmap targetBitmapImage)
         {
             BitmapData makedBitmapData = makedBitmapImage.LockBits(new Rectangle(0, 0, makedBitmapImage.Width, makedBitmapImage.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
             BitmapData targetBitmapData = targetBitmapImage.LockBits(new Rectangle(0, 0, targetBitmapImage.Width, targetBitmapImage.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
@@ -223,7 +217,7 @@ namespace ProjectAI.ProjectManiger
         /// </summary>
         /// <param name="bitmap"> 변환할 Bitmap Image RGB </param>
         /// <returns> XTY 배열 (이미지 채널, 이미지 Height, 이미지 Width) </returns>
-        public unsafe static double[,,] RGBtoXYZ(Bitmap bitmap)
+        public static unsafe double[,,] RGBtoXYZ(Bitmap bitmap)
         {
             BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
             double[,,] xyzArray = new double[3, bitmap.Height, bitmap.Width];
@@ -266,7 +260,7 @@ namespace ProjectAI.ProjectManiger
         }
 
         /// <summary>
-        /// XYZ to LAB 
+        /// XYZ to LAB
         /// </summary>
         /// <param name="xyzArray"> XTY 배열 (X, Y, Z)  </param>
         /// <returns> LAB 배열 (L, A, B) </returns>
@@ -292,8 +286,9 @@ namespace ProjectAI.ProjectManiger
 
             return labArray;
         }
+
         /// <summary>
-        /// XYZ to LAB 
+        /// XYZ to LAB
         /// </summary>
         /// <param name="xyzArray"> XTY 배열 (이미지 채널, 이미지 Height, 이미지 Width) </param>
         /// <returns> LAB 배열 (이미지 채널, 이미지 Height, 이미지 Width) </returns>
@@ -463,7 +458,6 @@ namespace ProjectAI.ProjectManiger
             //△θ
             double DeltaTheta = Deg2Rad(30.0) * Math.Exp(-Math.Pow((BarHPrime - Deg2Rad(275.0)) / Deg2Rad(25), 2.0));
 
-
             double DeltaLPrime = target.L - make.L;
             double DeltaCPrime = C2Prime - C1Prime;
             double SL = 1 + (0.015 * Math.Pow(BarLPrime - 50.0, 2.0) / Math.Sqrt(20 + Math.Pow(BarLPrime - 50.0, 2.0)));
@@ -535,8 +529,6 @@ namespace ProjectAI.ProjectManiger
                 Console.WriteLine(dDeltaE);
             }
         }
-
-
 
         public static Bitmap CropImage(Image image, Rectangle ROI)
         {

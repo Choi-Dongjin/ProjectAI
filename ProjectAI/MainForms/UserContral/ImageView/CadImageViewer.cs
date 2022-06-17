@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MetroFramework.Components;
-using System.IO;
+﻿using MetroFramework.Components;
 using OpenCvSharp;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms.UserContral.ImageView
 {
@@ -31,11 +22,11 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private Bitmap tempPic2;
 
         //pictureBox Zoom
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox3;
-        ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox4;
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
 
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox3;
+        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox4;
 
         public struct RectanglePaint
         {
@@ -50,7 +41,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         public struct RectSize
         {
             public System.Drawing.Point pos;
-            public int Width; 
+            public int Width;
             public int Height;
         }
 
@@ -67,12 +58,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
             FormsManiger formsManiger = FormsManiger.GetInstance(); // 폼 메니저
             OverlayUISetUp();
-  
+
             SetRectangle(regionSelect1);
             SetRectangle(regionSelect2);
         }
-
-
 
         private void SetRectangle(RectanglePaint regionSelect)
         {
@@ -80,7 +69,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             regionSelect.leftClick = false;
             regionSelect.rightClick = false;
         }
-
 
         private void UpdataFormStyleManager(MetroStyleManager m_StyleManager)
         {
@@ -127,8 +115,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate));
         }
 
-
-
         /// <summary>
         /// 사각형 구하기
         /// </summary>
@@ -152,8 +138,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             return centerPoint;
         }
 
-
         # region 예전코드
+
         /// <summary>
         /// 원본이미지와 CAD이미지를 Overlay한다.
         /// </summary>
@@ -174,8 +160,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             if (WorkSpaceData.m_activeProjectMainger.CADImageFileCheck(CADImageName, CADImageFolder))
             {
                 CADImage = Cv2.ImRead(WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["CADImage"].ToString(),
-                    ImreadModes.AnyDepth  | ImreadModes.Color);
-                Console.WriteLine( CADImage.Channels());
+                    ImreadModes.AnyDepth | ImreadModes.Color);
+                Console.WriteLine(CADImage.Channels());
                 try
                 {
                     double value = this.outputRate * (double)this.TrackBar.Value;
@@ -189,11 +175,11 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     return;
                 }
                 this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-
             }
             else
                 this.pictureBox2.Image = null;
         }
+
         #endregion
 
         /// <summary>
@@ -202,7 +188,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         public void OverlayUISetUp()
         {
             this.outputRate = 0.01;
-            
+
             this.TrackBar.Minimum = 0;
             this.TrackBar.Maximum = 100;
 
@@ -211,7 +197,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.TrackBar.LargeChange = 5;
             this.TrackBar.MouseWheelBarPartitions = 100;
             this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
-
         }
 
         private void TrackBarValueChanged(object sender, EventArgs e)
@@ -227,7 +212,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value);
+                    //this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value);
+                    this.imageToolUseingPictureBox3.InputBitmapImage(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value), false);
                 }
             }
             catch (Exception ex)
@@ -237,7 +223,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             }
         }
 
-
         /// <summary>
         /// 마우스 클릭 시
         /// </summary>
@@ -245,7 +230,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         /// <param name="e"></param>
         private void PictureBox1MouseDown(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left)
             {
                 this.regionSelect1.selectingArea = true;
@@ -261,9 +245,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 this.pictureBox1.Cursor = Cursors.Hand;
             }
             this.pictureBox1.Refresh();
-
         }
-
 
         /// <summary>
         /// 마우스 이동
@@ -275,7 +257,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             if (this.regionSelect1.leftClick)
                 this.regionSelect1.endPoint = e.Location;
             this.pictureBox1.Refresh();
-
         }
 
         /// <summary>
@@ -289,9 +270,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             {
                 this.regionSelect1.selectingArea = false;
                 this.regionSelect1.leftClick = false;
-                
+
                 Rectangle rectangle = GetRectangle(regionSelect1.startPoint, regionSelect1.endPoint);
- 
+
                 this.ROI = rectangle;
                 //this.image1ZoomInOut.rectangleCenterPoint = GetRectangleCenterPoint(rectangle);
             }
@@ -323,14 +304,17 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         {
             this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
         }
+
         public void BitmapImageInput2(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
         }
+
         public void BitmapImageInput3(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox3.InputBitmapImage(bitmap);
         }
+
         public void BitmapImageInput4(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox4.InputBitmapImage(bitmap);

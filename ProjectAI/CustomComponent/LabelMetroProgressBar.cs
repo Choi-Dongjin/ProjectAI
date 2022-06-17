@@ -115,7 +115,7 @@ namespace ProjectAI.CustomComponent
             }
         }
 
-        private string PercentageStr => $"{(int)((float)Value - Minimum) / ((float)Maximum - Minimum) * 100 } %";
+        private string PercentageStr => $"{(int)((float)Value - Minimum) / ((float)Maximum - Minimum) * 100} %";
 
         private string CurrProgressStr => $"{Value}/{Maximum}";
 

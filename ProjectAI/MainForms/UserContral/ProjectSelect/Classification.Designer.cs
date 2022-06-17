@@ -212,8 +212,7 @@
             this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnNoneImage.InputLabelText = "CAD Image 설명";
             this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
-            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.pcb_board_origin;
-            this.btnNoneImage.Name = "btnNoneImage";
+            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.pcb_board_origin; this.btnNoneImage.Name = "btnNoneImage";
             this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
             this.btnNoneImage.TabIndex = 102;
             this.btnNoneImage.Title = "CAD Image";

@@ -1,10 +1,9 @@
-﻿using OpenCvSharp;
-using MetroFramework.Components;
+﻿using MetroFramework.Components;
+using OpenCvSharp;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 
 namespace ProjectAI.DataAugmentationExampleForms.Contral1
 {
@@ -88,7 +87,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 this.UISetUpZoom();
                 this.activeConverter += this.ConvertZoom;
             }
-            // 이벤트 설정 
+            // 이벤트 설정
 
             this.TrackBarEventSetup();
         }
@@ -124,6 +123,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
         private void ActiveConverterSetup()
         {
         }
+
         /// <summary>
         /// 이미지 읽어오기 => 이미지 사이즈 조정
         /// </summary>
@@ -264,7 +264,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 GC.Collect();
@@ -328,7 +328,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Blur 설정
 
         #region Brightness
 
@@ -404,7 +404,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return convertImage;
         }
 
-        #endregion
+        #endregion Brightness
 
         #region Center
 
@@ -467,7 +467,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Center
 
         #region Contrast
 
@@ -548,7 +548,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Contrast
 
         #region GaussianNoise
 
@@ -606,7 +606,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return convertImage;
         }
 
-        #endregion
+        #endregion GaussianNoise
 
         #region Sharpen
 
@@ -702,7 +702,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Sharpen
 
         #region Gradation
 
@@ -741,7 +741,6 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             this.trbMapplied.LargeChange = 5;
             this.trbMapplied.MouseWheelBarPartitions = 100;
             this.lblMapplied.Text = this.trbMapplied.Value.ToString();
-
         }
 
         /// <summary>
@@ -761,7 +760,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
                 {
                     double rValue = (double)r * (double)convertImage.Width / 255.0 * 0.5;
                     Scalar bgr = new Scalar(rValue, rValue, rValue);
-                   convertImage.Row(r).SetTo(bgr);
+                    convertImage.Row(r).SetTo(bgr);
                 }
                 convertImage.ConvertTo(convertImage, MatType.CV_8UC3, value, 0);
                 //Cv2.ImShow("orign", orignalImage);
@@ -770,9 +769,11 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             }
             return convertImage;
         }
-        #endregion
+
+        #endregion Gradation
 
         #region GradationRGB
+
         /// <summary>
         /// Gradation 설정에서 UI 설정
         /// </summary>
@@ -845,7 +846,7 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return convertImage;
         }
 
-        #endregion
+        #endregion GradationRGB
 
         #region Zoom
 
@@ -908,7 +909,8 @@ namespace ProjectAI.DataAugmentationExampleForms.Contral1
             return converImage;
         }
 
-        #endregion
+        #endregion Zoom
+
         #endregion Converter 설정
 
         public string GetMaximumValue()

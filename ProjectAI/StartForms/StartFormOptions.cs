@@ -252,7 +252,8 @@ namespace ProjectAI.StartForms
             {
                 foreach (JProperty gpuName in HardwareInformation.systemHardwareInfoJObject["GRAPHIC"])
                 {
-                    this.cmbMdetectedGPU.Items.Add(gpuName.Name);
+                    if (gpuName.Name != "AdapterRAM")
+                        this.cmbMdetectedGPU.Items.Add(gpuName.Name);
                 }
             }
             else

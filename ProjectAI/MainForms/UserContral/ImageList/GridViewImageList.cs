@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms.UserContral.ImageList
 {
     public partial class GridViewImageList : UserControl
     {
-        FormsManiger formsManiger = FormsManiger.GetInstance();
+        private FormsManiger formsManiger = FormsManiger.GetInstance();
 
         public GridViewImageList()
         {
@@ -32,11 +25,9 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 
             if (formsManiger.m_isDarkMode) // Light로 변경시 진입
             {
-
             }
             else // Dark로 변경시 진입
             {
-
             }
         }
 
@@ -59,7 +50,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             }
             finally
             {
-
             }
             return imagePath;
         }
@@ -78,7 +68,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             }
             finally
             {
-
             }
             return imageName;
         }
@@ -87,7 +76,7 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
             {
-                this.lblImageListpageTotal.Text = WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_ImageListnumber"].ToString(); 
+                this.lblImageListpageTotal.Text = WorkSpaceData.m_activeProjectMainger.m_activeProjectImageListJObject["int_ImageListnumber"].ToString();
             }
         }
 
@@ -190,7 +179,6 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 WorkSpaceData.m_activeProjectMainger.ImageFilesAdding(this.gridImageList, this.ckbMdataGridViewAutoSize);
         }
 
-
         private void ImageFilesAddWizardToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
@@ -278,6 +266,7 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     WorkSpaceData.m_activeProjectMainger.CADImageForm(this.gridImageList, this.ckbMdataGridViewAutoSize, data);
                 }
         }
+
         private void CADImageMultiSelectToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (WorkSpaceData.m_activeProjectMainger != null)
@@ -294,6 +283,16 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 
         private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)
         {
+            this.GridImageListAutoResize();
+        }
+
+        private void GridImageListResize(object sender, EventArgs e)
+        {
+            //this.GridImageListAutoResize();
+        }
+
+        private void GridImageListAutoResize()
+        {
             int size = 0;
             for (int i = 0; i < this.gridImageList.Columns.Count; i++)
             {
@@ -306,13 +305,17 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 {
                     MainForm mainForm = MainForm.GetInstance();
                     if (mainForm.splitContainerImageAndImageList.Width - size > 0)
-                        mainForm.splitContainerImageAndImageList.SplitterDistance = mainForm.splitContainerImageAndImageList.Width - size;
+                        mainForm.splitContainerImageAndImageList.SplitterDistance = mainForm.splitContainerImageAndImageList.Width - size - 5;
                 }
                 catch
                 {
-
                 }
             }
+        }
+
+        private void GridViewImageList_Resize(object sender, EventArgs e)
+        {
+            //this.GridImageListAutoResize();
         }
     }
 }
