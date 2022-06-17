@@ -230,7 +230,6 @@ namespace ProjectAI.StartForms
             }
             finally
             {
-
             }
         }
 
