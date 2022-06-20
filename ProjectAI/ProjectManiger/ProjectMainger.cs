@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using OpenCvSharp;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace ProjectAI
 {
@@ -146,9 +147,17 @@ namespace ProjectAI
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     string sAdapterRAM = obj["AdapterRAM"]?.ToString();
-                    if (double.TryParse(sAdapterRAM, out double lAdapterRAM))
+                    if (obj["Name"].ToString().ToUpper().Contains("NVIDIA"))
                     {
-                        sAdapterRAM = CustomIOMainger.FormatBytesGB(lAdapterRAM);
+                        ramNVIDIA = String.Format("{0:0.000#}", (float)HardwareInformation.getCudaGpuInfo() / 1024.0F / 1024.0F);
+                        sAdapterRAM = ramNVIDIA;
+                    }
+                    else
+                    {
+                        if (double.TryParse(sAdapterRAM, out double lAdapterRAM))
+                        {
+                            sAdapterRAM = CustomIOMainger.FormatBytesGB(lAdapterRAM);
+                        }
                     }
 
                     Console.WriteLine("Name  -  " + obj["Name"]);
@@ -161,11 +170,6 @@ namespace ProjectAI
                     Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
                     Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
                     Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
-
-                    if (obj["Name"].ToString().ToUpper().Contains("NVIDIA"))
-                    {
-                        ramNVIDIA = sAdapterRAM;
-                    }
 
                     JObject jObject = new JObject()
                     {
@@ -225,6 +229,9 @@ namespace ProjectAI
 
             return HardwareInformation.systemHardwareInfoJObject;
         }
+
+        [DllImport("GetCudaInfoCSharp.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern unsafe int getCudaGpuInfo();
     }
 
     /// <summary>
@@ -2091,7 +2098,7 @@ namespace ProjectAI
                         }
 
                         //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-         
+
                         imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
 
                         string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
@@ -3266,7 +3273,6 @@ namespace ProjectAI
                 labeledData.Merge(labeledDatainnerProject);
             }
         }
-
 
         /// <summary>
         /// 기존에 있던 CAD Image와 중복 이름일 때 선택지 (덮어쓰기 or 취소)
