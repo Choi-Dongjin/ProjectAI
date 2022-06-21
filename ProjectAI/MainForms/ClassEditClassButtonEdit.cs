@@ -138,7 +138,7 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void TxtMClassNameKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) 
+            if (e.KeyCode == Keys.Enter)
                 this.m_classButton.TileText = txtMClassName.Text;
         }
 

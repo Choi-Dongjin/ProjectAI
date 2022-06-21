@@ -109,7 +109,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// 버튼 실행 이벤트
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e"></param>\
         private void BtnMactiveButtonClick(object sender, EventArgs e)
         {
             LabelSetting();

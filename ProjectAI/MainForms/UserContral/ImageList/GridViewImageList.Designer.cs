@@ -205,7 +205,6 @@
             // gridImageList
             // 
             this.gridImageList.AllowUserToAddRows = false;
-            this.gridImageList.AllowUserToResizeRows = false;
             this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gridImageList.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -251,10 +250,11 @@
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridImageList.Size = new System.Drawing.Size(378, 686);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
-            this.gridImageList.TabIndex = 3;
+            this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
             this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
+            this.gridImageList.Resize += new System.EventHandler(this.GridImageListResize);
             // 
             // cmsMImageListToolKit
             // 
@@ -282,7 +282,7 @@
             this.imageSetInfoResetToolStripMenuItem,
             this.toolStripSeparator15});
             this.cmsMImageListToolKit.Name = "cmsMImageListToolKit";
-            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 404);
+            this.cmsMImageListToolKit.Size = new System.Drawing.Size(220, 382);
             this.cmsMImageListToolKit.Style = MetroFramework.MetroColorStyle.Silver;
             this.cmsMImageListToolKit.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
@@ -331,6 +331,8 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
             // 
             // toolStripMenuItem2
             // 
@@ -479,6 +481,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "GridViewImageList";
             this.Size = new System.Drawing.Size(378, 750);
+            this.Resize += new System.EventHandler(this.GridViewImageList_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

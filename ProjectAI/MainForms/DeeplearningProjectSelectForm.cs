@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using MetroFramework;
+﻿using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ProjectAI.MainForms
 {

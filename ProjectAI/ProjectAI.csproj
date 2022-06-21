@@ -172,12 +172,6 @@
     <Compile Include="DataAugmentationExampleForms\DataAugmentationExampleForm.Designer.cs">
       <DependentUpon>DataAugmentationExampleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForms\CadImageSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,9 +361,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataAugmentationExampleForms\DataAugmentationExampleForm.resx">
       <DependentUpon>DataAugmentationExampleForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForms\CadImageSelect.resx">
       <DependentUpon>CadImageSelect.cs</DependentUpon>

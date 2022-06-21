@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ProjectAI.ProjectManiger
 {
-    public partial class CustomIOManigerFoem : Form
+    public partial class CustomIOManigerFoem : MetroForm
     {
         /// <summary>
         /// 싱글톤 패턴 구현
@@ -74,18 +74,21 @@ namespace ProjectAI.ProjectManiger
             /// 파일 설정퇸 폴터에 복사
             /// "예) 설정된 폴더명이 C:\Data -> C:\Data\파일명"
             /// </summary>
-            public static int PathToPath { get { return 1; } }
+            public static int PathToPath
+            { get { return 1; } }
 
             /// <summary>
             /// 학습을 위한 데이터 이동
             /// </summary>
-            public static int TrainSet { get { return 2; } }
+            public static int TrainSet
+            { get { return 2; } }
         }
 
         /// <summary>
         /// Main 으로 모니터링 하는 File IO 를 사용하는 Task
         /// </summary>
         private Task taskFileIO;
+
         /// <summary>
         /// File IO Task 동작 코드 0 = null, 1 = File Copy List, 2 = Del List
         /// </summary>
@@ -187,7 +190,7 @@ namespace ProjectAI.ProjectManiger
                         if (monitoring)
                         {
                             if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                                 mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                                mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                             mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
                             mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
                             mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
@@ -199,7 +202,7 @@ namespace ProjectAI.ProjectManiger
 
                         string fileName = Path.GetFileName(file);
                         string setFilePath = Path.Combine(setPath, fileName);
-                        
+
                         if (file != setFilePath)
                             File.Copy(file, setFilePath, true);
                     }
@@ -337,42 +340,5 @@ namespace ProjectAI.ProjectManiger
         {
             Task.Run(() => CustomIOMainger.DirDelete(Path));
         }
-
-
-        public void GridViewDataAdding()
-        {
-
-        }
-
-        #region CAD Image Progress Task
-        public async void ImageMatchingOK(ProjectAI.MainForms.CadImageSelect cadImageSelect,string m_pathActiveProjectImage, JObject labeledDatainnerProjectLabelName, 
-                        string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
-        {
-            var task = Task.Run(() => JsonWriteInputData(cadImageSelect, m_pathActiveProjectImage, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
-
-            await task;
-        }
-
-        private void JsonWriteInputData(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject labeledDatainnerProjectLabelName,
-                        string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
-        {
-            for (int i = 0; i < files.Length; i++)
-            {
-                imageTotalNumber++;
-                object imageData = new
-                {
-                    int_ImageNumber = imageTotalNumber,
-                    string_ImagePath = Path.Combine(m_pathActiveProjectImage, files[i]),
-                    Labeled = new JObject() { }
-                };
-                WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                WorkSpaceData.m_activeProjectMainger.WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
-            }
-            for (int i = 0; i < newSameFiles.Length; i++)
-            {
-                WorkSpaceData.m_activeProjectMainger.WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
-            }
-        }
-        #endregion
     }
 }
