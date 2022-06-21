@@ -253,6 +253,7 @@ namespace ProjectAI.MainForms
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
             // Forms Calss formStyleManager Update Handler 등록
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
+            //if ()
 
             btnMnewWorkSpace.FlatAppearance.BorderSize = 0;
         }
@@ -1124,5 +1125,21 @@ namespace ProjectAI.MainForms
         {
             this.Hide();
         }
+
+        private void RectangleToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            ProjectManiger.ImageToolUseingPictureBox.toolType = ProjectManiger.ImageToolUseingPictureBox.PaintTools.DrawRectangle;
+        }
+
+        //private void CircleToolStripMenuItemClick(object sender, EventArgs e)
+        //{
+        //    toolType = PaintTools.DrawCircle;
+        //}
+
+        //private void LineToolStripMenuItemClick(object sender, EventArgs e)
+        //{
+        //    toolType = PaintTools.DrawLine;
+        //}
+
     }
 }

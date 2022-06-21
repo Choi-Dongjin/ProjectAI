@@ -198,7 +198,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                 this.regionSelect1.startPoint = e.Location;
                 this.regionSelect1.endPoint = e.Location;
 
-                this.pictureBox1.Cursor = Cursors.Cross;
+                //this.pictureBox1.Cursor = Cursors.Hand;
             }
             else if (e.Button == MouseButtons.Right)
             {

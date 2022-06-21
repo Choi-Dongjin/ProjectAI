@@ -34,7 +34,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
-            this.HitmapImageLabel = new System.Windows.Forms.Label();
+            this.HeatmapImageLabel = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
             this.OverlayImageLabel = new System.Windows.Forms.Label();
@@ -99,7 +99,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // 
             // metroPanel5
             // 
-            this.metroPanel5.Controls.Add(this.HitmapImageLabel);
+            this.metroPanel5.Controls.Add(this.HeatmapImageLabel);
             this.metroPanel5.Controls.Add(this.pictureBox4);
             this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel5.HorizontalScrollbarBarColor = true;
@@ -113,20 +113,20 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
             // 
-            // HitmapImageLabel
+            // HeatmapImageLabel
             // 
-            this.HitmapImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.HitmapImageLabel.AutoSize = true;
-            this.HitmapImageLabel.BackColor = System.Drawing.Color.Coral;
-            this.HitmapImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HitmapImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HitmapImageLabel.ForeColor = System.Drawing.Color.White;
-            this.HitmapImageLabel.Location = new System.Drawing.Point(0, 298);
-            this.HitmapImageLabel.Name = "HitmapImageLabel";
-            this.HitmapImageLabel.Size = new System.Drawing.Size(105, 20);
-            this.HitmapImageLabel.TabIndex = 6;
-            this.HitmapImageLabel.Text = "Hitmap Image";
-            this.HitmapImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.HeatmapImageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HeatmapImageLabel.AutoSize = true;
+            this.HeatmapImageLabel.BackColor = System.Drawing.Color.Coral;
+            this.HeatmapImageLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HeatmapImageLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HeatmapImageLabel.ForeColor = System.Drawing.Color.White;
+            this.HeatmapImageLabel.Location = new System.Drawing.Point(0, 298);
+            this.HeatmapImageLabel.Name = "HeatmapImageLabel";
+            this.HeatmapImageLabel.Size = new System.Drawing.Size(117, 20);
+            this.HeatmapImageLabel.TabIndex = 6;
+            this.HeatmapImageLabel.Text = "Heatmap Image";
+            this.HeatmapImageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox4
             // 
@@ -288,11 +288,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1Paint);
             this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDoubleClick);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseUp);
             // 
             // CadImageViewer
             // 
@@ -335,7 +331,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private System.Windows.Forms.Label OriginImageLabel;
         private System.Windows.Forms.Label CADImageLabel;
         private System.Windows.Forms.Label OverlayImageLabel;
-        private System.Windows.Forms.Label HitmapImageLabel;
+        private System.Windows.Forms.Label HeatmapImageLabel;
         private MetroFramework.Controls.MetroTrackBar TrackBar;
         private System.Windows.Forms.Label TrackbarNumber;
     }

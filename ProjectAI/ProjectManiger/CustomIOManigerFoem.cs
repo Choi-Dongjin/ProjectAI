@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MetroFramework;
 using MetroFramework.Components;
 using MetroFramework.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectAI.ProjectManiger
 {
@@ -337,33 +338,41 @@ namespace ProjectAI.ProjectManiger
             Task.Run(() => CustomIOMainger.DirDelete(Path));
         }
 
-        #region CAD Image Progress Task
-        public void CreateCADFileCopyList(List<string> files, string setPath, int fileCopyListSet, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object WorkInProgressName = null)
-        {
-            //this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName)
-            lock (taskFileIOactivateCodeList)
-            {
-                taskFileIOactivateCodeList.Add(1);
-                taskFileIOFilesList.Add(files);
-                setPathList.Add(setPath);
-                fileCopyListSetList.Add(fileCopyListSet);
-                prograssBarList.Add(prograssBar);
-                labelWorkInProgressNumberList.Add(labelWorkInProgressNumber);
-                labelTotalProgressNumberList.Add(labelTotalProgressNumber);
-                workInIOStatusList.Add(workInIOStatus);
-                workInProgressNameList.Add(WorkInProgressName);
-            }
 
-            if (this.taskFileIO == null)
-            {
-                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
-            }
-            else if (this.taskFileIO.Status == TaskStatus.RanToCompletion)
-            {
-                this.taskFileIO = Task.Run(() => this.FileIOListManiger());
-            }
+        public void GridViewDataAdding()
+        {
+
         }
 
+        #region CAD Image Progress Task
+        public async void ImageMatchingOK(ProjectAI.MainForms.CadImageSelect cadImageSelect,string m_pathActiveProjectImage, JObject labeledDatainnerProjectLabelName, 
+                        string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
+        {
+            var task = Task.Run(() => JsonWriteInputData(cadImageSelect, m_pathActiveProjectImage, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
+
+            await task;
+        }
+
+        private void JsonWriteInputData(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject labeledDatainnerProjectLabelName,
+                        string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
+        {
+            for (int i = 0; i < files.Length; i++)
+            {
+                imageTotalNumber++;
+                object imageData = new
+                {
+                    int_ImageNumber = imageTotalNumber,
+                    string_ImagePath = Path.Combine(m_pathActiveProjectImage, files[i]),
+                    Labeled = new JObject() { }
+                };
+                WorkSpaceData.m_activeProjectMainger.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
+                WorkSpaceData.m_activeProjectMainger.WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+            }
+            for (int i = 0; i < newSameFiles.Length; i++)
+            {
+                WorkSpaceData.m_activeProjectMainger.WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+            }
+        }
         #endregion
     }
 }

@@ -1359,6 +1359,28 @@ namespace ProjectAI
         }
 
         /// <summary>
+        /// Draw ToolTip
+        /// </summary>
+        private void DrawToolToolTipButtonUI()
+        {
+            //this.MainForm.drawToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //this.MainForm.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            // 
+            // drawToolToolStripMenuItem
+            // 
+
+            this.MainForm.menuStrip1.Items.Add(this.MainForm.drawToolToolStripMenuItem);
+            this.MainForm.drawToolToolStripMenuItem.Name = "drawToolToolStripMenuItem";
+            this.MainForm.drawToolToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.MainForm.drawToolToolStripMenuItem.Text = "DrawTool";
+
+            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainForm.drawToolStripMenuItem,
+            this.MainForm.rectangleToolStripMenuItem});
+
+        }
+
+        /// <summary>
         /// InnerProjectUI 적용된 부분 삭제
         /// </summary>
         public void InnerProjectUIRemove()
@@ -1839,6 +1861,7 @@ namespace ProjectAI
                     this.ProjectIdleUIRemove(); // IdleUI 삭제 // panelTrainOptions 설정
                     this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
 
+                    this.DrawToolToolTipButtonUI(); //segmentation에 붙일거 만들어놓음 - drawToolToolTip 버튼을 생성
                     #region 컨트롤 추가
                     this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
                     this.MainForm.panelDataReview.Controls.Add(this.m_classViewerDictionary[this.m_activeInnerProjectName]);// panelDataReview 설정
@@ -2653,9 +2676,8 @@ namespace ProjectAI
         {
             using (ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(2))
             {
+                
                 cadImageSelect.ShowDialog();
-                Console.WriteLine(cadImageSelect.DialogResult);
-
                 if (cadImageSelect.DialogResult == DialogResult.OK)
                 {
                     this.CADImageFolderAdding(cadImageSelect, metroGrid, ckbMdataGridViewAutoSize, modifyClassName, dataSet);
@@ -2950,6 +2972,7 @@ namespace ProjectAI
 
             // Image List Data 값 반영
             //searchIndex = 0;
+            //customIOManigerFoem.ImageMatchingOK(cadImageSelect, this.m_pathActiveProjectImage, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder);
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -2966,8 +2989,8 @@ namespace ProjectAI
             {
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
-            
-                // image List 값 반영
+
+            // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
                 List<string> iImageList;
@@ -3140,8 +3163,8 @@ namespace ProjectAI
 
             //CADImage가 있는 폴더
             string CADFolder = cadImageSelect.CADGridView.Rows[0].Cells[2].Value.ToString();
+            
             // Image List Data 값 반영
-            //searchIndex = 0;
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -3260,7 +3283,7 @@ namespace ProjectAI
         //        }
         //    }
         //}
-        private void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
+        public void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
             string MatchingName = cadImageSelect.CADNameGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
             if (MatchingName != null)

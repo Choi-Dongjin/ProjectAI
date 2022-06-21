@@ -12,20 +12,28 @@ using System.Windows.Forms;
 using MetroFramework;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace ProjectAI.MainForms
 {
     public partial class CadImageSelect : MetroForm
     {
+        private ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+        private ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
         ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance();
         public DialogResult selectDialogResult = DialogResult.None;
-        int OriginNum = 0;
+        int originNum = 0;
         int CADNum = 0;
-        bool GridViewCheck = false;
+        bool gridViewCheck = false;
         int firstOriginInputdata = -1;
         int firstCADInputdata = -1;
         bool folder = false;
         public string imageTempName;
+        Task originTask;
+        Task CADTask;
+        CancellationTokenSource originCancel = null;
+        CancellationTokenSource CADCancel = null;
+
         public CadImageSelect()
         {
             InitializeComponent();
@@ -87,35 +95,51 @@ namespace ProjectAI.MainForms
 
         private void BtnCancelClick(object sender, EventArgs e)
         {
+            if (originTask != null)
+            {
+                Console.WriteLine(originCancel);
+                originCancel.Cancel();
+            }
+            if (CADTask != null)
+            {
+                CADCancel.Cancel();
+            }
             this.DialogResult = DialogResult.Cancel;
             this.selectDialogResult = DialogResult.Cancel;
-
             this.Close();
         }
 
         private void PictureBox1Click(object sender, EventArgs e)
         {
+            bool noFolder = false;
             if (WorkSpaceData.m_activeProjectMainger != null)
             {
                 if (folder)
                     this.OriginImageFolderSelect();
                 else
+                {
                     this.OriginImageFilesSelect();
+                    noFolder = true;
+                }
             }
-            if (this.pictureBox1.Image != null && this.pictureBox2.Image != null)
+            if ((this.pictureBox1.Image != null && this.pictureBox2.Image != null) && noFolder)
                 this.btnOK.Enabled = true;
         }
 
         private void PictureBox2Click(object sender, EventArgs e)
         {
+            bool noFolder = false;
             if (WorkSpaceData.m_activeProjectMainger != null)
             {
                 if (folder)
                     this.CADImageFolderSelect();
                 else
+                {
                     this.CADImageFilesSelect();
+                    noFolder = true;
+                }
             }
-            if (this.pictureBox1.Image != null && this.pictureBox2.Image != null)
+            if ((this.pictureBox1.Image != null && this.pictureBox2.Image != null) && noFolder)
                 this.btnOK.Enabled = true;
         }
 
@@ -152,7 +176,7 @@ namespace ProjectAI.MainForms
                                 this.OriginImageName = files;
                                 this.OriginImagePath = filesPath;
                                 this.imageTempName = files[0];
-                                if (GridViewCheck)// Wizard
+                                if (gridViewCheck)// Wizard
                                 {
                                     int index = 0;
                                     this.OriginGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -160,7 +184,7 @@ namespace ProjectAI.MainForms
 
                                     #region GridView에 데이터 Add와 최신 데이터파일로 cell 이동
                                     int beforeOriginRowsCount = OriginGridView.Rows.Count;
-                                    GridInputData(true, files, filesPath); // GridView에 데이터 Add
+                                    GridInputData(true, files, filesPath, beforeOriginRowsCount, -1); // GridView에 데이터 Add
                                     int afterOriginRowsCount = OriginGridView.Rows.Count;
                                     if (beforeOriginRowsCount == afterOriginRowsCount)
                                         index = beforeOriginRowsCount - 1;
@@ -219,25 +243,14 @@ namespace ProjectAI.MainForms
                                 this.OriginImageName = files;
                                 this.OriginImagePath = filesPath;
                                 this.imageTempName = files[0];
-                                if (GridViewCheck)// Wizard
+                                if (gridViewCheck)// Wizard
                                 {
-                                    int index = 0;
                                     this.OriginGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                                     this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
 
                                     #region GridView에 데이터 Add와 최신 데이터파일로 cell 이동
                                     int beforeOriginRowsCount = OriginGridView.Rows.Count;
-                                    GridInputData(true, files, filesPath); // GridView에 데이터 Add
-                                    int afterOriginRowsCount = OriginGridView.Rows.Count;
-                                    if (beforeOriginRowsCount == afterOriginRowsCount)
-                                        index = beforeOriginRowsCount - 1;
-                                    else
-                                        index = beforeOriginRowsCount;
-                                    Console.WriteLine(index);
-                                    OriginGridView.FirstDisplayedScrollingRowIndex = index;
-                                    OriginGridView.Refresh();
-                                    OriginGridView.CurrentCell = OriginGridView.Rows[index].Cells[0];
-                                    OriginGridView.Rows[index].Cells[1].Selected = true;
+                                    GridInputData(true, files, filesPath, beforeOriginRowsCount, -1); // GridView에 데이터 Add
                                     #endregion
                                 }
                                 else
@@ -280,7 +293,7 @@ namespace ProjectAI.MainForms
                                     this.CADImagePath = null;
                                 this.CADImageName = files;
                                 this.CADImagePath = filesPath;
-                                if (GridViewCheck) // Wizard
+                                if (gridViewCheck) // Wizard
                                 {
                                     int index = 0;
                                     this.CADGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -288,7 +301,7 @@ namespace ProjectAI.MainForms
 
                                     #region GridView에 데이터 추가, 최신 데이터파일로 cell 이동
                                     int beforeCADRowsCount = CADGridView.Rows.Count;
-                                    GridInputData(false, files, filesPath); // GridView에 데이터 추가
+                                    GridInputData(false, files, filesPath, -1, beforeCADRowsCount); // GridView에 데이터 추가
                                     int afterCADRowsCount = CADGridView.Rows.Count;
                                     if (afterCADRowsCount == beforeCADRowsCount)
                                         index = beforeCADRowsCount - 1;
@@ -344,24 +357,16 @@ namespace ProjectAI.MainForms
                                     this.CADImagePath = null;
                                 this.CADImageName = files;
                                 this.CADImagePath = filesPath;
-                                if (GridViewCheck) // Wizard
+                                if (gridViewCheck) // Wizard
                                 {
-                                    int index = 0;
                                     this.CADGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                                     this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
 
                                     #region GridView에 데이터 추가, 최신 데이터파일로 cell 이동
                                     int beforeCADRowsCount = CADGridView.Rows.Count;
-                                    GridInputData(false, files, filesPath); // GridView에 데이터 추가
-                                    int afterCADRowsCount = CADGridView.Rows.Count;
-                                    if (afterCADRowsCount == beforeCADRowsCount)
-                                        index = beforeCADRowsCount - 1;
-                                    else
-                                        index = beforeCADRowsCount;
-                                    CADGridView.FirstDisplayedScrollingRowIndex = index;
-                                    CADGridView.Refresh();
-                                    CADGridView.CurrentCell = CADGridView.Rows[index].Cells[0];
-                                    CADGridView.Rows[index].Cells[1].Selected = true;
+                                    GridInputData(false, files, filesPath, -1, beforeCADRowsCount); // GridView에 데이터 추가
+                                    //Console.Write("CADTask.IsCompleted");
+                                    //Console.WriteLine(CADTask.IsCompleted);
                                     #endregion
                                 }
                                 else
@@ -378,59 +383,139 @@ namespace ProjectAI.MainForms
         /// <param name="gridCheck"></param> Origin인지 CAD인지 판별
         /// <param name="files"></param> 파일 이름
         /// <param name="filesPath"></param> 파일의 전체경로
-        private void GridInputData(bool gridCheck, string[] files, string[] filesPath)
+        private async void GridInputData(bool gridCheck, string[] files, string[] filesPath, int beforeOriginRowsCount, int beforeCADRowsCount)
         {
-            //Stopwatch stopwatch = new Stopwatch(); //객체 선언
-            //stopwatch.Start(); // 시간측정 시작
             if (gridCheck) //OriginImage
             {
-                for (int i = 0; i < files.Length; i++)
+                try
                 {
-                    //Console.WriteLine($"{i}: {files[i]}");
-                    if (i % 100 == 0)
-                        Application.DoEvents();
-                    bool check = true;
-                    var items = this.OriginGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
-
-                    foreach (DataGridViewRow row in items)
-                        check = false;
-                    if (check)
-                    {
-                        this.OriginGridView.Rows.Add(OriginNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
-                        OriginNameGridList.Add(files[i]);
-                        OriginAddressGridList.Add(filesPath[i]);
-                        OriginNum++;
-                    }
+                    originCancel = new CancellationTokenSource();
+                    CancellationToken token = originCancel.Token;
+              
+                    originTask = Task.Run(() => OriginimageInput(files, filesPath, token), token);
+                    await originTask;
+                    OriginPanelstatus.Visible = false;
+                    
+                    int index = 0;
+                    int afterOriginRowsCount = OriginGridView.Rows.Count;
+                    if (beforeOriginRowsCount == afterOriginRowsCount)
+                        index = beforeOriginRowsCount - 1;
+                    else
+                        index = beforeOriginRowsCount;
+                    OriginGridView.FirstDisplayedScrollingRowIndex = index;
+                    OriginGridView.Refresh();
+                    OriginGridView.CurrentCell = OriginGridView.Rows[index].Cells[0];
+                    OriginGridView.Rows[index].Cells[1].Selected = true;
                 }
-                //System.Console.WriteLine("time : " + stopwatch.ElapsedMilliseconds + "ms");
-                //stopwatch.Stop();
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             else //CADImage
             {
-                for (int i = 0; i < files.Length; i++)
+                try
                 {
-                    //Console.WriteLine($"{i}: {files[i]}");
-                    if (i % 100 == 0)
-                        Application.DoEvents();
-                    bool check = true;
-                    var items = this.CADGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
+                    CADCancel = new CancellationTokenSource();
+                    CancellationToken token = CADCancel.Token;
+                    CADTask = Task.Run(() => CADimageInput(files, filesPath, token), token);
+                    await CADTask;
 
-                    foreach (DataGridViewRow row in items)
-                        check = false;
-                    if (check)
-                    {
-                        this.CADGridView.Rows.Add(CADNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
-                        CADNameGridList.Add(files[i]);
-                        CADAddressGridList.Add(filesPath[i]);
-                        CADNum++;
-                    }
+                    CADPanelstatus.Visible = false;
+
+                    int index = 0;
+                    int afterCADRowsCount = CADGridView.Rows.Count;
+                    if (afterCADRowsCount == beforeCADRowsCount)
+                        index = beforeCADRowsCount - 1;
+                    else
+                        index = beforeCADRowsCount;
+                    CADGridView.FirstDisplayedScrollingRowIndex = index;
+                    CADGridView.Refresh();
+                    CADGridView.CurrentCell = CADGridView.Rows[index].Cells[0];
+                    CADGridView.Rows[index].Cells[1].Selected = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
+           
+        }
+
+        private void OriginimageInput(string[] files, string[] filesPath, CancellationToken token)
+        {
+            int totalFileNumber = files.Count();
+            int workInNumber = 1;
+            for (int i = 0; i < files.Length; i++)
+            {
+                token.ThrowIfCancellationRequested();
+                bool check = true;
+                var items = this.OriginGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
+
+                foreach (DataGridViewRow row in items)
+                    check = false;
+                if (check)
+                {
+                    this.Invoke(new Action(delegate ()
+                    {
+                        this.OriginGridView.Rows.Add(originNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                    }));
+                    if (!mainForm.SafeVisiblePanel(this.OriginPanelstatus))
+                        mainForm.SafeVisiblePanel(this.OriginPanelstatus, true);
+                    mainForm.SafeWriteProgressBar(OriginpgbMfileIOstatus, totalFileNumber, workInNumber);
+                    mainForm.SafeWriteLabelText(OriginlblMworkInNumber, workInNumber.ToString());
+                    mainForm.SafeWriteLabelText(OriginlblMtotalNumber, totalFileNumber.ToString());
+                    mainForm.SafeWriteLabelText(OriginlblMIOStatus, "Input");
+                    mainForm.SafeWriteLabelText(OriginlblMworkInFileName, Path.GetFileName(files[i]));
+                    OriginNameGridList.Add(files[i]);
+                    OriginAddressGridList.Add(filesPath[i]);
+                    workInNumber++;
+                    originNum++;
+                }
+            }
+            mainForm.SafeWriteLabelText(OriginlblMIOStatus, "Completed");
+            mainForm.SafeVisiblePanel(this.OriginPanelstatus, false);
+        }
+
+        private void CADimageInput(string[] files, string[] filesPath, CancellationToken token)
+        {
+            int totalFileNumber = files.Count();
+            int workInNumber = 1;
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                token.ThrowIfCancellationRequested();
+                bool check = true;
+                var items = this.CADGridView.Rows.Cast<DataGridViewRow>().Where(row => row.Cells[1].Value.ToString() == files[i]);
+
+                foreach (DataGridViewRow row in items)
+                    check = false;
+                if (check)
+                {
+                    this.Invoke(new Action(delegate ()
+                    {
+                        this.CADGridView.Rows.Add(CADNum.ToString(), files[i], Path.GetDirectoryName(filesPath[i]));
+                    }));
+                    if (!mainForm.SafeVisiblePanel(this.CADPanelstatus))
+                        mainForm.SafeVisiblePanel(this.CADPanelstatus, true);
+                    mainForm.SafeWriteProgressBar(CADpgbMfileIOstatus, totalFileNumber, workInNumber);
+                    mainForm.SafeWriteLabelText(CADlblMworkInNumber, workInNumber.ToString());
+                    mainForm.SafeWriteLabelText(CADlblMtotalNumber, totalFileNumber.ToString());
+                    mainForm.SafeWriteLabelText(CADlblMIOStatus, "Input");
+                    mainForm.SafeWriteLabelText(CADlblMworkInFileName, Path.GetFileName(files[i]));
+                    CADNameGridList.Add(files[i]);
+                    CADAddressGridList.Add(filesPath[i]);
+                    workInNumber++;
+                    CADNum++;
+                }
+            }
+            mainForm.SafeWriteLabelText(CADlblMIOStatus, "Completed");
+            mainForm.SafeVisiblePanel(this.CADPanelstatus, false);
         }
 
         private void SetupDataGridView()
         {
-            GridViewCheck = true;
+            gridViewCheck = true;
             
             //OriginGridView Setup
             this.OriginGridView.ColumnCount = 3;
@@ -627,6 +712,18 @@ namespace ProjectAI.MainForms
                 e.SortResult = string.Compare(e.CellValue1.ToString(), e.CellValue2.ToString());
 
             e.Handled = true;
+        }
+
+        private void OriginlblMIOStatusTextChanged(object sender, EventArgs e)
+        {
+            if ((OriginlblMIOStatus.Text == "Completed") && (CADlblMIOStatus.Text == "Completed"))
+                this.btnOK.Enabled = true;
+        }
+
+        private void CADlblMIOStatusTextChanged(object sender, EventArgs e)
+        {
+            if ((OriginlblMIOStatus.Text == "Completed") && (CADlblMIOStatus.Text == "Completed"))
+                this.btnOK.Enabled = true;
         }
     }
 }

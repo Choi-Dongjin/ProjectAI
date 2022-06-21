@@ -28,6 +28,26 @@ namespace ProjectAI.ProjectManiger
 
         private PictureBox pictureBox;
 
+        //이미지 그리는데 필요한 변수
+        private static Point upPoint;
+        private static Bitmap originalBmp;
+        private static Bitmap drawBmp;
+        private static Rectangle imgDrawRect;
+
+        public static PaintTools toolType { get; set; }
+        public enum PaintTools
+        {
+            IDLE = default,
+            DrawLine,
+            DrawRectangle,
+            DrawCircle
+        }
+
+        public List<Rectangle> listRect = new List<Rectangle>();
+        public List<Rectangle> tempRect = new List<Rectangle>();
+        public List<PaintTools> listTool = new List<PaintTools>();
+        public List<PaintTools> tempTool = new List<PaintTools>();
+
         public ImageToolUseingPictureBox(PictureBox pictureBox)
         {
             this.pictureBox = pictureBox;
@@ -41,7 +61,7 @@ namespace ProjectAI.ProjectManiger
             //this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
 
             //this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
-
+            imgDrawRect = new Rectangle(0, 0, pictureBox.Width, pictureBox.Height);
             pictureBox.Invalidate();
         }
 
@@ -56,6 +76,8 @@ namespace ProjectAI.ProjectManiger
                     this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
                     this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
                 }
+                originalBmp = bitmap;
+
                 this.pictureBox.Invalidate();
             }
         }
@@ -71,7 +93,7 @@ namespace ProjectAI.ProjectManiger
             pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseMove);
             pictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseWheel);
             pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDown);
-            //pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseUp);
             pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDoubleClick);
         }
 
@@ -142,6 +164,14 @@ namespace ProjectAI.ProjectManiger
 
                 if (e.Button == MouseButtons.Left)
                 {
+                    float w = Math.Abs(this.mousePointLeftMouseDown.X - e.X);
+                    float h = Math.Abs(this.mousePointLeftMouseDown.Y - e.Y);
+                    Pen pn = new Pen(Color.Black)
+                    {
+                        Width = 2
+                    };
+                    Graphics g = this.pictureBox.CreateGraphics();
+                    this.pictureBox.Refresh();
                     this.imgRect.X = this.mousePointLeftMouseDownMove.X;
                     this.imgRect.Y = this.mousePointLeftMouseDownMove.Y;
 
@@ -156,12 +186,27 @@ namespace ProjectAI.ProjectManiger
                         this.imgRect.Y = 0;
                     if (Math.Abs(this.imgRect.Y) >= Math.Abs(this.imgRect.Height - this.pictureBox.Height))
                         this.imgRect.Y = -(this.imgRect.Height - this.pictureBox.Height);
+                    
+                    if (toolType == PaintTools.DrawRectangle) //사각형 그리기
+                    {
+                        this.pictureBox.Cursor = Cursors.Cross;
+                        if (e.X > this.mousePointLeftMouseDown.X)
+                        {
+                            if (e.Y > this.mousePointLeftMouseDown.Y) g.DrawRectangle(pn, this.mousePointLeftMouseDown.X, this.mousePointLeftMouseDown.Y, w, h);
+                            else g.DrawRectangle(pn, this.mousePointLeftMouseDown.X, e.Y, w, h);
+                        }
+                        else
+                        {
+                            if (e.Y > this.mousePointLeftMouseDown.Y) g.DrawRectangle(pn, e.X, this.mousePointLeftMouseDown.Y, w, h);
+                            else g.DrawRectangle(pn, e.X, e.Y, w, h);
+                        }
+                    }
                 }
                 if (e.Button == MouseButtons.Right)
                 {  
 
                 }
-                this.pictureBox.Invalidate();
+                //this.pictureBox.Invalidate();
             }
         }
 
@@ -182,8 +227,37 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        private void PictureBoxMouseUp(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                upPoint.X = e.X;
+                upPoint.Y = e.Y;
+
+                float w = Math.Abs(this.mousePointLeftMouseDown.X - e.X);
+                float h = Math.Abs(this.mousePointLeftMouseDown.Y - e.Y);
+                Pen pn = new Pen(Color.Black);
+                pn.Width = 2;
+                Rectangle rect = new Rectangle();
+                Graphics g = pictureBox.CreateGraphics();
+
+                if (toolType == PaintTools.DrawRectangle) //사각형 그리기
+                {
+                    if (e.X > this.mousePointLeftMouseDown.X)
+                    {
+                        if (e.Y > this.mousePointLeftMouseDown.Y) rect = new Rectangle(this.mousePointLeftMouseDown.X, this.mousePointLeftMouseDown.Y, (int)w, (int)h);
+                        else rect = new Rectangle(this.mousePointLeftMouseDown.X, e.Y, (int)w, (int)h);
+                    }
+                    else
+                    {
+                        if (e.Y > this.mousePointLeftMouseDown.Y) rect = new Rectangle(e.X, this.mousePointLeftMouseDown.Y, (int)w, (int)h);
+                        else rect = new Rectangle(e.X, e.Y, (int)w, (int)h);
+                    }
+                }
+                listRect.Add(rect);
+                listTool.Add(toolType);
+                //DrawBitmap(rect);
+            }
         }
 
         private double OutRatio(double orgA, double orgB, double targetA, double targetB)
@@ -197,6 +271,27 @@ namespace ProjectAI.ProjectManiger
                 return targetB / orgB;
             }
         }
+        private void DrawBitmap(Rectangle rect)
+        {
+            if (originalBmp != null)
+            {
+                drawBmp = (Bitmap)originalBmp.Clone();
+                for (int i = 0; i < listRect.Count; i++)
+                {
+                    Pen pn = new Pen(Color.Black)
+                    {
+                        Width = 2
+                    };
 
+                    using (Graphics g = Graphics.FromImage(drawBmp))
+                    {
+                        if (listTool[i] == PaintTools.DrawRectangle) g.DrawRectangle(pn, rect);
+                        else if (listTool[i] == PaintTools.DrawCircle) g.DrawEllipse(pn, rect);
+                        else if (listTool[i] == PaintTools.DrawLine) g.DrawLine(pn, new Point(rect.X, rect.Y), new Point(rect.Width - rect.X, rect.Height - rect.Y));
+                    }
+                }
+            }
+            //pictureBox.Image = drawBmp;
+        }
     }
 }
