@@ -15,7 +15,7 @@ using MetroFramework.Forms;
 
 namespace ProjectAI.ProjectManiger
 {
-    public partial class CustomIOManigerFoem : Form
+    public partial class CustomIOManigerFoem : MetroForm
     {
         /// <summary>
         /// 싱글톤 패턴 구현
@@ -73,18 +73,21 @@ namespace ProjectAI.ProjectManiger
             /// 파일 설정퇸 폴터에 복사
             /// "예) 설정된 폴더명이 C:\Data -> C:\Data\파일명"
             /// </summary>
-            public static int PathToPath { get { return 1; } }
+            public static int PathToPath
+            { get { return 1; } }
 
             /// <summary>
             /// 학습을 위한 데이터 이동
             /// </summary>
-            public static int TrainSet { get { return 2; } }
+            public static int TrainSet
+            { get { return 2; } }
         }
 
         /// <summary>
         /// Main 으로 모니터링 하는 File IO 를 사용하는 Task
         /// </summary>
         private Task taskFileIO;
+
         /// <summary>
         /// File IO Task 동작 코드 0 = null, 1 = File Copy List, 2 = Del List
         /// </summary>
@@ -186,7 +189,7 @@ namespace ProjectAI.ProjectManiger
                         if (monitoring)
                         {
                             if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                                 mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                                mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                             mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
                             mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
                             mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
@@ -198,7 +201,7 @@ namespace ProjectAI.ProjectManiger
 
                         string fileName = Path.GetFileName(file);
                         string setFilePath = Path.Combine(setPath, fileName);
-                        
+
                         if (file != setFilePath)
                             File.Copy(file, setFilePath, true);
                     }
@@ -338,6 +341,7 @@ namespace ProjectAI.ProjectManiger
         }
 
         #region CAD Image Progress Task
+
         public void CreateCADFileCopyList(List<string> files, string setPath, int fileCopyListSet, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object WorkInProgressName = null)
         {
             //this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, WorkInProgressName)
@@ -364,6 +368,6 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        #endregion
+        #endregion CAD Image Progress Task
     }
 }

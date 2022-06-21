@@ -45,4 +45,6 @@ extern "C" __declspec(dllexport) int getCudaGpuInfo() {
 
 int main()
 {
+	getCudaGpuInfo();
+	printf("\nEnd Cuda\n");
 }

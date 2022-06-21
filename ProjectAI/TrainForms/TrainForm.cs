@@ -63,12 +63,14 @@ namespace ProjectAI.TrainForms
         /// WaitingforWork 처리 Task
         /// </summary>
         private Task taskWaitingforWork;
+
         private List<string> taskWaitingforWorkList = new List<string>();
 
         /// <summary>
         /// Processing 처리 Task
         /// </summary>
         private Task taskProcessing;
+
         private List<string> taskProcessingList = new List<string>();
         private List<string> taskProcessingCorePaht = new List<string>();
 
@@ -76,6 +78,7 @@ namespace ProjectAI.TrainForms
         /// 프로세스 완료 결과 저장 데이터 저장 처리 Task
         /// </summary>
         private Task taskDone;
+
         private List<string> taskDonegList = new List<string>();
         private List<string> taskDoneCorePaht = new List<string>();
 
@@ -544,14 +547,14 @@ namespace ProjectAI.TrainForms
         private void UISetDataGridView()
         {
             /*
-            ["string_processModel"] = processModel, // 프로세스 모델 정보  "Classification", "Segmentation", "ObjectDetection"
-            ["string_processTask"] = processTask, // 프로세스 Task 정보 "Classification", "Segmentation", "ObjectDetection"
-            ["string_processName"] = processName, // 프로세스 이름 정보
-            ["string_processTrainTest"] = processTrainTest, // 프로세스 이름 정보
-            ["string_processImageType"] = processInputDataType, // 프로세스 Input Data type
-            ["string_processPath"] = ProcessPath,  // 프로세스 경로 정보
-            ["string_workSpasceName"] = processWorkSpasceName,  // 등록된 WorkSpace 이름
-            ["string_workSpaceInnerPorjectName"] = ProcessWorkSpaceInnerPorjectName  // 등록된 WorkSpaceInnerPorject 이름
+                        ["string_processModel"] = processModel, // 프로세스 모델 정보  "Classification", "Segmentation", "ObjectDetection"
+                        ["string_processTask"] = processTask, // 프로세스 Task 정보 "Classification", "Segmentation", "ObjectDetection"
+                        ["string_processName"] = processName, // 프로세스 이름 정보
+                        ["string_processTrainTest"] = processTrainTest, // 프로세스 이름 정보
+                        ["string_processImageType"] = processInputDataType, // 프로세스 Input Data type
+                        ["string_processPath"] = ProcessPath,  // 프로세스 경로 정보
+                        ["string_workSpasceName"] = processWorkSpasceName,  // 등록된 WorkSpace 이름
+                        ["string_workSpaceInnerPorjectName"] = ProcessWorkSpaceInnerPorjectName  // 등록된 WorkSpaceInnerPorject 이름
             */
 
             // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
@@ -691,7 +694,7 @@ namespace ProjectAI.TrainForms
                 processStep = localProcessInfo["TrainProcessInfo"]["string_processStep"].ToString();
 
                 // 프로세스 단계 Process Step = process 단계 !!"WaitingforWork" -> !!"EndPreprocess" -> "Processing" ->  "!!Processing Results" -> "!!SaveResult" -> "!!EndProcessing"
-                if (processStep == "WaitingforWork" )
+                if (processStep == "WaitingforWork")
                 {
                     this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork, processTask, processTrainTest, processImageType, processStep, processName, 0);
                     //this.dgvMWaitingforWork.Rows.Add(processTask, processTrainTest, processImageType, processStep, processName, 0);
@@ -761,7 +764,7 @@ namespace ProjectAI.TrainForms
 
         private void TrainFormShown(object sender, EventArgs e)
         {
-            //MetroTaskWindow.ShowTaskWindow(this, "Custom MessageBox", new ProjectAI.TrainForms.UserContral.CustomMessageBox(), 10);
+            MetroTaskWindow.ShowTaskWindow(this, "Custom MessageBox", new ProjectAI.TrainForms.UserContral.CustomMessageBox(), 10);
         }
 
         /// <summary>
@@ -893,7 +896,7 @@ namespace ProjectAI.TrainForms
             //MetroFramework.Controls.MetroGrid metroGrid = sender as MetroFramework.Controls.MetroGrid;
             //if (sender != null)
             //{
-            //    metroGrid.SelectedRows[0]
+            //    metroGrid.SelectedRows[0];
             //}
         }
 
@@ -971,7 +974,7 @@ namespace ProjectAI.TrainForms
                     this.DataGridViewCellMouseDoubleClick(this.dgvMmodelsVersion, selectModelName);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -1173,7 +1176,7 @@ namespace ProjectAI.TrainForms
             {
                 Bitmap orignalImage;
                 Bitmap cadImage;
-                
+
                 //Overlay된 파일을 생성
                 for (int i = 0; i < imageNameList.Count; i++)
                 {
@@ -1527,7 +1530,7 @@ namespace ProjectAI.TrainForms
                     }
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 #region ERROR 처리
 
@@ -1688,7 +1691,6 @@ namespace ProjectAI.TrainForms
                 processJObject["TrainProcessInfo"]["string_processStep"] = "Processing Results";
                 jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
                 Thread.Sleep(300);
-
                 // 데이터 읽어오기
                 string processTask = processInfo["string_processTask"].ToString();
                 string processName = processInfo["string_processName"].ToString();
@@ -2139,9 +2141,8 @@ namespace ProjectAI.TrainForms
             {
                 trainOptions.Add(PackingString($"dnn_file |{"default"}|")); //default ro new
             }
+
             #endregion ContinualLearning 설정
-
-
 
             #region ClassWeight 가져오기
 
@@ -2157,9 +2158,8 @@ namespace ProjectAI.TrainForms
                 trainOptions.Add(PackingString($"loss_wt |{classWeight}|"));
             else
                 trainOptions.Add(PackingString($"loss_wt |auto|")); // auto ro 1
+
             #endregion ClassWeight 가져오기
-
-
 
             #region 데이터 옵션 설정
 
@@ -2168,9 +2168,8 @@ namespace ProjectAI.TrainForms
             trainOptions.Add(PackingString($"dts_pth_lst ||"));
             trainOptions.Add(PackingString($"train_dir |Train|"));
             trainOptions.Add(PackingString($"test_dir |Test|"));
+
             #endregion 데이터 옵션 설정
-
-
 
             #region 이미지 설정
 
@@ -2179,9 +2178,8 @@ namespace ProjectAI.TrainForms
 
             #endregion 이미지 설정
 
-
-
             #region 시스템 설정 옵션
+
             trainOptions.Add(PackingString($"tr_wrk |{modelLearningInfo["ModelLearningInfo"]["TrainSystemOption"]["int_dataLoaderNUmberofWorkers"].ToString()}|"));
 
             trainOptions.Add(PackingString($"eval |n|"));
@@ -2518,9 +2516,8 @@ namespace ProjectAI.TrainForms
                 trainOptions.Add(PackingString($"loss_wt |{classWeight}|"));
             else
                 trainOptions.Add(PackingString($"loss_wt |auto|")); // auto ro 1
+
             #endregion ClassWeight 가져오기
-
-
 
             #region 데이터 옵션 설정
 
@@ -2529,9 +2526,8 @@ namespace ProjectAI.TrainForms
             trainOptions.Add(PackingString($"dts_pth_lst ||"));
             trainOptions.Add(PackingString($"train_dir |Train|"));
             trainOptions.Add(PackingString($"test_dir |Test|"));
+
             #endregion 데이터 옵션 설정
-
-
 
             #region 이미지 설정
 
@@ -2678,7 +2674,7 @@ namespace ProjectAI.TrainForms
                 ["string_workSpasceName"] = processWorkSpasceName,  // 등록된 WorkSpace 이름
                 ["string_workSpaceInnerPorjectName"] = ProcessWorkSpaceInnerPorjectName, // 등록된 WorkSpaceInnerPorject 이름
                 ["string_processStep"] = "WaitingforWork" // process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
-        };
+            };
 
             // 2. 학습 옵션 데이터 관리 데이터로 변경 - 문서 파일에 예시 있음. ModelInfo1.Json
             JObject processInfo = new JObject
@@ -2767,6 +2763,7 @@ namespace ProjectAI.TrainForms
                 }
             }
         }
+
         private void TaskWaitingforManiger()
         {
             while (true)
@@ -2862,6 +2859,7 @@ namespace ProjectAI.TrainForms
                     }
                 }
         }
+
         private void TaskProcessingManiger()
         {
             while (true)
@@ -2888,7 +2886,6 @@ namespace ProjectAI.TrainForms
                     task.Wait();
                 }
             }
-
         }
 
         /// <summary>
@@ -2915,7 +2912,6 @@ namespace ProjectAI.TrainForms
                 else if (processImageType == "MultiImage")
                 {
                     corePath = ProgramEntryPointVariables.m_prohramClassificationCorePath;
-
                 }
                 else if (processImageType == "CADImage")
                 {
@@ -3027,7 +3023,6 @@ namespace ProjectAI.TrainForms
                                 this.UpdateModelView(); // 프로젝트 모델 정보 업데이트
                                 WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].ModelUpdate();
                             }
-                                
 
             if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
                 // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
@@ -3051,6 +3046,7 @@ namespace ProjectAI.TrainForms
                 this.taskDone = Task.Run(() => this.TaskDoneManiger());
             }
         }
+
         private void TaskDoneManiger()
         {
             while (true)
@@ -3261,7 +3257,7 @@ namespace ProjectAI.TrainForms
 
                                 this.chartDoneAccuracy.Series["Train"].Points.AddXY(locationX, trainAcc);
                                 this.chartDoneAccuracy.Series["Test"].Points.AddXY(locationX, testAcc);
-                            } 
+                            }
                         }
                 }
             }
@@ -3272,7 +3268,6 @@ namespace ProjectAI.TrainForms
             finally
             {
             }
-
         }
 
         /// <summary>
@@ -3292,7 +3287,7 @@ namespace ProjectAI.TrainForms
              * 6. contral에 정보 적용
              * 7. contral readonly 모드로 전환
              */
-            
+
             if (sender is MetroFramework.Controls.MetroGrid metroGrid)
             {
                 if (e.RowIndex != -1) // 컬럼 해더 눌렀는지 감지 해더를 눌렀으면 통과
@@ -3302,7 +3297,7 @@ namespace ProjectAI.TrainForms
                         //string processType = this.dgvMProcessing.Rows[e.RowIndex].Cells[1].Value.ToString();
                         //string processImageType = this.dgvMProcessing.Rows[e.RowIndex].Cells[2].Value.ToString();
                         //string processStep = this.dgvMProcessing.Rows[e.RowIndex].Cells[3].Value.ToString();
-                        
+
                         // 1. 작업 접근 코드 가져오기
                         string processAccesscode = metroGrid.Rows[e.RowIndex].Cells[4].Value.ToString();
 
@@ -3450,7 +3445,6 @@ namespace ProjectAI.TrainForms
                     }
                 }
 
-
                 // 6. Contral 정보 적용
                 if (networkModel.Equals("SynapseNet_Classification_18"))
                 {
@@ -3562,11 +3556,9 @@ namespace ProjectAI.TrainForms
                     this.ClassificationTrainOptions.tilMInstantEvaluateTest.Visible = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
             }
-            
         }
 
         private void ModelOutputToolStripMenuItemClick(object sender, EventArgs e)
@@ -3616,7 +3608,6 @@ namespace ProjectAI.TrainForms
                             }
                         }
                     }
-                
             }
         }
 

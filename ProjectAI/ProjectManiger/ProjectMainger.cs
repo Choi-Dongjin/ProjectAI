@@ -6,11 +6,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Windows.Forms;
-using OpenCvSharp;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProjectAI
 {
@@ -1575,7 +1573,7 @@ namespace ProjectAI
 
                 MetroFramework.MetroColorStyle style;
                 if (selectProject == "Classification")
-                    style = MetroColorStyle.Green;
+                    style = MetroColorStyle.Purple;
                 else if (selectProject == "Segmentation")
                     style = MetroColorStyle.Red;
                 else if (selectProject == "ObjectDetection")
