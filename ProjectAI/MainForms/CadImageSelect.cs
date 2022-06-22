@@ -31,7 +31,7 @@ namespace ProjectAI.MainForms
         bool folder = false;
         public string imageTempName;
 
-        Task originTask;
+        public Task originTask;
         Task CADTask;
         CancellationTokenSource originCancel = null;
         CancellationTokenSource CADCancel = null;
@@ -99,7 +99,6 @@ namespace ProjectAI.MainForms
         {
             if (originTask != null)
             {
-                Console.WriteLine(originCancel);
                 originCancel.Cancel();
             }
             if (CADTask != null)
@@ -399,7 +398,7 @@ namespace ProjectAI.MainForms
               
                     originTask = Task.Run(() => OriginimageInput(files, filesPath, token), token);
                     await originTask;
-                    OriginPanelstatus.Visible = false;
+                    //OriginPanelstatus.Visible = false;
                     
                     int index = 0;
                     int afterOriginRowsCount = OriginGridView.Rows.Count;
@@ -426,7 +425,7 @@ namespace ProjectAI.MainForms
                     CADTask = Task.Run(() => CADimageInput(files, filesPath, token), token);
                     await CADTask;
 
-                    CADPanelstatus.Visible = false;
+                    //CADPanelstatus.Visible = false;
 
                     int index = 0;
                     int afterCADRowsCount = CADGridView.Rows.Count;
@@ -728,6 +727,10 @@ namespace ProjectAI.MainForms
         {
             if ((OriginlblMIOStatus.Text == "Completed") && (CADlblMIOStatus.Text == "Completed"))
                 this.btnOK.Enabled = true;
+            if (OriginlblMIOStatus.Text == "AllCompleted")
+            {
+                this.Close();
+            }
         }
     }
 }
