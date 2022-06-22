@@ -658,14 +658,14 @@
         public MetroFramework.Controls.MetroGrid CADGridView;
         public MetroFramework.Controls.MetroGrid OriginGridView;
         public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private MetroFramework.Controls.MetroProgressBar CADpgbMfileIOstatus;
+        public MetroFramework.Controls.MetroProgressBar CADpgbMfileIOstatus;
         public MetroFramework.Controls.MetroLabel CADlblMworkInNumber;
         public MetroFramework.Controls.MetroLabel OriginlblMworkInFileName;
         public MetroFramework.Controls.MetroLabel OriginlblMIOStatus;
         public MetroFramework.Controls.MetroLabel OriginlblMtotalNumber;
         public MetroFramework.Controls.MetroLabel OriginlblStatus;
         public MetroFramework.Controls.MetroLabel OriginlblMworkInNumber;
-        private MetroFramework.Controls.MetroProgressBar OriginpgbMfileIOstatus;
+        public MetroFramework.Controls.MetroProgressBar OriginpgbMfileIOstatus;
         public MetroFramework.Controls.MetroLabel CADlblMworkInFileName;
         public MetroFramework.Controls.MetroLabel CADlblMIOStatus;
         public MetroFramework.Controls.MetroLabel CADlblMtotalNumber;

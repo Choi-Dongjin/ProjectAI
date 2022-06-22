@@ -427,6 +427,7 @@ namespace ProjectAI
         /// </summary>
         public MainForms.ClassEdit classEdit = new MainForms.ClassEdit();
 
+        private ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
         #endregion ProjectMainger에 종속된 Forms 정의
 
         //=== === === === === === === === === === === === === === ===
@@ -1377,9 +1378,11 @@ namespace ProjectAI
             this.MainForm.drawToolToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.MainForm.drawToolToolStripMenuItem.Text = "DrawTool";
 
-            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MainForm.drawToolStripMenuItem,
-            this.MainForm.rectangleToolStripMenuItem});
+            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] 
+            {
+                this.MainForm.drawToolStripMenuItem,
+                this.MainForm.rectangleToolStripMenuItem
+            });
 
         }
 
@@ -2977,8 +2980,6 @@ namespace ProjectAI
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
             // Image List Data 값 반영
-            //searchIndex = 0;
-            //customIOManigerFoem.ImageMatchingOK(cadImageSelect, this.m_pathActiveProjectImage, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder);
             for (int i = 0; i < files.Length; i++)
             {
                 imageTotalNumber++;
@@ -3069,7 +3070,7 @@ namespace ProjectAI
         /// <summary>
         /// Folder 내에 있는 이미지를 바로 반영하여 넣어줍니다.
         /// </summary>
-        public void CADImageFolderAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
+        public async void CADImageFolderAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
             //#35 UI로 묶여져 있는 변수들을 만들어진 List로 관리해야 함
             //CADImage 저장 폴더
@@ -3167,27 +3168,29 @@ namespace ProjectAI
 
             //CADImage가 있는 폴더
             string CADFolder = cadImageSelect.CADGridView.Rows[0].Cells[2].Value.ToString();
-            
-            // Image List Data 값 반영
-            for (int i = 0; i < files.Length; i++)
-            {
-                imageTotalNumber++;
-                object imageData = new
-                {
-                    int_ImageNumber = imageTotalNumber,
-                    string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
-                    Labeled = new JObject() { }
-                };
-                this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
-                
-            }
-            for (int i = 0; i < newSameFiles.Length; i++)
-            {
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
-            }
 
- 
+            // Image List Data 값 반영
+            //ImageMatchingOK(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder);
+
+            Task CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
+            await CADOkTask;
+            //for (int i = 0; i < files.Length; i++)
+            //{
+            //    imageTotalNumber++;
+            //    object imageData = new
+            //    {
+            //        int_ImageNumber = imageTotalNumber,
+            //        string_ImagePath = Path.Combine(this.m_pathActiveProjectImage, files[i]),
+            //        Labeled = new JObject() { }
+            //    };
+            //    this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
+            //    WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+            //}
+            //for (int i = 0; i < newSameFiles.Length; i++)
+            //{
+            //    WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+            //}
+
             // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {
@@ -4761,6 +4764,52 @@ namespace ProjectAI
                 }
             }
             return trainData;
+        }
+
+        public async void ImageMatchingOK(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
+            JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
+        {
+            Task CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
+            await CADOkTask;
+        }
+
+        private void JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
+            JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
+        {
+            int totalFileNumber = files.Count();
+            int workInNumber = 1;
+            for (int i = 0; i < files.Length; i++)
+            {
+                imageTotalNumber++;
+                object imageData = new
+                {
+                    int_ImageNumber = imageTotalNumber,
+                    string_ImagePath = Path.Combine(m_pathActiveProjectImage, files[i]),
+                    Labeled = new JObject() { }
+                };
+                m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+                if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                    mainForm.SafeVisiblePanel(mainForm.panelstatus, true);
+                mainForm.SafeWriteProgressBar(mainForm.pgbMfileIOstatus, totalFileNumber, workInNumber);
+                mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
+                mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
+                mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+                mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i]));
+                workInNumber++;
+            }
+
+            for (int i = 0; i < newSameFiles.Length; i++)
+            {
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+                mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
+                mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
+                mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+                mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i]));
+                workInNumber++;
+            }
+            mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "AllCompleted");
+            mainForm.SafeVisiblePanel(mainForm.panelstatus, false);
         }
     }
 }
