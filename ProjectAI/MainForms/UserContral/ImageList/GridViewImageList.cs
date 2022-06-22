@@ -11,6 +11,8 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         public GridViewImageList()
         {
             InitializeComponent();
+            DoubleBuffered = true;
+            CustomIOMainger.CDoubleBuffered(this.gridImageList, true);
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
         }
 

@@ -53,7 +53,7 @@ namespace ProjectAI.MainForms
         private ProjectAI.TrainForms.TrainForm TrainForm;
 
         // panelMlogo
-        readonly MetroFramework.Controls.MetroPanel mainPanelMlogo = new MetroFramework.Controls.MetroPanel
+        private readonly MetroFramework.Controls.MetroPanel mainPanelMlogo = new MetroFramework.Controls.MetroPanel
         {
             BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio,
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom,
@@ -729,16 +729,13 @@ namespace ProjectAI.MainForms
             customMessageBoxOKCancel2.Dispose();
             customMessageBoxOKCancel3.Dispose();
         }
+
         private void ToolStripMenuItem1Click(object sender, EventArgs e)
         {
-            //if (WorkSpaceData.m_activeProjectMainger != null)
-            //    if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
-            //    {
-            //        JObject jObject = new JObject();
-            //        WorkSpaceData.m_activeProjectMainger.m_classificationTrainOptionDictionary[WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName].GetTrainOptions(jObject);
-            //        jsonDataManiger.PushJsonObject(@"C:\Users\USER\AppData\Roaming\SynapseNet\SynapseNet 0.1\workspaces\Test.Json", jObject);
-            //    }
-            ProjectAI.ProjectManiger.CustomImageProcess.CalculateDeltaE1();
+            ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
+            customIOManigerFoem.Show();
+
+            //ProjectAI.ProjectManiger.CustomImageProcess.CalculateDeltaE1();
         }
 
         private void TsmProjectAllWorkSpaceSaveClick(object sender, EventArgs e)
@@ -1015,16 +1012,21 @@ namespace ProjectAI.MainForms
                 if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                 {
                     #region 학습 Option Info 가져오기
+
                     JObject trainOptions = new JObject();
                     trainOptions = WorkSpaceData.m_activeProjectMainger.GetTrainInfo(trainOptions);
+
                     #endregion 학습 Option Info 가져오기
 
                     #region 학습 이미지 정보 가져오기
+
                     JObject trainImageData = new JObject();
                     trainImageData = WorkSpaceData.m_activeProjectMainger.GetTrainData(trainImageData);
+
                     #endregion 학습 이미지 정보 가져오기
 
                     #region 학습 정보 넣어주기
+
                     this.TrainForm.ClassificationPushTrainData(
                         (JObject)trainOptions.DeepClone(),
                         (JObject)trainImageData.DeepClone(),
@@ -1033,6 +1035,7 @@ namespace ProjectAI.MainForms
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString(),
                         WorkSpaceData.m_activeProjectMainger.m_activeProjectName,
                         WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName);
+
                     #endregion 학습 정보 넣어주기
                 }
         }
@@ -1128,7 +1131,6 @@ namespace ProjectAI.MainForms
 
         private void RectangleToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ProjectManiger.ImageToolUseingPictureBox.toolType = ProjectManiger.ImageToolUseingPictureBox.PaintTools.DrawRectangle;
         }
 
         //private void CircleToolStripMenuItemClick(object sender, EventArgs e)
@@ -1140,6 +1142,5 @@ namespace ProjectAI.MainForms
         //{
         //    toolType = PaintTools.DrawLine;
         //}
-
     }
 }

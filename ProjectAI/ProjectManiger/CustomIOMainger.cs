@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace ProjectAI
 {
@@ -12,7 +13,7 @@ namespace ProjectAI
         /// <summary>
         /// 이미지 검색 확장자 필터 설정
         /// </summary>
-        private readonly static string[] imageExts = new[] { ".jpg", ".bmp", ".png" }; // 검색할 확장자 필터
+        private static readonly string[] imageExts = new[] { ".jpg", ".bmp", ".png" }; // 검색할 확장자 필터
 
         /// <summary>
         /// 바이트로 되어있는 것을 KB, MB, GB 형식으로 변환 해주는 것
@@ -395,24 +396,31 @@ namespace ProjectAI
         /// <returns></returns>
         public static Bitmap LoadBitmap(string path)
         {
-            if (File.Exists(path))
+            if (imageExts.Contains(Path.GetExtension(path)))
             {
-                // open file in read only mode
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                if (File.Exists(path))
                 {
-                    // get a binary reader for the file stream
-                    using (BinaryReader reader = new BinaryReader(stream))
+                    // open file in read only mode
+                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                     {
-                        // copy the content of the file into a memory stream
-                        var memoryStream = new MemoryStream(reader.ReadBytes((int)stream.Length));
-                        // make a new Bitmap object the owner of the MemoryStream
-                        return new Bitmap(memoryStream);
+                        // get a binary reader for the file stream
+                        using (BinaryReader reader = new BinaryReader(stream))
+                        {
+                            // copy the content of the file into a memory stream
+                            var memoryStream = new MemoryStream(reader.ReadBytes((int)stream.Length));
+                            // make a new Bitmap object the owner of the MemoryStream
+                            return new Bitmap(memoryStream);
+                        }
                     }
+                }
+                else
+                {
+                    // MessageBox.Show("Error Loading File.", "Error!", MessageBoxButtons.OK);
+                    return null;
                 }
             }
             else
             {
-                // MessageBox.Show("Error Loading File.", "Error!", MessageBoxButtons.OK);
                 return null;
             }
         }
@@ -420,6 +428,13 @@ namespace ProjectAI
         public static JObject BitmapToJObject(Bitmap bitmap)
         {
             return null;
+        }
+
+        public static void CDoubleBuffered(this System.Windows.Forms.DataGridView dgv, bool setting)
+        {
+            Type dgvType = dgv.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(dgv, setting, null);
         }
     }
 }

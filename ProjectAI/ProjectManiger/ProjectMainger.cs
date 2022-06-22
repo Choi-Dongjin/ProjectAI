@@ -1368,9 +1368,9 @@ namespace ProjectAI
         {
             //this.MainForm.drawToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             //this.MainForm.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            // 
+            //
             // drawToolToolStripMenuItem
-            // 
+            //
 
             this.MainForm.menuStrip1.Items.Add(this.MainForm.drawToolToolStripMenuItem);
             this.MainForm.drawToolToolStripMenuItem.Name = "drawToolToolStripMenuItem";
@@ -1380,7 +1380,6 @@ namespace ProjectAI
             this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainForm.drawToolStripMenuItem,
             this.MainForm.rectangleToolStripMenuItem});
-
         }
 
         /// <summary>
@@ -1871,6 +1870,7 @@ namespace ProjectAI
                     this.InnerProjectDataReset(); // 이전에 적용된 모델 관련 데이터 초기화
 
                     this.DrawToolToolTipButtonUI(); //segmentation에 붙일거 만들어놓음 - drawToolToolTip 버튼을 생성
+
                     #region 컨트롤 추가
 
                     this.MainForm.panelTrainOptions.Controls.Add(this.m_classificationTrainOptionDictionary[this.m_activeInnerProjectName]); // panelTrainOptions 패널에 m_classificationTrainOption 창 적용
@@ -2468,14 +2468,14 @@ namespace ProjectAI
                             }
                             delIndexs.Reverse(); // List 뒤에서 부터 삭제 => 뒤에서 부터 삭제 해야 인덱스 불일치가 안뜸.
                                                  // 동일한 이름 데이터 삭제
-                            foreach (int delIndex in delIndexs)
-                            {
-                                files = files.Where(condition => condition != files[delIndex]).ToArray();
-                                filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
-                            }
+                                                 //foreach (int delIndex in delIndexs)
+                                                 //{
+                                                 //    files = files.Where(condition => condition != files[delIndex]).ToArray();
+                                                 //    filesPath = filesPath.Where(condition => condition != filesPath[delIndex]).ToArray();
+                                                 //}
 
-                            if (files.Length == 0) // 파일이 없으면
-                                return;
+                            //if (files.Length == 0) // 파일이 없으면
+                            //    return;
 
                             //this.MainForm.panelstatus.Visible = true;
 
@@ -2689,7 +2689,6 @@ namespace ProjectAI
         {
             using (ProjectAI.MainForms.CadImageSelect cadImageSelect = new MainForms.CadImageSelect(2))
             {
-                
                 cadImageSelect.ShowDialog();
                 if (cadImageSelect.DialogResult == DialogResult.OK)
                 {
@@ -3167,7 +3166,7 @@ namespace ProjectAI
 
             //CADImage가 있는 폴더
             string CADFolder = cadImageSelect.CADGridView.Rows[0].Cells[2].Value.ToString();
-            
+
             // Image List Data 값 반영
             for (int i = 0; i < files.Length; i++)
             {
@@ -3180,14 +3179,12 @@ namespace ProjectAI
                 };
                 this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
-                
             }
             for (int i = 0; i < newSameFiles.Length; i++)
             {
                 WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
             }
 
- 
             // image List 값 반영
             for (int i = 0; i < totalImageListnumber; i++)
             {

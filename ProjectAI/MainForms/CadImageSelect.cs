@@ -7,8 +7,10 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+
 using MetroFramework;
 using System.IO;
+
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,23 +21,21 @@ namespace ProjectAI.MainForms
     {
         private ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
         private ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
-        ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance();
-
+        private ProjectAI.FormsManiger formsManiger = ProjectAI.FormsManiger.GetInstance();
 
         public DialogResult selectDialogResult = DialogResult.None;
-        int originNum = 0;
-        int CADNum = 0;
-        bool gridViewCheck = false;
-        int firstOriginInputdata = -1;
-        int firstCADInputdata = -1;
-        bool folder = false;
+        private int originNum = 0;
+        private int CADNum = 0;
+        private bool gridViewCheck = false;
+        private int firstOriginInputdata = -1;
+        private int firstCADInputdata = -1;
+        private bool folder = false;
         public string imageTempName;
 
-        Task originTask;
-        Task CADTask;
-        CancellationTokenSource originCancel = null;
-        CancellationTokenSource CADCancel = null;
-
+        private Task originTask;
+        private Task CADTask;
+        private CancellationTokenSource originCancel = null;
+        private CancellationTokenSource CADCancel = null;
 
         public CadImageSelect()
         {
@@ -209,7 +209,6 @@ namespace ProjectAI.MainForms
             }
         }
 
-
         /// <summary>
         /// CAD 이미지와 묶일 이미지가 들어있는 폴더 선택
         /// </summary>
@@ -235,7 +234,6 @@ namespace ProjectAI.MainForms
                         {
                             if (WorkSpaceData.m_activeProjectMainger.m_activeProjectInfoJObject["string_projectListInfo"][WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
                             {
-
                                 if (this.pictureBox1.Image != null)
                                 {
                                     this.pictureBox1.Image.Dispose();
@@ -252,9 +250,11 @@ namespace ProjectAI.MainForms
                                     this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
 
                                     #region GridView에 데이터 Add와 최신 데이터파일로 cell 이동
+
                                     int beforeOriginRowsCount = OriginGridView.Rows.Count;
                                     GridInputData(true, files, filesPath, beforeOriginRowsCount, -1); // GridView에 데이터 Add
-                                    #endregion
+
+                                    #endregion GridView에 데이터 Add와 최신 데이터파일로 cell 이동
                                 }
                                 else
                                     this.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
@@ -368,11 +368,13 @@ namespace ProjectAI.MainForms
                                     this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
 
                                     #region GridView에 데이터 추가, 최신 데이터파일로 cell 이동
+
                                     int beforeCADRowsCount = CADGridView.Rows.Count;
                                     GridInputData(false, files, filesPath, -1, beforeCADRowsCount); // GridView에 데이터 추가
                                     //Console.Write("CADTask.IsCompleted");
                                     //Console.WriteLine(CADTask.IsCompleted);
-                                    #endregion
+
+                                    #endregion GridView에 데이터 추가, 최신 데이터파일로 cell 이동
                                 }
                                 else
                                     this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
@@ -382,6 +384,7 @@ namespace ProjectAI.MainForms
                 }
             }
         }
+
         /// <summary>
         /// GridView에 데이터 Add
         /// </summary>
@@ -396,11 +399,11 @@ namespace ProjectAI.MainForms
                 {
                     originCancel = new CancellationTokenSource();
                     CancellationToken token = originCancel.Token;
-              
+
                     originTask = Task.Run(() => OriginimageInput(files, filesPath, token), token);
                     await originTask;
                     OriginPanelstatus.Visible = false;
-                    
+
                     int index = 0;
                     int afterOriginRowsCount = OriginGridView.Rows.Count;
                     if (beforeOriginRowsCount == afterOriginRowsCount)
@@ -444,7 +447,6 @@ namespace ProjectAI.MainForms
                     Console.WriteLine(ex.Message);
                 }
             }
-           
         }
 
         private void OriginimageInput(string[] files, string[] filesPath, CancellationToken token)

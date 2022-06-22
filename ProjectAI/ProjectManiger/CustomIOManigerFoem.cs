@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -90,6 +91,11 @@ namespace ProjectAI.ProjectManiger
         private Task taskFileIO;
 
         /// <summary>
+        ///
+        /// </summary>
+        private CancellationTokenSource taskFileIOCancellationTokenSource = new CancellationTokenSource();
+
+        /// <summary>
         /// File IO Task 동작 코드 0 = null, 1 = File Copy List, 2 = Del List
         /// </summary>
         private List<int> taskFileIOactivateCodeList = new List<int>();
@@ -103,7 +109,7 @@ namespace ProjectAI.ProjectManiger
         private List<object> workInIOStatusList = new List<object>();
         private List<object> workInProgressNameList = new List<object>();
 
-        private void FileIOListManiger()
+        private async void FileIOListManiger()
         {
             int taskFileIOactivateCode;
             List<string> files;
@@ -145,15 +151,25 @@ namespace ProjectAI.ProjectManiger
                         break;
                     }
                 }
+
+                this.taskFileIOCancellationTokenSource = new CancellationTokenSource(); // 스레드 제어
+
                 if (taskFileIOactivateCode == 1)
                 {
-                    Task task = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
-                    task.Wait();
+                    Task task = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, this.taskFileIOCancellationTokenSource.Token,
+                        prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
+                    await task;
                 }
                 else if (taskFileIOactivateCode == 2)
                 {
-                    Task task = Task.Run(() => this.FileDelList(files, prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
-                    task.Wait();
+                    Task task = Task.Run(() => this.FileDelList(files, this.taskFileIOCancellationTokenSource.Token,
+                        prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
+                    await task;
+                }
+                else
+                {
+                    ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel1 = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Error, "An attempt was made to access using an unknown control code.");
+                    customMessageBoxOKCancel1.ShowDialog();
                 }
             }
         }
@@ -169,7 +185,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="labelTotalProgressNumber"> label 총 파일 겟수 </param>
         /// <param name="workInIOStatus"> label 총 파일 겟수 </param>
         /// <param name="workInProgressName"> label 복사중인 파일 이름 </param>
-        private void FileCopyList(List<string> files, string setPath, int fileCopyListSet, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
+        private void FileCopyList(List<string> files, string setPath, int fileCopyListSet, CancellationToken cancellationToken, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
         {
             bool monitoring = false;
             int totalFileNumber = files.Count;
@@ -187,24 +203,41 @@ namespace ProjectAI.ProjectManiger
                 case 1:
                     foreach (string file in files)
                     {
-                        if (monitoring)
+                        if (cancellationToken.IsCancellationRequested)
                         {
-                            if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                                mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
-                            mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
-                            mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
-                            mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
-                            mainForm.SafeWriteLabelText(workInIOStatus, "Copy");
-                            mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
-                            //CustomIOMainger.FileIODelay(10);
-                            workInNumber++;
+                            if (monitoring)
+                            {
+                                if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                                    mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                                mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, totalFileNumber);
+                                mainForm.SafeWriteLabelText(labelWorkInProgressNumber, totalFileNumber.ToString());
+                                mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                                mainForm.SafeWriteLabelText(workInIOStatus, "Force quit");
+                                mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                            }
+                            break;
                         }
+                        else
+                        {
+                            if (monitoring)
+                            {
+                                if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                                    mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                                mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
+                                mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
+                                mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                                mainForm.SafeWriteLabelText(workInIOStatus, "Copy");
+                                mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                                //CustomIOMainger.FileIODelay(10);
+                                workInNumber++;
+                            }
 
-                        string fileName = Path.GetFileName(file);
-                        string setFilePath = Path.Combine(setPath, fileName);
+                            string fileName = Path.GetFileName(file);
+                            string setFilePath = Path.Combine(setPath, fileName);
 
-                        if (file != setFilePath)
-                            File.Copy(file, setFilePath, true);
+                            if (file != setFilePath)
+                                File.Copy(file, setFilePath, true);
+                        }
                     }
                     break;
 
@@ -260,7 +293,7 @@ namespace ProjectAI.ProjectManiger
         /// <param name="labelTotalProgressNumber"> label 총 파일 겟수 </param>
         /// <param name="workInIOStatus"> label 총 파일 겟수 </param>
         /// <param name="workInProgressName"> label 복사중인 파일 이름 </param>
-        private void FileDelList(List<string> files, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
+        private void FileDelList(List<string> files, CancellationToken cancellationToken, object prograssBar = null, object labelWorkInProgressNumber = null, object labelTotalProgressNumber = null, object workInIOStatus = null, object workInProgressName = null)
         {
             bool monitoring = false;
             int totalFileNumber = files.Count;
@@ -274,25 +307,42 @@ namespace ProjectAI.ProjectManiger
             }
             foreach (string file in files)
             {
-                if (monitoring)
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                        mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
-                    mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
-                    mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
-                    mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
-                    mainForm.SafeWriteLabelText(workInIOStatus, "Delete");
-                    mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
-                    //CustomIOMainger.FileIODelay(1000);
-                    workInNumber++;
+                    if (monitoring)
+                    {
+                        if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                            mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                        mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, totalFileNumber);
+                        mainForm.SafeWriteLabelText(labelWorkInProgressNumber, totalFileNumber.ToString());
+                        mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                        mainForm.SafeWriteLabelText(workInIOStatus, "Force quit");
+                        mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                    }
+                    break;
                 }
-                try
+                else
                 {
-                    File.Delete(file);
-                }
-                catch
-                {
-                    Console.WriteLine($"ERROR: File IO Del ERROR");
+                    if (monitoring)
+                    {
+                        if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                            mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                        mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
+                        mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
+                        mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                        mainForm.SafeWriteLabelText(workInIOStatus, "Delete");
+                        mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                        //CustomIOMainger.FileIODelay(1000);
+                        workInNumber++;
+                    }
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"ERROR: File IO Del ERROR");
+                    }
                 }
             }
             mainForm.SafeVisiblePanel(mainForm.panelstatus, false); // 모니터링 창 출력
@@ -339,6 +389,19 @@ namespace ProjectAI.ProjectManiger
         public void DeleteDictionary(string Path)
         {
             Task.Run(() => CustomIOMainger.DirDelete(Path));
+        }
+
+        private void btnMCancelClick(object sender, EventArgs e)
+        {
+            try
+            {
+                //this.taskFileIOCancellationTokenSource.Cancel(); // Cancel을 사용하면 해당 TokenSource는 자동으로 Dispose 됩니다.
+            }
+            catch (Exception ex)
+            {
+                ProjectAI.CustomMessageBox.CustomMessageBoxOKCancel customMessageBoxOKCancel1 = new CustomMessageBox.CustomMessageBoxOKCancel(MessageBoxIcon.Warning, ex.ToString());
+                customMessageBoxOKCancel1.ShowDialog();
+            }
         }
     }
 }

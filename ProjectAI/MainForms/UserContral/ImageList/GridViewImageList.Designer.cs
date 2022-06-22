@@ -205,7 +205,8 @@
             // gridImageList
             // 
             this.gridImageList.AllowUserToAddRows = false;
-            this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridImageList.AllowUserToResizeRows = false;
+            this.gridImageList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.gridImageList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gridImageList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridImageList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -330,16 +331,14 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(246, 6);
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(238, 6);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.BackgroundImage = global::ProjectAI.Properties.Resources.Loading2Test;
             this.toolStripMenuItem2.Image = global::ProjectAI.Properties.Resources.Initimage;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItem2.Text = "Init Image Select";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemInitImageClick);
             // 
@@ -347,20 +346,20 @@
             // 
             this.toolStripMenuItem3.Image = global::ProjectAI.Properties.Resources.CADimage;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItem3.Text = "CAD Image Select";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.CADImageSelectToolStripMenuItemCADImageClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Image = global::ProjectAI.Properties.Resources.CADWizard;
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItem4.Text = "CAD Image Files Add Wizard";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.CADImageMultiSelectToolStripMenuItemClick);
             // 
@@ -368,14 +367,14 @@
             // 
             this.toolStripMenuItem5.Image = global::ProjectAI.Properties.Resources.CADfolder;
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(249, 30);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItem5.Text = "CAD Image Forder Add Wizard";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.CADImageForderWizardToolStripMenuItemClick);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(238, 6);
             // 
             // toolStripSeparator14
             // 
