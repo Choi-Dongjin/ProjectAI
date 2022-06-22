@@ -4769,6 +4769,7 @@ namespace ProjectAI
         private void JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
             JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
         {
+            int a = 0;
             int totalFileNumber = files.Count();
             int workInNumber = 1;
             for (int i = 0; i < files.Length; i++)
