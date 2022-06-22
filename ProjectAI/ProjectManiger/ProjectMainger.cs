@@ -4766,13 +4766,6 @@ namespace ProjectAI
             return trainData;
         }
 
-        public async void ImageMatchingOK(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
-            JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
-        {
-            Task CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
-            await CADOkTask;
-        }
-
         private void JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
             JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
         {
