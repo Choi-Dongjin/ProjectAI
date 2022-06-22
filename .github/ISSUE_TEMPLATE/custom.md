@@ -1,5 +1,5 @@
 ---
-name: Custom issue template
+name: 기본 이슈 형식
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
