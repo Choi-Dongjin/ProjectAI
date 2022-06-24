@@ -33,10 +33,9 @@ namespace ProjectAI.MainForms
         public string imageTempName;
 
         public Task originTask;
-        Task CADTask;
-        CancellationTokenSource originCancel = null;
-        CancellationTokenSource CADCancel = null;
-
+        private Task CADTask;
+        private CancellationTokenSource originCancel = null;
+        private CancellationTokenSource CADCancel = null;
 
         public CadImageSelect()
         {
@@ -403,7 +402,7 @@ namespace ProjectAI.MainForms
                     originTask = Task.Run(() => OriginimageInput(files, filesPath, token), token);
                     await originTask;
                     //OriginPanelstatus.Visible = false;
-                    
+
                     int index = 0;
                     int afterOriginRowsCount = OriginGridView.Rows.Count;
                     if (beforeOriginRowsCount == afterOriginRowsCount)

@@ -1143,6 +1143,5 @@ namespace ProjectAI.MainForms
         //    toolType = PaintTools.DrawLine;
         //}
         //}
-
     }
 }
