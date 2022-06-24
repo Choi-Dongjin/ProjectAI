@@ -7,37 +7,59 @@ namespace ProjectAI.ProjectManiger
 {
     internal class ImageToolUseingPictureBox
     {
-        private Bitmap imgBitmap;
+        private Bitmap imgOutputBitmap;
+        private Bitmap imgDrawingBitmap;
+        private Bitmap imgInputBitmap;
 
         private Rectangle imgRect;
 
         private double zoomRatio = 1F;
 
-        private Point mousePoint = new Point(0, 0);
+        private Point mousePointZoom = new Point(0, 0);
         private Point mousePointLeftMouseDown = new Point(0, 0);
         private Point mousePointLeftMouseDownMove = new Point(0, 0);
 
         private Point mousePointRightMouseDown = new Point(0, 0);
         private Point mousePointRightMouseDownMove = new Point(0, 0);
 
+        private Point drawLastPoint = new Point(0, 0);
+
+        /// <summary>
+        /// 메인 이미지 박스
+        /// </summary>
         private PictureBox pictureBox;
+
+        /// <summary>
+        /// horizental 스크롤바 기능 추가
+        /// </summary>
         private HScrollBar hScrollBar;
+
+        /// <summary>
+        /// vertical
+        /// </summary>
         private VScrollBar vScrollBar;
+
+        private bool enableDrawing = false;
+        private bool enableFloodFill = false;
+
+        private bool viewInputImg = true;
+        private bool viewDrawingImg = false;
+
+        #region 이미지 Tools 정보
+
+        private Color drawColor = Color.Red;
+        private int drawSize = 1;
+        private System.Drawing.Pen drawPen;
+
+        #endregion 이미지 Tools 정보
 
         public ImageToolUseingPictureBox(PictureBox pictureBox)
         {
             this.pictureBox = pictureBox;
+            this.drawPen = new Pen(this.drawColor, this.drawSize);
 
             this.PictureBoxEvent(pictureBox);
             this.PictureBoxOption(pictureBox);
-
-            //this.imgBitmap = new Bitmap(global::ImageTools.Properties.Resources.OpenCVexImage);
-
-            //this.zoomRatio = this.OutRatio(this.imgBitmap.Width, this.imgBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
-
-            //this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
-
-            //this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
 
             pictureBox.Invalidate();
         }
@@ -113,24 +135,38 @@ namespace ProjectAI.ProjectManiger
 
         private void PictureBoxImagePaint(object sender, PaintEventArgs e)
         {
-            if (this.imgBitmap != null)
+            if (this.imgInputBitmap != null)
             {
                 if (this.pictureBox.Width > this.imgRect.Width)
-                {
                     this.imgRect.X = (this.pictureBox.Width - this.imgRect.Width) / 2;
+                if (this.pictureBox.Height > this.imgRect.Height)
+                    this.imgRect.Y = (this.pictureBox.Height - this.imgRect.Height) / 2;
+
+                if (this.viewInputImg && this.viewDrawingImg)
+                {
+                    // 이미지 같이 그리기
+                    if (this.imgDrawingBitmap != null)
+                        this.imgOutputBitmap = CustomImageProcess.BitmapImageOverlay24bppRgb(this.imgInputBitmap, this.imgDrawingBitmap, 0.8);
+                }
+                else if (this.viewInputImg)
+                {
+                    // 원본 이미지
+                    this.imgOutputBitmap = this.imgInputBitmap;
+                }
+                else if (this.viewDrawingImg)
+                {
+                    // 그리는 이미지
+                    this.imgOutputBitmap = this.imgDrawingBitmap;
                 }
                 else
                 {
-                }
-                if (this.pictureBox.Height > this.imgRect.Height)
-                {
-                    this.imgRect.Y = (this.pictureBox.Height - this.imgRect.Height) / 2;
+                    // 오류
+                    // MessageBox.Show("ERROR", "ERROR1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-                e.Graphics.DrawImage(this.imgBitmap, this.imgRect);
-
+                e.Graphics.DrawImage(this.imgOutputBitmap, this.imgRect);
                 this.pictureBox.Focus();
             }
             else
@@ -141,7 +177,7 @@ namespace ProjectAI.ProjectManiger
 
         private void PictureBoxMouseWheel(object sender, MouseEventArgs e)
         {
-            if (this.imgBitmap != null)
+            if (this.imgOutputBitmap != null)
             {
                 int lines = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
                 PictureBox pb = (PictureBox)sender;
@@ -151,10 +187,10 @@ namespace ProjectAI.ProjectManiger
                     if (zoomRatio * 1.1F < 100.0F)
                     {
                         zoomRatio *= 1.1F;
-                        this.imgRect.Width = (int)Math.Round(this.imgBitmap.Width * zoomRatio);
-                        this.imgRect.Height = (int)Math.Round(this.imgBitmap.Height * zoomRatio);
-                        this.imgRect.X = -(int)Math.Round(1.1F * (mousePoint.X - this.imgRect.X) - mousePoint.X);
-                        this.imgRect.Y = -(int)Math.Round(1.1F * (mousePoint.Y - this.imgRect.Y) - mousePoint.Y);
+                        this.imgRect.Width = (int)Math.Round(this.imgOutputBitmap.Width * zoomRatio);
+                        this.imgRect.Height = (int)Math.Round(this.imgOutputBitmap.Height * zoomRatio);
+                        this.imgRect.X = -(int)Math.Round(1.1F * (mousePointZoom.X - this.imgRect.X) - mousePointZoom.X);
+                        this.imgRect.Y = -(int)Math.Round(1.1F * (mousePointZoom.Y - this.imgRect.Y) - mousePointZoom.Y);
                     }
                 }
                 else if (lines < 0)
@@ -162,10 +198,10 @@ namespace ProjectAI.ProjectManiger
                     if (zoomRatio * 0.9F > 0.001)
                     {
                         zoomRatio *= 0.9F;
-                        this.imgRect.Width = (int)Math.Round(this.imgBitmap.Width * zoomRatio);
-                        this.imgRect.Height = (int)Math.Round(this.imgBitmap.Height * zoomRatio);
-                        this.imgRect.X = -(int)Math.Round(0.9F * (mousePoint.X - this.imgRect.X) - mousePoint.X);
-                        this.imgRect.Y = -(int)Math.Round(0.9F * (mousePoint.Y - this.imgRect.Y) - mousePoint.Y);
+                        this.imgRect.Width = (int)Math.Round(this.imgOutputBitmap.Width * zoomRatio);
+                        this.imgRect.Height = (int)Math.Round(this.imgOutputBitmap.Height * zoomRatio);
+                        this.imgRect.X = -(int)Math.Round(0.9F * (mousePointZoom.X - this.imgRect.X) - mousePointZoom.X);
+                        this.imgRect.Y = -(int)Math.Round(0.9F * (mousePointZoom.Y - this.imgRect.Y) - mousePointZoom.Y);
                     }
                 }
 
@@ -180,31 +216,54 @@ namespace ProjectAI.ProjectManiger
 
         public void PictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Console.WriteLine($"X: {-(this.this.imgRect.X / this.zoomRatio) + (e.X / this.zoomRatio)}");
-            //Console.WriteLine($"Y: {-(this.this.imgRect.Y / this.zoomRatio) + (e.Y / this.zoomRatio)}");
+            //Console.WriteLine($"X: {-(this.imgRect.X / this.zoomRatio) + (e.X / this.zoomRatio)}");
+            //Console.WriteLine($"Y: {-(this.imgRect.Y / this.zoomRatio) + (e.Y / this.zoomRatio)}");
+            Console.WriteLine($"Xa: {(-this.imgRect.X + e.X) / this.zoomRatio}");
+            Console.WriteLine($"Ya: {(-this.imgRect.Y + e.Y) / this.zoomRatio}");
         }
 
         private void PictureBoxMouseMove(object sender, MouseEventArgs e)
         {
-            this.mousePoint = e.Location;
-
+            this.mousePointZoom = e.Location;
             if (e.Button == MouseButtons.Left)
             {
-                this.imgRect.X = this.mousePointLeftMouseDownMove.X + (int)Math.Round((double)(e.X - this.mousePointLeftMouseDown.X) * this.zoomRatio);
-                if (this.imgRect.X >= 0)
-                    this.imgRect.X = 0;
-                if (Math.Abs(this.imgRect.X) >= Math.Abs(this.imgRect.Width - this.pictureBox.Width))
-                    this.imgRect.X = -(this.imgRect.Width - this.pictureBox.Width);
-
-                this.imgRect.Y = this.mousePointLeftMouseDownMove.Y + (int)Math.Round((double)(e.Y - this.mousePointLeftMouseDown.Y) * this.zoomRatio);
-                if (this.imgRect.Y >= 0)
-                    this.imgRect.Y = 0;
-                if (Math.Abs(this.imgRect.Y) >= Math.Abs(this.imgRect.Height - this.pictureBox.Height))
-                    this.imgRect.Y = -(this.imgRect.Height - this.pictureBox.Height);
-
-                if (this.hScrollBar != null)
+                // 이미지 그리기
+                if (this.enableDrawing)
                 {
-                    this.ScrollBarPrint();
+                    int pointX = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
+                    int pointY = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
+
+                    using (Graphics g = Graphics.FromImage(this.imgDrawingBitmap))
+                    {
+                        g.DrawLine(this.drawPen, this.drawLastPoint.X, this.drawLastPoint.Y, pointX, pointY);
+                        //this.imgDrawingBitmap = bitmap;
+                    }
+
+                    this.drawLastPoint.X = pointX;
+                    this.drawLastPoint.Y = pointY;
+                }
+                // 이미지 이동
+                else
+                {
+                    this.imgRect.X = this.mousePointLeftMouseDownMove.X;
+                    this.imgRect.Y = this.mousePointLeftMouseDownMove.Y;
+
+                    this.imgRect.X = this.mousePointLeftMouseDownMove.X + (int)Math.Round((double)(e.X - this.mousePointLeftMouseDown.X));
+                    if (this.imgRect.X >= 0)
+                        this.imgRect.X = 0;
+                    if (Math.Abs(this.imgRect.X) >= Math.Abs(this.imgRect.Width - this.pictureBox.Width))
+                        this.imgRect.X = -(this.imgRect.Width - this.pictureBox.Width);
+
+                    this.imgRect.Y = this.mousePointLeftMouseDownMove.Y + (int)Math.Round((double)(e.Y - this.mousePointLeftMouseDown.Y));
+                    if (this.imgRect.Y >= 0)
+                        this.imgRect.Y = 0;
+                    if (Math.Abs(this.imgRect.Y) >= Math.Abs(this.imgRect.Height - this.pictureBox.Height))
+                        this.imgRect.Y = -(this.imgRect.Height - this.pictureBox.Height);
+
+                    if (this.hScrollBar != null)
+                    {
+                        this.ScrollBarPrint();
+                    }
                 }
             }
 
@@ -218,18 +277,23 @@ namespace ProjectAI.ProjectManiger
                 this.mousePointLeftMouseDown = e.Location;
                 this.mousePointLeftMouseDownMove.X = this.imgRect.X;
                 this.mousePointLeftMouseDownMove.Y = this.imgRect.Y;
-            }
-
-            if (e.Button == MouseButtons.Right)
-            {
-                this.mousePointRightMouseDown = e.Location;
-                this.mousePointRightMouseDownMove.X = this.imgRect.X;
-                this.mousePointRightMouseDownMove.Y = this.imgRect.Y;
+                if (this.enableDrawing)
+                {
+                    this.drawLastPoint.X = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
+                    this.drawLastPoint.Y = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
+                }
+                if (this.enableFloodFill)
+                {
+                    int pointX = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
+                    int pointY = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
+                    Point point = new Point(pointX, pointY);
+                }
             }
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            //this.imgDrawingBitmap.Save("", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
         private void pictureBox1_DragDrop(object sender, DragEventArgs e)
@@ -241,10 +305,10 @@ namespace ProjectAI.ProjectManiger
                     foreach (string file in files)
                     {
                         Console.WriteLine(file);
-                        this.imgBitmap = CustomIOMainger.LoadBitmap(file);
-                        if (this.imgBitmap != null)
+                        this.imgOutputBitmap = CustomIOMainger.LoadBitmap(file);
+                        if (this.imgOutputBitmap != null)
                         {
-                            this.InputBitmapImage(this.imgBitmap);
+                            this.InputBitmapImage(this.imgOutputBitmap);
                         }
                     }
             }
@@ -258,32 +322,61 @@ namespace ProjectAI.ProjectManiger
 
         private void pictureBox1_Resize(object sender, EventArgs e)
         {
-            if (this.imgBitmap != null)
+            if (this.imgOutputBitmap != null)
                 this.pictureBox.Invalidate();
         }
 
         private double OutRatio(double orgA, double orgB, double targetA, double targetB)
         {
-            if (targetA <= targetB)
+            if (orgA * orgB > targetA * targetB)
             {
-                return targetA / orgA;
+                double ra = (targetA / orgA) - (targetA / orgA) * 0.1;
+                double rb = (targetB / orgB) - (targetB / orgB) * 0.1;
+
+                if (ra > rb)
+                    return rb;
+                else
+                    return ra;
             }
             else
             {
-                return targetB / orgB;
+                if (orgA > orgB)
+                    return (targetA / orgA) - (targetA / orgA) * 0.1;
+                else
+                    return targetB / orgB - (targetB / orgB) * 0.1;
             }
         }
 
+        /// <summary>
+        /// 이미지 툴, View 설정 리셋
+        /// </summary>
+        private void ToolsReset()
+        {
+            this.enableDrawing = false;
+
+            this.viewDrawingImg = true;
+            this.viewDrawingImg = false;
+        }
+
+        /// <summary>
+        /// 이미지 넣기
+        /// </summary>
+        /// <param name="bitmap"> 리뷰할 bitmap 이미지 </param>
+        /// <param name="autoResize"> 이미지 입력중 viewbox 이미지 시이즈 자동으로 fitin 하기 기본 활성화, 기존 설정으로 입력을 넣기 위해서는 flase로 </param>
         public void InputBitmapImage(Bitmap bitmap, bool autoResize = true)
         {
             if (bitmap != null)
             {
                 if (autoResize)
                 {
-                    this.imgBitmap = bitmap;
-                    this.zoomRatio = this.OutRatio(this.imgBitmap.Width, this.imgBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
-                    this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgBitmap.Width * zoomRatio), (int)Math.Round(this.imgBitmap.Height * zoomRatio));
-                    this.mousePoint = new Point((int)Math.Round(this.imgBitmap.Width / 2.0F), (int)Math.Round(this.imgBitmap.Height / 2.0F));
+                    this.ToolsReset(); // tools, view 설정 리셋
+                    this.imgInputBitmap = bitmap;
+                    this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+                    this.imgDrawingBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+
+                    this.zoomRatio = this.OutRatio(this.imgInputBitmap.Width, this.imgInputBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
+                    this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgInputBitmap.Width * zoomRatio), (int)Math.Round(this.imgInputBitmap.Height * zoomRatio));
+                    this.mousePointZoom = new Point((int)Math.Round(this.imgInputBitmap.Width / 2.0F), (int)Math.Round(this.imgInputBitmap.Height / 2.0F));
 
                     if (this.hScrollBar != null)
                     {
@@ -297,15 +390,55 @@ namespace ProjectAI.ProjectManiger
                 }
                 else
                 {
-                    this.imgBitmap = bitmap;
+                    this.imgInputBitmap = bitmap;
+                    this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+
                     this.pictureBox.Invalidate();
                 }
             }
             else
             {
-                this.imgBitmap = null;
+                this.imgInputBitmap = null;
+                this.imgOutputBitmap = null;
+                this.imgDrawingBitmap = null;
+
                 this.pictureBox.Invalidate();
             }
+            GC.Collect();
+        }
+
+        internal void ToggleDrawing()
+        {
+            this.enableDrawing = !this.enableDrawing;
+        }
+
+        internal void ToggleViewInputimg()
+        {
+            this.viewInputImg = !this.viewInputImg;
+            this.pictureBox.Invalidate();
+        }
+
+        internal void ToggleViewDrawingImg()
+        {
+            this.viewDrawingImg = !this.viewDrawingImg;
+            this.pictureBox.Invalidate();
+        }
+
+        internal void ToggleFloodFill()
+        {
+            this.enableFloodFill = !this.enableFloodFill;
+        }
+
+        internal void DrawPenColorChange(Color color)
+        {
+            this.drawColor = color;
+            this.drawPen = new Pen(color, this.drawSize);
+        }
+
+        internal void DrawPenSizeChange(int size)
+        {
+            this.drawSize = size;
+            this.drawPen = new Pen(this.drawColor, size);
         }
     }
 }
