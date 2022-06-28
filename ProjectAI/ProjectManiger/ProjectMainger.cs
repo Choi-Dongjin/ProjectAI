@@ -428,6 +428,7 @@ namespace ProjectAI
         public MainForms.ClassEdit classEdit = new MainForms.ClassEdit();
 
         private ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+
         #endregion ProjectMainger에 종속된 Forms 정의
 
         //=== === === === === === === === === === === === === === ===
@@ -1378,12 +1379,11 @@ namespace ProjectAI
             this.MainForm.drawToolToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.MainForm.drawToolToolStripMenuItem.Text = "DrawTool";
 
-            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] 
+            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
             {
                 this.MainForm.drawToolStripMenuItem,
                 this.MainForm.rectangleToolStripMenuItem
             });
-
         }
 
         /// <summary>

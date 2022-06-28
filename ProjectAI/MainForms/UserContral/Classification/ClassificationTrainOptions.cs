@@ -255,6 +255,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             else if (cbbManetworkModel.Text == "Extra Large")
                 networkModel = "SynapseNet_Classification_100";
 
+            if (!float.TryParse(txtValidationRatio.Text, out float validationRatio))
+                validationRatio = 0;
+            else
+                validationRatio /= 100;
+
             JObject jObject = new JObject
             {
                 // Network Model 설정
@@ -266,7 +271,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 // Mmodel Minimum Selection Epoch (모델 최소 저장 Epoch) 설정
                 ["int_ModelMinimumSelectionEpoch"] = txtMmodelMinimumSelectionEpoch.Text,
                 // Validation Ratio (검증 비율) 설정
-                ["int_ValidationRatio"] = txtValidationRatio.Text,
+                ["int_ValidationRatio"] = String.Format("{0:0.000#}", validationRatio),
                 // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정
                 ["int_PatienceEpochs"] = txtPatienceEpochs.Text
             };
@@ -291,7 +296,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
              * 2. Image Size
              */
 
-            double.TryParse(HardwareInformation.systemHardwareInfoJObject["GRAPHIC"]["AdapterRAM"].ToString(),out double gpuRAM);
+            double.TryParse(HardwareInformation.systemHardwareInfoJObject["GRAPHIC"]["AdapterRAM"].ToString(), out double gpuRAM);
             int batchSize = this.GetAutoBatchSize(gpuRAM, this.GetImageSize());
             if (!(batchSize > 1))
             {
@@ -364,7 +369,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             int batchSize = 0;
 
             double y = graphicAdapterRAM;
-            
+
             double a = 0;
             double b = 0;
 
@@ -1266,6 +1271,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             int totalImageHeight = 2 * margin + toolTipImage.Height;
             e.ToolTipSize = new Size(totalImageWidth, totalImageHeight);
         }
+
         /// <summary>
         /// 툴팁 이미지 그리기 함수
         /// </summary>
@@ -1515,14 +1521,17 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         {
             this.DataAugmentationGetValue("Gradation", this.txtGradation);
         }
+
         private void TilMGradationRGBClick(object sender, EventArgs e)
         {
             this.DataAugmentationGetValue("GradationRGB", this.txtGradation);
         }
+
         private void TilMZoomClick(object sender, EventArgs e)
         {
             this.DataAugmentationGetValue("Zoom", this.txtZoomMax);
         }
+
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
@@ -1536,7 +1545,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                         imagePath = GridViewImageList.GetSelectImagePath();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex);
                     imagePath = null;
@@ -1552,11 +1561,9 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                         }
                     }
                 }
-
             }
-
-
         }
+
         private void DataAugmentationGetValue(string exCase, TextBox maxTextBox)
         {
             string imagePath = null;
@@ -1584,6 +1591,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void DataAugmentationGetValue(string exCase, MetroFramework.Controls.MetroTextBox minTextBox, MetroFramework.Controls.MetroTextBox maxTextBox)
         {
             string imagePath = null;
@@ -1599,7 +1607,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 Console.WriteLine(ex);
                 imagePath = null;
             }
-            finally 
+            finally
             {
                 using (ProjectAI.DataAugmentationExampleForms.DataAugmentationExampleForm dataAugmentationExampleForm = new DataAugmentationExampleForms.DataAugmentationExampleForm(imagePath, exCase))
                 {
@@ -1612,6 +1620,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         private void DataAugmentationGetValue(string exCase, TextBox minTextBox, TextBox maxTextBox)
         {
             string imagePath = null;
@@ -1640,6 +1649,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
             }
         }
+
         #endregion 세부 옵션 설정
 
         #region checkBox 변경 함수
@@ -1803,7 +1813,8 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
 
         #endregion checkBox 변경 함수
 
-        #region Train Option 설정 
+        #region Train Option 설정
+
         /// <summary>
         /// 버튼 더하기
         /// </summary>
@@ -1822,6 +1833,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtEpochNumber.Text = "100";
             }
         }
+
         /// <summary>
         /// 버튼 빼기
         /// </summary>
@@ -1842,6 +1854,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtEpochNumber.Text = "100";
             }
         }
+
         /// <summary>
         /// TextBox 값 확인
         /// </summary>
@@ -1861,6 +1874,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtEpochNumber.Text = "100";
             }
         }
+
         /// <summary>
         /// 버튼 더하기
         /// </summary>
@@ -1879,6 +1893,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtMmodelMinimumSelectionEpoch.Text = "5";
             }
         }
+
         /// <summary>
         /// 버튼 뺴기
         /// </summary>
@@ -1897,6 +1912,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtMmodelMinimumSelectionEpoch.Text = "5";
             }
         }
+
         /// <summary>
         /// TextBox 값 확인
         /// </summary>
@@ -1916,6 +1932,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtMmodelMinimumSelectionEpoch.Text = "5";
             }
         }
+
         /// <summary>
         /// 버튼 더하기
         /// </summary>
@@ -1934,6 +1951,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtPatienceEpochs.Text = "5";
             }
         }
+
         /// <summary>
         /// 버튼 빼기
         /// </summary>
@@ -1952,6 +1970,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtPatienceEpochs.Text = "5";
             }
         }
+
         /// <summary>
         /// TextBox 값 확인
         /// </summary>
@@ -1971,6 +1990,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtPatienceEpochs.Text = "5";
             }
         }
+
         /// <summary>
         /// 버튼 더하기
         /// </summary>
@@ -1989,6 +2009,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtTrainRepeat.Text = "3";
             }
         }
+
         /// <summary>
         /// 버튼 빼기
         /// </summary>
@@ -2007,6 +2028,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtTrainRepeat.Text = "3";
             }
         }
+
         /// <summary>
         /// TextBox 값 확인
         /// </summary>
@@ -2026,6 +2048,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtTrainRepeat.Text = "3";
             }
         }
+
         /// <summary>
         /// 더하기
         /// </summary>
@@ -2042,7 +2065,6 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 }
                 else
                 {
-
                 }
             }
             else
@@ -2050,6 +2072,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtValidationRatio.Text = "3";
             }
         }
+
         /// <summary>
         /// 빼기
         /// </summary>
@@ -2068,6 +2091,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 this.txtValidationRatio.Text = "3";
             }
         }
+
         /// <summary>
         ///  TextBox 값 확인
         /// </summary>
@@ -2092,21 +2116,18 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
         }
 
-        #endregion
+        #endregion Train Option 설정
 
         private void TxtBlurTextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void TxtBrightnessMinTextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void TxtBrightnessMaxTextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

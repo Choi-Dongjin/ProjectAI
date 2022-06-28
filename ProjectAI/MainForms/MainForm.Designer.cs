@@ -566,7 +566,7 @@
             // 
             this.trainToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.deep_learning;
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
             // 
@@ -574,14 +574,14 @@
             // 
             this.changeStyleToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.memphis_style;
             this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
-            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
             this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
             // 
             // hiddenToolStripMenuItem
             // 
             this.hiddenToolStripMenuItem.Name = "hiddenToolStripMenuItem";
-            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.hiddenToolStripMenuItem.Text = "Hidden";
             this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
             // 
