@@ -47,6 +47,10 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.OriginImageLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.metroContextMenu1 = new MetroFramework.Controls.MetroContextMenu(this.components);
+            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawFillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager1)).BeginInit();
             this.metroPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -58,6 +62,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.metroPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.metroContextMenu1.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroStyleManager1
@@ -281,6 +286,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+            this.pictureBox1.ContextMenuStrip = this.metroContextMenu1;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
@@ -289,6 +295,38 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDoubleClick);
+            // 
+            // metroContextMenu1
+            // 
+            this.metroContextMenu1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.metroContextMenu1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.drawToolStripMenuItem,
+            this.drawViewerToolStripMenuItem,
+            this.drawFillToolStripMenuItem});
+            this.metroContextMenu1.Name = "metroContextMenu1";
+            this.metroContextMenu1.Size = new System.Drawing.Size(181, 92);
+            // 
+            // drawToolStripMenuItem
+            // 
+            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
+            this.drawToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawToolStripMenuItem.Text = "draw";
+            this.drawToolStripMenuItem.Click += new System.EventHandler(this.DrawToolStripMenuItemClick);
+            // 
+            // drawViewerToolStripMenuItem
+            // 
+            this.drawViewerToolStripMenuItem.Name = "drawViewerToolStripMenuItem";
+            this.drawViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawViewerToolStripMenuItem.Text = "drawViewer";
+            this.drawViewerToolStripMenuItem.Click += new System.EventHandler(this.DrawViewerToolStripMenuItemClick);
+            // 
+            // drawFillToolStripMenuItem
+            // 
+            this.drawFillToolStripMenuItem.Name = "drawFillToolStripMenuItem";
+            this.drawFillToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawFillToolStripMenuItem.Text = "drawFloodFill";
+            this.drawFillToolStripMenuItem.Click += new System.EventHandler(this.DrawFloodFillToolStripMenuItemClick);
             // 
             // CadImageViewer
             // 
@@ -312,6 +350,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroPanel2.ResumeLayout(false);
             this.metroPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.metroContextMenu1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -334,5 +373,9 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private System.Windows.Forms.Label HeatmapImageLabel;
         private MetroFramework.Controls.MetroTrackBar TrackBar;
         private System.Windows.Forms.Label TrackbarNumber;
+        private MetroFramework.Controls.MetroContextMenu metroContextMenu1;
+        private System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawFillToolStripMenuItem;
     }
 }

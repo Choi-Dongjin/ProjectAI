@@ -186,16 +186,6 @@ namespace ProjectAI.MainForms
 
                                     int beforeOriginRowsCount = OriginGridView.Rows.Count;
                                     GridInputData(true, files, filesPath, beforeOriginRowsCount, -1); // GridView에 데이터 Add
-                                    int afterOriginRowsCount = OriginGridView.Rows.Count;
-                                    if (beforeOriginRowsCount == afterOriginRowsCount)
-                                        index = beforeOriginRowsCount - 1;
-                                    else
-                                        index = beforeOriginRowsCount;
-                                    Console.WriteLine(index);
-                                    OriginGridView.FirstDisplayedScrollingRowIndex = index;
-                                    OriginGridView.Refresh();
-                                    OriginGridView.CurrentCell = OriginGridView.Rows[index].Cells[0];
-                                    OriginGridView.Rows[index].Cells[1].Selected = true;
 
                                     #endregion GridView에 데이터 Add와 최신 데이터파일로 cell 이동
                                 }
@@ -305,15 +295,6 @@ namespace ProjectAI.MainForms
 
                                     int beforeCADRowsCount = CADGridView.Rows.Count;
                                     GridInputData(false, files, filesPath, -1, beforeCADRowsCount); // GridView에 데이터 추가
-                                    int afterCADRowsCount = CADGridView.Rows.Count;
-                                    if (afterCADRowsCount == beforeCADRowsCount)
-                                        index = beforeCADRowsCount - 1;
-                                    else
-                                        index = beforeCADRowsCount;
-                                    CADGridView.FirstDisplayedScrollingRowIndex = index;
-                                    CADGridView.Refresh();
-                                    CADGridView.CurrentCell = CADGridView.Rows[index].Cells[0];
-                                    CADGridView.Rows[index].Cells[1].Selected = true;
 
                                     #endregion GridView에 데이터 추가, 최신 데이터파일로 cell 이동
                                 }

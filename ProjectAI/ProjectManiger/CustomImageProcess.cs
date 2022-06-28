@@ -1,4 +1,5 @@
 ﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +10,18 @@ namespace ProjectAI.ProjectManiger
 {
     public static class CustomImageProcess
     {
+
+        /// <summary>
+        /// 비트맵 데이터
+        /// </summary>
+        private static BitmapData bitmapData;
+
+        /// <summary>
+        /// 이미지 바이트 배열
+        /// </summary>
+        private static byte[] imageByteArray;
+
+
         /// <summary>
         /// ssim의 계산 값
         /// </summary>
@@ -569,6 +582,21 @@ namespace ProjectAI.ProjectManiger
             }
             Bitmap exbmpImage = new Bitmap(image);
             return exbmpImage;
+        }
+
+
+
+        /// <summary>
+        /// <summary>
+        /// 영역 채우기
+        /// </summary>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="newColor">신규 색상</param>
+        public static void FloodFill(int x, int y, Bitmap bitmap, Color newColor)
+        {
+            //Cv2.ImShow("check", BitmapConverter.ToMat(bitmap));
+
         }
     }
 }

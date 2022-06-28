@@ -16,7 +16,6 @@ namespace ProjectAI
             #region 프로그램 Entry Optins 파일 읽고 값 가져오기
 
             JsonDataManiger jsonDataManiger = JsonDataManiger.GetInstance(); // Json File 관리 Class
-
             #region StartForm, StartFormOptions 변경시를 관리 Update Handler 등록
 
             FormsManiger.m_startFormOptionsManagerHandler += Program.IfProgramEntryPointOptionsChange;
