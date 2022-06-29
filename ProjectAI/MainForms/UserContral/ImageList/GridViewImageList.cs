@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectAI.ProjectManiger;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,6 +8,10 @@ namespace ProjectAI.MainForms.UserContral.ImageList
     public partial class GridViewImageList : UserControl
     {
         private FormsManiger formsManiger = FormsManiger.GetInstance();
+        private int rowInEdit = -1;
+        // Declare a variable to indicate the commit scope.
+        // Set this value to false to use cell-level commit scope.
+        private bool rowScopeCommit = true;
 
         public GridViewImageList()
         {
@@ -323,5 +328,176 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         {
             //this.GridImageListAutoResize();
         }
+
+        /// <summary>
+        /// DataGridView 컨트롤의 VirtualMode 속성이 true이고, DataGridView에서 셀을 서식 지정하고 표시하기 위해 셀에 대한 값이 필요할 때 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        {
+
+            if (e.RowIndex == this.gridImageList.RowCount - 1) return;
+
+            GridViewDataIntegrity gridViewDataIntegrityTmp = null;
+
+            // Store a reference to the Customer object for the row being painted.
+            if (e.RowIndex == rowInEdit)
+            {
+                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+            }
+            else
+            {
+                gridViewDataIntegrityTmp = (GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex];
+            }
+
+            // Set the cell value to paint using the Customer object retrieved.
+            switch (this.gridImageList.Columns[e.ColumnIndex].Name)
+            {
+                case "Num Name":
+                    e.Value = gridViewDataIntegrityTmp.Num;
+                    break;
+
+                case "Files Name":
+                    e.Value = gridViewDataIntegrityTmp.FilesName;
+                    break;
+
+                case "Set":
+                    e.Value = gridViewDataIntegrityTmp.Set;
+                    break;
+
+                case "Labeled":
+                    e.Value = gridViewDataIntegrityTmp.Labeled;
+                    break;
+
+                case "Prediction":
+                    e.Value = gridViewDataIntegrityTmp.Prediction;
+                    break;
+
+                case "Probability":
+                    e.Value = gridViewDataIntegrityTmp.Probability;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// DataGridView 컨트롤의 VirtualMode 속성이 true이고 변경된 셀 값에 내부 데이터 원본의 스토리지가 필요할 때 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListCellValuePushed(object sender, DataGridViewCellValueEventArgs e)
+        {
+            GridViewDataIntegrity gridViewDataIntegrityTmp = null;
+
+            // Store a reference to the Customer object for the row being edited.
+            if (e.RowIndex < WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count)
+            {
+                // If the user is editing a new row, create a new Customer object.
+                WorkSpaceData.m_activeProjectMainger.customerInEdit = new GridViewDataIntegrity(
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Num,
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).FilesName,
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Set,
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Labeled,
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Prediction,
+                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Probability);
+                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+                this.rowInEdit = e.RowIndex;
+            }
+            else
+            {
+                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+            }
+
+            // Set the appropriate Customer property to the cell value entered.
+            String newValue = e.Value as String;
+
+            switch (this.gridImageList.Columns[e.ColumnIndex].Name)
+            {
+                case "Num Name":
+                    e.Value = gridViewDataIntegrityTmp.Num;
+                    break;
+
+                case "Files Name":
+                    e.Value = gridViewDataIntegrityTmp.FilesName;
+                    break;
+
+                case "Set":
+                    e.Value = gridViewDataIntegrityTmp.Set;
+                    break;
+
+                case "Labeled":
+                    e.Value = gridViewDataIntegrityTmp.Labeled;
+                    break;
+
+                case "Prediction":
+                    e.Value = gridViewDataIntegrityTmp.Prediction;
+                    break;
+
+                case "Probability":
+                    e.Value = gridViewDataIntegrityTmp.Probability;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// VirtualMode의 DataGridView 속성이 true이고 사용자가 DataGridView의 맨 아래에 있는 새 행으로 이동하면 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListNewRowNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            // Create a new Customer object when the user edits
+            // the row for new records.
+            WorkSpaceData.m_activeProjectMainger.customerInEdit = new GridViewDataIntegrity();
+            this.rowInEdit = this.gridImageList.Rows.Count - 1;
+        }
+
+        /// <summary>
+        /// 행의 유효성 검사가 완료된 후 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListRowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            // Save row changes if any were made and release the edited
+            // Customer object if there is one.
+            if (e.RowIndex >= WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count &&
+                e.RowIndex != this.gridImageList.Rows.Count - 1)
+            {
+                // Add the new Customer object to the data store.
+                WorkSpaceData.m_activeProjectMainger.gridViewAddList.Add(WorkSpaceData.m_activeProjectMainger.customerInEdit);
+                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.rowInEdit = -1;
+            }
+            else if (WorkSpaceData.m_activeProjectMainger.customerInEdit != null &&
+                e.RowIndex < WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count)
+            {
+                // Save the modified Customer object in the data store.
+                WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex] = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.rowInEdit = -1;
+            }
+            else if (this.gridImageList.ContainsFocus)
+            {
+                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.rowInEdit = -1;
+            }
+        }
+
+        /// <summary>
+        /// VirtualMode 컨트롤의 DataGridView 속성이 true이고 DataGridView가 현재 행에 커밋되지 않은 변경 내용이 있는지 여부를 확인해야 하는 경우 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListRowDirtyStateNeeded(object sender, QuestionEventArgs e)
+        {
+            if (!rowScopeCommit)
+            {
+                // In cell-level commit scope, indicate whether the value
+                // of the current cell has been modified.
+                e.Response = this.gridImageList.IsCurrentCellDirty;
+            }
+        }
+
     }
 }

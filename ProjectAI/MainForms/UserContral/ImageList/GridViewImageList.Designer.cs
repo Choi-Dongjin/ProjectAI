@@ -254,6 +254,12 @@
             this.gridImageList.TabIndex = 1;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
+            this.gridImageList.VirtualMode = true;
+            this.gridImageList.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridImageListCellValueNeeded);
+            this.gridImageList.CellValuePushed += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridImageListCellValuePushed);
+            this.gridImageList.NewRowNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.GridImageListNewRowNeeded);
+            this.gridImageList.RowDirtyStateNeeded += new System.Windows.Forms.QuestionEventHandler(this.GridImageListRowDirtyStateNeeded);
+            this.gridImageList.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridImageListRowValidated);
             this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
             this.gridImageList.Resize += new System.EventHandler(this.GridImageListResize);
             // 

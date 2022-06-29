@@ -565,6 +565,7 @@
             this.CADGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CADGridView.Size = new System.Drawing.Size(120, 270);
             this.CADGridView.TabIndex = 11;
+            this.CADGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridImageListCellValueNeeded);
             this.CADGridView.SelectionChanged += new System.EventHandler(this.CADGridViewSelectionChanged);
             this.CADGridView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.CADGridViewSortCompare);
             // 

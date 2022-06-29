@@ -1,5 +1,6 @@
 ﻿using MetroFramework;
 using Newtonsoft.Json.Linq;
+using ProjectAI.ProjectManiger;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -669,6 +670,15 @@ namespace ProjectAI
         /// CADImage가 OriginImage와 부합되는 이미지만 저장
         /// </summary>
         public List<string> CADImageSaveList = new List<string>();
+
+        //#10
+        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+
+        // Declare a Customer object to store data for a row being edited.
+        public GridViewDataIntegrity customerInEdit;
+
+        public int rowInEdit = -1;
+
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -1511,7 +1521,10 @@ namespace ProjectAI
                             this.MainForm.gridImageList.Columns[4].Name = "Probability";
                             */
 
-                            metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            //#10 GridView Add
+                            //metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            this.gridViewAddList.Add(new GridViewDataIntegrity(imageNumber.ToString(), imageFile, set, activeClass, predictionClass, threshold.ToString()));
+
                             if (activeClassColor != null)
                                 metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
                         }
@@ -2033,13 +2046,45 @@ namespace ProjectAI
             gridViewImageList.gridImageList.Rows.Clear();
             gridViewImageList.gridImageList.Refresh();
 
-            gridViewImageList.gridImageList.ColumnCount = 6;
-            gridViewImageList.gridImageList.Columns[0].Name = "NO";
-            gridViewImageList.gridImageList.Columns[1].Name = "Files Name";
-            gridViewImageList.gridImageList.Columns[2].Name = "Set"; //Train Test
-            gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
-            gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
-            gridViewImageList.gridImageList.Columns[5].Name = "Probability";
+            //gridViewImageList.gridImageList.ColumnCount = 6;
+            //gridViewImageList.gridImageList.Columns[0].Name = "NO";
+            //gridViewImageList.gridImageList.Columns[1].Name = "Files Name";
+            //gridViewImageList.gridImageList.Columns[2].Name = "Set"; //Train Test
+            //gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
+            //gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
+            //gridViewImageList.gridImageList.Columns[5].Name = "Probability";
+            //#10
+            DataGridViewTextBoxColumn numberColumn = new DataGridViewTextBoxColumn();
+            numberColumn.HeaderText = "NO";
+            numberColumn.Name = "Num Name";
+
+            DataGridViewTextBoxColumn filesNameColumn = new DataGridViewTextBoxColumn();
+            filesNameColumn.HeaderText = "Files Name";
+            filesNameColumn.Name = "Files Name";
+
+            DataGridViewTextBoxColumn setColumn = new DataGridViewTextBoxColumn();
+            setColumn.HeaderText = "Set";
+            setColumn.Name = "Set";
+
+            DataGridViewTextBoxColumn labeledColumn = new DataGridViewTextBoxColumn();
+            setColumn.HeaderText = "Labeled";
+            setColumn.Name = "Labeled";
+
+            DataGridViewTextBoxColumn predictionColumn = new DataGridViewTextBoxColumn();
+            setColumn.HeaderText = "Prediction";
+            setColumn.Name = "Prediction";
+
+            DataGridViewTextBoxColumn probabilityColumn = new DataGridViewTextBoxColumn();
+            setColumn.HeaderText = "Probability";
+            setColumn.Name = "Probability";
+
+            gridViewImageList.gridImageList.Columns.Add(numberColumn);
+            gridViewImageList.gridImageList.Columns.Add(filesNameColumn);
+            gridViewImageList.gridImageList.Columns.Add(setColumn);
+            gridViewImageList.gridImageList.Columns.Add(labeledColumn);
+            gridViewImageList.gridImageList.Columns.Add(predictionColumn);
+            gridViewImageList.gridImageList.Columns.Add(probabilityColumn);
+
 
             gridViewImageList.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewImageList.Location = new System.Drawing.Point(0, 0);

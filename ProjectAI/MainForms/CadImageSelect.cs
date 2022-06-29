@@ -714,5 +714,9 @@ namespace ProjectAI.MainForms
                 this.Close();
             }
         }
+        private void GridImageListCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        {
+
+        }
     }
 }
