@@ -1,14 +1,28 @@
 ﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using Point = System.Drawing.Point;
 
 namespace ProjectAI.ProjectManiger
 {
     public static class CustomImageProcess
     {
+
+        /// <summary>
+        /// 비트맵 데이터
+        /// </summary>
+        private static BitmapData bitmapData;
+
+        /// <summary>
+        /// 이미지 바이트 배열
+        /// </summary>
+        private static byte[] imageByteArray;
+
+
         /// <summary>
         /// ssim의 계산 값
         /// </summary>
@@ -569,6 +583,49 @@ namespace ProjectAI.ProjectManiger
             }
             Bitmap exbmpImage = new Bitmap(image);
             return exbmpImage;
+        }
+
+
+        private static bool ColorMatch(Color a, Color b)
+        {
+            return (a.ToArgb() & 0xffffff) == (b.ToArgb() & 0xffffff);
+        }
+        /// <summary>
+        /// <summary>
+        /// 영역 채우기
+        /// </summary>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="newColor">신규 색상</param>
+        public static void FloodFillBitmap(Point pos, Bitmap bitmap, Color targetColor, Color replacementColor)
+        {
+            Queue<Point> q = new Queue<Point>();
+            q.Enqueue(pos);
+            while (q.Count > 0)
+            {
+                Point n = q.Dequeue();
+                if (!ColorMatch(bitmap.GetPixel(n.X, n.Y), targetColor))
+                    continue;
+                Point w = n, e = new Point(n.X + 1, n.Y);
+                while ((w.X >= 0) && ColorMatch(bitmap.GetPixel(w.X, w.Y), targetColor))
+                {
+                    bitmap.SetPixel(w.X, w.Y, replacementColor);
+                    if ((w.Y > 0) && ColorMatch(bitmap.GetPixel(w.X, w.Y - 1), targetColor))
+                        q.Enqueue(new Point(w.X, w.Y - 1));
+                    if ((w.Y < bitmap.Height - 1) && ColorMatch(bitmap.GetPixel(w.X, w.Y + 1), targetColor))
+                        q.Enqueue(new Point(w.X, w.Y + 1));
+                    w.X--;
+                }
+                while ((e.X <= bitmap.Width - 1) && ColorMatch(bitmap.GetPixel(e.X, e.Y), targetColor))
+                {
+                    bitmap.SetPixel(e.X, e.Y, replacementColor);
+                    if ((e.Y > 0) && ColorMatch(bitmap.GetPixel(e.X, e.Y - 1), targetColor))
+                        q.Enqueue(new Point(e.X, e.Y - 1));
+                    if ((e.Y < bitmap.Height - 1) && ColorMatch(bitmap.GetPixel(e.X, e.Y + 1), targetColor))
+                        q.Enqueue(new Point(e.X, e.Y + 1));
+                    e.X++;
+                }
+            }
         }
     }
 }

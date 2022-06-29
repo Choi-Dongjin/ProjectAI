@@ -308,9 +308,12 @@ namespace ProjectAI.ProjectManiger
                 }
                 if (this.enableFloodFill)
                 {
-                    int pointX = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
-                    int pointY = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
-                    Point point = new Point(pointX, pointY);
+                    this.drawLastPoint.X = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
+                    this.drawLastPoint.Y = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
+                    //int pointX = (int)Math.Round((-this.imgRect.X + e.X) / this.zoomRatio);
+                    //int pointY = (int)Math.Round((-this.imgRect.Y + e.Y) / this.zoomRatio);
+                    //Point point = new Point(pointX, pointY);
+                    CustomImageProcess.FloodFillBitmap(this.drawLastPoint, this.imgDrawingBitmap, Color.Black, Color.Red);
                 }
             }
         }

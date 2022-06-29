@@ -17,7 +17,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         //pictureBox Zoom
         private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
-
         private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
         private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox3;
         private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox4;
@@ -259,6 +258,21 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private void PictureBox1MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.PrintOrignalImage(tempPic1);
+        }
+
+        private void DrawToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            imageToolUseingPictureBox1.ToggleDrawing();
+        }
+
+        private void DrawViewerToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            imageToolUseingPictureBox1.ToggleViewDrawingImg();
+        }
+
+        private void DrawFloodFillToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            imageToolUseingPictureBox1.ToggleFloodFill();
         }
     }
 }
