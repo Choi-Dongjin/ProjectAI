@@ -8,7 +8,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 {
     public partial class CadImageViewer : UserControl
     {
-
         private Bitmap bitmapOriginImage = null;
         private Bitmap bitmapCADImage = null;
         private double outputRate;
@@ -85,7 +84,21 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.tempPic1 = originImage;
             this.bitmapOriginImage = originImage;
             //this.pictureBox1.Image = originImage;
-            this.BitmapImageInput1(originImage);
+            this.imageToolUseingPictureBox1.InputBitmapImage(originImage);
+
+            // 원본 이미지가 변경되면 다른 항목들 초기화 -> 확인 하고 필요없으면 삭제
+            //if (this.imageToolUseingPictureBox2.ImgBitmapState)
+            //{
+            //    this.imageToolUseingPictureBox2.InputBitmapImage(null);
+            //}
+            //if (this.imageToolUseingPictureBox3.ImgBitmapState)
+            //{
+            //    this.imageToolUseingPictureBox3.InputBitmapImage(null);
+            //}
+            //if (this.imageToolUseingPictureBox4.ImgBitmapState)
+            //{
+            //    this.imageToolUseingPictureBox4.InputBitmapImage(null);
+            //}
         }
 
         public void PrintCADImage(Bitmap cadImage)
@@ -93,14 +106,19 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.tempPic2 = cadImage;
             this.bitmapCADImage = cadImage;
             //this.pictureBox2.Image = cadImage;
-            this.BitmapImageInput2(cadImage);
+            this.imageToolUseingPictureBox2.InputBitmapImage(cadImage);
         }
 
         public void PrintOverlayImage()
         {
             //this.bitmapCADImage = cadImage;
             //this.pictureBox3.Image = ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate);
-            this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate));
+            this.imageToolUseingPictureBox3.InputBitmapImage(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, this.TrackBar.Value * this.outputRate));
+        }
+
+        public void PrintHeatmapImage(Bitmap bitmap)
+        {
+            this.imageToolUseingPictureBox4.InputBitmapImage(bitmap);
         }
 
         /// <summary>
@@ -125,7 +143,6 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             System.Drawing.Point centerPoint = new System.Drawing.Point((region.X + region.Width / 2), (region.Y + region.Height / 2));
             return centerPoint;
         }
-
 
         /// <summary>
         /// TrackBar Setting
@@ -157,7 +174,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
                     this.TrackbarNumber.Text = ((double)this.TrackBar.Value * this.outputRate).ToString("0.00");
                     //Cv2.AddWeighted(originImage, alpha, CADImage, beta, 0, OverlayImage);
                     //this.pictureBox2.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OverlayImage);
-                    this.BitmapImageInput3(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value), false);
+                    this.imageToolUseingPictureBox3.InputBitmapImage(ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(this.bitmapOriginImage, this.bitmapCADImage, value), false);
                 }
             }
             catch (Exception ex)
@@ -241,26 +258,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 
         private void PictureBox1MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            BitmapImageInput1(tempPic1);
-        }
-
-        public void BitmapImageInput1(Bitmap bitmap)
-        {
-            this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
-        }
-
-        public void BitmapImageInput2(Bitmap bitmap)
-        {
-            this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
-        }
-        public void BitmapImageInput3(Bitmap bitmap, bool b1 = true)
-        {
-            this.imageToolUseingPictureBox3.InputBitmapImage(bitmap, b1);
-        }
-
-        public void BitmapImageInput4(Bitmap bitmap)
-        {
-            this.imageToolUseingPictureBox4.InputBitmapImage(bitmap);
+            this.PrintOrignalImage(tempPic1);
         }
     }
 }

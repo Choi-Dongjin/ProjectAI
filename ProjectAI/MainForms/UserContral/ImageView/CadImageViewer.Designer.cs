@@ -321,18 +321,18 @@ namespace ProjectAI.MainForms.UserContral.ImageView
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel5;
-        public System.Windows.Forms.PictureBox pictureBox4;
         private MetroFramework.Controls.MetroPanel metroPanel4;
-        public System.Windows.Forms.PictureBox pictureBox3;
         private MetroFramework.Controls.MetroPanel metroPanel3;
-        public System.Windows.Forms.PictureBox pictureBox2;
         private MetroFramework.Controls.MetroPanel metroPanel2;
-        public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label OriginImageLabel;
         private System.Windows.Forms.Label CADImageLabel;
         private System.Windows.Forms.Label OverlayImageLabel;
         private System.Windows.Forms.Label HeatmapImageLabel;
         private MetroFramework.Controls.MetroTrackBar TrackBar;
         private System.Windows.Forms.Label TrackbarNumber;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
