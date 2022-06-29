@@ -287,7 +287,6 @@ namespace ProjectAI.MainForms
                                 this.CADImagePath = filesPath;
                                 if (gridViewCheck) // Wizard
                                 {
-                                    int index = 0;
                                     this.CADGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                                     this.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(filesPath[0]));
 
