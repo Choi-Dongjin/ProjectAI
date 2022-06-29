@@ -428,6 +428,7 @@ namespace ProjectAI
         public MainForms.ClassEdit classEdit = new MainForms.ClassEdit();
 
         private ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
+
         #endregion ProjectMainger에 종속된 Forms 정의
 
         //=== === === === === === === === === === === === === === ===
@@ -1378,12 +1379,11 @@ namespace ProjectAI
             this.MainForm.drawToolToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.MainForm.drawToolToolStripMenuItem.Text = "DrawTool";
 
-            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] 
+            this.MainForm.drawToolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
             {
                 this.MainForm.drawToolStripMenuItem,
                 this.MainForm.rectangleToolStripMenuItem
             });
-
         }
 
         /// <summary>
@@ -2055,72 +2055,48 @@ namespace ProjectAI
                     if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "SingleImage")
                     {
                         ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.SimpleTwoImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
-                        if (imageViewer.pictureBox1.Image != null)
-                            imageViewer.pictureBox1.Image = null;
-                        imageViewer.pictureBox2.Image = null;
+                        string heatMapPath = null;
+                        string heatMapImage = null;
+                        bool heatMapImageEnable = false;
 
-                        //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
-                        imageViewer.BitmapImageInput1(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
-                        try
+                        if (this.m_avtiveModelsName != null)
                         {
-                            if (this.m_avtiveModelsName != null)
+                            if (this.m_avtiveinnerModelsName != null)
                             {
-                                if (this.m_avtiveinnerModelsName != null)
+                                try
                                 {
-                                    try
-                                    {
-                                        string heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
-                                        string heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
-                                        //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
-                                        imageViewer.BitmapImageInput2(CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage)));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Console.WriteLine(ex);
-                                        imageViewer.pictureBox2.Image = null;
-                                    }
-                                    finally
-                                    {
-                                        if (imageViewer.pictureBox2.Image != null)
-                                        {
-                                            imageViewer.splitContainer1.Panel2Collapsed = false;
-                                        }
-                                        else
-                                        {
-                                            imageViewer.splitContainer1.Panel2Collapsed = true;
-                                        }
-                                    }
+                                    heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
+                                    heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
+                                    //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
+                                    heatMapImageEnable = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex);
+                                    heatMapImageEnable = false;
                                 }
                             }
                         }
-                        catch
+
+                        // 이미지 출력
+                        if (heatMapImageEnable && heatMapPath != null && heatMapImage != null)
                         {
-                            imageViewer.pictureBox1.Image = null;
+                            if (imageViewer.splitContainer1.Panel2Collapsed)
+                                imageViewer.splitContainer1.Panel2Collapsed = false;
+                            imageViewer.OrignalImageInput(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
+                            imageViewer.HeatmapImageInput(CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage)));
                         }
+                        else
+                        {
+                            if (!imageViewer.splitContainer1.Panel2Collapsed)
+                                imageViewer.splitContainer1.Panel2Collapsed = true;
+                            imageViewer.OrignalImageInput(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
+                        }
+
                     }
                     else if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
                     {
                         ProjectAI.MainForms.UserContral.ImageView.CadImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.CadImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
-                        if (imageViewer.pictureBox1.Image != null)
-                        {
-                            imageViewer.pictureBox1.Image.Dispose();
-                            imageViewer.pictureBox1.Image = null;
-                        }
-                        if (imageViewer.pictureBox2.Image != null)
-                        {
-                            imageViewer.pictureBox2.Image.Dispose();
-                            imageViewer.pictureBox2.Image = null;
-                        }
-                        if (imageViewer.pictureBox3.Image != null)
-                        {
-                            imageViewer.pictureBox3.Image.Dispose();
-                            imageViewer.pictureBox3.Image = null;
-                        }
-                        if (imageViewer.pictureBox4.Image != null)
-                        {
-                            imageViewer.pictureBox4.Image.Dispose();
-                            imageViewer.pictureBox4.Image = null;
-                        }
 
                         //imageViewer.pictureBox1.Image = CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName));
 
@@ -2149,6 +2125,39 @@ namespace ProjectAI
                                     imageViewer.PrintCADImage(cadBitmapImage);
                                 }
                                 imageViewer.PrintOverlayImage();
+
+                                // Heatmap Image 수정
+                                try
+                                {
+                                    if (this.m_avtiveModelsName != null)
+                                    {
+                                        if (this.m_avtiveinnerModelsName != null)
+                                        {
+                                            try
+                                            {
+                                                string heatMapPath = System.IO.Path.Combine(this.m_pathActiveProjectModel, this.m_activeInnerProjectName, this.m_avtiveModelsName, "heatmap", this.m_avtiveinnerModelsName);
+                                                string heatMapImage = Array.Find(this.m_activeInnerModelsHeatMapImageList, element => element.Contains(Path.GetFileNameWithoutExtension(imageName)));
+                                                //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage));
+                                                if (heatMapImage != null)
+                                                    imageViewer.PrintHeatmapImage(CustomIOMainger.LoadBitmap(Path.Combine(heatMapPath, heatMapImage)));
+                                                else
+                                                    imageViewer.PrintHeatmapImage(null);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine(ex);
+                                                imageViewer.PrintHeatmapImage(null);
+                                            }
+                                            finally
+                                            {
+                                            }
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+                                    imageViewer.PrintHeatmapImage(null);
+                                }
                                 //if (this.CADImageFileCheck(CADImageName, CADImageFolder))
                                 //imageViewer.pictureBox2.Image = CustomIOMainger.LoadBitmap(this.m_activeProjectDataImageListDataJObject[imageName]["Labeled"][this.m_activeInnerProjectName]["CADImage"].ToString());
                             }
@@ -3393,15 +3402,11 @@ namespace ProjectAI
                     if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
                     {
                         ProjectAI.MainForms.UserContral.ImageView.CadImageViewer imageViewer = (ProjectAI.MainForms.UserContral.ImageView.CadImageViewer)this.m_imageViewDictionary[this.m_activeInnerProjectName];
-                        if (imageViewer.pictureBox1.Image != null)
-                            imageViewer.pictureBox1.Image = null;
-                        if (imageViewer.pictureBox2.Image != null)
-                            imageViewer.pictureBox2.Image = null;
 
                         string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
-                        imageViewer.BitmapImageInput1(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, cadImageSelect.imageTempName)));
-                        imageViewer.BitmapImageInput2(CustomIOMainger.LoadBitmap(Path.Combine(CADImageFolder, cadImageSelect.CADImageName[0])));
+                        imageViewer.PrintOrignalImage(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, cadImageSelect.imageTempName)));
+                        imageViewer.PrintCADImage(CustomIOMainger.LoadBitmap(Path.Combine(CADImageFolder, cadImageSelect.CADImageName[0])));
                     }
                 }
             }

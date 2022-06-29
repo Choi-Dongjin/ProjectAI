@@ -6,8 +6,8 @@ namespace ProjectAI.MainForms.UserContral.ImageView
 {
     public partial class SimpleTwoImageViewer : UserControl
     {
-        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
-        private ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
+        internal ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox1;
+        internal ProjectManiger.ImageToolUseingPictureBox imageToolUseingPictureBox2;
 
         public SimpleTwoImageViewer()
         {
@@ -38,14 +38,38 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.metroStyleManager1.Theme = styleManager.Theme;
         }
 
-        public void BitmapImageInput1(Bitmap bitmap)
+        /// <summary>
+        /// 이미지 입력
+        /// </summary>
+        /// <param name="bitmap"> 이미지 bitmap 형식 </param>
+        internal void OrignalImageInput(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox1.InputBitmapImage(bitmap);
         }
 
-        public void BitmapImageInput2(Bitmap bitmap)
+        /// <summary>
+        /// 이미지 입력
+        /// </summary>
+        /// <param name="bitmap"> 이미지 Bitmap 형식 </param>
+        internal void HeatmapImageInput(Bitmap bitmap)
         {
             this.imageToolUseingPictureBox2.InputBitmapImage(bitmap);
+        }
+
+        /// <summary>
+        /// Bitmap 이미지 상태 확인, Null = false
+        /// </summary>
+        internal bool OrignalImageState()
+        {
+            return this.imageToolUseingPictureBox1.ImgBitmapState;
+        }
+
+        /// <summary>
+        /// Bitmap 이미지 상태 확인, Null = false
+        /// </summary>
+        internal bool HeatmapImageState()
+        {
+            return this.imageToolUseingPictureBox2.ImgBitmapState;
         }
     }
 }

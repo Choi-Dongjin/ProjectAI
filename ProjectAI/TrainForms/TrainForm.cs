@@ -64,12 +64,18 @@ namespace ProjectAI.TrainForms
         /// </summary>
         private Task taskWaitingforWork;
 
+        private CancellationTokenSource taskWaitingforWorkManigerCancellation;
+        private CancellationTokenSource taskWaitingforWorkCancellation;
+
         private List<string> taskWaitingforWorkList = new List<string>();
 
         /// <summary>
         /// Processing 처리 Task
         /// </summary>
         private Task taskProcessing;
+
+        private CancellationTokenSource taskProcessingManigerCancellation;
+        private CancellationTokenSource taskProcessingCancellation;
 
         private List<string> taskProcessingList = new List<string>();
         private List<string> taskProcessingCorePaht = new List<string>();
@@ -1206,39 +1212,7 @@ namespace ProjectAI.TrainForms
                         cadImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(cadImagePath, OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
                     }
 
-                    ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]);
-
-                    //orignalImage = null;
-                    //cadImage = null;
-                    //// Orignal Image 읽어오기
-                    //try
-                    //{
-                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(imagePathList[i]);
-                    //    orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    Console.WriteLine(ex);
-                    //    orignalImage = OpenCvSharp.Cv2.ImRead(imagePathList[i], ImreadModes.AnyDepth | ImreadModes.AnyColor);
-                    //}
-
-                    //// CAD Image 읽어오기
-                    //try
-                    //{
-                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
-                    //    Bitmap bitmap = CustomIOMainger.LoadBitmap(cadImagePath);
-                    //    cadImage = OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
-                    //    Console.WriteLine(ex);
-                    //    cadImage = OpenCvSharp.Cv2.ImRead(cadImagePath, ImreadModes.AnyDepth | ImreadModes.AnyColor);
-                    //}
-
-                    //Cv2.AddWeighted(orignalImage, 0.5, cadImage, 0.5, 0, orignalImage);
-
-                    //Cv2.ImWrite(imageSetPathList[i], orignalImage);
+                    ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]); // CAD 이미지 오버레이
 
                     this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imageNameList.Count - 1) * 100)); // Progress Value 설정
                 }
