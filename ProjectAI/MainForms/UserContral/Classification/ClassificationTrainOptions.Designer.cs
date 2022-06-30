@@ -137,6 +137,7 @@
             this.dgvMContinualLearning = new MetroFramework.Controls.MetroGrid();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panelMClassWeight = new MetroFramework.Controls.MetroPanel();
+            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.lblMClassWeight = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblMInstantEvaluate = new MetroFramework.Controls.MetroLabel();
@@ -149,7 +150,6 @@
             this.metroStyleExtender1 = new MetroFramework.Components.MetroStyleExtender(this.components);
             this.metroStyleManager1 = new MetroFramework.Components.MetroStyleManager(this.components);
             this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
-            this.classWeightControl1 = new ProjectAI.MainForms.UserContral.Classification.ClassWeightControl();
             this.metroPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1788,6 +1788,25 @@
             this.panelMClassWeight.VerticalScrollbarHighlightOnWheel = false;
             this.panelMClassWeight.VerticalScrollbarSize = 10;
             // 
+            // classWeightControl1
+            // 
+            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
+            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
+            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.classWeightControl1.ClassName = "metroLabel2";
+            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
+            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
+            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.classWeightControl1.Name = "classWeightControl1";
+            this.classWeightControl1.Number = 1;
+            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
+            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
+            this.classWeightControl1.TabIndex = 2;
+            this.classWeightControl1.Weight = 100;
+            // 
             // lblMClassWeight
             // 
             this.lblMClassWeight.AutoSize = true;
@@ -1925,25 +1944,6 @@
             this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroToolTip1.StyleManager = null;
             this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // classWeightControl1
-            // 
-            this.metroStyleExtender1.SetApplyMetroTheme(this.classWeightControl1, true);
-            this.classWeightControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.classWeightControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("classWeightControl1.BackgroundImage")));
-            this.classWeightControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.classWeightControl1.ClassName = "metroLabel2";
-            this.classWeightControl1.ClassNameColor = System.Drawing.SystemColors.ControlText;
-            this.classWeightControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classWeightControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.classWeightControl1.Location = new System.Drawing.Point(5, 0);
-            this.classWeightControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.classWeightControl1.Name = "classWeightControl1";
-            this.classWeightControl1.Number = 1;
-            this.classWeightControl1.Padding = new System.Windows.Forms.Padding(6);
-            this.classWeightControl1.Size = new System.Drawing.Size(445, 36);
-            this.classWeightControl1.TabIndex = 2;
-            this.classWeightControl1.Weight = 100;
             // 
             // ClassificationTrainOptions
             // 

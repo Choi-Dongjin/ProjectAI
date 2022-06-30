@@ -97,7 +97,10 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvMWaitingforWork = new MetroFramework.Controls.MetroGrid();
             this.btnMStartProcessing = new MetroFramework.Controls.MetroButton();
-            this.metroButton3 = new MetroFramework.Controls.MetroButton();
+            this.btnMWaitingAllStop = new MetroFramework.Controls.MetroButton();
+            this.btnMStopProcessing = new MetroFramework.Controls.MetroButton();
+            this.btnMWaitingStop = new MetroFramework.Controls.MetroButton();
+            this.btnMWaitingStart = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -183,7 +186,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1061, 802);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1082, 1041);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panelMProcess
@@ -197,7 +200,7 @@
             this.panelMProcess.Margin = new System.Windows.Forms.Padding(0);
             this.panelMProcess.Name = "panelMProcess";
             this.panelMProcess.Padding = new System.Windows.Forms.Padding(10, 20, 0, 10);
-            this.panelMProcess.Size = new System.Drawing.Size(561, 802);
+            this.panelMProcess.Size = new System.Drawing.Size(582, 1041);
             this.panelMProcess.TabIndex = 1;
             this.panelMProcess.VerticalScrollbarBarColor = true;
             this.panelMProcess.VerticalScrollbarHighlightOnWheel = false;
@@ -212,7 +215,7 @@
             this.tclMProcess.Location = new System.Drawing.Point(10, 20);
             this.tclMProcess.Name = "tclMProcess";
             this.tclMProcess.SelectedIndex = 0;
-            this.tclMProcess.Size = new System.Drawing.Size(551, 772);
+            this.tclMProcess.Size = new System.Drawing.Size(572, 1011);
             this.tclMProcess.TabIndex = 2;
             this.tclMProcess.UseSelectable = true;
             // 
@@ -240,7 +243,7 @@
             this.tclpMProcessActive.Name = "tclpMProcessActive";
             this.tclpMProcessActive.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.tclpMProcessActive.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tclpMProcessActive.Size = new System.Drawing.Size(543, 730);
+            this.tclpMProcessActive.Size = new System.Drawing.Size(564, 969);
             this.tclpMProcessActive.TabIndex = 0;
             this.tclpMProcessActive.Text = "Processing ( 0 )";
             this.tclpMProcessActive.VerticalScrollbar = true;
@@ -256,7 +259,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(0, 865);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(533, 89);
+            this.richTextBox1.Size = new System.Drawing.Size(554, 89);
             this.richTextBox1.TabIndex = 30;
             this.richTextBox1.Text = "";
             // 
@@ -315,7 +318,7 @@
             this.chartProcessingAccuracy.Series.Add(series2);
             this.chartProcessingAccuracy.Series.Add(series3);
             this.chartProcessingAccuracy.Series.Add(series4);
-            this.chartProcessingAccuracy.Size = new System.Drawing.Size(533, 190);
+            this.chartProcessingAccuracy.Size = new System.Drawing.Size(554, 190);
             this.chartProcessingAccuracy.SuppressExceptions = true;
             this.chartProcessingAccuracy.TabIndex = 28;
             this.chartProcessingAccuracy.Text = "chart1";
@@ -376,7 +379,7 @@
             this.chartProcessingLoss.Series.Add(series6);
             this.chartProcessingLoss.Series.Add(series7);
             this.chartProcessingLoss.Series.Add(series8);
-            this.chartProcessingLoss.Size = new System.Drawing.Size(533, 190);
+            this.chartProcessingLoss.Size = new System.Drawing.Size(554, 190);
             this.chartProcessingLoss.SuppressExceptions = true;
             this.chartProcessingLoss.TabIndex = 26;
             this.chartProcessingLoss.Text = "chartLoss";
@@ -405,7 +408,7 @@
             this.metroPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel2.Name = "metroPanel2";
             this.metroPanel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.metroPanel2.Size = new System.Drawing.Size(533, 180);
+            this.metroPanel2.Size = new System.Drawing.Size(554, 180);
             this.metroPanel2.TabIndex = 21;
             this.metroPanel2.VerticalScrollbarBarColor = true;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
@@ -414,13 +417,19 @@
             // tableLayoutPanel3
             // 
             this.metroStyleExtender1.SetApplyMetroTheme(this.tableLayoutPanel3, true);
-            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnCount = 6;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel3.Controls.Add(this.dgvMWaitingforWork, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnMStartProcessing, 2, 1);
-            this.tableLayoutPanel3.Controls.Add(this.metroButton3, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnMWaitingStart, 5, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnMStopProcessing, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnMWaitingStop, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnMStartProcessing, 4, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnMWaitingAllStop, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -428,8 +437,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(533, 170);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(554, 170);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // dgvMWaitingforWork
@@ -450,7 +458,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMWaitingforWork.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMWaitingforWork.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableLayoutPanel3.SetColumnSpan(this.dgvMWaitingforWork, 3);
+            this.tableLayoutPanel3.SetColumnSpan(this.dgvMWaitingforWork, 6);
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -480,7 +488,7 @@
             this.dgvMWaitingforWork.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMWaitingforWork.RowTemplate.Height = 23;
             this.dgvMWaitingforWork.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMWaitingforWork.Size = new System.Drawing.Size(533, 135);
+            this.dgvMWaitingforWork.Size = new System.Drawing.Size(554, 135);
             this.dgvMWaitingforWork.TabIndex = 0;
             this.dgvMWaitingforWork.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMWaitingforWorkCellMouseDoubleClick);
             this.dgvMWaitingforWork.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DgvMWaitingforWorkRowsAdded);
@@ -488,7 +496,7 @@
             // btnMStartProcessing
             // 
             this.btnMStartProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMStartProcessing.Location = new System.Drawing.Point(434, 138);
+            this.btnMStartProcessing.Location = new System.Drawing.Point(353, 138);
             this.btnMStartProcessing.Name = "btnMStartProcessing";
             this.btnMStartProcessing.Size = new System.Drawing.Size(96, 29);
             this.btnMStartProcessing.TabIndex = 2;
@@ -497,18 +505,50 @@
             this.btnMStartProcessing.UseSelectable = true;
             this.btnMStartProcessing.Click += new System.EventHandler(this.BtnMStartProcessingClick);
             // 
-            // metroButton3
+            // btnMWaitingAllStop
             // 
-            this.metroButton3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroButton3.Location = new System.Drawing.Point(332, 138);
-            this.metroButton3.Name = "metroButton3";
-            this.metroButton3.Size = new System.Drawing.Size(96, 29);
-            this.metroButton3.TabIndex = 3;
-            this.metroButton3.Text = "Stop Register";
-            this.metroToolTip1.SetToolTip(this.metroButton3, "Stop Processing Register");
-            this.metroButton3.UseSelectable = true;
-            this.metroButton3.Visible = false;
-            this.metroButton3.Click += new System.EventHandler(this.MetroButton3Click);
+            this.btnMWaitingAllStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMWaitingAllStop.Location = new System.Drawing.Point(149, 138);
+            this.btnMWaitingAllStop.Name = "btnMWaitingAllStop";
+            this.btnMWaitingAllStop.Size = new System.Drawing.Size(96, 29);
+            this.btnMWaitingAllStop.TabIndex = 5;
+            this.btnMWaitingAllStop.Text = "All Stop";
+            this.btnMWaitingAllStop.UseSelectable = true;
+            this.btnMWaitingAllStop.Click += new System.EventHandler(this.BtnMWaitingAllStopClick);
+            // 
+            // btnMStopProcessing
+            // 
+            this.btnMStopProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMStopProcessing.Location = new System.Drawing.Point(251, 138);
+            this.btnMStopProcessing.Name = "btnMStopProcessing";
+            this.btnMStopProcessing.Size = new System.Drawing.Size(96, 29);
+            this.btnMStopProcessing.TabIndex = 3;
+            this.btnMStopProcessing.Text = "Stop Register";
+            this.metroToolTip1.SetToolTip(this.btnMStopProcessing, "Stop Processing Register");
+            this.btnMStopProcessing.UseSelectable = true;
+            this.btnMStopProcessing.Click += new System.EventHandler(this.BtnMStopProcessingClick);
+            // 
+            // btnMWaitingStop
+            // 
+            this.btnMWaitingStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMWaitingStop.Location = new System.Drawing.Point(47, 138);
+            this.btnMWaitingStop.Name = "btnMWaitingStop";
+            this.btnMWaitingStop.Size = new System.Drawing.Size(96, 29);
+            this.btnMWaitingStop.TabIndex = 4;
+            this.btnMWaitingStop.Text = "Stop";
+            this.btnMWaitingStop.UseSelectable = true;
+            this.btnMWaitingStop.Click += new System.EventHandler(this.BtnMWaitingStopClick);
+            // 
+            // btnMWaitingStart
+            // 
+            this.btnMWaitingStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMWaitingStart.Location = new System.Drawing.Point(455, 138);
+            this.btnMWaitingStart.Name = "btnMWaitingStart";
+            this.btnMWaitingStart.Size = new System.Drawing.Size(96, 29);
+            this.btnMWaitingStart.TabIndex = 6;
+            this.btnMWaitingStart.Text = "Menual Start";
+            this.btnMWaitingStart.UseSelectable = true;
+            this.btnMWaitingStart.Click += new System.EventHandler(this.BtnMWaitingStartClick);
             // 
             // metroLabel1
             // 
@@ -534,7 +574,7 @@
             this.metroPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel3.Name = "metroPanel3";
             this.metroPanel3.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.metroPanel3.Size = new System.Drawing.Size(533, 180);
+            this.metroPanel3.Size = new System.Drawing.Size(554, 180);
             this.metroPanel3.TabIndex = 19;
             this.metroPanel3.VerticalScrollbarBarColor = true;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
@@ -558,7 +598,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(533, 170);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(554, 170);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // dgvMProcessing
@@ -609,7 +649,7 @@
             this.dgvMProcessing.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMProcessing.RowTemplate.Height = 23;
             this.dgvMProcessing.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMProcessing.Size = new System.Drawing.Size(533, 135);
+            this.dgvMProcessing.Size = new System.Drawing.Size(554, 135);
             this.dgvMProcessing.TabIndex = 0;
             this.dgvMProcessing.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMProcessingCellMouseDoubleClick);
             this.dgvMProcessing.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DgvMProcessingRowsAdded);
@@ -617,19 +657,18 @@
             // btnMProcessStop
             // 
             this.btnMProcessStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMProcessStop.Location = new System.Drawing.Point(332, 138);
+            this.btnMProcessStop.Location = new System.Drawing.Point(353, 138);
             this.btnMProcessStop.Name = "btnMProcessStop";
             this.btnMProcessStop.Size = new System.Drawing.Size(96, 29);
             this.btnMProcessStop.TabIndex = 1;
             this.btnMProcessStop.Text = "Stop";
             this.btnMProcessStop.UseSelectable = true;
-            this.btnMProcessStop.Visible = false;
             this.btnMProcessStop.Click += new System.EventHandler(this.BtnMProcessStopClick);
             // 
             // btnMProcessAllStop
             // 
             this.btnMProcessAllStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMProcessAllStop.Location = new System.Drawing.Point(434, 138);
+            this.btnMProcessAllStop.Location = new System.Drawing.Point(455, 138);
             this.btnMProcessAllStop.Name = "btnMProcessAllStop";
             this.btnMProcessAllStop.Size = new System.Drawing.Size(96, 29);
             this.btnMProcessAllStop.TabIndex = 2;
@@ -668,7 +707,7 @@
             this.tclpMProcessDone.Margin = new System.Windows.Forms.Padding(0);
             this.tclpMProcessDone.Name = "tclpMProcessDone";
             this.tclpMProcessDone.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.tclpMProcessDone.Size = new System.Drawing.Size(543, 730);
+            this.tclpMProcessDone.Size = new System.Drawing.Size(564, 969);
             this.tclpMProcessDone.TabIndex = 1;
             this.tclpMProcessDone.Text = "Done ( 0 )";
             this.tclpMProcessDone.VerticalScrollbar = true;
@@ -718,7 +757,7 @@
             this.chartDoneAccuracy.Series.Add(series10);
             this.chartDoneAccuracy.Series.Add(series11);
             this.chartDoneAccuracy.Series.Add(series12);
-            this.chartDoneAccuracy.Size = new System.Drawing.Size(533, 190);
+            this.chartDoneAccuracy.Size = new System.Drawing.Size(554, 190);
             this.chartDoneAccuracy.SuppressExceptions = true;
             this.chartDoneAccuracy.TabIndex = 32;
             this.chartDoneAccuracy.Text = "chart1";
@@ -778,7 +817,7 @@
             this.chartDoneLoss.Series.Add(series14);
             this.chartDoneLoss.Series.Add(series15);
             this.chartDoneLoss.Series.Add(series16);
-            this.chartDoneLoss.Size = new System.Drawing.Size(533, 190);
+            this.chartDoneLoss.Size = new System.Drawing.Size(554, 190);
             this.chartDoneLoss.SuppressExceptions = true;
             this.chartDoneLoss.TabIndex = 30;
             this.chartDoneLoss.Text = "chartLoss";
@@ -807,7 +846,7 @@
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.metroPanel1.Size = new System.Drawing.Size(533, 250);
+            this.metroPanel1.Size = new System.Drawing.Size(554, 250);
             this.metroPanel1.TabIndex = 22;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
@@ -830,7 +869,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(533, 240);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(554, 240);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // dgvMDoneWork
@@ -880,7 +919,7 @@
             this.dgvMDoneWork.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMDoneWork.RowTemplate.Height = 23;
             this.dgvMDoneWork.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMDoneWork.Size = new System.Drawing.Size(533, 205);
+            this.dgvMDoneWork.Size = new System.Drawing.Size(554, 205);
             this.dgvMDoneWork.TabIndex = 0;
             this.dgvMDoneWork.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMDoneWorkCellMouseDoubleClick);
             this.dgvMDoneWork.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DgvMDoneWorkRowsAdded);
@@ -888,7 +927,7 @@
             // metroButton1
             // 
             this.metroButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroButton1.Location = new System.Drawing.Point(434, 208);
+            this.metroButton1.Location = new System.Drawing.Point(455, 208);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(96, 29);
             this.metroButton1.TabIndex = 2;
@@ -930,7 +969,7 @@
             this.tclpModelView.Margin = new System.Windows.Forms.Padding(0);
             this.tclpModelView.Name = "tclpModelView";
             this.tclpModelView.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.tclpModelView.Size = new System.Drawing.Size(543, 730);
+            this.tclpModelView.Size = new System.Drawing.Size(564, 969);
             this.tclpModelView.TabIndex = 2;
             this.tclpModelView.Text = "Model View";
             this.tclpModelView.VerticalScrollbar = true;
@@ -994,7 +1033,7 @@
             this.chartViewAccuracy.Series.Add(series18);
             this.chartViewAccuracy.Series.Add(series19);
             this.chartViewAccuracy.Series.Add(series20);
-            this.chartViewAccuracy.Size = new System.Drawing.Size(533, 190);
+            this.chartViewAccuracy.Size = new System.Drawing.Size(554, 190);
             this.chartViewAccuracy.SuppressExceptions = true;
             this.chartViewAccuracy.TabIndex = 50;
             this.chartViewAccuracy.Text = "chart3";
@@ -1056,7 +1095,7 @@
             this.chartViewLoss.Series.Add(series22);
             this.chartViewLoss.Series.Add(series23);
             this.chartViewLoss.Series.Add(series24);
-            this.chartViewLoss.Size = new System.Drawing.Size(533, 190);
+            this.chartViewLoss.Size = new System.Drawing.Size(554, 190);
             this.chartViewLoss.SuppressExceptions = true;
             this.chartViewLoss.TabIndex = 48;
             this.chartViewLoss.Text = "chartLoss";
@@ -1085,7 +1124,7 @@
             this.metroPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel5.Name = "metroPanel5";
             this.metroPanel5.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.metroPanel5.Size = new System.Drawing.Size(533, 140);
+            this.metroPanel5.Size = new System.Drawing.Size(554, 140);
             this.metroPanel5.TabIndex = 44;
             this.metroPanel5.VerticalScrollbarBarColor = true;
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
@@ -1106,7 +1145,7 @@
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(533, 130);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(554, 130);
             this.tableLayoutPanel6.TabIndex = 2;
             // 
             // dgvMmodelsEpoch
@@ -1158,7 +1197,7 @@
             this.dgvMmodelsEpoch.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMmodelsEpoch.RowTemplate.Height = 23;
             this.dgvMmodelsEpoch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMmodelsEpoch.Size = new System.Drawing.Size(533, 130);
+            this.dgvMmodelsEpoch.Size = new System.Drawing.Size(554, 130);
             this.dgvMmodelsEpoch.TabIndex = 0;
             this.dgvMmodelsEpoch.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMmodelsEpochCellMouseDoubleClick);
             this.dgvMmodelsEpoch.SelectionChanged += new System.EventHandler(this.DgvMmodelsEpochSelectionChanged);
@@ -1203,7 +1242,7 @@
             this.metroPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel4.Name = "metroPanel4";
             this.metroPanel4.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.metroPanel4.Size = new System.Drawing.Size(533, 140);
+            this.metroPanel4.Size = new System.Drawing.Size(554, 140);
             this.metroPanel4.TabIndex = 23;
             this.metroPanel4.VerticalScrollbarBarColor = true;
             this.metroPanel4.VerticalScrollbarHighlightOnWheel = false;
@@ -1224,7 +1263,7 @@
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(533, 130);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(554, 130);
             this.tableLayoutPanel5.TabIndex = 2;
             // 
             // dgvMmodelsVersion
@@ -1276,7 +1315,7 @@
             this.dgvMmodelsVersion.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvMmodelsVersion.RowTemplate.Height = 23;
             this.dgvMmodelsVersion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMmodelsVersion.Size = new System.Drawing.Size(533, 130);
+            this.dgvMmodelsVersion.Size = new System.Drawing.Size(554, 130);
             this.dgvMmodelsVersion.TabIndex = 0;
             this.dgvMmodelsVersion.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMmodelsVersionCellMouseDoubleClick);
             this.dgvMmodelsVersion.SelectionChanged += new System.EventHandler(this.DgvMmodelsVersionSelectionChanged);
@@ -1303,7 +1342,7 @@
             this.panelMTrainOption.Location = new System.Drawing.Point(0, 0);
             this.panelMTrainOption.Margin = new System.Windows.Forms.Padding(0);
             this.panelMTrainOption.Name = "panelMTrainOption";
-            this.panelMTrainOption.Size = new System.Drawing.Size(500, 802);
+            this.panelMTrainOption.Size = new System.Drawing.Size(500, 1041);
             this.panelMTrainOption.TabIndex = 0;
             this.panelMTrainOption.VerticalScrollbarBarColor = true;
             this.panelMTrainOption.VerticalScrollbarHighlightOnWheel = false;
@@ -1320,7 +1359,7 @@
             this.metroStyleExtender1.SetApplyMetroTheme(this, true);
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1061, 802);
+            this.ClientSize = new System.Drawing.Size(1082, 1041);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TrainForm";
@@ -1396,7 +1435,7 @@
         private MetroFramework.Controls.MetroButton metroButton1;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private MetroFramework.Controls.MetroButton metroButton3;
+        private MetroFramework.Controls.MetroButton btnMStopProcessing;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDoneAccuracy;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDoneLoss;
@@ -1419,5 +1458,8 @@
         private System.Windows.Forms.ToolStripMenuItem modelOutputToolStripMenuItem;
         private MetroFramework.Components.MetroToolTip metroToolTip1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private MetroFramework.Controls.MetroButton btnMWaitingAllStop;
+        private MetroFramework.Controls.MetroButton btnMWaitingStop;
+        private MetroFramework.Controls.MetroButton btnMWaitingStart;
     }
 }

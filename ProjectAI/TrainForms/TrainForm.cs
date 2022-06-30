@@ -1,21 +1,15 @@
-﻿using System;
+﻿using MetroFramework.Components;
+using MetroFramework.Forms;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Forms;
 
 namespace ProjectAI.TrainForms
 {
@@ -49,14 +43,17 @@ namespace ProjectAI.TrainForms
         /// <summary>
         /// Idel Train Options
         /// </summary>
-        private ProjectAI.CustomComponent.MainForms.Idle.IdelTrainOptions IdelTrainOptions = new CustomComponent.MainForms.Idle.IdelTrainOptions();
+        private ProjectAI.CustomComponent.MainForms.Idle.IdelTrainOptions IdelTrainOptions
+            = new CustomComponent.MainForms.Idle.IdelTrainOptions();
 
-        private ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions ClassificationTrainOptions = new CustomComponent.MainForms.Classification.ClassificationTrainOptions();
+        private ProjectAI.CustomComponent.MainForms.Classification.ClassificationTrainOptions ClassificationTrainOptions
+            = new CustomComponent.MainForms.Classification.ClassificationTrainOptions();
 
         /// <summary>
         /// 학습 프로세스 ProgressBar 관리 Dictionary: Key -> 실행중인 Processing Number
         /// </summary>
-        private Dictionary<string, ProjectAI.CustomComponent.DataGridViewProgressColumn> trainProcessProgressBar = new Dictionary<string, ProjectAI.CustomComponent.DataGridViewProgressColumn>();
+        private Dictionary<string, ProjectAI.CustomComponent.DataGridViewProgressColumn> trainProcessProgressBar
+            = new Dictionary<string, ProjectAI.CustomComponent.DataGridViewProgressColumn>();
 
         // process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
         /// <summary>
@@ -64,8 +61,8 @@ namespace ProjectAI.TrainForms
         /// </summary>
         private Task taskWaitingforWork;
 
-        private CancellationTokenSource taskWaitingforWorkManigerCancellation;
-        private CancellationTokenSource taskWaitingforWorkCancellation;
+        internal CancellationTokenSource taskWaitingforWorkManigerCancellation;
+        internal CancellationTokenSource taskWaitingforWorkCancellation;
 
         private List<string> taskWaitingforWorkList = new List<string>();
 
@@ -74,8 +71,8 @@ namespace ProjectAI.TrainForms
         /// </summary>
         private Task taskProcessing;
 
-        private CancellationTokenSource taskProcessingManigerCancellation;
-        private CancellationTokenSource taskProcessingCancellation;
+        internal CancellationTokenSource taskProcessingManigerCancellation;
+        internal CancellationTokenSource taskProcessingCancellation;
 
         private List<string> taskProcessingList = new List<string>();
         private List<string> taskProcessingCorePaht = new List<string>();
@@ -119,11 +116,59 @@ namespace ProjectAI.TrainForms
             this.panelMTrainOption.Controls.Add(this.IdelTrainOptions); // UI Idel Form에 적용
 
             this.UISetDataGridView();
-            this.ReadDataandUpdateDataGridView(); // 데이터 읽고 컨트롤에 추가하기
 
             this.trainFormF1Start = true; // Train Forms 처음 동작 확인 dgvMWaitingforWork -> 처음 추가 동작 제어
 
             this.UISetUPClassificationTrainOptionsDgvMContinualLearningColumns(); // ClassificationTrainOptions UI Setup
+        }
+
+        private void TrainFormLoad(object sender, EventArgs e)
+        {
+            // 차트 색 수정
+            // 차트 스타일 변경
+            FormsManiger.ChartWhiteMode(this.chartProcessingLoss);
+            FormsManiger.ChartWhiteMode(this.chartProcessingAccuracy);
+            FormsManiger.ChartWhiteMode(this.chartDoneLoss);
+            FormsManiger.ChartWhiteMode(this.chartDoneAccuracy);
+            FormsManiger.ChartWhiteMode(this.chartViewLoss);
+            FormsManiger.ChartWhiteMode(this.chartViewAccuracy);
+
+            // 차트 BorderWidth 수정
+            this.chartProcessingLoss.Series["Train"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["Test"].BorderWidth = 2;
+            this.chartProcessingLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartProcessingLoss.Series["selectModelDataTest"].BorderWidth = 4;
+
+            this.chartProcessingAccuracy.Series["Train"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartProcessingAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartProcessingAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
+
+            this.chartDoneLoss.Series["Train"].BorderWidth = 2;
+            this.chartDoneLoss.Series["Test"].BorderWidth = 2;
+            this.chartDoneLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartDoneLoss.Series["selectModelDataTest"].BorderWidth = 4;
+
+            this.chartDoneAccuracy.Series["Train"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartDoneAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartDoneAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
+
+            this.chartViewLoss.Series["Train"].BorderWidth = 2;
+            this.chartViewLoss.Series["Test"].BorderWidth = 2;
+            this.chartViewLoss.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartViewLoss.Series["selectModelDataTest"].BorderWidth = 4;
+
+            this.chartViewAccuracy.Series["Train"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["Test"].BorderWidth = 2;
+            this.chartViewAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
+            this.chartViewAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
+        }
+
+        private void TrainFormShown(object sender, EventArgs e)
+        {
+            //MetroTaskWindow.ShowTaskWindow(this, "Custom MessageBox", new ProjectAI.TrainForms.UserContral.CustomMessageBox(), 10);
+            this.ReadDataandUpdateDataGridView(); // 데이터 읽고 컨트롤에 추가하기
         }
 
         public void UpdataFormStyleManager(MetroStyleManager styleManager)
@@ -725,54 +770,6 @@ namespace ProjectAI.TrainForms
             }
         }
 
-        private void TrainFormLoad(object sender, EventArgs e)
-        {
-            // 차트 색 수정
-            // 차트 스타일 변경
-            FormsManiger.ChartWhiteMode(this.chartProcessingLoss);
-            FormsManiger.ChartWhiteMode(this.chartProcessingAccuracy);
-            FormsManiger.ChartWhiteMode(this.chartDoneLoss);
-            FormsManiger.ChartWhiteMode(this.chartDoneAccuracy);
-            FormsManiger.ChartWhiteMode(this.chartViewLoss);
-            FormsManiger.ChartWhiteMode(this.chartViewAccuracy);
-
-            // 차트 BorderWidth 수정
-            this.chartProcessingLoss.Series["Train"].BorderWidth = 2;
-            this.chartProcessingLoss.Series["Test"].BorderWidth = 2;
-            this.chartProcessingLoss.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartProcessingLoss.Series["selectModelDataTest"].BorderWidth = 4;
-
-            this.chartProcessingAccuracy.Series["Train"].BorderWidth = 2;
-            this.chartProcessingAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartProcessingAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartProcessingAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
-
-            this.chartDoneLoss.Series["Train"].BorderWidth = 2;
-            this.chartDoneLoss.Series["Test"].BorderWidth = 2;
-            this.chartDoneLoss.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartDoneLoss.Series["selectModelDataTest"].BorderWidth = 4;
-
-            this.chartDoneAccuracy.Series["Train"].BorderWidth = 2;
-            this.chartDoneAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartDoneAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartDoneAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
-
-            this.chartViewLoss.Series["Train"].BorderWidth = 2;
-            this.chartViewLoss.Series["Test"].BorderWidth = 2;
-            this.chartViewLoss.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartViewLoss.Series["selectModelDataTest"].BorderWidth = 4;
-
-            this.chartViewAccuracy.Series["Train"].BorderWidth = 2;
-            this.chartViewAccuracy.Series["Test"].BorderWidth = 2;
-            this.chartViewAccuracy.Series["selectModelDataTrain"].BorderWidth = 4;
-            this.chartViewAccuracy.Series["selectModelDataTest"].BorderWidth = 4;
-        }
-
-        private void TrainFormShown(object sender, EventArgs e)
-        {
-            MetroTaskWindow.ShowTaskWindow(this, "Custom MessageBox", new ProjectAI.TrainForms.UserContral.CustomMessageBox(), 10);
-        }
-
         /// <summary>
         /// 데이터 읽어오고 Json 데이터에 문제가 있으면 초기화
         /// </summary>
@@ -1044,7 +1041,7 @@ namespace ProjectAI.TrainForms
             finally { }
         }
 
-        private void ActiveProcessWaitingforWork(JObject processInfo)
+        private void ActiveProcessWaitingforWork(JObject processInfo, CancellationToken cancellationToken)
         {
             // 파일 Copy List 만들기
             /* processInfo
@@ -1063,52 +1060,96 @@ namespace ProjectAI.TrainForms
             string processJsonPath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "TrainSystem.Json");
             JObject processJObject = jsonDataManiger.GetJsonObjectShare(processJsonPath);
 
-            string processSetImagePath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "Image");
+            string processStep = processJObject["TrainProcessInfo"]["string_processStep"].ToString();
 
-            // 학습에 사용되는 이미지 리스트 만들기
-            List<string> imageNameList = new List<string>();
-            List<string> imagePathList = new List<string>();
-            List<string> imageSetPathList = new List<string>();
-
-            // Count
-            int progressValueMaxNumber = processJObject["ImageListData"].Count();
-            int progressValueCountNumber = 0;
-            this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), 0); // Progress Value 설정
-            //
-            List<string> classNames = new List<string>();
-
-            foreach (JProperty imageInfo in processJObject["ImageListData"])
+            // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
+            if (processStep != "EndPreprocess")
             {
-                if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"] != null)
+                string processSetImagePath = System.IO.Path.Combine(processInfo["string_processPath"].ToString(), "Image");
+
+                // 학습에 사용되는 이미지 리스트 만들기
+                List<string> imageNameList = new List<string>();
+                List<string> imagePathList = new List<string>();
+                List<string> imageSetPathList = new List<string>();
+
+                // Count
+                int progressValueMaxNumber = processJObject["ImageListData"].Count();
+                int progressValueCountNumber = 0;
+                this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), 0); // Progress Value 설정
+                                                                                                                                                     //
+                List<string> classNames = new List<string>();
+
+                foreach (JProperty imageInfo in processJObject["ImageListData"])
                 {
-                    if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"].ToString(), out bool trainActivate))
+                    // 정지 확인
+                    if (cancellationToken.IsCancellationRequested)
                     {
-                        if (trainActivate)
-                            if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
-                            {
-                                // 이미지 Class 가져오기
-                                string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
-
-                                // 이미지 이름 추가
-                                imageNameList.Add(imageInfo.Name);
-
-                                // 이미지 위치 추가
-                                imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
-
-                                // Set Image 위치 폴더 있는지 확인
-                                if (CustomIOMainger.DirChackCreateName(imageClass))
-                                    CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass));
-                                else
-                                    break;
-                                //이미지 Set Path 추가
-                                imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass,
-                                    System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
-
-                                // class 관리 List에 추가
-                                classNames.Add(imageClass);
-                            }
+                        lock (this.taskWaitingforWorkList)
+                        {
+                            this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
+                        }
+                        return;
                     }
-                    if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
+
+                    if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"] != null)
+                    {
+                        if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Train"].ToString(), out bool trainActivate))
+                        {
+                            if (trainActivate)
+                                if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
+                                {
+                                    // 이미지 Class 가져오기
+                                    string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
+
+                                    // 이미지 이름 추가
+                                    imageNameList.Add(imageInfo.Name);
+
+                                    // 이미지 위치 추가
+                                    imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
+
+                                    // Set Image 위치 폴더 있는지 확인
+                                    if (CustomIOMainger.DirChackCreateName(imageClass))
+                                        CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass));
+                                    else
+                                        break;
+                                    //이미지 Set Path 추가
+                                    imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Train", imageClass,
+                                        System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
+
+                                    // class 관리 List에 추가
+                                    classNames.Add(imageClass);
+                                }
+                        }
+                        if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
+                        {
+                            if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"].ToString(), out bool testActivate))
+                                if (testActivate)
+                                    if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
+                                    {
+                                        // 이미지 Class 가져오기
+                                        string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
+
+                                        // 이미지 이름 추가
+                                        imageNameList.Add(imageInfo.Name);
+
+                                        // 이미지 위치 추가
+                                        imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
+
+                                        // Set Image 위치 폴더 있는지 확인
+                                        if (CustomIOMainger.DirChackCreateName(imageClass))
+                                            CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass));
+                                        else
+                                            break;
+                                        //이미지 Set Path 추가
+                                        imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
+                                            System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
+
+                                        // class 관리 List에 추가
+                                        classNames.Add(imageClass);
+                                    }
+                        }
+                    }
+                    else if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
                     {
                         if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"].ToString(), out bool testActivate))
                             if (testActivate)
@@ -1136,130 +1177,122 @@ namespace ProjectAI.TrainForms
                                     classNames.Add(imageClass);
                                 }
                     }
+                    progressValueCountNumber++;
+                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)progressValueCountNumber / (double)progressValueMaxNumber * 100)); // Progress Value 설정
                 }
-                else if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"] != null)
+
+                if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("SingleImage"))
                 {
-                    if (Boolean.TryParse(processJObject["ImageListData"][imageInfo.Name]["Labeled"]["bool_Test"].ToString(), out bool testActivate))
-                        if (testActivate)
-                            if (processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"] != null)
+                    // 파일 Copy
+                    for (int i = 0; i < imageNameList.Count; i++)
+                    {
+                        // 정지 확인
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            lock (this.taskWaitingforWorkList)
                             {
-                                // 이미지 Class 가져오기
-                                string imageClass = processJObject["ImageListData"][imageInfo.Name]["Labeled"]["string_Label"].ToString();
-
-                                // 이미지 이름 추가
-                                imageNameList.Add(imageInfo.Name);
-
-                                // 이미지 위치 추가
-                                imagePathList.Add(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString());
-
-                                // Set Image 위치 폴더 있는지 확인
-                                if (CustomIOMainger.DirChackCreateName(imageClass))
-                                    CustomIOMainger.DirChackExistsAndCreate(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass));
-                                else
-                                    break;
-                                //이미지 Set Path 추가
-                                imageSetPathList.Add(System.IO.Path.Combine(processJObject["TrainProcessInfo"]["string_processPath"].ToString(), "ImageData", "Test", imageClass,
-                                    System.IO.Path.GetFileName(processJObject["ImageListData"][imageInfo.Name]["string_ImagePath"].ToString())));
-
-                                // class 관리 List에 추가
-                                classNames.Add(imageClass);
+                                this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
                             }
-                }
-                progressValueCountNumber++;
-                this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)progressValueCountNumber / (double)progressValueMaxNumber * 100)); // Progress Value 설정
-            }
+                            return;
+                        }
 
-            if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("SingleImage"))
-            {
-                // 파일 Copy
-                for (int i = 0; i < imageNameList.Count; i++)
+                        System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
+                        this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
+                    }
+                }
+                else if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("CADImage"))
                 {
-                    System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
-                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
-                }
-            }
-            else if (processJObject["TrainProcessInfo"]["string_processImageType"].ToString().Equals("CADImage"))
-            {
-                Bitmap orignalImage;
-                Bitmap cadImage;
+                    Bitmap orignalImage;
+                    Bitmap cadImage;
 
-                //Overlay된 파일을 생성
-                for (int i = 0; i < imageNameList.Count; i++)
+                    //Overlay된 파일을 생성
+                    for (int i = 0; i < imageNameList.Count; i++)
+                    {
+                        // 정지 확인
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            lock (this.taskWaitingforWorkList)
+                            {
+                                this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
+                            }
+                            return;
+                        }
+
+                        orignalImage = null;
+                        cadImage = null;
+
+                        try
+                        {
+                            orignalImage = CustomIOMainger.LoadBitmap(imagePathList[i]);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                            orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(imagePathList[i], OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
+                        }
+
+                        // CAD Image 읽어오기
+                        try
+                        {
+                            string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                            cadImage = CustomIOMainger.LoadBitmap(cadImagePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
+                            Console.WriteLine(ex);
+                            cadImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(cadImagePath, OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
+                        }
+
+                        ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]); // CAD 이미지 오버레이
+
+                        this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imageNameList.Count - 1) * 100)); // Progress Value 설정
+                    }
+                }
+                // DataGridView WaitingforWork 값 수정
+                this.SafeDataGridViewProcessStep(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), "EndPreprocess");
+
+                // Json Class Info 값 추가
+                JArray classList = new JArray();
+                var disClassNames = classNames.Distinct();
+                classNames = new List<string>();
+                foreach (var i in disClassNames)
+                    classNames.Add(i.ToString());
+
+                classNames.Sort((a, b) => a.CompareTo(b)); // Class 이름 정렬
+                classList = JArray.FromObject(classNames);
+                JObject trainProcessInfo = (JObject)processJObject["TrainProcessInfo"];
+                trainProcessInfo["string_array_classList"] = classList; // Class 이름 넣기
+
+                // Json 파일 저장
+                processJObject["TrainProcessInfo"]["string_processStep"] = "EndPreprocess";
+                jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
+                Thread.Sleep(300);
+
+                /* processInfo
+                "string_processModel": "Classification",
+                "string_processTask": "Classification",
+                "string_processName": "Sc3Qr",
+                "string_processTrainTest": "Train",
+                "string_processImageType": "SingleImage",
+                "string_processPath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test1\\waitingProsecce\\Sc3Qr",
+                "string_workSpasceName": "Test1",
+                "string_workSpaceInnerPorjectName": "0jbfjVOaHP",
+                "string_processStep": "WaitingforWork"
+                */
+                if (this.processingStart)
                 {
-                    orignalImage = null;
-                    cadImage = null;
+                    string processTask = processInfo["string_processTask"].ToString();
+                    string processName = processInfo["string_processName"].ToString();
+                    string processTrainTest = processInfo["string_processTrainTest"].ToString();
+                    string processImageType = processInfo["string_processImageType"].ToString();
 
-                    try
-                    {
-                        orignalImage = CustomIOMainger.LoadBitmap(imagePathList[i]);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                        orignalImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(imagePathList[i], OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
-                    }
+                    this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
 
-                    // CAD Image 읽어오기
-                    try
-                    {
-                        string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
-                        cadImage = CustomIOMainger.LoadBitmap(cadImagePath);
-                    }
-                    catch (Exception ex)
-                    {
-                        string cadImagePath = processJObject["ImageListData"][imageNameList[i]]["Labeled"]["CADImage"].ToString();
-                        Console.WriteLine(ex);
-                        cadImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(OpenCvSharp.Cv2.ImRead(cadImagePath, OpenCvSharp.ImreadModes.AnyDepth | OpenCvSharp.ImreadModes.AnyColor));
-                    }
+                    this.SafeTapPageNumberChange(this.tclpMProcessActive, 1);
 
-                    ProjectAI.ProjectManiger.CustomImageProcess.BitmapImageOverlay24bppRgb(orignalImage, cadImage, 0.8).Save(imageSetPathList[i]); // CAD 이미지 오버레이
-
-                    this.SafeDataGridViewProgressValue(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imageNameList.Count - 1) * 100)); // Progress Value 설정
+                    this.SafeTrainFormDataGridViewAdd(this.dgvMProcessing, processTask, processTrainTest, processImageType, "EndPreprocess", processName, 0);
                 }
-            }
-            // DataGridView WaitingforWork 값 수정
-            this.SafeDataGridViewProcessStep(this.dgvMWaitingforWork, processJObject["TrainProcessInfo"]["string_processName"].ToString(), "EndPreprocess");
-
-            // Json Class Info 값 추가
-            JArray classList = new JArray();
-            var disClassNames = classNames.Distinct();
-            classNames = new List<string>();
-            foreach (var i in disClassNames)
-                classNames.Add(i.ToString());
-
-            classNames.Sort((a, b) => a.CompareTo(b)); // Class 이름 정렬
-            classList = JArray.FromObject(classNames);
-            JObject trainProcessInfo = (JObject)processJObject["TrainProcessInfo"];
-            trainProcessInfo["string_array_classList"] = classList; // Class 이름 넣기
-
-            // Json 파일 저장
-            processJObject["TrainProcessInfo"]["string_processStep"] = "EndPreprocess";
-            jsonDataManiger.PushJsonObject(processJsonPath, processJObject);
-            Thread.Sleep(300);
-
-            /* processInfo
-            "string_processModel": "Classification",
-            "string_processTask": "Classification",
-            "string_processName": "Sc3Qr",
-            "string_processTrainTest": "Train",
-            "string_processImageType": "SingleImage",
-            "string_processPath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test1\\waitingProsecce\\Sc3Qr",
-            "string_workSpasceName": "Test1",
-            "string_workSpaceInnerPorjectName": "0jbfjVOaHP",
-            "string_processStep": "WaitingforWork"
-            */
-            if (this.processingStart)
-            {
-                string processTask = processInfo["string_processTask"].ToString();
-                string processName = processInfo["string_processName"].ToString();
-                string processTrainTest = processInfo["string_processTrainTest"].ToString();
-                string processImageType = processInfo["string_processImageType"].ToString();
-
-                this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
-
-                this.SafeTapPageNumberChange(this.tclpMProcessActive, 1);
-
-                this.SafeTrainFormDataGridViewAdd(this.dgvMProcessing, processTask, processTrainTest, processImageType, "EndPreprocess", processName, 0);
             }
         }
 
@@ -1268,7 +1301,7 @@ namespace ProjectAI.TrainForms
             // 파일 학습 가능하도록 Copy
         }
 
-        private void ActiveProcessClassificationProcessing(JObject processInfo, string corePath)
+        private void ActiveProcessClassificationProcessing(JObject processInfo, string corePath, CancellationToken cancellationToken)
         {
             // 학습 진행
             /* processInfo
@@ -1351,6 +1384,29 @@ namespace ProjectAI.TrainForms
             {
                 while (true)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        string processTask = processInfo["string_processTask"].ToString();
+                        string processName = processInfo["string_processName"].ToString();
+                        string processTrainTest = processInfo["string_processTrainTest"].ToString();
+                        string processImageType = processInfo["string_processImageType"].ToString();
+                        string processStep = "EndPreprocess";
+
+                        lock (this.taskWaitingforWorkList)
+                        {
+                            this.taskWaitingforWorkList.Add(processName);
+                        }
+
+                        this.SafeDataGridViewRowDelete(this.dgvMProcessing, processName);
+                        this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork,
+                            processTask, processTrainTest, processImageType, processStep, processName, 0);
+                        this.SafeTapPageNumberChange(this.tclpMProcessActive, -1);
+
+                        classificationProcess.Kill(); // 종료
+
+                        return;
+                    }
+
                     string classificationSystemLog = classificationReader.ReadLine();
                     processLogs.Add(classificationSystemLog); // 프로세스 로그 확인
                     Console.WriteLine(classificationSystemLog);
@@ -1579,11 +1635,57 @@ namespace ProjectAI.TrainForms
                                                     break;
                                             }
                                 }
+
+                                if (cancellationToken.IsCancellationRequested)
+                                {
+                                    string processTask = processInfo["string_processTask"].ToString();
+                                    string processName = processInfo["string_processName"].ToString();
+                                    string processTrainTest = processInfo["string_processTrainTest"].ToString();
+                                    string processImageType = processInfo["string_processImageType"].ToString();
+                                    string processStep = "EndPreprocess";
+
+                                    lock (this.taskWaitingforWorkList)
+                                    {
+                                        this.taskWaitingforWorkList.Add(processName);
+                                    }
+
+                                    this.SafeDataGridViewRowDelete(this.dgvMProcessing, processName);
+                                    this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork,
+                                        processTask, processTrainTest, processImageType, processStep, processName, 0);
+                                    this.SafeTapPageNumberChange(this.tclpMProcessActive, -1);
+
+                                    classificationProcess.Kill(); // 종료
+
+                                    return;
+                                }
                             }
 
                             // 파일 Copy
                             for (int i = 0; i < imagePathList.Count; i++)
                             {
+                                if (cancellationToken.IsCancellationRequested)
+                                {
+                                    string processTask = processInfo["string_processTask"].ToString();
+                                    string processName = processInfo["string_processName"].ToString();
+                                    string processTrainTest = processInfo["string_processTrainTest"].ToString();
+                                    string processImageType = processInfo["string_processImageType"].ToString();
+                                    string processStep = "EndPreprocess";
+
+                                    lock (this.taskWaitingforWorkList)
+                                    {
+                                        this.taskWaitingforWorkList.Add(processName);
+                                    }
+
+                                    this.SafeDataGridViewRowDelete(this.dgvMProcessing, processName);
+                                    this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork,
+                                        processTask, processTrainTest, processImageType, processStep, processName, 0);
+                                    this.SafeTapPageNumberChange(this.tclpMProcessActive, -1);
+
+                                    classificationProcess.Kill(); // 종료
+
+                                    return;
+                                }
+
                                 //Thread.Sleep(10);
                                 System.IO.File.Copy(imagePathList[i], imageSetPathList[i], true);
                                 this.SafeDataGridViewProgressValue(this.dgvMProcessing, processInfo["string_processName"].ToString(), (int)Math.Round((double)i / (double)(imagePathList.Count - 1) * 100)); // Progress Value 설정
@@ -1618,6 +1720,29 @@ namespace ProjectAI.TrainForms
                         // Log 가져오기
                         while (true)
                         {
+                            if (cancellationToken.IsCancellationRequested)
+                            {
+                                string processTask = processInfo["string_processTask"].ToString();
+                                string processName = processInfo["string_processName"].ToString();
+                                string processTrainTest = processInfo["string_processTrainTest"].ToString();
+                                string processImageType = processInfo["string_processImageType"].ToString();
+                                string processStep = "EndPreprocess";
+
+                                lock (this.taskWaitingforWorkList)
+                                {
+                                    this.taskWaitingforWorkList.Add(processName);
+                                }
+
+                                this.SafeDataGridViewRowDelete(this.dgvMProcessing, processName);
+                                this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork,
+                                    processTask, processTrainTest, processImageType, processStep, processName, 0);
+                                this.SafeTapPageNumberChange(this.tclpMProcessActive, -1);
+
+                                classificationProcess.Kill(); // 종료
+
+                                return;
+                            }
+
                             string classificationSystemLog = classificationReader.ReadLine();
                             Console.WriteLine(classificationSystemLog); //Log 확인
 
@@ -1801,7 +1926,7 @@ namespace ProjectAI.TrainForms
             string epochNumber = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
             string trainRepeat = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_TrainRepeat"].ToString();
             string modelMinimumSelectionEpoch = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ModelMinimumSelectionEpoch"].ToString();
-            string validationRatio = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
+            string validationRatio = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["float_ValidationRatio"].ToString();
             string patienceEpochs = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
 
             trainOptions.Add(PackingString($"dnn_type |{networkModel}|"));
@@ -2177,7 +2302,7 @@ namespace ProjectAI.TrainForms
             string epochNumber = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
             string trainRepeat = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_TrainRepeat"].ToString();
             string modelMinimumSelectionEpoch = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ModelMinimumSelectionEpoch"].ToString();
-            string validationRatio = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
+            string validationRatio = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["float_ValidationRatio"].ToString();
             string patienceEpochs = modelLearningInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
 
             trainOptions.Add(PackingString($"dnn_type |{networkModel}|"));
@@ -2716,32 +2841,72 @@ namespace ProjectAI.TrainForms
         /// <param name="e"></param>
         private void DgvMWaitingforWorkRowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            if (this.trainFormF1Start)
-            {
-                // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
-                string processName = this.dgvMWaitingforWork.Rows[e.RowIndex].Cells[4].Value.ToString();
-                string processSet = this.dgvMWaitingforWork.Rows[e.RowIndex].Cells[3].Value.ToString();
+            // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
+            string processName = this.dgvMWaitingforWork.Rows[e.RowIndex].Cells[4].Value.ToString();
+            string processSet = this.dgvMWaitingforWork.Rows[e.RowIndex].Cells[3].Value.ToString();
 
-                if (processSet == "WaitingforWork")
+            if (processSet == "WaitingforWork")
+            {
+                lock (this.taskWaitingforWorkList)
                 {
-                    lock (this.taskWaitingforWorkList)
-                    {
-                        this.taskWaitingforWorkList.Add(processName);
-                    }
-                    if (this.taskWaitingforWork == null)
-                        this.taskWaitingforWork = Task.Run(() => this.TaskWaitingforManiger());
-                    else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
-                    {
-                        this.taskWaitingforWork = Task.Run(() => this.TaskWaitingforManiger());
-                    }
+                    this.taskWaitingforWorkList.Add(processName);
+                }
+                if (this.taskWaitingforWork == null)
+                {
+                    this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWork = Task.Run(
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                }
+                else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
+                {
+                    this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWork = Task.Run(
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
                 }
             }
         }
 
-        private void TaskWaitingforManiger()
+        /// <summary>
+        /// 전처리 작업 등록 프로세스 수동 시작 함수
+        /// </summary>
+        private void WaitingforWorkManigerManualStart()
+        {
+            bool taskEnable = false;
+            lock (this.taskWaitingforWorkList)
+            {
+                if (this.taskWaitingforWorkList.Count > 0)
+                    taskEnable = true;
+            }
+            if (taskEnable)
+            {
+                if (this.taskWaitingforWork == null)
+                {
+                    this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWork = Task.Run(
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                }
+                else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
+                {
+                    this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWork = Task.Run(
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                }
+            }
+        }
+
+        private void TaskWaitingforManiger(CancellationToken manigercanCellationToken)
         {
             while (true)
             {
+                this.taskWaitingforWorkCancellation = new CancellationTokenSource(); // 전처리 작업 제어
+
+                // 전처리 메니저 작업 취소 확인
+                if (manigercanCellationToken.IsCancellationRequested)
+                {
+                    this.taskWaitingforWorkCancellation.Cancel(); // 작업 취소
+                    break;
+                }
+                    
                 string processName = null;
                 lock (this.taskWaitingforWorkList)
                 {
@@ -2758,7 +2923,9 @@ namespace ProjectAI.TrainForms
                 }
                 if (processName != null)
                 {
-                    Task task = Task.Run(() => this.ActiveProcessWaitingforWork((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone()));
+                    Task task = Task.Run(() => this.ActiveProcessWaitingforWork(
+                        (JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone(),
+                        this.taskWaitingforWorkCancellation.Token));
                     task.Wait();
                 }
             }
@@ -2811,35 +2978,95 @@ namespace ProjectAI.TrainForms
             }
 
             if (corePath != null) // corePath 가 설정되지 않으면 학습 Task 등록 하지 않음.
-                if (this.trainFormF1Start)
+                if (processStep == "EndPreprocess")
                 {
-                    if (processStep == "EndPreprocess")
-                    {
-                        lock (this.taskProcessingList)
-                            lock (this.taskProcessingCorePaht)
-                            {
-                                this.taskProcessingList.Add(processAccesscode);
-                                this.taskProcessingCorePaht.Add(corePath);
-                            }
+                    lock (this.taskProcessingList)
+                        lock (this.taskProcessingCorePaht)
+                        {
+                            this.taskProcessingList.Add(processAccesscode);
+                            this.taskProcessingCorePaht.Add(corePath);
+                        }
 
-                        if (this.taskProcessing == null)
-                        {
-                            this.taskProcessing = Task.Run(() => this.TaskProcessingManiger());
-                        }
-                        else if (this.taskProcessing.Status == TaskStatus.RanToCompletion)
-                        {
-                            this.taskProcessing = Task.Run(() => this.TaskProcessingManiger());
-                        }
+                    if (this.taskProcessing == null)
+                    {
+                        this.taskProcessingManigerCancellation = new CancellationTokenSource();
+                        this.taskProcessing = Task.Run(() => this.TaskProcessingManiger(this.taskProcessingManigerCancellation.Token));
+                    }
+                    else if (this.taskProcessing.Status == TaskStatus.RanToCompletion)
+                    {
+                        this.taskProcessingManigerCancellation = new CancellationTokenSource();
+                        this.taskProcessing = Task.Run(() => this.TaskProcessingManiger(this.taskProcessingManigerCancellation.Token));
                     }
                 }
         }
 
-        private void TaskProcessingManiger()
+        private void TaskProcessingManiger(CancellationToken manigerCancellationToken)
         {
+            //taskProcessingCancellation
             while (true)
             {
+                this.taskProcessingCancellation = new CancellationTokenSource();
+
+                if (manigerCancellationToken.IsCancellationRequested)
+                {
+                    this.taskProcessingCancellation.Cancel();
+
+                    List<string> stopTaskList = new List<string>();
+                    lock (this.taskProcessingList)
+                    {
+                        foreach(string taskName in this.taskProcessingList)
+                            stopTaskList.Add(taskName);
+
+                        if (this.taskProcessingList.Count > 0)
+                        {
+                            this.taskProcessingList.RemoveAt(0);
+                            this.taskProcessingCorePaht.RemoveAt(0);
+                        }
+                    }
+                    lock (this.taskWaitingforWorkList)
+                    {
+                        foreach (string taskName in stopTaskList)
+                            this.taskWaitingforWorkList.Add(taskName);
+                    }
+
+                    foreach (string processName in stopTaskList)
+                    {
+                        string processTask;
+                        string processTrainTest;
+                        string processImageType;
+                        string processStep = "EndPreprocess";
+
+                        lock (WorkSpaceEarlyData.m_trainFormJobject)
+                        {
+                            // Process Step = process 단계 "WaitingforWork" -> "EndPreprocess" -> "Processing" -> "Processing Results" -> "SaveResult" -> "EndProcessing"
+                            /* processInfo
+                                "string_processModel": "Classification",
+                                "string_processTask": "Classification",
+                                "string_processName": "Sc3Qr",
+                                "string_processTrainTest": "Train",
+                                "string_processImageType": "SingleImage",
+                                "string_processPath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test1\\waitingProsecce\\Sc3Qr",
+                                "string_workSpasceName": "Test1",
+                                "string_workSpaceInnerPorjectName": "0jbfjVOaHP",
+                                "string_processStep": "WaitingforWork"
+                             */
+                            processTask = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName]["string_processTask"].ToString();
+                            processTrainTest = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName]["string_processTrainTest"].ToString();
+                            processImageType = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName]["string_processImageType"].ToString();
+                        }
+
+                        this.SafeDataGridViewRowDelete(this.dgvMProcessing, processName);
+                        this.SafeTrainFormDataGridViewAdd(this.dgvMWaitingforWork, 
+                            processTask, processTrainTest, processImageType, processStep, processName, 0);
+                        this.SafeTapPageNumberChange(this.tclpMProcessActive, -1);
+                    }
+
+                    return;
+                }
+
                 string processAccesscode = null;
                 string corePath = null;
+                JObject processInfo = null;
                 lock (this.taskProcessingList)
                     lock (this.taskProcessingCorePaht)
                     {
@@ -2854,9 +3081,28 @@ namespace ProjectAI.TrainForms
                         else
                             break;
                     }
+
+                lock(WorkSpaceEarlyData.m_trainFormJobject)
+                {
+                    /* processInfo
+                        "string_processModel": "Classification",
+                        "string_processTask": "Classification",
+                        "string_processName": "Sc3Qr",
+                        "string_processTrainTest": "Train",
+                        "string_processImageType": "SingleImage",
+                        "string_processPath": "C:\\Users\\USER\\AppData\\Roaming\\SynapseNet\\SynapseNet 0.1\\workspaces\\Test1\\waitingProsecce\\Sc3Qr",
+                        "string_workSpasceName": "Test1",
+                        "string_workSpaceInnerPorjectName": "0jbfjVOaHP",
+                        "string_processStep": "WaitingforWork"
+                     */
+                    processInfo = (JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone();
+                }
+
                 if (processAccesscode != null)
                 {
-                    Task task = Task.Run(() => this.ActiveProcessClassificationProcessing((JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode].DeepClone(), corePath));
+                    this.taskProcessingCancellation = new CancellationTokenSource();
+                    Task task = Task.Run(() => this.ActiveProcessClassificationProcessing(
+                        (JObject)processInfo.DeepClone(),corePath, this.taskProcessingCancellation.Token));
                     task.Wait();
                 }
             }
@@ -3058,15 +3304,23 @@ namespace ProjectAI.TrainForms
 
         private void BtnMProcessAllStopClick(object sender, EventArgs e)
         {
+            if (this.taskProcessingManigerCancellation != null)
+                this.taskProcessingManigerCancellation.Cancel();
+            if (this.taskProcessingCancellation != null)
+                this.taskProcessingCancellation.Cancel();
             this.processingStart = false;
         }
 
         private void BtnMProcessStopClick(object sender, EventArgs e)
         {
+            if (this.taskProcessingCancellation != null)
+                this.taskProcessingCancellation.Cancel();
+            this.processingStart = false;
         }
 
-        private void MetroButton3Click(object sender, EventArgs e)
+        private void BtnMStopProcessingClick(object sender, EventArgs e)
         {
+            this.processingStart = false;
         }
 
         /// <summary>
@@ -3076,6 +3330,7 @@ namespace ProjectAI.TrainForms
         /// <param name="e"></param>
         private void BtnMStartProcessingClick(object sender, EventArgs e)
         {
+            
             // this.dgvMProcessing.Columns[1].Name = "Process Type"; // Total Labeled Image Number
             // this.dgvMProcessing.Columns[2].Name = "Image Type"; // Total Labeled Image Number
             // this.dgvMProcessing.Columns[3].Name = "Process Step"; // Total Labeled Image Number
@@ -3115,6 +3370,22 @@ namespace ProjectAI.TrainForms
                     }
                 }
             }
+        }
+
+        private void BtnMWaitingStopClick(object sender, EventArgs e)
+        {
+            this.taskWaitingforWorkCancellation.Cancel();
+        }
+
+        private void BtnMWaitingAllStopClick(object sender, EventArgs e)
+        {
+            this.taskWaitingforWorkManigerCancellation.Cancel();
+            this.taskWaitingforWorkCancellation.Cancel();
+        }
+
+        private void BtnMWaitingStartClick(object sender, EventArgs e)
+        {
+            this.WaitingforWorkManigerManualStart();
         }
 
         /// <summary>
@@ -3344,7 +3615,7 @@ namespace ProjectAI.TrainForms
             {
                 this.panelMTrainOption.Controls.Clear(); // 컨트롤 초기화
                 this.panelMTrainOption.Controls.Add(this.ClassificationTrainOptions); // 컨트롤 적용
-                this.ClassificationTrainOptions.Enabled = false;
+                this.ClassificationTrainOptions.Enabled = true;
 
                 // 5. Contral 정보 가져오기
                 // Trian Options 수동
@@ -3352,7 +3623,7 @@ namespace ProjectAI.TrainForms
                 string epochNumber = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_EpochNumber"].ToString();
                 string trainRepeat = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_TrainRepeat"].ToString();
                 string modelMinimumSelectionEpoch = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ModelMinimumSelectionEpoch"].ToString();
-                string validationRatio = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_ValidationRatio"].ToString();
+                string validationRatio = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["float_ValidationRatio"].ToString();
                 string patienceEpochs = modelInfo["ModelLearningInfo"]["TrainOptionManual"]["int_PatienceEpochs"].ToString();
 
                 // Data Augmentation Manual 설정
