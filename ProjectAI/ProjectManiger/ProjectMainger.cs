@@ -626,7 +626,7 @@ namespace ProjectAI
         /// <summary>
         /// 이미지 리스트 내의 이미지 갯수 기본값 - Test로 5로 정함 이미 프로젝트에서 정한 값은 몰?루
         /// </summary>
-        private readonly int m_imageeListSetnumber = 50;
+        private readonly int m_imageeListSetnumber = 1000;
 
         /// <summary>
         /// 현제 이미지 페이지
@@ -671,8 +671,8 @@ namespace ProjectAI
         /// </summary>
         public List<string> CADImageSaveList = new List<string>();
 
-        //#10
-        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+        //#9
+        //public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
 
         // Declare a Customer object to store data for a row being edited.
         public GridViewDataIntegrity customerInEdit;
@@ -1521,12 +1521,15 @@ namespace ProjectAI
                             this.MainForm.gridImageList.Columns[4].Name = "Probability";
                             */
 
-                            //#10 GridView Add
+                            //# GridView Add
                             //metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
-                            this.gridViewAddList.Add(new GridViewDataIntegrity(imageNumber.ToString(), imageFile, set, activeClass, predictionClass, threshold.ToString()));
-
-                            if (activeClassColor != null)
-                                metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
+                      
+                            ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList =
+                                (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
+                            gridViewImageList.Test(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            
+                            //if (activeClassColor != null)
+                            //    metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
                         }
                     }
                 }
@@ -1553,6 +1556,7 @@ namespace ProjectAI
             {
             }
         }
+
 
         /// <summary>
         /// 이미지 페이지 이동 Forward
@@ -2053,7 +2057,7 @@ namespace ProjectAI
             //gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
             //gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
             //gridViewImageList.gridImageList.Columns[5].Name = "Probability";
-            //#10
+            //#9
             DataGridViewTextBoxColumn numberColumn = new DataGridViewTextBoxColumn();
             numberColumn.HeaderText = "NO";
             numberColumn.Name = "Num Name";

@@ -8,11 +8,15 @@ namespace ProjectAI.MainForms.UserContral.ImageList
     public partial class GridViewImageList : UserControl
     {
         private FormsManiger formsManiger = FormsManiger.GetInstance();
+
+        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+
         private int rowInEdit = -1;
         // Declare a variable to indicate the commit scope.
         // Set this value to false to use cell-level commit scope.
         private bool rowScopeCommit = true;
 
+        public GridViewDataIntegrity customerInEdit;
         public GridViewImageList()
         {
             InitializeComponent();
@@ -329,6 +333,13 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             //this.GridImageListAutoResize();
         }
 
+        public void Test(int num, String filesName, String set, String labeled, String prediction, double probability)
+        {
+            this.gridViewAddList.Add(new GridViewDataIntegrity(num, filesName, set, labeled, prediction, probability));
+            foreach (var item in gridViewAddList)
+                Console.WriteLine(item);
+        }
+  
         /// <summary>
         /// DataGridView 컨트롤의 VirtualMode 속성이 true이고, DataGridView에서 셀을 서식 지정하고 표시하기 위해 셀에 대한 값이 필요할 때 발생
         /// </summary>
@@ -344,11 +355,11 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             // Store a reference to the Customer object for the row being painted.
             if (e.RowIndex == rowInEdit)
             {
-                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+                gridViewDataIntegrityTmp = this.customerInEdit;
             }
             else
             {
-                gridViewDataIntegrityTmp = (GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex];
+                gridViewDataIntegrityTmp = (GridViewDataIntegrity)this.gridViewAddList[e.RowIndex];
             }
 
             // Set the cell value to paint using the Customer object retrieved.
@@ -390,22 +401,22 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             GridViewDataIntegrity gridViewDataIntegrityTmp = null;
 
             // Store a reference to the Customer object for the row being edited.
-            if (e.RowIndex < WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count)
+            if (e.RowIndex < this.gridViewAddList.Count)
             {
                 // If the user is editing a new row, create a new Customer object.
-                WorkSpaceData.m_activeProjectMainger.customerInEdit = new GridViewDataIntegrity(
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Num,
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).FilesName,
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Set,
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Labeled,
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Prediction,
-                    ((GridViewDataIntegrity)WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex]).Probability);
-                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+                this.customerInEdit = new GridViewDataIntegrity(
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Num,
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).FilesName,
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Set,
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Labeled,
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Prediction,
+                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Probability);
+                gridViewDataIntegrityTmp = this.customerInEdit;
                 this.rowInEdit = e.RowIndex;
             }
             else
             {
-                gridViewDataIntegrityTmp = WorkSpaceData.m_activeProjectMainger.customerInEdit;
+                gridViewDataIntegrityTmp = this.customerInEdit;
             }
 
             // Set the appropriate Customer property to the cell value entered.
@@ -448,7 +459,7 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         {
             // Create a new Customer object when the user edits
             // the row for new records.
-            WorkSpaceData.m_activeProjectMainger.customerInEdit = new GridViewDataIntegrity();
+            this.customerInEdit = new GridViewDataIntegrity();
             this.rowInEdit = this.gridImageList.Rows.Count - 1;
         }
 
@@ -461,25 +472,25 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         {
             // Save row changes if any were made and release the edited
             // Customer object if there is one.
-            if (e.RowIndex >= WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count &&
+            if (e.RowIndex >= this.gridViewAddList.Count &&
                 e.RowIndex != this.gridImageList.Rows.Count - 1)
             {
                 // Add the new Customer object to the data store.
-                WorkSpaceData.m_activeProjectMainger.gridViewAddList.Add(WorkSpaceData.m_activeProjectMainger.customerInEdit);
-                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.gridViewAddList.Add(this.customerInEdit);
+                this.customerInEdit = null;
                 this.rowInEdit = -1;
             }
-            else if (WorkSpaceData.m_activeProjectMainger.customerInEdit != null &&
-                e.RowIndex < WorkSpaceData.m_activeProjectMainger.gridViewAddList.Count)
+            else if (this.customerInEdit != null &&
+                e.RowIndex < this.gridViewAddList.Count)
             {
                 // Save the modified Customer object in the data store.
-                WorkSpaceData.m_activeProjectMainger.gridViewAddList[e.RowIndex] = WorkSpaceData.m_activeProjectMainger.customerInEdit;
-                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.gridViewAddList[e.RowIndex] = this.customerInEdit;
+                this.customerInEdit = null;
                 this.rowInEdit = -1;
             }
             else if (this.gridImageList.ContainsFocus)
             {
-                WorkSpaceData.m_activeProjectMainger.customerInEdit = null;
+                this.customerInEdit = null;
                 this.rowInEdit = -1;
             }
         }
