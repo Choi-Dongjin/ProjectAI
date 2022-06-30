@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 
 namespace ProjectAI.CustomComponent.MainForms.Classification
 {
     public partial class ClassificationTrainOptions : UserControl
     {
         private List<string> previousClassList = new List<string>(); // class Update 가 실행되기전 이전 class List값과 비교하여 변경 사항이 있으면 업데이터 동작하도록 설정
-
+        private MetroFramework.Controls.MetroTile activeMetroButton;
         public ClassificationTrainOptions()
         {
             InitializeComponent();
@@ -271,11 +272,11 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                 // Mmodel Minimum Selection Epoch (모델 최소 저장 Epoch) 설정
                 ["int_ModelMinimumSelectionEpoch"] = txtMmodelMinimumSelectionEpoch.Text,
                 // Validation Ratio (검증 비율) 설정
-                ["int_ValidationRatio"] = String.Format("{0:0.000#}", validationRatio),
+                ["float_ValidationRatio"] = String.Format("{0:0.00#}", validationRatio),
                 // Patience Epochs (Loss 증가, 변화 Epochs 수) 설정
                 ["int_PatienceEpochs"] = txtPatienceEpochs.Text
             };
-
+            
             // BringTrainOptionManual 옵션 추가
             TrainOptionData["TrainOptionManual"] = jObject;
             return TrainOptionData;
@@ -1055,16 +1056,62 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         private void TilMInstantEvaluateAllClick(object sender, EventArgs e)
         {
             this.instantEvaluateDataset = "All";
+            Control control = (Control)sender;
+            this.ActivateButton(sender, control.Parent);
         }
 
         private void TilMInstantEvaluateTrainClick(object sender, EventArgs e)
         {
             this.instantEvaluateDataset = "Train";
+            Control control = (Control)sender;
+            this.ActivateButton(sender, control.Parent);
         }
 
         private void TilMInstantEvaluateTestClick(object sender, EventArgs e)
         {
             this.instantEvaluateDataset = "Test";
+            Control control = (Control)sender;
+            this.ActivateButton(sender, control.Parent);
+        }
+
+        private void ActivateButton(object btnSender, object panel)
+        {
+            if (btnSender != null)
+            {
+                if (this.activeMetroButton != btnSender)
+                {
+                    this.activeMetroButton = btnSender as MetroTile;
+                    if (this.activeMetroButton != null)
+                    {
+                        DisableButton(panel);
+                        this.activeMetroButton = (MetroTile)btnSender;
+                        this.activeMetroButton.UseStyleColors = true;
+                        this.activeMetroButton.Style = MetroFramework.MetroColorStyle.Orange;
+                    }
+                }
+            }
+        }
+
+        private void DisableButton(object panel)
+        {
+            //System.Windows.Forms.TableLayoutPanel
+            if (panel != null)
+            {
+                foreach (Control previousBtn in this.tlpInstantEvaluate.Controls)
+                {
+                    MetroTile metroButton = previousBtn as MetroTile;
+                    if (metroButton != null)
+                    {
+                        FormsManiger formsManiger = FormsManiger.GetInstance();
+                        metroButton.Style = formsManiger.m_StyleManager.Style;
+                        if (metroButton.UseStyleColors)
+                            metroButton.UseStyleColors = false;
+                        if (metroButton.UseCustomBackColor)
+                            metroButton.UseCustomBackColor = false;
+                        previousBtn.Refresh();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -2099,11 +2146,15 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
         /// <param name="e"></param>
         private void TxtValidationRatioTextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(this.txtValidationRatio.Text, out int value))
+            if (float.TryParse(this.txtValidationRatio.Text, out float value))
             {
                 if (value < 0)
                 {
                     this.txtValidationRatio.Text = "0";
+                }
+                else if (value > 0 && value < 1)
+                {
+                    this.txtValidationRatio.Text = (value*100).ToString();
                 }
                 else if (value > 100)
                 {
@@ -2112,7 +2163,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
             else
             {
-                this.txtValidationRatio.Text = "3";
+                this.txtValidationRatio.Text = "TextChanged ERROR";
             }
         }
 

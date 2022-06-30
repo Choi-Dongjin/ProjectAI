@@ -522,7 +522,7 @@
             // 
             this.trainToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.deep_learning;
             this.trainToolStripMenuItem.Name = "trainToolStripMenuItem";
-            this.trainToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.trainToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.trainToolStripMenuItem.Text = "Train";
             this.trainToolStripMenuItem.Click += new System.EventHandler(this.TrainToolStripMenuItemClick);
             // 
@@ -530,14 +530,14 @@
             // 
             this.changeStyleToolStripMenuItem.Image = global::ProjectAI.Properties.Resources.memphis_style;
             this.changeStyleToolStripMenuItem.Name = "changeStyleToolStripMenuItem";
-            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.changeStyleToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.changeStyleToolStripMenuItem.Text = "ChangeStyle";
             this.changeStyleToolStripMenuItem.Click += new System.EventHandler(this.ChangeStyleToolStripMenuItemClick);
             // 
             // hiddenToolStripMenuItem
             // 
             this.hiddenToolStripMenuItem.Name = "hiddenToolStripMenuItem";
-            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
+            this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.hiddenToolStripMenuItem.Text = "Hidden";
             this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
             // 
@@ -622,6 +622,7 @@
             // 
             this.btnMDeleteWorkSpace.BackgroundImage = global::ProjectAI.Properties.Resources.minus;
             this.btnMDeleteWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnMDeleteWorkSpace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMDeleteWorkSpace.FontWeight = MetroFramework.MetroButtonWeight.Light;
             this.btnMDeleteWorkSpace.Location = new System.Drawing.Point(180, 3);
             this.btnMDeleteWorkSpace.Name = "btnMDeleteWorkSpace";
@@ -634,6 +635,7 @@
             // 
             this.btnMnewWorkSpace.BackgroundImage = global::ProjectAI.Properties.Resources.plus;
             this.btnMnewWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnMnewWorkSpace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMnewWorkSpace.Location = new System.Drawing.Point(212, 3);
             this.btnMnewWorkSpace.Name = "btnMnewWorkSpace";
             this.btnMnewWorkSpace.Size = new System.Drawing.Size(26, 26);
