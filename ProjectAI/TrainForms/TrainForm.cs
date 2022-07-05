@@ -62,7 +62,9 @@ namespace ProjectAI.TrainForms
         private Task taskWaitingforWork;
 
         internal CancellationTokenSource taskWaitingforWorkManigerCancellation;
+        internal CancellationTokenSource taskWaitingforWorkManigerTaskdel;
         internal CancellationTokenSource taskWaitingforWorkCancellation;
+        internal CancellationTokenSource taskWaitingforWorkTaskdel;
 
         private List<string> taskWaitingforWorkList = new List<string>();
 
@@ -714,6 +716,7 @@ namespace ProjectAI.TrainForms
 
         private void ReadDataandUpdateDataGridView()
         {
+            JArray processListClone = (JArray)WorkSpaceEarlyData.m_trainFormJobject["processList"].DeepClone();
             foreach (string processAccesscode in WorkSpaceEarlyData.m_trainFormJobject["processList"])
             {
                 // WorkSpaceEarlyData.m_trainFormJobject 에서는 string_processStep 읽어서 EndProcessing 아니면
@@ -733,7 +736,7 @@ namespace ProjectAI.TrainForms
 
                 JObject localProcessInfo = jsonDataManiger.GetJsonObject(System.IO.Path.Combine(processPath, "TrainSystem.Json"));
                 if (localProcessInfo == null)
-                    break;
+                    continue;
                 processModel = localProcessInfo["TrainProcessInfo"]["string_processModel"].ToString();
                 processTask = localProcessInfo["TrainProcessInfo"]["string_processTask"].ToString();
                 processName = localProcessInfo["TrainProcessInfo"]["string_processName"].ToString();
@@ -765,9 +768,23 @@ namespace ProjectAI.TrainForms
                 }
                 else if (processStep == "EndProcessing")
                 {
+                    JObject processInfoList = (JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"];
+
+                    for(int i = 0; i < processListClone.Count; i++)
+                    {
+                        if (processName.Equals(processListClone[i].ToString()))
+                        {
+                            processListClone.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    processInfoList.Remove(processName);
+                    CustomIOMainger.DirDelete(processPath);
                 }
                 // 3. 학습 데이터 관리 Dictionary 데이터 추가하기
             }
+            WorkSpaceEarlyData.m_trainFormJobject["processList"] = processListClone;
+            this.jsonDataManiger.PushJsonObject(WorkSpaceEarlyData.m_trainFormPath, WorkSpaceEarlyData.m_trainFormJobject);
         }
 
         /// <summary>
@@ -1041,7 +1058,7 @@ namespace ProjectAI.TrainForms
             finally { }
         }
 
-        private void ActiveProcessWaitingforWork(JObject processInfo, CancellationToken cancellationToken)
+        private void ActiveProcessWaitingforWork(JObject processInfo, CancellationToken cancellationToken, CancellationToken tokenDel)
         {
             // 파일 Copy List 만들기
             /* processInfo
@@ -1086,8 +1103,14 @@ namespace ProjectAI.TrainForms
                     {
                         lock (this.taskWaitingforWorkList)
                         {
-                            this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
+                            //this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
                         }
+                        return;
+                    }
+                    if (tokenDel.IsCancellationRequested)
+                    {
+                        string processName = processInfo["string_processName"].ToString();
+                        this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
                         return;
                     }
 
@@ -1191,8 +1214,14 @@ namespace ProjectAI.TrainForms
                         {
                             lock (this.taskWaitingforWorkList)
                             {
-                                this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
+                                //this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
                             }
+                            return;
+                        }
+                        if (tokenDel.IsCancellationRequested)
+                        {
+                            string processName = processInfo["string_processName"].ToString();
+                            this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
                             return;
                         }
 
@@ -1213,8 +1242,14 @@ namespace ProjectAI.TrainForms
                         {
                             lock (this.taskWaitingforWorkList)
                             {
-                                this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
+                                //this.taskWaitingforWorkList.Add(processInfo["string_processName"].ToString());
                             }
+                            return;
+                        }
+                        if (tokenDel.IsCancellationRequested)
+                        {
+                            string processName = processInfo["string_processName"].ToString();
+                            this.SafeDataGridViewRowDelete(this.dgvMWaitingforWork, processName);
                             return;
                         }
 
@@ -2854,14 +2889,16 @@ namespace ProjectAI.TrainForms
                 if (this.taskWaitingforWork == null)
                 {
                     this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWorkManigerTaskdel = new CancellationTokenSource(); // 작업 제어
                     this.taskWaitingforWork = Task.Run(
-                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token, this.taskWaitingforWorkManigerTaskdel.Token));
                 }
                 else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
                 {
                     this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWorkManigerTaskdel = new CancellationTokenSource(); // 작업 제어
                     this.taskWaitingforWork = Task.Run(
-                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token, this.taskWaitingforWorkManigerTaskdel.Token));
                 }
             }
         }
@@ -2882,28 +2919,35 @@ namespace ProjectAI.TrainForms
                 if (this.taskWaitingforWork == null)
                 {
                     this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
+                    this.taskWaitingforWorkManigerTaskdel = new CancellationTokenSource(); // 작업 제어
                     this.taskWaitingforWork = Task.Run(
-                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token, this.taskWaitingforWorkManigerTaskdel.Token));
                 }
                 else if (this.taskWaitingforWork.Status == TaskStatus.RanToCompletion)
                 {
                     this.taskWaitingforWorkManigerCancellation = new CancellationTokenSource(); // 작업 제어
                     this.taskWaitingforWork = Task.Run(
-                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token));
+                        () => this.TaskWaitingforManiger(this.taskWaitingforWorkManigerCancellation.Token, this.taskWaitingforWorkManigerTaskdel.Token));
                 }
             }
         }
 
-        private void TaskWaitingforManiger(CancellationToken manigercanCellationToken)
+        private void TaskWaitingforManiger(CancellationToken manigercanCellationToken, CancellationToken taskDel)
         {
             while (true)
             {
                 this.taskWaitingforWorkCancellation = new CancellationTokenSource(); // 전처리 작업 제어
+                this.taskWaitingforWorkTaskdel = new CancellationTokenSource(); // 전처리 작업 제어
 
                 // 전처리 메니저 작업 취소 확인
                 if (manigercanCellationToken.IsCancellationRequested)
                 {
                     this.taskWaitingforWorkCancellation.Cancel(); // 작업 취소
+                    break;
+                }
+                if (taskDel.IsCancellationRequested)
+                {
+                    this.taskWaitingforWorkTaskdel.Cancel(); // 작업 취소
                     break;
                 }
                     
@@ -2925,7 +2969,7 @@ namespace ProjectAI.TrainForms
                 {
                     Task task = Task.Run(() => this.ActiveProcessWaitingforWork(
                         (JObject)WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processName].DeepClone(),
-                        this.taskWaitingforWorkCancellation.Token));
+                        this.taskWaitingforWorkCancellation.Token, this.taskWaitingforWorkTaskdel.Token));
                     task.Wait();
                 }
             }
@@ -3012,18 +3056,17 @@ namespace ProjectAI.TrainForms
                     this.taskProcessingCancellation.Cancel();
 
                     List<string> stopTaskList = new List<string>();
-                    lock (this.taskProcessingList)
+                    lock (this)
                     {
-                        foreach(string taskName in this.taskProcessingList)
-                            stopTaskList.Add(taskName);
-
-                        if (this.taskProcessingList.Count > 0)
+                        int number = this.taskProcessingList.Count;
+                        for (int i = 0; i < number; i++)
                         {
+                            stopTaskList.Add(this.taskProcessingList[0]);
                             this.taskProcessingList.RemoveAt(0);
                             this.taskProcessingCorePaht.RemoveAt(0);
                         }
                     }
-                    lock (this.taskWaitingforWorkList)
+                    lock (this)
                     {
                         foreach (string taskName in stopTaskList)
                             this.taskWaitingforWorkList.Add(taskName);
@@ -3067,22 +3110,21 @@ namespace ProjectAI.TrainForms
                 string processAccesscode = null;
                 string corePath = null;
                 JObject processInfo = null;
-                lock (this.taskProcessingList)
-                    lock (this.taskProcessingCorePaht)
+                lock (this)
+                {
+                    if (this.taskProcessingList.Count > 0)
                     {
-                        if (this.taskProcessingList.Count > 0)
-                        {
-                            processAccesscode = this.taskProcessingList[0];
-                            corePath = this.taskProcessingCorePaht[0];
+                        processAccesscode = this.taskProcessingList[0];
+                        corePath = this.taskProcessingCorePaht[0];
 
-                            this.taskProcessingList.RemoveAt(0);
-                            this.taskProcessingCorePaht.RemoveAt(0);
-                        }
-                        else
-                            break;
+                        this.taskProcessingList.RemoveAt(0);
+                        this.taskProcessingCorePaht.RemoveAt(0);
                     }
+                    else
+                        break;
+                }
 
-                lock(WorkSpaceEarlyData.m_trainFormJobject)
+                lock(WorkSpaceEarlyData.LockObject)
                 {
                     /* processInfo
                         "string_processModel": "Classification",
@@ -3374,13 +3416,61 @@ namespace ProjectAI.TrainForms
 
         private void BtnMWaitingStopClick(object sender, EventArgs e)
         {
-            this.taskWaitingforWorkCancellation.Cancel();
+            if (this.taskWaitingforWorkManigerCancellation != null)
+                this.taskWaitingforWorkManigerCancellation.Cancel();
+            if (this.taskWaitingforWorkCancellation != null)
+                this.taskWaitingforWorkCancellation.Cancel();
+
+            List<DataGridViewRow> delRows = new List<DataGridViewRow>();
+            List<string> delAccCodes = new List<string>();
+            for (int i = 0; i < dgvMWaitingforWork.Rows.Count; i++)
+            {
+                if (dgvMWaitingforWork.Rows[i].Selected == true)
+                {
+                    delRows.Add(dgvMWaitingforWork.Rows[i]);
+
+                    string processAccesscode = this.dgvMWaitingforWork.Rows[i].Cells[4].Value.ToString(); // 등록된 작업 이름 가져오기
+                    string processPath = WorkSpaceEarlyData.m_trainFormJobject["processInfo"][processAccesscode]["string_processPath"].ToString(); // 등록된 작업 이름을 기반으로 프로세스 작업 위치 정보 가져오기
+                    string processInfoPath = System.IO.Path.Combine(processPath, "TrainSystem.Json"); // 작업 정보 파일 위치 가져오기
+                    JObject localProcessInfo = jsonDataManiger.GetJsonObjectShare(processInfoPath); // 작업 정보 가져오기
+
+                    delAccCodes.Add(processAccesscode);
+                    //string processModel = localProcessInfo["TrainProcessInfo"]["string_processModel"].ToString();
+                    //string processTask = localProcessInfo["TrainProcessInfo"]["string_processTask"].ToString();
+                    //string processName = localProcessInfo["TrainProcessInfo"]["string_processName"].ToString();
+                    //string processTrainTest = localProcessInfo["TrainProcessInfo"]["string_processTrainTest"].ToString();
+                    //string processImageType = localProcessInfo["TrainProcessInfo"]["string_processImageType"].ToString();
+                    //processPath = localProcessInfo["TrainProcessInfo"]["string_processPath"].ToString();
+                    //string porkSpasceName = localProcessInfo["TrainProcessInfo"]["string_workSpasceName"].ToString();
+                    //string workSpaceInnerPorjectName = localProcessInfo["TrainProcessInfo"]["string_workSpaceInnerPorjectName"].ToString();
+                    //string processStep = localProcessInfo["TrainProcessInfo"]["string_processStep"].ToString();
+
+                    localProcessInfo["TrainProcessInfo"]["string_processStep"] = "EndProcessing";
+                    jsonDataManiger.PushJsonObject(processInfoPath, localProcessInfo);
+                }
+            }
+            foreach (DataGridViewRow delRow in delRows)
+            {
+                dgvMWaitingforWork.Rows.Remove(delRow);
+            }
+            lock (this)
+            {
+                foreach (string delAccCode in delAccCodes)
+                    for (int i = 0; i < taskWaitingforWorkList.Count; i++)
+                        if (this.taskWaitingforWorkList[i].Equals(delAccCode))
+                        {
+                            this.taskWaitingforWorkList.RemoveAt(i);
+                            break;
+                        }
+            }
         }
 
         private void BtnMWaitingAllStopClick(object sender, EventArgs e)
         {
-            this.taskWaitingforWorkManigerCancellation.Cancel();
-            this.taskWaitingforWorkCancellation.Cancel();
+            if (this.taskWaitingforWorkManigerCancellation != null)
+                this.taskWaitingforWorkManigerCancellation.Cancel();
+            if (this.taskWaitingforWorkCancellation != null)
+                this.taskWaitingforWorkCancellation.Cancel();
         }
 
         private void BtnMWaitingStartClick(object sender, EventArgs e)

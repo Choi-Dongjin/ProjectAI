@@ -43,6 +43,7 @@
             this.txtMprogramWorkSpacePath = new MetroFramework.Controls.MetroTextBox();
             this.styleManagerStartForm = new MetroFramework.Components.MetroStyleManager(this.components);
             this.styleExtenderStartForm = new MetroFramework.Components.MetroStyleExtender(this.components);
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutProjectAIMain.SuspendLayout();
             this.tableLayoutMainIcons.SuspendLayout();
             this.tableLayoutMainIconPath.SuspendLayout();
@@ -62,7 +63,7 @@
             this.PanelMainLogo.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.PanelMainLogo, "PanelMainLogo");
             this.PanelMainLogo.HorizontalScrollbarBarColor = true;
-            this.PanelMainLogo.HorizontalScrollbarHighlightOnWheel = false;
+            this.PanelMainLogo.HorizontalScrollbarHighlightOnWheel = true;
             this.PanelMainLogo.HorizontalScrollbarSize = 10;
             this.PanelMainLogo.Name = "PanelMainLogo";
             this.PanelMainLogo.VerticalScrollbarBarColor = true;
@@ -77,6 +78,7 @@
             this.tableLayoutMainIcons.Controls.Add(this.buttonStyleChange, 2, 7);
             this.tableLayoutMainIcons.Controls.Add(this.buttonStartOption, 2, 5);
             this.tableLayoutMainIcons.Controls.Add(this.tableLayoutMainIconPath, 0, 7);
+            this.tableLayoutMainIcons.Controls.Add(this.metroLabel1, 0, 3);
             this.tableLayoutMainIcons.Name = "tableLayoutMainIcons";
             this.tableLayoutMainIcons.Paint += new System.Windows.Forms.PaintEventHandler(this.TableLayoutMainIconsPaint);
             // 
@@ -168,6 +170,14 @@
             // 
             this.styleManagerStartForm.Owner = this;
             // 
+            // metroLabel1
+            // 
+            resources.ApplyResources(this.metroLabel1, "metroLabel1");
+            this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel1.Name = "metroLabel1";
+            this.tableLayoutMainIcons.SetRowSpan(this.metroLabel1, 3);
+            // 
             // StartForm
             // 
             resources.ApplyResources(this, "$this");
@@ -183,6 +193,7 @@
             this.Shown += new System.EventHandler(this.StartFormShown);
             this.tableLayoutProjectAIMain.ResumeLayout(false);
             this.tableLayoutMainIcons.ResumeLayout(false);
+            this.tableLayoutMainIcons.PerformLayout();
             this.tableLayoutMainIconPath.ResumeLayout(false);
             this.tableLayoutMainIconPath.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerStartForm)).EndInit();
@@ -205,6 +216,7 @@
         private MetroFramework.Controls.MetroTextBox txtMprogramWorkSpacePath;
         private MetroFramework.Components.MetroStyleManager styleManagerStartForm;
         private MetroFramework.Components.MetroStyleExtender styleExtenderStartForm;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }
 

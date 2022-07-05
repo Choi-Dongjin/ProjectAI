@@ -334,6 +334,8 @@ namespace ProjectAI
     /// </summary>
     public struct WorkSpaceEarlyData
     {
+        public static Object LockObject = new object();
+
         /// <summary>
         /// workSpaceEarlyData Jobject 관리
         /// </summary>
@@ -2145,7 +2147,6 @@ namespace ProjectAI
                                 imageViewer.splitContainer1.Panel2Collapsed = true;
                             imageViewer.OrignalImageInput(CustomIOMainger.LoadBitmap(Path.Combine(this.m_pathActiveProjectImage, imageName)));
                         }
-
                     }
                     else if (this.m_activeProjectInfoJObject["string_projectListInfo"][this.m_activeInnerProjectName]["string_selectProjectInputDataType"].ToString() == "CADImage")
                     {
@@ -3143,6 +3144,13 @@ namespace ProjectAI
             if (CADImageSaveList.Count != 0)
                 CADImageSaveList.RemoveAll(x => true);
 
+            //DJ
+            string[] files = cadImageSelect.OriginImageName.ToArray(); // Origin 기준으로 새로 들어온 이미지 관리
+            string[] SameFiles = cadImageSelect.OriginImageName.ToArray(); // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
+            string[] filesPath = cadImageSelect.OriginImagePath.ToArray(); // Origin 기준으로 새로 들어온 이미지의 FullPath
+            string[] CADImagePath = cadImageSelect.CADImagePath.ToArray(); // CAD 기준, 이미지 FullPath
+            //DJ
+/*
             int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
             int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
             string[] files = new string[OriginRowsCount]; // Origin 기준으로 새로 들어온 이미지 관리
@@ -3162,6 +3170,7 @@ namespace ProjectAI
                 if (i < CADRowsCount)
                     CADImagePath[i] = Path.Combine(cadImageSelect.CADGridView.Rows[i].Cells[2].Value.ToString(), cadImageSelect.CADGridView.Rows[i].Cells[1].Value.ToString());
             }
+*/
 
             int countNumber = files.Length;
             List<int> delIndexs = new List<int>();
@@ -4824,7 +4833,6 @@ namespace ProjectAI
             }
             return trainData;
         }
-
 
         private void JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
             JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, ref int imageTotalNumber, string CADImageFolder)
