@@ -8,19 +8,20 @@ namespace ProjectAI.ProjectManiger
 {
     public class GridViewDataIntegrity
     {
-        private int numValue;
+        private String numValue;
         private String filesNameValue;
         private String setValue;
         private String labeledValue;
         private String predictionValue;
-        private double probabilityValue;
+        private String probabilityValue;
+        private String addressValue;
 
         public GridViewDataIntegrity()
         {
             // Leave fields empty.
         }
 
-        public GridViewDataIntegrity(int num, String filesName, String set, String labeled, String prediction, double probability)
+        public GridViewDataIntegrity(String num, String filesName, String set, String labeled, String prediction, String probability)
         {
             numValue = num;
             filesNameValue = filesName;
@@ -30,7 +31,14 @@ namespace ProjectAI.ProjectManiger
             probabilityValue = probability;
         }
 
-        public int Num
+        public GridViewDataIntegrity(String num, String filesName, String address)
+        {
+            numValue = num;
+            filesNameValue = filesName;
+            addressValue = address;
+        }
+
+        public String Num
         {
             get
             {
@@ -90,7 +98,7 @@ namespace ProjectAI.ProjectManiger
             }
         }
 
-        public double Probability
+        public String Probability
         {
             get
             {
@@ -99,6 +107,18 @@ namespace ProjectAI.ProjectManiger
             set
             {
                 probabilityValue = value;
+            }
+        }
+
+        public String Address
+        {
+            get
+            {
+                return addressValue;
+            }
+            set
+            {
+                addressValue = value;
             }
         }
     }

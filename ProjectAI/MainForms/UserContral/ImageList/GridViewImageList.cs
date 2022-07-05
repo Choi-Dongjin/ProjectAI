@@ -11,10 +11,8 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 
         public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
 
-        private int rowInEdit = -1;
         // Declare a variable to indicate the commit scope.
         // Set this value to false to use cell-level commit scope.
-        private bool rowScopeCommit = true;
 
         public GridViewDataIntegrity customerInEdit;
         public GridViewImageList()
@@ -333,11 +331,10 @@ namespace ProjectAI.MainForms.UserContral.ImageList
             //this.GridImageListAutoResize();
         }
 
-        public void Test(int num, String filesName, String set, String labeled, String prediction, double probability)
+        public void GridDataAdd(String num, String filesName, String set, String labeled, String prediction, String probability, int row)
         {
             this.gridViewAddList.Add(new GridViewDataIntegrity(num, filesName, set, labeled, prediction, probability));
-            foreach (var item in gridViewAddList)
-                Console.WriteLine(item);
+            this.gridImageList.RowCount = row + 1;
         }
   
         /// <summary>
@@ -347,20 +344,13 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         /// <param name="e"></param>
         private void GridImageListCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
-
-            if (e.RowIndex == this.gridImageList.RowCount - 1) return;
+            if (e.RowIndex == this.gridImageList.RowCount) return;
 
             GridViewDataIntegrity gridViewDataIntegrityTmp = null;
 
             // Store a reference to the Customer object for the row being painted.
-            if (e.RowIndex == rowInEdit)
-            {
-                gridViewDataIntegrityTmp = this.customerInEdit;
-            }
-            else
-            {
-                gridViewDataIntegrityTmp = (GridViewDataIntegrity)this.gridViewAddList[e.RowIndex];
-            }
+
+            gridViewDataIntegrityTmp = (GridViewDataIntegrity)this.gridViewAddList[e.RowIndex];
 
             // Set the cell value to paint using the Customer object retrieved.
             switch (this.gridImageList.Columns[e.ColumnIndex].Name)
@@ -390,125 +380,5 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                     break;
             }
         }
-
-        /// <summary>
-        /// DataGridView 컨트롤의 VirtualMode 속성이 true이고 변경된 셀 값에 내부 데이터 원본의 스토리지가 필요할 때 발생
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridImageListCellValuePushed(object sender, DataGridViewCellValueEventArgs e)
-        {
-            GridViewDataIntegrity gridViewDataIntegrityTmp = null;
-
-            // Store a reference to the Customer object for the row being edited.
-            if (e.RowIndex < this.gridViewAddList.Count)
-            {
-                // If the user is editing a new row, create a new Customer object.
-                this.customerInEdit = new GridViewDataIntegrity(
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Num,
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).FilesName,
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Set,
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Labeled,
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Prediction,
-                    ((GridViewDataIntegrity)this.gridViewAddList[e.RowIndex]).Probability);
-                gridViewDataIntegrityTmp = this.customerInEdit;
-                this.rowInEdit = e.RowIndex;
-            }
-            else
-            {
-                gridViewDataIntegrityTmp = this.customerInEdit;
-            }
-
-            // Set the appropriate Customer property to the cell value entered.
-            String newValue = e.Value as String;
-
-            switch (this.gridImageList.Columns[e.ColumnIndex].Name)
-            {
-                case "Num Name":
-                    e.Value = gridViewDataIntegrityTmp.Num;
-                    break;
-
-                case "Files Name":
-                    e.Value = gridViewDataIntegrityTmp.FilesName;
-                    break;
-
-                case "Set":
-                    e.Value = gridViewDataIntegrityTmp.Set;
-                    break;
-
-                case "Labeled":
-                    e.Value = gridViewDataIntegrityTmp.Labeled;
-                    break;
-
-                case "Prediction":
-                    e.Value = gridViewDataIntegrityTmp.Prediction;
-                    break;
-
-                case "Probability":
-                    e.Value = gridViewDataIntegrityTmp.Probability;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// VirtualMode의 DataGridView 속성이 true이고 사용자가 DataGridView의 맨 아래에 있는 새 행으로 이동하면 발생
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridImageListNewRowNeeded(object sender, DataGridViewRowEventArgs e)
-        {
-            // Create a new Customer object when the user edits
-            // the row for new records.
-            this.customerInEdit = new GridViewDataIntegrity();
-            this.rowInEdit = this.gridImageList.Rows.Count - 1;
-        }
-
-        /// <summary>
-        /// 행의 유효성 검사가 완료된 후 발생
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridImageListRowValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            // Save row changes if any were made and release the edited
-            // Customer object if there is one.
-            if (e.RowIndex >= this.gridViewAddList.Count &&
-                e.RowIndex != this.gridImageList.Rows.Count - 1)
-            {
-                // Add the new Customer object to the data store.
-                this.gridViewAddList.Add(this.customerInEdit);
-                this.customerInEdit = null;
-                this.rowInEdit = -1;
-            }
-            else if (this.customerInEdit != null &&
-                e.RowIndex < this.gridViewAddList.Count)
-            {
-                // Save the modified Customer object in the data store.
-                this.gridViewAddList[e.RowIndex] = this.customerInEdit;
-                this.customerInEdit = null;
-                this.rowInEdit = -1;
-            }
-            else if (this.gridImageList.ContainsFocus)
-            {
-                this.customerInEdit = null;
-                this.rowInEdit = -1;
-            }
-        }
-
-        /// <summary>
-        /// VirtualMode 컨트롤의 DataGridView 속성이 true이고 DataGridView가 현재 행에 커밋되지 않은 변경 내용이 있는지 여부를 확인해야 하는 경우 발생
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridImageListRowDirtyStateNeeded(object sender, QuestionEventArgs e)
-        {
-            if (!rowScopeCommit)
-            {
-                // In cell-level commit scope, indicate whether the value
-                // of the current cell has been modified.
-                e.Response = this.gridImageList.IsCurrentCellDirty;
-            }
-        }
-
     }
 }

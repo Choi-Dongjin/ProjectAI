@@ -260,7 +260,6 @@ namespace ProjectAI.MainForms
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            // this.gridImageList.DoubleBuffered(true);
             this.WorkSpaceEarlyDataSet();
             this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
         }

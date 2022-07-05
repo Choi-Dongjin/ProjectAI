@@ -626,7 +626,7 @@ namespace ProjectAI
         /// <summary>
         /// 이미지 리스트 내의 이미지 갯수 기본값 - Test로 5로 정함 이미 프로젝트에서 정한 값은 몰?루
         /// </summary>
-        private readonly int m_imageeListSetnumber = 1000;
+        private readonly int m_imageeListSetnumber = 50;
 
         /// <summary>
         /// 현제 이미지 페이지
@@ -672,7 +672,7 @@ namespace ProjectAI
         public List<string> CADImageSaveList = new List<string>();
 
         //#9
-        //public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
 
         // Declare a Customer object to store data for a row being edited.
         public GridViewDataIntegrity customerInEdit;
@@ -1464,12 +1464,11 @@ namespace ProjectAI
             try
             {
                 metroGrid.Rows.Clear();
-
                 page = page - 1;
-
                 JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
                 if (imageFiles != null)
                 {
+                    int i = 0;
                     foreach (string imageFile in imageFiles)
                     {
                         if (imageFile != null && imageFile != "")
@@ -1521,17 +1520,22 @@ namespace ProjectAI
                             this.MainForm.gridImageList.Columns[4].Name = "Probability";
                             */
 
-                            //# GridView Add
-                            //metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
-                      
-                            ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList =
-                                (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
-                            gridViewImageList.Test(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
-                            
-                            //if (activeClassColor != null)
-                            //    metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
+                            //#9 GridView Add
+                            metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            //ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList =
+                            //    (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
+                            //gridViewImageList.GridDataAdd(imageNumber.ToString(), imageFile, set, activeClass, predictionClass, threshold.ToString(), i);
+                            //i++;
+                            // arraylist input 확인
+                            //this.gridViewAddList.Add(new GridViewDataIntegrity(imageNumber, imageFile, set, activeClass, predictionClass, threshold));
+                            //GridViewDataIntegrity tmp = null;
+                            //tmp = (GridViewDataIntegrity)this.gridViewAddList[i];
+                            //Console.WriteLine(tmp.FilesName);
+                            if (activeClassColor != null)
+                                metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
                         }
                     }
+
                 }
 
                 int size = 0;
@@ -2050,44 +2054,44 @@ namespace ProjectAI
             gridViewImageList.gridImageList.Rows.Clear();
             gridViewImageList.gridImageList.Refresh();
 
-            //gridViewImageList.gridImageList.ColumnCount = 6;
-            //gridViewImageList.gridImageList.Columns[0].Name = "NO";
-            //gridViewImageList.gridImageList.Columns[1].Name = "Files Name";
-            //gridViewImageList.gridImageList.Columns[2].Name = "Set"; //Train Test
-            //gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
-            //gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
-            //gridViewImageList.gridImageList.Columns[5].Name = "Probability";
+            gridViewImageList.gridImageList.ColumnCount = 6;
+            gridViewImageList.gridImageList.Columns[0].Name = "NO";
+            gridViewImageList.gridImageList.Columns[1].Name = "Files Name";
+            gridViewImageList.gridImageList.Columns[2].Name = "Set"; //Train Test
+            gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
+            gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
+            gridViewImageList.gridImageList.Columns[5].Name = "Probability";
             //#9
-            DataGridViewTextBoxColumn numberColumn = new DataGridViewTextBoxColumn();
-            numberColumn.HeaderText = "NO";
-            numberColumn.Name = "Num Name";
+            //DataGridViewTextBoxColumn numberColumn = new DataGridViewTextBoxColumn();
+            //numberColumn.HeaderText = "NO";
+            //numberColumn.Name = "Num Name";
 
-            DataGridViewTextBoxColumn filesNameColumn = new DataGridViewTextBoxColumn();
-            filesNameColumn.HeaderText = "Files Name";
-            filesNameColumn.Name = "Files Name";
+            //DataGridViewTextBoxColumn filesNameColumn = new DataGridViewTextBoxColumn();
+            //filesNameColumn.HeaderText = "Files Name";
+            //filesNameColumn.Name = "Files Name";
 
-            DataGridViewTextBoxColumn setColumn = new DataGridViewTextBoxColumn();
-            setColumn.HeaderText = "Set";
-            setColumn.Name = "Set";
+            //DataGridViewTextBoxColumn setColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Set";
+            //setColumn.Name = "Set";
 
-            DataGridViewTextBoxColumn labeledColumn = new DataGridViewTextBoxColumn();
-            setColumn.HeaderText = "Labeled";
-            setColumn.Name = "Labeled";
+            //DataGridViewTextBoxColumn labeledColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Labeled";
+            //setColumn.Name = "Labeled";
 
-            DataGridViewTextBoxColumn predictionColumn = new DataGridViewTextBoxColumn();
-            setColumn.HeaderText = "Prediction";
-            setColumn.Name = "Prediction";
+            //DataGridViewTextBoxColumn predictionColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Prediction";
+            //setColumn.Name = "Prediction";
 
-            DataGridViewTextBoxColumn probabilityColumn = new DataGridViewTextBoxColumn();
-            setColumn.HeaderText = "Probability";
-            setColumn.Name = "Probability";
+            //DataGridViewTextBoxColumn probabilityColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Probability";
+            //setColumn.Name = "Probability";
 
-            gridViewImageList.gridImageList.Columns.Add(numberColumn);
-            gridViewImageList.gridImageList.Columns.Add(filesNameColumn);
-            gridViewImageList.gridImageList.Columns.Add(setColumn);
-            gridViewImageList.gridImageList.Columns.Add(labeledColumn);
-            gridViewImageList.gridImageList.Columns.Add(predictionColumn);
-            gridViewImageList.gridImageList.Columns.Add(probabilityColumn);
+            //gridViewImageList.gridImageList.Columns.Add(numberColumn);
+            //gridViewImageList.gridImageList.Columns.Add(filesNameColumn);
+            //gridViewImageList.gridImageList.Columns.Add(setColumn);
+            //gridViewImageList.gridImageList.Columns.Add(labeledColumn);
+            //gridViewImageList.gridImageList.Columns.Add(predictionColumn);
+            //gridViewImageList.gridImageList.Columns.Add(probabilityColumn);
 
 
             gridViewImageList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3342,6 +3346,7 @@ namespace ProjectAI
         public void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
             string MatchingName = cadImageSelect.CADNameGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
+            
             if (MatchingName != null)
             {
                 CADImageSaveList.Add(Path.Combine(Path.GetDirectoryName(cadImageSelect.CADAddressGridList[0].ToString()), MatchingName));
