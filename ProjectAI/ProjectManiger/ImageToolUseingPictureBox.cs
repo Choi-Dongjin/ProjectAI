@@ -11,6 +11,30 @@ namespace ProjectAI.ProjectManiger
         private Bitmap imgDrawingBitmap;
         private Bitmap imgInputBitmap;
 
+        /// <summary>
+        /// Bitmap 이미지 자져오기
+        /// </summary>
+        internal Bitmap ImgBitmap
+        {
+            get { return this.imgInputBitmap; }
+        }
+
+        /// <summary>
+        /// Bitmap 이미지 상태 확인, Null = false
+        /// </summary>
+        internal bool ImgBitmapState
+        {
+            get
+            {
+                if (this.imgInputBitmap == null)
+                    return false;
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         private Rectangle imgRect;
 
         private double zoomRatio = 1F;
@@ -333,8 +357,8 @@ namespace ProjectAI.ProjectManiger
         {
             if (orgA * orgB > targetA * targetB)
             {
-                double ra = (targetA / orgA) - (targetA / orgA) * 0.1;
-                double rb = (targetB / orgB) - (targetB / orgB) * 0.1;
+                double ra = (targetA / orgA) - (targetA / orgA) * 0.01;
+                double rb = (targetB / orgB) - (targetB / orgB) * 0.01;
 
                 if (ra > rb)
                     return rb;
@@ -343,10 +367,10 @@ namespace ProjectAI.ProjectManiger
             }
             else
             {
-                if (orgA > orgB)
-                    return (targetA / orgA) - (targetA / orgA) * 0.1;
+                if (targetA < targetB)
+                    return (targetA / orgA) - (targetA / orgA) * 0.01;
                 else
-                    return targetB / orgB - (targetB / orgB) * 0.1;
+                    return targetB / orgB - (targetB / orgB) * 0.01;
             }
         }
 
@@ -366,7 +390,7 @@ namespace ProjectAI.ProjectManiger
         /// </summary>
         /// <param name="bitmap"> 리뷰할 bitmap 이미지 </param>
         /// <param name="autoResize"> 이미지 입력중 viewbox 이미지 시이즈 자동으로 fitin 하기 기본 활성화, 기존 설정으로 입력을 넣기 위해서는 flase로 </param>
-        public void InputBitmapImage(Bitmap bitmap, bool autoResize = true)
+        internal void InputBitmapImage(Bitmap bitmap, bool autoResize = true)
         {
             if (bitmap != null)
             {
@@ -396,6 +420,12 @@ namespace ProjectAI.ProjectManiger
                     this.imgInputBitmap = bitmap;
                     this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 
+                    if (this.imgRect == null || this.mousePointZoom == null)
+                    {
+                        this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgInputBitmap.Width * zoomRatio), (int)Math.Round(this.imgInputBitmap.Height * zoomRatio));
+                        this.mousePointZoom = new Point((int)Math.Round(this.imgInputBitmap.Width / 2.0F), (int)Math.Round(this.imgInputBitmap.Height / 2.0F));
+                    }
+
                     this.pictureBox.Invalidate();
                 }
             }
@@ -407,7 +437,6 @@ namespace ProjectAI.ProjectManiger
 
                 this.pictureBox.Invalidate();
             }
-            GC.Collect();
         }
 
         internal void ToggleDrawing()

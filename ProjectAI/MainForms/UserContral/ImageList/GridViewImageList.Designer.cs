@@ -251,7 +251,7 @@
             this.gridImageList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridImageList.Size = new System.Drawing.Size(378, 686);
             this.gridImageList.Style = MetroFramework.MetroColorStyle.Silver;
-            this.gridImageList.TabIndex = 1;
+            this.gridImageList.TabIndex = 0;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
             this.gridImageList.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridImageListCellValueNeeded);
