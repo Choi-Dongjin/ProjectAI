@@ -260,7 +260,6 @@ namespace ProjectAI.MainForms
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            // this.gridImageList.DoubleBuffered(true);
             this.WorkSpaceEarlyDataSet();
             this.TrainForm = ProjectAI.TrainForms.TrainForm.GetInstance();
         }
@@ -732,10 +731,7 @@ namespace ProjectAI.MainForms
 
         private void ToolStripMenuItem1Click(object sender, EventArgs e)
         {
-            ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectAI.ProjectManiger.CustomIOManigerFoem.GetInstance();
-            customIOManigerFoem.Show();
-
-            //ProjectAI.ProjectManiger.CustomImageProcess.CalculateDeltaE1();
+            WorkSpaceData.m_activeProjectMainger.JsonDataSave(1);
         }
 
         private void TsmProjectAllWorkSpaceSaveClick(object sender, EventArgs e)

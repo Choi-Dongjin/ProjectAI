@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectAI.ProjectManiger;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,6 +9,12 @@ namespace ProjectAI.MainForms.UserContral.ImageList
     {
         private FormsManiger formsManiger = FormsManiger.GetInstance();
 
+        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+
+        // Declare a variable to indicate the commit scope.
+        // Set this value to false to use cell-level commit scope.
+
+        public GridViewDataIntegrity customerInEdit;
         public GridViewImageList()
         {
             InitializeComponent();
@@ -322,6 +329,56 @@ namespace ProjectAI.MainForms.UserContral.ImageList
         private void GridViewImageList_Resize(object sender, EventArgs e)
         {
             //this.GridImageListAutoResize();
+        }
+
+        public void GridDataAdd(String num, String filesName, String set, String labeled, String prediction, String probability, int row)
+        {
+            this.gridViewAddList.Add(new GridViewDataIntegrity(num, filesName, set, labeled, prediction, probability));
+            this.gridImageList.RowCount = row + 1;
+        }
+  
+        /// <summary>
+        /// DataGridView 컨트롤의 VirtualMode 속성이 true이고, DataGridView에서 셀을 서식 지정하고 표시하기 위해 셀에 대한 값이 필요할 때 발생
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridImageListCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        {
+            if (e.RowIndex == this.gridImageList.RowCount) return;
+
+            GridViewDataIntegrity gridViewDataIntegrityTmp = null;
+
+            // Store a reference to the Customer object for the row being painted.
+
+            gridViewDataIntegrityTmp = (GridViewDataIntegrity)this.gridViewAddList[e.RowIndex];
+
+            // Set the cell value to paint using the Customer object retrieved.
+            switch (this.gridImageList.Columns[e.ColumnIndex].Name)
+            {
+                case "Num Name":
+                    e.Value = gridViewDataIntegrityTmp.Num;
+                    break;
+
+                case "Files Name":
+                    e.Value = gridViewDataIntegrityTmp.FilesName;
+                    break;
+
+                case "Set":
+                    e.Value = gridViewDataIntegrityTmp.Set;
+                    break;
+
+                case "Labeled":
+                    e.Value = gridViewDataIntegrityTmp.Labeled;
+                    break;
+
+                case "Prediction":
+                    e.Value = gridViewDataIntegrityTmp.Prediction;
+                    break;
+
+                case "Probability":
+                    e.Value = gridViewDataIntegrityTmp.Probability;
+                    break;
+            }
         }
     }
 }

@@ -307,6 +307,7 @@
     <Compile Include="ProjectManiger\CustomIOManigerFoem.Designer.cs">
       <DependentUpon>CustomIOManigerFoem.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProjectManiger\GridViewDataIntegrity.cs" />
     <Compile Include="ProjectManiger\ImageToolUseingPictureBox.cs" />
     <Compile Include="ProjectManiger\ProjectMainger.cs" />
     <Compile Include="ProjectManiger\JsonDataManiger.cs" />

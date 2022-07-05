@@ -254,6 +254,7 @@
             this.gridImageList.TabIndex = 0;
             this.gridImageList.Theme = MetroFramework.MetroThemeStyle.Light;
             this.gridImageList.UseStyleColors = true;
+            this.gridImageList.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridImageListCellValueNeeded);
             this.gridImageList.SelectionChanged += new System.EventHandler(this.GridImageListSelectionChanged);
             this.gridImageList.Resize += new System.EventHandler(this.GridImageListResize);
             // 

@@ -1,5 +1,6 @@
 ﻿using MetroFramework;
 using Newtonsoft.Json.Linq;
+using ProjectAI.ProjectManiger;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -672,6 +673,15 @@ namespace ProjectAI
         /// CADImage가 OriginImage와 부합되는 이미지만 저장
         /// </summary>
         public List<string> CADImageSaveList = new List<string>();
+
+        //#9
+        public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
+
+        // Declare a Customer object to store data for a row being edited.
+        public GridViewDataIntegrity customerInEdit;
+
+        public int rowInEdit = -1;
+
 
         /// <summary>
         /// 프로젝트 #Class 처음 진입시
@@ -1456,12 +1466,11 @@ namespace ProjectAI
             try
             {
                 metroGrid.Rows.Clear();
-
                 page = page - 1;
-
                 JArray imageFiles = (JArray)m_activeProjectImageListJObject["imageList"][page.ToString()];
                 if (imageFiles != null)
                 {
+                    int i = 0;
                     foreach (string imageFile in imageFiles)
                     {
                         if (imageFile != null && imageFile != "")
@@ -1513,11 +1522,22 @@ namespace ProjectAI
                             this.MainForm.gridImageList.Columns[4].Name = "Probability";
                             */
 
+                            //#9 GridView Add
                             metroGrid.Rows.Add(imageNumber, imageFile, set, activeClass, predictionClass, threshold);
+                            //ProjectAI.MainForms.UserContral.ImageList.GridViewImageList gridViewImageList =
+                            //    (ProjectAI.MainForms.UserContral.ImageList.GridViewImageList)this.m_imageListDictionary[this.m_activeInnerProjectName];
+                            //gridViewImageList.GridDataAdd(imageNumber.ToString(), imageFile, set, activeClass, predictionClass, threshold.ToString(), i);
+                            //i++;
+                            // arraylist input 확인
+                            //this.gridViewAddList.Add(new GridViewDataIntegrity(imageNumber, imageFile, set, activeClass, predictionClass, threshold));
+                            //GridViewDataIntegrity tmp = null;
+                            //tmp = (GridViewDataIntegrity)this.gridViewAddList[i];
+                            //Console.WriteLine(tmp.FilesName);
                             if (activeClassColor != null)
                                 metroGrid.Rows[metroGrid.RowCount - 1].Cells[3].Style.ForeColor = ColorTranslator.FromHtml(activeClassColor);
                         }
                     }
+
                 }
 
                 int size = 0;
@@ -1542,6 +1562,7 @@ namespace ProjectAI
             {
             }
         }
+
 
         /// <summary>
         /// 이미지 페이지 이동 Forward
@@ -2042,6 +2063,38 @@ namespace ProjectAI
             gridViewImageList.gridImageList.Columns[3].Name = "Labeled";
             gridViewImageList.gridImageList.Columns[4].Name = "Prediction";
             gridViewImageList.gridImageList.Columns[5].Name = "Probability";
+            //#9
+            //DataGridViewTextBoxColumn numberColumn = new DataGridViewTextBoxColumn();
+            //numberColumn.HeaderText = "NO";
+            //numberColumn.Name = "Num Name";
+
+            //DataGridViewTextBoxColumn filesNameColumn = new DataGridViewTextBoxColumn();
+            //filesNameColumn.HeaderText = "Files Name";
+            //filesNameColumn.Name = "Files Name";
+
+            //DataGridViewTextBoxColumn setColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Set";
+            //setColumn.Name = "Set";
+
+            //DataGridViewTextBoxColumn labeledColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Labeled";
+            //setColumn.Name = "Labeled";
+
+            //DataGridViewTextBoxColumn predictionColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Prediction";
+            //setColumn.Name = "Prediction";
+
+            //DataGridViewTextBoxColumn probabilityColumn = new DataGridViewTextBoxColumn();
+            //setColumn.HeaderText = "Probability";
+            //setColumn.Name = "Probability";
+
+            //gridViewImageList.gridImageList.Columns.Add(numberColumn);
+            //gridViewImageList.gridImageList.Columns.Add(filesNameColumn);
+            //gridViewImageList.gridImageList.Columns.Add(setColumn);
+            //gridViewImageList.gridImageList.Columns.Add(labeledColumn);
+            //gridViewImageList.gridImageList.Columns.Add(predictionColumn);
+            //gridViewImageList.gridImageList.Columns.Add(probabilityColumn);
+
 
             gridViewImageList.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewImageList.Location = new System.Drawing.Point(0, 0);
@@ -3311,6 +3364,7 @@ namespace ProjectAI
         public void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
         {
             string MatchingName = cadImageSelect.CADNameGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
+            
             if (MatchingName != null)
             {
                 CADImageSaveList.Add(Path.Combine(Path.GetDirectoryName(cadImageSelect.CADAddressGridList[0].ToString()), MatchingName));
