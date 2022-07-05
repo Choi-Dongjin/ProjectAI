@@ -69,7 +69,6 @@ namespace ProjectAI
 
         private void StartFormShown(object sender, EventArgs e)
         {
-
             // HardwareInformation.GetHardwareInformation();
         }
 
@@ -307,9 +306,15 @@ namespace ProjectAI
 
         private void ButtonStartClick(object sender, EventArgs e)
         {
-            /// <summary>
-            /// MainForm 호출
-            /// </summary>
+            //PictureBox pictureBox = new PictureBox();
+            //pictureBox.Image = Properties.Resources.Loading2Test;
+            //pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //pictureBox.Dock = DockStyle.Fill;
+            //this.PanelMainLogo.Controls.Add(pictureBox);
+            //this.PanelMainLogo.BackgroundImage = null;
+            this.metroLabel1.Text = "Loading Data";
+            //CustomIOMainger.FileIODelay(1000);
+
             ProjectAI.MainForms.MainForm MainForm = ProjectAI.MainForms.MainForm.GetInstance();
             MainForm.Show();
             this.Close();

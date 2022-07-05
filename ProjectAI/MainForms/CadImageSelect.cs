@@ -430,9 +430,16 @@ namespace ProjectAI.MainForms
 
         private void OriginimageInput(string[] files, string[] filesPath, CancellationToken token)
         {
-            int totalFileNumber = files.Count();
+            //int totalFileNumber = files.Count();
+            int totalFileNumber = 1000;
             int workInNumber = 1;
-            for (int i = 0; i < files.Length; i++)
+
+            OriginNameGridList = files.ToList();
+            OriginAddressGridList = filesPath.ToList();
+
+            //DJ
+            //for (int i = 0; i < files.Length; i++)
+            for (int i = 0; i < totalFileNumber; i++)
             {
                 token.ThrowIfCancellationRequested();
                 bool check = true;
@@ -453,8 +460,7 @@ namespace ProjectAI.MainForms
                     mainForm.SafeWriteLabelText(OriginlblMtotalNumber, totalFileNumber.ToString());
                     mainForm.SafeWriteLabelText(OriginlblMIOStatus, "Input");
                     mainForm.SafeWriteLabelText(OriginlblMworkInFileName, Path.GetFileName(files[i]));
-                    OriginNameGridList.Add(files[i]);
-                    OriginAddressGridList.Add(filesPath[i]);
+
                     workInNumber++;
                     originNum++;
                 }
@@ -465,10 +471,16 @@ namespace ProjectAI.MainForms
 
         private void CADimageInput(string[] files, string[] filesPath, CancellationToken token)
         {
-            int totalFileNumber = files.Count();
+            //int totalFileNumber = files.Count();
+            int totalFileNumber = 1000;
             int workInNumber = 1;
 
-            for (int i = 0; i < files.Length; i++)
+            CADNameGridList = files.ToList();
+            CADAddressGridList = filesPath.ToList();
+
+            //DJ
+            //for (int i = 0; i < files.Length; i++)
+            for (int i = 0; i < totalFileNumber; i++)
             {
                 token.ThrowIfCancellationRequested();
                 bool check = true;
@@ -489,8 +501,6 @@ namespace ProjectAI.MainForms
                     mainForm.SafeWriteLabelText(CADlblMtotalNumber, totalFileNumber.ToString());
                     mainForm.SafeWriteLabelText(CADlblMIOStatus, "Input");
                     mainForm.SafeWriteLabelText(CADlblMworkInFileName, Path.GetFileName(files[i]));
-                    CADNameGridList.Add(files[i]);
-                    CADAddressGridList.Add(filesPath[i]);
                     workInNumber++;
                     CADNum++;
                 }

@@ -438,6 +438,36 @@
   <data name="tableLayoutMainIconPath.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labMprogramWorkSpacePath" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btnMprogramWorkSpaceChange" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="txtMprogramWorkSpacePath" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,50,Percent,100,Absolute,32" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
+  <data name="metroLabel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 40</value>
+  </data>
+  <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>257, 53</value>
+  </data>
+  <data name="metroLabel1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="metroLabel1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>tableLayoutMainIcons</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="tableLayoutMainIcons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -469,7 +499,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutMainIcons.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="metroButton4" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStart" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStyleChange" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStartOption" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutMainIconPath" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,5,Absolute,70" /&gt;&lt;Rows Styles="Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="metroButton4" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStart" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStyleChange" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonStartOption" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutMainIconPath" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="metroLabel1" Row="3" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,5,Absolute,70" /&gt;&lt;Rows Styles="Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20,Absolute,22,Percent,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutProjectAIMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

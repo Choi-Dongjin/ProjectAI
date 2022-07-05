@@ -96,11 +96,11 @@
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvMWaitingforWork = new MetroFramework.Controls.MetroGrid();
-            this.btnMStartProcessing = new MetroFramework.Controls.MetroButton();
-            this.btnMWaitingAllStop = new MetroFramework.Controls.MetroButton();
+            this.btnMWaitingStart = new MetroFramework.Controls.MetroButton();
             this.btnMStopProcessing = new MetroFramework.Controls.MetroButton();
             this.btnMWaitingStop = new MetroFramework.Controls.MetroButton();
-            this.btnMWaitingStart = new MetroFramework.Controls.MetroButton();
+            this.btnMStartProcessing = new MetroFramework.Controls.MetroButton();
+            this.btnMWaitingAllStop = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -493,28 +493,16 @@
             this.dgvMWaitingforWork.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMWaitingforWorkCellMouseDoubleClick);
             this.dgvMWaitingforWork.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DgvMWaitingforWorkRowsAdded);
             // 
-            // btnMStartProcessing
+            // btnMWaitingStart
             // 
-            this.btnMStartProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMStartProcessing.Location = new System.Drawing.Point(353, 138);
-            this.btnMStartProcessing.Name = "btnMStartProcessing";
-            this.btnMStartProcessing.Size = new System.Drawing.Size(96, 29);
-            this.btnMStartProcessing.TabIndex = 2;
-            this.btnMStartProcessing.Text = "Start Register";
-            this.toolTip1.SetToolTip(this.btnMStartProcessing, "Start Processing Register");
-            this.btnMStartProcessing.UseSelectable = true;
-            this.btnMStartProcessing.Click += new System.EventHandler(this.BtnMStartProcessingClick);
-            // 
-            // btnMWaitingAllStop
-            // 
-            this.btnMWaitingAllStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMWaitingAllStop.Location = new System.Drawing.Point(149, 138);
-            this.btnMWaitingAllStop.Name = "btnMWaitingAllStop";
-            this.btnMWaitingAllStop.Size = new System.Drawing.Size(96, 29);
-            this.btnMWaitingAllStop.TabIndex = 5;
-            this.btnMWaitingAllStop.Text = "All Stop";
-            this.btnMWaitingAllStop.UseSelectable = true;
-            this.btnMWaitingAllStop.Click += new System.EventHandler(this.BtnMWaitingAllStopClick);
+            this.btnMWaitingStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMWaitingStart.Location = new System.Drawing.Point(455, 138);
+            this.btnMWaitingStart.Name = "btnMWaitingStart";
+            this.btnMWaitingStart.Size = new System.Drawing.Size(96, 29);
+            this.btnMWaitingStart.TabIndex = 6;
+            this.btnMWaitingStart.Text = "Menual Start";
+            this.btnMWaitingStart.UseSelectable = true;
+            this.btnMWaitingStart.Click += new System.EventHandler(this.BtnMWaitingStartClick);
             // 
             // btnMStopProcessing
             // 
@@ -539,16 +527,28 @@
             this.btnMWaitingStop.UseSelectable = true;
             this.btnMWaitingStop.Click += new System.EventHandler(this.BtnMWaitingStopClick);
             // 
-            // btnMWaitingStart
+            // btnMStartProcessing
             // 
-            this.btnMWaitingStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMWaitingStart.Location = new System.Drawing.Point(455, 138);
-            this.btnMWaitingStart.Name = "btnMWaitingStart";
-            this.btnMWaitingStart.Size = new System.Drawing.Size(96, 29);
-            this.btnMWaitingStart.TabIndex = 6;
-            this.btnMWaitingStart.Text = "Menual Start";
-            this.btnMWaitingStart.UseSelectable = true;
-            this.btnMWaitingStart.Click += new System.EventHandler(this.BtnMWaitingStartClick);
+            this.btnMStartProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMStartProcessing.Location = new System.Drawing.Point(353, 138);
+            this.btnMStartProcessing.Name = "btnMStartProcessing";
+            this.btnMStartProcessing.Size = new System.Drawing.Size(96, 29);
+            this.btnMStartProcessing.TabIndex = 2;
+            this.btnMStartProcessing.Text = "Start Register";
+            this.toolTip1.SetToolTip(this.btnMStartProcessing, "Start Processing Register");
+            this.btnMStartProcessing.UseSelectable = true;
+            this.btnMStartProcessing.Click += new System.EventHandler(this.BtnMStartProcessingClick);
+            // 
+            // btnMWaitingAllStop
+            // 
+            this.btnMWaitingAllStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMWaitingAllStop.Location = new System.Drawing.Point(149, 138);
+            this.btnMWaitingAllStop.Name = "btnMWaitingAllStop";
+            this.btnMWaitingAllStop.Size = new System.Drawing.Size(96, 29);
+            this.btnMWaitingAllStop.TabIndex = 5;
+            this.btnMWaitingAllStop.Text = "Pause";
+            this.btnMWaitingAllStop.UseSelectable = true;
+            this.btnMWaitingAllStop.Click += new System.EventHandler(this.BtnMWaitingAllStopClick);
             // 
             // metroLabel1
             // 
