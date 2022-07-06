@@ -2925,7 +2925,7 @@ namespace ProjectAI
         /// <summary>
         /// 많은 이미지를 선택하고 OK 누를 때 OriginImage와 CADImage가 1:1매칭으로 전부 등록된다. 1:1이 안되면 안되는 채로 OriginImage가 저장
         /// </summary>
-        public void CADMultiImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
+        public async void CADMultiImageAdding(ProjectAI.MainForms.CadImageSelect cadImageSelect, MetroFramework.Controls.MetroGrid metroGrid, MetroFramework.Controls.MetroCheckBox ckbMdataGridViewAutoSize, string modifyClassName, string dataSet)
         {
             //#35 UI로 묶여져 있는 변수들을 만들어진 List로 관리해야 함
             //CADImage 저장 폴더
@@ -3042,6 +3042,56 @@ namespace ProjectAI
             //CADImage를 저장할 폴더 명
             string CADImageFolder = Path.Combine(this.m_pathActiveProjectCADImage, this.m_activeInnerProjectName);
 
+            string[] inputFiles1 = new string[files.Length];
+            string[] inputFiles2 = new string[newSameFiles.Length];
+            for (int i = 0; i < files.Length; i++)
+            {
+                string[] fileNameSplit = files[i].Split('_');
+                string fileName = null;
+                for (int j = 0; j < fileNameSplit.Length - 1; j++)
+                {
+                    if (fileName == null)
+                        fileName = fileNameSplit[j];
+                    else
+                        fileName += "_" + fileNameSplit[j];
+                }
+
+                //fileList1[i] = fileName + $".{System.IO.Path.GetExtension(fileList1[i])}"; // 확장자 포함
+                inputFiles1[i] = fileName; // 확장자 미 포함
+            }
+            for (int i = 0; i < newSameFiles.Length; i++)
+            {
+                string[] fileNameSplit = newSameFiles[i].Split('_');
+                string fileName = null;
+                for (int j = 0; j < fileNameSplit.Length - 1; j++)
+                {
+                    if (fileName == null)
+                        fileName = fileNameSplit[j];
+                    else
+                        fileName += "_" + fileNameSplit[j];
+                }
+
+                //fileList1[i] = fileName + $".{System.IO.Path.GetExtension(fileList1[i])}"; // 확장자 포함
+                inputFiles2[i] = fileName; // 확장자 미 포함
+            }
+
+            System.Threading.CancellationTokenSource searchAlgorithmCancellTokenSource = new System.Threading.CancellationTokenSource();
+            ProjectAlgorithm.SearchAlgorithmString searchAlgorithmString = new ProjectAlgorithm.SearchAlgorithmString();
+            Task<string[]> searchAlgorithmStringTaskFiles = Task.Run(() => searchAlgorithmString.StringArraySearchManager(files, cadImageSelect.CADNameGridList.ToArray(), searchAlgorithmCancellTokenSource.Token));
+            Task<string[]> searchAlgorithmStringTaskNewSameFiles = Task.Run(() => searchAlgorithmString.StringArraySearchManager(files, cadImageSelect.CADNameGridList.ToArray(), searchAlgorithmCancellTokenSource.Token));
+
+            if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                mainForm.SafeVisiblePanel(mainForm.panelstatus, true);
+            mainForm.SafeWriteProgressBar(mainForm.pgbMfileIOstatus, OriginRowsCount, 0);
+            mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, "0");
+            mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, OriginRowsCount.ToString());
+            mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+            mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, "Image Matching");
+
+            await searchAlgorithmStringTaskFiles;
+            string[] searchDataArrayFiles = await searchAlgorithmStringTaskFiles;
+
+
             // Image List Data 값 반영
             for (int i = 0; i < files.Length; i++)
             {
@@ -3053,11 +3103,15 @@ namespace ProjectAI
                     Labeled = new JObject() { }
                 };
                 this.m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i], searchDataArrayFiles[i]);
             }
+
+            await searchAlgorithmStringTaskNewSameFiles;
+            string[] searchDataArraynewSameFiles = await searchAlgorithmStringTaskNewSameFiles;
+
             for (int i = 0; i < newSameFiles.Length; i++)
             {
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i], searchDataArraynewSameFiles[i]);
             }
 
             // image List 값 반영
@@ -3144,12 +3198,10 @@ namespace ProjectAI
             if (CADImageSaveList.Count != 0)
                 CADImageSaveList.RemoveAll(x => true);
 
-            //DJ
             string[] files = cadImageSelect.OriginImageName.ToArray(); // Origin 기준으로 새로 들어온 이미지 관리
             string[] SameFiles = cadImageSelect.OriginImageName.ToArray(); // Origin 기준으로 이미 Grid에 같은 이름의 이미지가 있을 때 관리
             string[] filesPath = cadImageSelect.OriginImagePath.ToArray(); // Origin 기준으로 새로 들어온 이미지의 FullPath
             string[] CADImagePath = cadImageSelect.CADImagePath.ToArray(); // CAD 기준, 이미지 FullPath
-            //DJ
 /*
             int OriginRowsCount = cadImageSelect.OriginGridView.Rows.Count; //Origin Grid의 이미지 개수
             int CADRowsCount = cadImageSelect.CADGridView.Rows.Count; //CAD Grid의 이미지 개수
@@ -3243,8 +3295,9 @@ namespace ProjectAI
             // Image List Data 값 반영
             //ImageMatchingOK(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder);
 
-            Task CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, ref imageTotalNumber, CADImageFolder));
+            Task<int> CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
             await CADOkTask;
+            imageTotalNumber = await CADOkTask;
             //for (int i = 0; i < files.Length; i++)
             //{
             //    imageTotalNumber++;
@@ -3361,10 +3414,8 @@ namespace ProjectAI
         //        }
         //    }
         //}
-        public void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file)
+        public void WriteImageListData(ProjectAI.MainForms.CadImageSelect cadImageSelect, JObject labeledDatainnerProjectLabelName, string CADImageFolder, string file, string MatchingName)
         {
-            string MatchingName = cadImageSelect.CADNameGridList.Find(a => a.Contains(cadImageSelect.NameUnderbarParsing(file)));
-            
             if (MatchingName != null)
             {
                 CADImageSaveList.Add(Path.Combine(Path.GetDirectoryName(cadImageSelect.CADAddressGridList[0].ToString()), MatchingName));
@@ -4834,13 +4885,77 @@ namespace ProjectAI
             return trainData;
         }
 
-        private void JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
-            JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, ref int imageTotalNumber, string CADImageFolder)
+        private async Task<int> JsonImageWrite(ProjectAI.MainForms.CadImageSelect cadImageSelect, string m_pathActiveProjectImage, JObject m_activeProjectDataImageListDataJObject,
+            JObject labeledDatainnerProjectLabelName, string[] files, string[] newSameFiles, int imageTotalNumber, string CADImageFolder)
         {
             int totalFileNumber = files.Count();
             int workInNumber = 1;
+
+            System.Threading.CancellationTokenSource searchAlgorithmCancellTokenSource = new System.Threading.CancellationTokenSource();
+            ProjectAlgorithm.SearchAlgorithmString searchAlgorithmString = new ProjectAlgorithm.SearchAlgorithmString();
+
+            string[] inputFiles1 = new string[files.Length];
+            string[] inputFiles2 = new string[newSameFiles.Length];
             for (int i = 0; i < files.Length; i++)
             {
+                string[] fileNameSplit = files[i].Split('_');
+                string fileName = null;
+                for (int j = 0; j < fileNameSplit.Length - 1; j++)
+                {
+                    if (fileName == null)
+                        fileName = fileNameSplit[j];
+                    else
+                        fileName += "_" + fileNameSplit[j];
+                }
+
+                //fileList1[i] = fileName + $".{System.IO.Path.GetExtension(fileList1[i])}"; // 확장자 포함
+                inputFiles1[i] = fileName; // 확장자 미 포함
+            }
+            for (int i = 0; i < newSameFiles.Length; i++)
+            {
+                string[] fileNameSplit = newSameFiles[i].Split('_');
+                string fileName = null;
+                for (int j = 0; j < fileNameSplit.Length - 1; j++)
+                {
+                    if (fileName == null)
+                        fileName = fileNameSplit[j];
+                    else
+                        fileName += "_" + fileNameSplit[j];
+                }
+
+                //fileList1[i] = fileName + $".{System.IO.Path.GetExtension(fileList1[i])}"; // 확장자 포함
+                inputFiles2[i] = fileName; // 확장자 미 포함
+            }
+
+            Task<string[]> searchAlgorithmStringTaskFiles = Task.Run(() => searchAlgorithmString.StringArraySearchManager(inputFiles1, cadImageSelect.CADNameGridList.ToArray(), searchAlgorithmCancellTokenSource.Token));
+            Task<string[]> searchAlgorithmStringTaskNewSameFiles = Task.Run(() => searchAlgorithmString.StringArraySearchManager(inputFiles2, cadImageSelect.CADNameGridList.ToArray(), searchAlgorithmCancellTokenSource.Token));
+
+            if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                mainForm.SafeVisiblePanel(mainForm.panelstatus, true);
+            mainForm.SafeWriteProgressBar(mainForm.pgbMfileIOstatus, totalFileNumber, 0);
+            mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, "0");
+            mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
+            mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+            mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, "Image Matching");
+
+            await searchAlgorithmStringTaskFiles;
+            string[] searchDataArrayFiles = await searchAlgorithmStringTaskFiles;
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (i % 200 == 0)
+                {
+                    if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                        mainForm.SafeVisiblePanel(mainForm.panelstatus, true);
+                    mainForm.SafeWriteProgressBar(mainForm.pgbMfileIOstatus, totalFileNumber, workInNumber);
+                    mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
+                    mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
+                    mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+                    mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i])); 
+                }
+                workInNumber++;
+
+
                 imageTotalNumber++;
                 object imageData = new
                 {
@@ -4849,28 +4964,29 @@ namespace ProjectAI
                     Labeled = new JObject() { }
                 };
                 m_activeProjectDataImageListDataJObject[files[i].ToString()] = JObject.FromObject(imageData);
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i]);
-                if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                    mainForm.SafeVisiblePanel(mainForm.panelstatus, true);
-                mainForm.SafeWriteProgressBar(mainForm.pgbMfileIOstatus, totalFileNumber, workInNumber);
-                mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
-                mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
-                mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
-                mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i]));
-                workInNumber++;
+                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, files[i], searchDataArrayFiles[i]);
             }
+
+            await searchAlgorithmStringTaskNewSameFiles;
+            string[] searchDataArrayNewSameFiles = await searchAlgorithmStringTaskNewSameFiles;
 
             for (int i = 0; i < newSameFiles.Length; i++)
             {
-                WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i]);
-                mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
-                mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
-                mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
-                mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i]));
+                if (i % 200 == 0)
+                {
+                    mainForm.SafeWriteLabelText(mainForm.lblMwaorkInNumber, workInNumber.ToString());
+                    mainForm.SafeWriteLabelText(mainForm.lblMtotalNumber, totalFileNumber.ToString());
+                    mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "Pogressing");
+                    mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, Path.GetFileName(files[i]));
+                }
                 workInNumber++;
+
+                //WriteImageListData(cadImageSelect, labeledDatainnerProjectLabelName, CADImageFolder, newSameFiles[i], searchDataArrayNewSameFiles[i]);
             }
             mainForm.SafeWriteLabelText(mainForm.lblMIOStatus, "AllCompleted");
             mainForm.SafeVisiblePanel(mainForm.panelstatus, false);
+
+            return imageTotalNumber;
         }
     }
 }

@@ -221,14 +221,17 @@ namespace ProjectAI.ProjectManiger
                         {
                             if (monitoring)
                             {
-                                if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                                    mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
-                                mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
-                                mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
-                                mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
-                                mainForm.SafeWriteLabelText(workInIOStatus, "Copy");
-                                mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
-                                //CustomIOMainger.FileIODelay(10);
+                                if (workInNumber % 125 == 0)
+                                {
+                                    if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                                        mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                                    mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
+                                    mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
+                                    mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                                    mainForm.SafeWriteLabelText(workInIOStatus, "Copy");
+                                    mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                                    //CustomIOMainger.FileIODelay(10);
+                                }
                                 workInNumber++;
                             }
 
