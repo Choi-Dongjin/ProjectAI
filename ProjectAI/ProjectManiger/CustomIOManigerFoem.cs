@@ -190,7 +190,6 @@ namespace ProjectAI.ProjectManiger
             bool monitoring = false;
             int totalFileNumber = files.Count;
             int workInNumber = 1;
-            int updateCycle = totalFileNumber / 100;
             int workInNumberPercentage = 0;
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
 
@@ -223,9 +222,9 @@ namespace ProjectAI.ProjectManiger
                         {
                             if (monitoring)
                             {
-                                if (workInNumber % updateCycle == 0)
+                                if (workInNumberPercentage != (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100))
                                 {
-                                    workInNumberPercentage++;
+                                    workInNumberPercentage = (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100);
                                     if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                                         mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                                     mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
@@ -304,8 +303,8 @@ namespace ProjectAI.ProjectManiger
             bool monitoring = false;
             int totalFileNumber = files.Count;
             int workInNumber = 1;
-            int updateCycle = totalFileNumber / 100;
             int workInNumberPercentage = 0;
+
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
 
             if (prograssBar != null && labelWorkInProgressNumber != null && labelTotalProgressNumber != null && workInIOStatus != null && workInProgressName != null)
@@ -333,9 +332,9 @@ namespace ProjectAI.ProjectManiger
                 {
                     if (monitoring)
                     {
-                        if (workInNumber % updateCycle == 0)
+                        if (workInNumberPercentage != (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100))
                         {
-                            workInNumberPercentage++;
+                            workInNumberPercentage = (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100);
                             if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                                 mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                             mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
