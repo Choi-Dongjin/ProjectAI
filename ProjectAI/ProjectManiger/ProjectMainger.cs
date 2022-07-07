@@ -4853,7 +4853,7 @@ namespace ProjectAI
             mainForm.SafeWriteLabelText(mainForm.lblMworkInFileName, "Image Matching");
 
             await searchAlgorithmStringTaskFiles;
-            string[] searchDataArrayFiles = await searchAlgorithmStringTaskFiles;
+            string[] searchDataArrayFiles = searchAlgorithmStringTaskFiles.Result;
 
             for (int i = 0; i < files.Length; i++)
             {
@@ -4882,7 +4882,7 @@ namespace ProjectAI
             }
 
             await searchAlgorithmStringTaskNewSameFiles;
-            string[] searchDataArrayNewSameFiles = await searchAlgorithmStringTaskNewSameFiles;
+            string[] searchDataArrayNewSameFiles = searchAlgorithmStringTaskNewSameFiles.Result;
 
             for (int i = 0; i < newSameFiles.Length; i++)
             {
