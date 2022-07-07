@@ -88,7 +88,7 @@ namespace ProjectAI.ProjectAlgorithm
                     Task<string> res = StringSearchManager(searchKeys[i], (taskNumber * arraySliceBand) + i, searchDatas, cancellationToken, taskNumber);
                     //Console.WriteLine($"Active (StringArraySearch), Task Number: {taskNumber}, End For Number: {i}");
                     await res;
-                    Console.WriteLine(res.Result);
+                    //Console.WriteLine(res.Result);
                     fileNameArray[i] = res.Result;
                 }
                 catch (Exception ex)
