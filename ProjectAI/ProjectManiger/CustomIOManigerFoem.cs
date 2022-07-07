@@ -190,6 +190,8 @@ namespace ProjectAI.ProjectManiger
             bool monitoring = false;
             int totalFileNumber = files.Count;
             int workInNumber = 1;
+            int updateCycle = totalFileNumber / 100;
+            int workInNumberPercentage = 0;
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
 
             if (prograssBar != null && labelWorkInProgressNumber != null && labelTotalProgressNumber != null && workInIOStatus != null && workInProgressName != null)
@@ -210,8 +212,8 @@ namespace ProjectAI.ProjectManiger
                                 if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                                     mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                                 mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, totalFileNumber);
-                                mainForm.SafeWriteLabelText(labelWorkInProgressNumber, totalFileNumber.ToString());
-                                mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                                mainForm.SafeWriteLabelText(labelWorkInProgressNumber, "100 %");
+                                mainForm.SafeWriteLabelText(labelTotalProgressNumber, "100 %");
                                 mainForm.SafeWriteLabelText(workInIOStatus, "Force quit");
                                 mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
                             }
@@ -221,13 +223,14 @@ namespace ProjectAI.ProjectManiger
                         {
                             if (monitoring)
                             {
-                                if (workInNumber % 125 == 0)
+                                if (workInNumber % updateCycle == 0)
                                 {
+                                    workInNumberPercentage++;
                                     if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                                         mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                                     mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
-                                    mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
-                                    mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                                    mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumberPercentage.ToString());
+                                    mainForm.SafeWriteLabelText(labelTotalProgressNumber, "100 %");
                                     mainForm.SafeWriteLabelText(workInIOStatus, "Copy");
                                     mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
                                     //CustomIOMainger.FileIODelay(10);
@@ -301,6 +304,8 @@ namespace ProjectAI.ProjectManiger
             bool monitoring = false;
             int totalFileNumber = files.Count;
             int workInNumber = 1;
+            int updateCycle = totalFileNumber / 100;
+            int workInNumberPercentage = 0;
             ProjectAI.MainForms.MainForm mainForm = ProjectAI.MainForms.MainForm.GetInstance();
 
             if (prograssBar != null && labelWorkInProgressNumber != null && labelTotalProgressNumber != null && workInIOStatus != null && workInProgressName != null)
@@ -317,8 +322,8 @@ namespace ProjectAI.ProjectManiger
                         if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                             mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                         mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, totalFileNumber);
-                        mainForm.SafeWriteLabelText(labelWorkInProgressNumber, totalFileNumber.ToString());
-                        mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
+                        mainForm.SafeWriteLabelText(labelWorkInProgressNumber, "100 %");
+                        mainForm.SafeWriteLabelText(labelTotalProgressNumber, "100 %");
                         mainForm.SafeWriteLabelText(workInIOStatus, "Force quit");
                         mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
                     }
@@ -328,14 +333,18 @@ namespace ProjectAI.ProjectManiger
                 {
                     if (monitoring)
                     {
-                        if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
-                            mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
-                        mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
-                        mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumber.ToString());
-                        mainForm.SafeWriteLabelText(labelTotalProgressNumber, totalFileNumber.ToString());
-                        mainForm.SafeWriteLabelText(workInIOStatus, "Delete");
-                        mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
-                        //CustomIOMainger.FileIODelay(1000);
+                        if (workInNumber % updateCycle == 0)
+                        {
+                            workInNumberPercentage++;
+                            if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
+                                mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
+                            mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);
+                            mainForm.SafeWriteLabelText(labelWorkInProgressNumber, workInNumberPercentage.ToString());
+                            mainForm.SafeWriteLabelText(labelTotalProgressNumber, "100 %");
+                            mainForm.SafeWriteLabelText(workInIOStatus, "Delete");
+                            mainForm.SafeWriteLabelText(workInProgressName, Path.GetFileName(file));
+                            //CustomIOMainger.FileIODelay(1000);
+                        }
                         workInNumber++;
                     }
                     try

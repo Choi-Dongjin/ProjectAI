@@ -229,7 +229,7 @@ namespace ProjectAI
             return HardwareInformation.systemHardwareInfoJObject;
         }
 
-        [DllImport("GetCudaInfoCSharp.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("CudaGPUInfo.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe int getCudaGpuInfo();
     }
 
@@ -3257,7 +3257,7 @@ namespace ProjectAI
 
             Task<int> CADOkTask = Task.Run(() => JsonImageWrite(cadImageSelect, this.m_pathActiveProjectImage, this.m_activeProjectDataImageListDataJObject, labeledDatainnerProjectLabelName, files, newSameFiles, imageTotalNumber, CADImageFolder));
             await CADOkTask;
-            imageTotalNumber = await CADOkTask;
+            imageTotalNumber = CADOkTask.Result;
 
 
             // image List 값 반영
