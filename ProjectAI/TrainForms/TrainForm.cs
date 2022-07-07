@@ -779,7 +779,9 @@ namespace ProjectAI.TrainForms
                         }
                     }
                     processInfoList.Remove(processName);
-                    CustomIOMainger.DirDelete(processPath);
+                    ProjectAI.ProjectManiger.CustomIOManigerFoem customIOManigerFoem = ProjectManiger.CustomIOManigerFoem.GetInstance();
+                    customIOManigerFoem.DeleteDictionary(processPath);
+                    //CustomIOMainger.DirDelete(processPath);
                 }
                 // 3. 학습 데이터 관리 Dictionary 데이터 추가하기
             }
