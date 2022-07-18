@@ -937,5 +937,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hiddenToolStripMenuItem;
         public System.Windows.Forms.SplitContainer splitContainerImageAndImageList;
+        public System.Windows.Forms.Panel panelTrainOptions;
     }
 }
