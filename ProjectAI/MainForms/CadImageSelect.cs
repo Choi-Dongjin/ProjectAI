@@ -304,8 +304,8 @@ namespace ProjectAI.MainForms
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string[] files = CustomIOMainger.DirFileSerch(System.IO.Path.GetDirectoryName(openFileDialog.FileName), "Name").ToArray();
-                    string[] filesPath = CustomIOMainger.DirFileSerch(System.IO.Path.GetDirectoryName(openFileDialog.FileName), "Full").ToArray();
+                    string[] files = CustomIOMainger.ImageFileFileSearch(System.IO.Path.GetDirectoryName(openFileDialog.FileName), false).ToArray();
+                    string[] filesPath = CustomIOMainger.ImageFileFileSearch(System.IO.Path.GetDirectoryName(openFileDialog.FileName), true).ToArray();
 
                     if (WorkSpaceData.m_activeProjectMainger.m_activeInnerProjectName != null)
                     {

@@ -380,8 +380,8 @@ namespace ProjectAI.ProjectManiger
         private void ToolsReset()
         {
             this.enableDrawing = false;
-
-            this.viewDrawingImg = true;
+            this.enableFloodFill = false;
+            this.viewInputImg = true;
             this.viewDrawingImg = false;
         }
 
@@ -396,7 +396,7 @@ namespace ProjectAI.ProjectManiger
             {
                 if (autoResize)
                 {
-                    this.ToolsReset(); // tools, view 설정 리셋
+                    this.ToolsReset(); // tools, view, fill_flood 설정 리셋
                     this.imgInputBitmap = bitmap;
                     this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
                     this.imgDrawingBitmap = new Bitmap(bitmap.Width, bitmap.Height);
@@ -412,12 +412,11 @@ namespace ProjectAI.ProjectManiger
                         this.vScrollBar.Minimum = 0;
                         this.vScrollBar.Maximum = this.imgRect.Height - this.pictureBox.Height;
                     }
-
                     this.pictureBox.Invalidate();
                 }
                 else
                 {
-                    this.ToolsReset(); // tools, view 설정 리셋
+                    this.ToolsReset(); // tools, view, fill_flood 설정 리셋
                     this.imgInputBitmap = bitmap;
                     this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
                     this.imgDrawingBitmap = new Bitmap(bitmap.Width, bitmap.Height);
@@ -425,11 +424,16 @@ namespace ProjectAI.ProjectManiger
                     if (this.imgRect == null || this.mousePointZoom == null || this.zoomRatio == 1F)
                     {
                         this.zoomRatio = this.OutRatio(this.imgInputBitmap.Width, this.imgInputBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
-
                         this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgInputBitmap.Width * zoomRatio), (int)Math.Round(this.imgInputBitmap.Height * zoomRatio));
                         this.mousePointZoom = new Point((int)Math.Round(this.imgInputBitmap.Width / 2.0F), (int)Math.Round(this.imgInputBitmap.Height / 2.0F));
                     }
-
+                    if (this.hScrollBar != null)
+                    {
+                        this.hScrollBar.Minimum = 0;
+                        this.hScrollBar.Maximum = this.imgRect.Width - this.pictureBox.Width;
+                        this.vScrollBar.Minimum = 0;
+                        this.vScrollBar.Maximum = this.imgRect.Height - this.pictureBox.Height;
+                    }
                     this.pictureBox.Invalidate();
                 }
             }

@@ -1128,20 +1128,5 @@ namespace ProjectAI.MainForms
         {
             this.Hide();
         }
-
-        private void RectangleToolStripMenuItemClick(object sender, EventArgs e)
-        {
-        }
-
-        //private void CircleToolStripMenuItemClick(object sender, EventArgs e)
-        //{
-        //    toolType = PaintTools.DrawCircle;
-        //}
-
-        //private void LineToolStripMenuItemClick(object sender, EventArgs e)
-        //{
-        //    toolType = PaintTools.DrawLine;
-        //}
-        //}
     }
 }

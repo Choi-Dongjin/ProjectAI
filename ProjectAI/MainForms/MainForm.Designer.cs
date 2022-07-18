@@ -72,7 +72,6 @@
             this.trainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hiddenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelWorkSpaseIconIN = new System.Windows.Forms.Panel();
             this.panelMWorkSpaceString1 = new MetroFramework.Controls.MetroPanel();
             this.btnMWorkSpaseClose = new MetroFramework.Controls.MetroButton();
@@ -93,8 +92,6 @@
             this.cmsMtryIcon = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rectangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.styleManagerMainForm)).BeginInit();
             this.tableLayoutMainForm.SuspendLayout();
             this.panelWorkSpaseIconOUT.SuspendLayout();
@@ -425,8 +422,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmWorSpace,
             this.viewToolStripMenuItem,
-            this.toolToolStripMenuItem,
-            this.drawToolToolStripMenuItem});
+            this.toolToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(984, 24);
@@ -587,11 +583,6 @@
             this.hiddenToolStripMenuItem.Size = new System.Drawing.Size(148, 30);
             this.hiddenToolStripMenuItem.Text = "Hidden";
             this.hiddenToolStripMenuItem.Click += new System.EventHandler(this.HiddenToolStripMenuItemClick);
-            // 
-            // drawToolToolStripMenuItem
-            // 
-            this.drawToolToolStripMenuItem.Name = "drawToolToolStripMenuItem";
-            this.drawToolToolStripMenuItem.Size = new System.Drawing.Size(12, 20);
             // 
             // panelWorkSpaseIconIN
             // 
@@ -844,18 +835,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
             // 
-            // drawToolStripMenuItem
-            // 
-            this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
-            this.drawToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.drawToolStripMenuItem.Text = "Draw";
-            // 
-            // rectangleToolStripMenuItem
-            // 
-            this.rectangleToolStripMenuItem.Name = "rectangleToolStripMenuItem";
-            this.rectangleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.rectangleToolStripMenuItem.Text = "Rectangle";
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -958,9 +937,5 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hiddenToolStripMenuItem;
         public System.Windows.Forms.SplitContainer splitContainerImageAndImageList;
-        public System.Windows.Forms.ToolStripMenuItem drawToolToolStripMenuItem;
-        public System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
-        public System.Windows.Forms.ToolStripMenuItem rectangleToolStripMenuItem;
-        public System.Windows.Forms.Panel panelTrainOptions;
     }
 }
