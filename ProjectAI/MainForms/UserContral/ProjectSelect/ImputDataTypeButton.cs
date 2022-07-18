@@ -53,6 +53,8 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         {
             InitializeComponent();
             this.ButtonSetting(); // 초기 버튼 셋팅
+            this.LabelSetting();
+            this.metroPanel1.Controls.Add(this.metroButton);
         }
 
         private void ControlReset()
@@ -112,7 +114,10 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// <param name="e"></param>\
         private void BtnMactiveButtonClick(object sender, EventArgs e)
         {
-            LabelSetting();
+            this.metroPanel1.Controls.Clear();
+            //this.Size = new System.Drawing.Size(240, 160);
+            this.metroPanel1.Controls.Add(this.metroTextBox);
+            //LabelSetting();
         }
 
         /// <summary>
@@ -122,7 +127,21 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// <param name="e"></param>
         private void MetroTextBoxClick(object sender, EventArgs e)
         {
-            ButtonSetting();
+            this.metroPanel1.Controls.Clear();
+            //this.Size = new System.Drawing.Size(160, 184);
+            this.metroPanel1.Controls.Add(this.metroButton);
+        }
+
+        public void ButtonActive()
+        {
+            this.metroPanel1.Controls.Clear();
+            this.metroPanel1.Controls.Add(this.metroButton);
+        }
+
+        public void TextBoxActive()
+        {
+            this.metroPanel1.Controls.Clear();
+            this.metroPanel1.Controls.Add(this.metroTextBox);
         }
 
         /// <summary>
@@ -130,12 +149,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// </summary>
         public void ButtonSetting()
         {
-            this.metroPanel1.Controls.Clear();
-
-            this.Size = new System.Drawing.Size(160, 184);
-
             this.metroButton = new MetroFramework.Controls.MetroButton();
-            this.metroPanel1.Controls.Add(this.metroButton);
 
             //
             // btnMactiveButton
@@ -168,11 +182,6 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// </summary>
         private void LabelSetting()
         {
-            this.metroPanel1.Controls.Clear();
-            this.Size = new System.Drawing.Size(240, 160);
-
-            this.metroTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.metroPanel1.Controls.Add(this.metroTextBox);
             //
             // metroTextBox1
             //

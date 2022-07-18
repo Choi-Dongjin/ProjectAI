@@ -168,18 +168,18 @@
             // metroPanel1
             // 
             this.metroPanel1.AutoScroll = true;
-            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(460, 820);
+            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(465, 820);
             this.metroPanel1.Controls.Add(this.flowLayoutPanel1);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbar = true;
             this.metroPanel1.HorizontalScrollbarBarColor = false;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
-            this.metroPanel1.Location = new System.Drawing.Point(20, 20);
+            this.metroPanel1.Location = new System.Drawing.Point(0, 0);
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.metroPanel1.Size = new System.Drawing.Size(470, 820);
+            this.metroPanel1.Size = new System.Drawing.Size(475, 830);
             this.metroPanel1.TabIndex = 6;
             this.metroPanel1.VerticalScrollbar = true;
             this.metroPanel1.VerticalScrollbarBarColor = true;
@@ -188,7 +188,6 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel1);
             this.flowLayoutPanel1.Controls.Add(this.tlpContinualLearning);
@@ -200,7 +199,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(460, 820);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(465, 830);
             this.flowLayoutPanel1.TabIndex = 12;
             // 
             // tableLayoutPanel2
@@ -1947,13 +1946,11 @@
             // 
             // ClassificationTrainOptions
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.metroPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ClassificationTrainOptions";
-            this.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
-            this.Size = new System.Drawing.Size(500, 860);
+            this.Size = new System.Drawing.Size(475, 830);
             this.Load += new System.EventHandler(this.TrainOptionsLoad);
             this.metroPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);

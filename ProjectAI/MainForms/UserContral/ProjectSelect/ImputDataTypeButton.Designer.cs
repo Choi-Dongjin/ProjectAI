@@ -94,8 +94,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
             // 
             // ImputDataTypeButton
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ImputDataTypeButton";

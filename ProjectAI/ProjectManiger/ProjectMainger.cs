@@ -1310,7 +1310,7 @@ namespace ProjectAI
             m_classificationTrainOption.Dock = System.Windows.Forms.DockStyle.Fill;
             m_classificationTrainOption.Location = new System.Drawing.Point(0, 0);
             m_classificationTrainOption.Margin = new System.Windows.Forms.Padding(0);
-            m_classificationTrainOption.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
+            m_classificationTrainOption.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
             return m_classificationTrainOption;
         }
 

@@ -1074,8 +1074,20 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             this.ActivateButton(sender, control.Parent);
         }
 
-        private void ActivateButton(object btnSender, object panel)
+        private void ActivateButton(object btnSender, object panel = null)
         {
+            if (panel == null)
+            {
+                try
+                {
+                    Control control = (Control)btnSender;
+                    panel = control.Parent;
+                }
+                catch
+                {
+                    return;
+                }
+            }
             if (btnSender != null)
             {
                 if (this.activeMetroButton != btnSender)
@@ -1083,7 +1095,7 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
                     this.activeMetroButton = btnSender as MetroTile;
                     if (this.activeMetroButton != null)
                     {
-                        DisableButton(panel);
+                        DisableButton(btnSender, panel);
                         this.activeMetroButton = (MetroTile)btnSender;
                         this.activeMetroButton.UseStyleColors = true;
                         this.activeMetroButton.Style = MetroFramework.MetroColorStyle.Orange;
@@ -1092,24 +1104,33 @@ namespace ProjectAI.CustomComponent.MainForms.Classification
             }
         }
 
-        private void DisableButton(object panel)
+        private void DisableButton(object btnSender, object panel = null)
         {
-            //System.Windows.Forms.TableLayoutPanel
-            if (panel != null)
+            if (panel == null)
             {
-                foreach (Control previousBtn in this.tlpInstantEvaluate.Controls)
+                try
                 {
-                    MetroTile metroButton = previousBtn as MetroTile;
-                    if (metroButton != null)
-                    {
-                        FormsManiger formsManiger = FormsManiger.GetInstance();
-                        metroButton.Style = formsManiger.m_StyleManager.Style;
-                        if (metroButton.UseStyleColors)
-                            metroButton.UseStyleColors = false;
-                        if (metroButton.UseCustomBackColor)
-                            metroButton.UseCustomBackColor = false;
-                        previousBtn.Refresh();
-                    }
+                    Control control = (Control)btnSender;
+                    panel = control.Parent;
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            //System.Windows.Forms.TableLayoutPanel
+            foreach (Control previousBtn in this.tlpInstantEvaluate.Controls)
+            {
+                MetroTile metroButton = previousBtn as MetroTile;
+                if (metroButton != null)
+                {
+                    FormsManiger formsManiger = FormsManiger.GetInstance();
+                    metroButton.Style = formsManiger.m_StyleManager.Style;
+                    if (metroButton.UseStyleColors)
+                        metroButton.UseStyleColors = false;
+                    if (metroButton.UseCustomBackColor)
+                        metroButton.UseCustomBackColor = false;
+                    previousBtn.Refresh();
                 }
             }
         }

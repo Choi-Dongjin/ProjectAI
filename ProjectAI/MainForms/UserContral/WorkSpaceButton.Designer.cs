@@ -131,8 +131,7 @@
             // WorkSpaceButton
             // 
             this.metroStyleExtender1.SetApplyMetroTheme(this, true);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = global::ProjectAI.Properties.Resources.border1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;

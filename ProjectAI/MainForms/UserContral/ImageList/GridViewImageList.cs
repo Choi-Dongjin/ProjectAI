@@ -9,6 +9,8 @@ namespace ProjectAI.MainForms.UserContral.ImageList
     {
         private FormsManiger formsManiger = FormsManiger.GetInstance();
 
+        private int contralSize = 0;
+
         public System.Collections.ArrayList gridViewAddList = new System.Collections.ArrayList();
 
         // Declare a variable to indicate the commit scope.
@@ -296,17 +298,38 @@ namespace ProjectAI.MainForms.UserContral.ImageList
 
         private void CkbMdataGridViewAutoSizeCheckedChanged(object sender, EventArgs e)
         {
-            this.GridImageListAutoResize();
-        }
+            MainForm mainForm = MainForm.GetInstance();
+            if (this.contralSize != mainForm.splitContainerImageAndImageList.SplitterDistance)
+            {
+                Console.WriteLine("1");
+                this.GridImageListAutoResize();
+            }                    }
 
         private void GridImageListResize(object sender, EventArgs e)
         {
-            //this.GridImageListAutoResize();
+            MainForm mainForm = MainForm.GetInstance();
+            if (this.contralSize != mainForm.splitContainerImageAndImageList.SplitterDistance)
+            {
+                Console.WriteLine("2");
+                //this.GridImageListAutoResize();
+            }
+        }
+
+        private void GridViewImageList_Resize(object sender, EventArgs e)
+        {
+            MainForm mainForm = MainForm.GetInstance();
+
+            if (this.contralSize != mainForm.splitContainerImageAndImageList.SplitterDistance)
+            {
+                Console.WriteLine("3");
+                this.GridImageListAutoResize();
+            }        
         }
 
         private void GridImageListAutoResize()
         {
             int size = 0;
+            int setsize = 0;
             for (int i = 0; i < this.gridImageList.Columns.Count; i++)
             {
                 size += this.gridImageList.Columns[i].Width;
@@ -318,17 +341,20 @@ namespace ProjectAI.MainForms.UserContral.ImageList
                 {
                     MainForm mainForm = MainForm.GetInstance();
                     if (mainForm.splitContainerImageAndImageList.Width - size > 0)
-                        mainForm.splitContainerImageAndImageList.SplitterDistance = mainForm.splitContainerImageAndImageList.Width - size - 5;
+                    {
+                        setsize = mainForm.splitContainerImageAndImageList.Width - size - 5;
+                        mainForm.splitContainerImageAndImageList.SplitterDistance = setsize;
+                        this.contralSize = setsize;
+                        //this.Refresh();
+                        this.Width = size;
+                        //this.gridImageList.Width = size;
+                        //this.tableLayoutImageDataManiger.Width = size;
+                    }
                 }
                 catch
                 {
                 }
             }
-        }
-
-        private void GridViewImageList_Resize(object sender, EventArgs e)
-        {
-            //this.GridImageListAutoResize();
         }
 
         public void GridDataAdd(String num, String filesName, String set, String labeled, String prediction, String probability, int row)

@@ -41,9 +41,9 @@
             this.labMprogramWorkSpacePath = new MetroFramework.Controls.MetroLabel();
             this.btnMprogramWorkSpaceChange = new MetroFramework.Controls.MetroButton();
             this.txtMprogramWorkSpacePath = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.styleManagerStartForm = new MetroFramework.Components.MetroStyleManager(this.components);
             this.styleExtenderStartForm = new MetroFramework.Components.MetroStyleExtender(this.components);
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutProjectAIMain.SuspendLayout();
             this.tableLayoutMainIcons.SuspendLayout();
             this.tableLayoutMainIconPath.SuspendLayout();
@@ -166,10 +166,6 @@
             this.txtMprogramWorkSpacePath.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtMprogramWorkSpacePath.WaterMarkFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
-            // styleManagerStartForm
-            // 
-            this.styleManagerStartForm.Owner = this;
-            // 
             // metroLabel1
             // 
             resources.ApplyResources(this.metroLabel1, "metroLabel1");
@@ -178,10 +174,14 @@
             this.metroLabel1.Name = "metroLabel1";
             this.tableLayoutMainIcons.SetRowSpan(this.metroLabel1, 3);
             // 
+            // styleManagerStartForm
+            // 
+            this.styleManagerStartForm.Owner = this;
+            // 
             // StartForm
             // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.Controls.Add(this.tableLayoutProjectAIMain);
             this.MaximizeBox = false;

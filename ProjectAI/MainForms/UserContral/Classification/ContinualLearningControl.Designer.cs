@@ -41,8 +41,7 @@
             // ContinualLearningControl
             // 
             this.metroStyleExtender1.SetApplyMetroTheme(this, true);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ContinualLearningControl";
             this.Size = new System.Drawing.Size(460, 150);

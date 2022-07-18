@@ -36,11 +36,11 @@
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-            this.lblInputDataType = new System.Windows.Forms.Label();
-            this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
             this.btnNoneImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnMultiImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
             this.btnSingleImage = new ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton();
+            this.lblInputDataType = new System.Windows.Forms.Label();
+            this.metroStyleManagerClassification = new MetroFramework.Components.MetroStyleManager(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -189,21 +189,6 @@
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
             // 
-            // lblInputDataType
-            // 
-            this.lblInputDataType.AutoSize = true;
-            this.lblInputDataType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
-            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
-            this.lblInputDataType.Name = "lblInputDataType";
-            this.lblInputDataType.Size = new System.Drawing.Size(123, 19);
-            this.lblInputDataType.TabIndex = 2;
-            this.lblInputDataType.Text = "Input Data Type";
-            // 
-            // metroStyleManagerClassification
-            // 
-            this.metroStyleManagerClassification.Owner = this;
-            // 
             // btnNoneImage
             // 
             this.btnNoneImage.BackColor = System.Drawing.Color.Transparent;
@@ -212,7 +197,8 @@
             this.btnNoneImage.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnNoneImage.InputLabelText = "CAD Image 설명";
             this.btnNoneImage.Location = new System.Drawing.Point(320, 0);
-            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.pcb_board_origin; this.btnNoneImage.Name = "btnNoneImage";
+            this.btnNoneImage.MBBackgroundImage = global::ProjectAI.Properties.Resources.pcb_board_origin;
+            this.btnNoneImage.Name = "btnNoneImage";
             this.btnNoneImage.Size = new System.Drawing.Size(160, 190);
             this.btnNoneImage.TabIndex = 102;
             this.btnNoneImage.Title = "CAD Image";
@@ -245,10 +231,24 @@
             this.btnSingleImage.TabIndex = 100;
             this.btnSingleImage.Title = "Single Image";
             // 
+            // lblInputDataType
+            // 
+            this.lblInputDataType.AutoSize = true;
+            this.lblInputDataType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInputDataType.Location = new System.Drawing.Point(288, 43);
+            this.lblInputDataType.Margin = new System.Windows.Forms.Padding(3);
+            this.lblInputDataType.Name = "lblInputDataType";
+            this.lblInputDataType.Size = new System.Drawing.Size(123, 19);
+            this.lblInputDataType.TabIndex = 2;
+            this.lblInputDataType.Text = "Input Data Type";
+            // 
+            // metroStyleManagerClassification
+            // 
+            this.metroStyleManagerClassification.Owner = this;
+            // 
             // Classification
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "Classification";

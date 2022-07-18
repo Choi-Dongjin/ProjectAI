@@ -144,8 +144,7 @@
             // 
             // CustomMessageBoxOKCancel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(556, 265);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CustomMessageBoxOKCancel";

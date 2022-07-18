@@ -99,8 +99,7 @@
             // 
             // MainFormsImageListPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(250, 124);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);

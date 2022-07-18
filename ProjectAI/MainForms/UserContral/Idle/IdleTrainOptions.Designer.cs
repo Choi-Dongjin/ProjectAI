@@ -36,7 +36,7 @@
             // metroPanel1
             // 
             this.metroPanel1.AutoScroll = true;
-            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(460, 810);
+            this.metroPanel1.AutoScrollMinSize = new System.Drawing.Size(435, 790);
             this.metroPanel1.Controls.Add(this.txtMworkSpaceName);
             this.metroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel1.HorizontalScrollbar = true;
@@ -47,7 +47,7 @@
             this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.metroPanel1.Size = new System.Drawing.Size(470, 810);
+            this.metroPanel1.Size = new System.Drawing.Size(445, 790);
             this.metroPanel1.TabIndex = 1;
             this.metroPanel1.VerticalScrollbar = true;
             this.metroPanel1.VerticalScrollbarBarColor = true;
@@ -60,9 +60,9 @@
             // 
             // 
             this.txtMworkSpaceName.CustomButton.Image = null;
-            this.txtMworkSpaceName.CustomButton.Location = new System.Drawing.Point(-348, 2);
+            this.txtMworkSpaceName.CustomButton.Location = new System.Drawing.Point(-353, 2);
             this.txtMworkSpaceName.CustomButton.Name = "";
-            this.txtMworkSpaceName.CustomButton.Size = new System.Drawing.Size(805, 805);
+            this.txtMworkSpaceName.CustomButton.Size = new System.Drawing.Size(785, 785);
             this.txtMworkSpaceName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.txtMworkSpaceName.CustomButton.TabIndex = 1;
             this.txtMworkSpaceName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -72,6 +72,7 @@
             this.txtMworkSpaceName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.txtMworkSpaceName.Lines = new string[0];
             this.txtMworkSpaceName.Location = new System.Drawing.Point(0, 0);
+            this.txtMworkSpaceName.Margin = new System.Windows.Forms.Padding(0);
             this.txtMworkSpaceName.MaxLength = 32767;
             this.txtMworkSpaceName.Multiline = true;
             this.txtMworkSpaceName.Name = "txtMworkSpaceName";
@@ -83,7 +84,7 @@
             this.txtMworkSpaceName.SelectionLength = 0;
             this.txtMworkSpaceName.SelectionStart = 0;
             this.txtMworkSpaceName.ShortcutsEnabled = true;
-            this.txtMworkSpaceName.Size = new System.Drawing.Size(460, 810);
+            this.txtMworkSpaceName.Size = new System.Drawing.Size(435, 790);
             this.txtMworkSpaceName.TabIndex = 2;
             this.txtMworkSpaceName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMworkSpaceName.UseSelectable = true;
@@ -93,13 +94,12 @@
             // 
             // IdelTrainOptions
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.metroPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "IdelTrainOptions";
             this.Padding = new System.Windows.Forms.Padding(20, 20, 10, 20);
-            this.Size = new System.Drawing.Size(500, 850);
+            this.Size = new System.Drawing.Size(475, 830);
             this.metroPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

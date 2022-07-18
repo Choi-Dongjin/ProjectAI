@@ -302,8 +302,8 @@
             // 
             // StartFormOptions
             // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutStartOptionMain);
             this.MaximizeBox = false;

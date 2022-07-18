@@ -579,6 +579,7 @@
     <None Include="Resources\folderCAD.png" />
     <None Include="Resources\Initimage.png" />
     <None Include="Resources\CADfolder.png" />
+    <None Include="Resources\imageBackground2GR.png" />
     <Content Include="문서 파일\Json 파일 무결성 검사 시퀀스.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -329,8 +329,7 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             // 
             // CadImageViewer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.metroPanel1);
             this.Name = "CadImageViewer";
             this.Size = new System.Drawing.Size(826, 648);

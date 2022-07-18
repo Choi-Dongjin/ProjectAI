@@ -154,11 +154,52 @@ namespace ProjectAI.ProjectManiger
 
                 this.taskFileIOCancellationTokenSource = new CancellationTokenSource(); // 스레드 제어
 
+                int numberOfTask = 1;
+                int filesCount = files.Count;
+                string[] filesArray = files.ToArray();
+
                 if (taskFileIOactivateCode == 1)
                 {
-                    Task task = Task.Run(() => this.FileCopyList(files, setPath, fileCopyListSet, this.taskFileIOCancellationTokenSource.Token,
-                        prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
-                    await task;
+                    
+                    if (filesCount <= 0)
+                    {
+                        return;
+                    }
+                    else if (filesCount > 0 && filesCount < 1000)
+                    {
+                        numberOfTask = 2;
+                    }
+                    else if (filesCount >= 1000 && filesCount < 10000)
+                    {
+                        numberOfTask = 4;
+                    }
+                    else if (filesCount >= 10000)
+                    {
+                        numberOfTask = 8;
+                    }
+
+                    Task[] tasks = new Task[numberOfTask];
+                    int arraySliceBand = filesCount / numberOfTask;
+
+
+                    for (int i = 0; i < numberOfTask; i++)
+                    {
+                        if (i != numberOfTask - 1)
+                        {
+                            string[] array = new ArraySegment<string>(filesArray, i * arraySliceBand, arraySliceBand).ToArray();
+                            tasks[i] = Task.Run(() => this.FileCopyList(array.ToList(), setPath, fileCopyListSet, this.taskFileIOCancellationTokenSource.Token));
+                        }
+                        else
+                        {
+                            string[] array = new ArraySegment<string>(filesArray, (i) * arraySliceBand, filesCount - ((i) * arraySliceBand)).ToArray();
+                            tasks[i] = Task.Run(() => this.FileCopyList(array.ToList(), setPath, fileCopyListSet, this.taskFileIOCancellationTokenSource.Token,
+                                                                        prograssBar, labelWorkInProgressNumber, labelTotalProgressNumber, workInIOStatus, workInProgressName));
+                        }
+                    }
+                    for (int i = 0; i < numberOfTask; i++)
+                    {
+                        await tasks[i];
+                    }
                 }
                 else if (taskFileIOactivateCode == 2)
                 {
@@ -222,9 +263,10 @@ namespace ProjectAI.ProjectManiger
                         {
                             if (monitoring)
                             {
-                                if (workInNumberPercentage != (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100))
+                                int workInNumberPercentageC = (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100);
+                                if (workInNumberPercentage != workInNumberPercentageC)
                                 {
-                                    workInNumberPercentage = (int)Math.Round((float)workInNumber / (float)totalFileNumber * 100);
+                                    workInNumberPercentage = workInNumberPercentageC;
                                     if (!mainForm.SafeVisiblePanel(mainForm.panelstatus))
                                         mainForm.SafeVisiblePanel(mainForm.panelstatus, true); // 모니터링 창 출력
                                     mainForm.SafeWriteProgressBar(prograssBar, totalFileNumber, workInNumber);

@@ -7,9 +7,9 @@ namespace ProjectAI.ProjectManiger
 {
     internal class ImageToolUseingPictureBox
     {
-        private Bitmap imgOutputBitmap;
-        private Bitmap imgDrawingBitmap;
-        private Bitmap imgInputBitmap;
+        private Bitmap imgOutputBitmap = null;
+        private Bitmap imgDrawingBitmap = null;
+        private Bitmap imgInputBitmap = null;
 
         /// <summary>
         /// Bitmap 이미지 자져오기
@@ -416,7 +416,7 @@ namespace ProjectAI.ProjectManiger
                 }
                 else
                 {
-                    this.ToolsReset(); // tools, view,fill_flood 설정 리셋
+                    this.ToolsReset(); // tools, view, fill_flood 설정 리셋
                     this.imgInputBitmap = bitmap;
                     this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
                     this.imgDrawingBitmap = new Bitmap(bitmap.Width, bitmap.Height);

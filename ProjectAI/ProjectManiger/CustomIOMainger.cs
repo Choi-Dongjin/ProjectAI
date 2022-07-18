@@ -56,7 +56,7 @@ namespace ProjectAI
         {
             if (Directory.Exists(dirPath))
             {
-                Console.WriteLine("That path exists already.");
+                //Console.WriteLine("That path exists already.");
                 return true;
             }
             // Try to create the directory.
