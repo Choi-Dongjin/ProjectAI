@@ -354,9 +354,9 @@ namespace ProjectAI.MainForms
             this.CADGridView.Size = new System.Drawing.Size(120, 288);
             this.CADGridView.TabIndex = 11;
             this.CADGridView.VirtualMode = true;
+            this.CADGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.CADViewCellValueNeeded);
             this.CADGridView.SelectionChanged += new System.EventHandler(this.CADGridViewSelectionChanged);
             this.CADGridView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.CADGridViewSortCompare);
-            this.CADGridView.CellValueNeeded += new DataGridViewCellValueEventHandler(CADViewCellValueNeeded);
             // 
             // OriginGridView
             // 
@@ -407,15 +407,13 @@ namespace ProjectAI.MainForms
             this.OriginGridView.Size = new System.Drawing.Size(120, 288);
             this.OriginGridView.TabIndex = 12;
             this.OriginGridView.VirtualMode = true;
+            this.OriginGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.OriginGridViewCellValueNeeded);
             this.OriginGridView.SelectionChanged += new System.EventHandler(this.OriginGridViewSelectionChanged);
             this.OriginGridView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OriginGridViewSortCompare);
-            this.OriginGridView.CellValueNeeded += new DataGridViewCellValueEventHandler(OriginGridViewCellValueNeeded);
-
             // 
             // CadImageSelect
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1301, 757);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CadImageSelect";

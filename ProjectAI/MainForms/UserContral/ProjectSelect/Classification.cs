@@ -53,6 +53,7 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         public Classification()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
 
             // btnSingleImage Click에 이벤트 함수 등록
             this.btnSingleImage.BtnMactiveButtonClickEvnetHandler += BtnSingleImageClickEvent;
@@ -106,37 +107,54 @@ namespace ProjectAI.MainForms.UserContral.ProjectSelect
         /// <param name="btnSender"></param>
         private void DisableButton(object btnSender)
         {
-            foreach (Control previousBtn in metroPanel2.Controls)
+            List<Control> previousBtnList = new List<Control>();
+            MetroFramework.Controls.MetroButton clickButton = (MetroFramework.Controls.MetroButton)btnSender; // 선택된 버튼 MetroButton 이름 비교
+
+            foreach (Control previousBtn in this.metroPanel2.Controls)
             {
                 if (previousBtn.GetType() == typeof(ProjectAI.MainForms.UserContral.ProjectSelect.ImputDataTypeButton))
                 {
-                    ImputDataTypeButton passbutton = (ImputDataTypeButton)previousBtn; // ImputDataTypeButton 타이틀
-                    MetroFramework.Controls.MetroButton clickButton = (MetroFramework.Controls.MetroButton)btnSender; // 선택된 버튼 MetroButton 이름 비교
-                    /*
-                     * ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름을 동일하게 셋팅하였음.
-                     * 따라서 ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름 비교하여
-                     * 같으면 비활성화 하지 않고 다르면 모두 비활성화
-                    */
-                    Console.WriteLine("");
-                    Console.WriteLine("=== === === === === === === === === === ===");
-                    Console.WriteLine($"passbutton.Title: {passbutton.Title}");
-                    Console.WriteLine($"clickButton.Name: {clickButton.Name}");
-                    Console.WriteLine("=== === === === === === === === === === ===");
-                    Console.WriteLine("");
-                    if (passbutton.Title != clickButton.Name)
-                    {
-                        try
-                        {
-                            passbutton.ButtonSetting();
-                            passbutton.Size = new Size(160, 0);
-                        }
-                        catch { }
-                    }
-                    else
-                    {
-                    }
+                    previousBtnList.Add(previousBtn);
                 }
             }
+            foreach (Control previousBtn in previousBtnList)
+            {
+                ImputDataTypeButton passbutton = (ImputDataTypeButton)previousBtn; // ImputDataTypeButton 타이틀
+                /*
+                 * ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름을 동일하게 셋팅하였음.
+                 * 따라서 ImputDataTypeButton 타이틀과 활성화된 MetroButton 이름 비교하여
+                 * 같으면 비활성화 하지 않고 다르면 모두 비활성화
+                */
+                Console.WriteLine("");
+                Console.WriteLine("=== === === === === === === === === === ===");
+                Console.WriteLine($"passbutton.Title: {passbutton.Title}");
+                Console.WriteLine($"clickButton.Name: {clickButton.Name}");
+                Console.WriteLine("=== === === === === === === === === === ===");
+                Console.WriteLine("");
+
+                int fixSize = 160;
+                int txtWidth = this.metroPanel2.Size.Width - (fixSize * (previousBtnList.Count - 1));
+
+                if (passbutton.Title != clickButton.Name)
+                {
+                    try
+                    {
+                        //passbutton.ButtonSetting();
+                        passbutton.Size = new Size(fixSize, this.metroPanel2.Size.Height);
+                        passbutton.ButtonActive();
+                    }
+                    catch { }
+                }
+                else
+                {
+                    try
+                    {
+                        passbutton.Size = new Size(txtWidth, this.metroPanel2.Size.Height);
+                    }
+                    catch { }
+                }
+            }
+
         }
 
         private void DisableText(object btnSender = null)

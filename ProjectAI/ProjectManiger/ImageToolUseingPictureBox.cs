@@ -7,9 +7,9 @@ namespace ProjectAI.ProjectManiger
 {
     internal class ImageToolUseingPictureBox
     {
-        private Bitmap imgOutputBitmap;
-        private Bitmap imgDrawingBitmap;
-        private Bitmap imgInputBitmap;
+        private Bitmap imgOutputBitmap = null;
+        private Bitmap imgDrawingBitmap = null;
+        private Bitmap imgInputBitmap = null;
 
         /// <summary>
         /// Bitmap 이미지 자져오기
@@ -390,7 +390,7 @@ namespace ProjectAI.ProjectManiger
         /// </summary>
         /// <param name="bitmap"> 리뷰할 bitmap 이미지 </param>
         /// <param name="autoResize"> 이미지 입력중 viewbox 이미지 시이즈 자동으로 fitin 하기 기본 활성화, 기존 설정으로 입력을 넣기 위해서는 flase로 </param>
-        internal void InputBitmapImage(Bitmap bitmap, bool autoResize = true)
+        internal void InputBitmapImage(Bitmap bitmap, bool autoResize = false)
         {
             if (bitmap != null)
             {
@@ -417,11 +417,15 @@ namespace ProjectAI.ProjectManiger
                 }
                 else
                 {
+                    this.ToolsReset(); // tools, view 설정 리셋
                     this.imgInputBitmap = bitmap;
                     this.imgOutputBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+                    this.imgDrawingBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 
-                    if (this.imgRect == null || this.mousePointZoom == null)
+                    if (this.imgRect == null || this.mousePointZoom == null || this.zoomRatio == 1F)
                     {
+                        this.zoomRatio = this.OutRatio(this.imgInputBitmap.Width, this.imgInputBitmap.Height, this.pictureBox.Width, this.pictureBox.Height);
+
                         this.imgRect = new Rectangle(0, 0, (int)Math.Round(this.imgInputBitmap.Width * zoomRatio), (int)Math.Round(this.imgInputBitmap.Height * zoomRatio));
                         this.mousePointZoom = new Point((int)Math.Round(this.imgInputBitmap.Width / 2.0F), (int)Math.Round(this.imgInputBitmap.Height / 2.0F));
                     }

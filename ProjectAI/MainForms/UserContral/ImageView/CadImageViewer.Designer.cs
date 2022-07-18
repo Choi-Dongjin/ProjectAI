@@ -305,33 +305,32 @@ namespace ProjectAI.MainForms.UserContral.ImageView
             this.drawViewerToolStripMenuItem,
             this.drawFillToolStripMenuItem});
             this.metroContextMenu1.Name = "metroContextMenu1";
-            this.metroContextMenu1.Size = new System.Drawing.Size(181, 92);
+            this.metroContextMenu1.Size = new System.Drawing.Size(146, 70);
             // 
             // drawToolStripMenuItem
             // 
             this.drawToolStripMenuItem.Name = "drawToolStripMenuItem";
-            this.drawToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.drawToolStripMenuItem.Text = "draw";
             this.drawToolStripMenuItem.Click += new System.EventHandler(this.DrawToolStripMenuItemClick);
             // 
             // drawViewerToolStripMenuItem
             // 
             this.drawViewerToolStripMenuItem.Name = "drawViewerToolStripMenuItem";
-            this.drawViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawViewerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.drawViewerToolStripMenuItem.Text = "drawViewer";
             this.drawViewerToolStripMenuItem.Click += new System.EventHandler(this.DrawViewerToolStripMenuItemClick);
             // 
             // drawFillToolStripMenuItem
             // 
             this.drawFillToolStripMenuItem.Name = "drawFillToolStripMenuItem";
-            this.drawFillToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.drawFillToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.drawFillToolStripMenuItem.Text = "drawFloodFill";
             this.drawFillToolStripMenuItem.Click += new System.EventHandler(this.DrawFloodFillToolStripMenuItemClick);
             // 
             // CadImageViewer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.metroPanel1);
             this.Name = "CadImageViewer";
             this.Size = new System.Drawing.Size(826, 648);

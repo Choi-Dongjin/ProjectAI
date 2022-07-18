@@ -134,7 +134,7 @@
             this.tableLayoutMainForm.RowCount = 2;
             this.tableLayoutMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 106F));
             this.tableLayoutMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutMainForm.Size = new System.Drawing.Size(1038, 771);
+            this.tableLayoutMainForm.Size = new System.Drawing.Size(984, 807);
             this.tableLayoutMainForm.TabIndex = 3;
             // 
             // panelWorkSpaseIconOUT
@@ -149,7 +149,7 @@
             this.panelWorkSpaseIconOUT.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseIconOUT.Name = "panelWorkSpaseIconOUT";
             this.tableLayoutMainForm.SetRowSpan(this.panelWorkSpaseIconOUT, 2);
-            this.panelWorkSpaseIconOUT.Size = new System.Drawing.Size(27, 771);
+            this.panelWorkSpaseIconOUT.Size = new System.Drawing.Size(27, 807);
             this.panelWorkSpaseIconOUT.TabIndex = 4;
             this.panelWorkSpaseIconOUT.VerticalScrollbarBarColor = true;
             this.panelWorkSpaseIconOUT.VerticalScrollbarHighlightOnWheel = false;
@@ -197,21 +197,21 @@
             this.panelProjectMain.Location = new System.Drawing.Point(27, 106);
             this.panelProjectMain.Margin = new System.Windows.Forms.Padding(0);
             this.panelProjectMain.Name = "panelProjectMain";
-            this.panelProjectMain.Size = new System.Drawing.Size(1011, 665);
+            this.panelProjectMain.Size = new System.Drawing.Size(957, 701);
             this.panelProjectMain.TabIndex = 5;
             // 
             // splitContainerImageAndImageList
             // 
             this.splitContainerImageAndImageList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerImageAndImageList.Location = new System.Drawing.Point(199, 0);
+            this.splitContainerImageAndImageList.Location = new System.Drawing.Point(502, 0);
             this.splitContainerImageAndImageList.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainerImageAndImageList.Name = "splitContainerImageAndImageList";
             // 
             // splitContainerImageAndImageList.Panel1
             // 
             this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
-            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(485, 665);
-            this.splitContainerImageAndImageList.SplitterDistance = 200;
+            this.splitContainerImageAndImageList.Size = new System.Drawing.Size(128, 701);
+            this.splitContainerImageAndImageList.SplitterDistance = 52;
             this.splitContainerImageAndImageList.TabIndex = 10;
             // 
             // tableLayoutDataReview
@@ -227,13 +227,13 @@
             this.tableLayoutDataReview.Controls.Add(this.iclTotal, 0, 0);
             this.tableLayoutDataReview.Controls.Add(this.panelDataReview, 0, 1);
             this.tableLayoutDataReview.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutDataReview.Location = new System.Drawing.Point(684, 0);
+            this.tableLayoutDataReview.Location = new System.Drawing.Point(630, 0);
             this.tableLayoutDataReview.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutDataReview.Name = "tableLayoutDataReview";
             this.tableLayoutDataReview.RowCount = 2;
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutDataReview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 665);
+            this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 701);
             this.tableLayoutDataReview.TabIndex = 9;
             // 
             // iclTest
@@ -287,22 +287,24 @@
             this.panelDataReview.Location = new System.Drawing.Point(0, 75);
             this.panelDataReview.Margin = new System.Windows.Forms.Padding(0);
             this.panelDataReview.Name = "panelDataReview";
-            this.panelDataReview.Size = new System.Drawing.Size(300, 590);
+            this.panelDataReview.Size = new System.Drawing.Size(300, 626);
             this.panelDataReview.TabIndex = 10;
             // 
             // panelTrainOptions
             // 
             this.styleExtenderMainForm.SetApplyMetroTheme(this.panelTrainOptions, true);
             this.panelTrainOptions.BackColor = System.Drawing.Color.White;
+            this.panelTrainOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTrainOptions.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTrainOptions.Location = new System.Drawing.Point(27, 0);
             this.panelTrainOptions.Margin = new System.Windows.Forms.Padding(0);
             this.panelTrainOptions.Name = "panelTrainOptions";
-            this.panelTrainOptions.Size = new System.Drawing.Size(172, 665);
+            this.panelTrainOptions.Size = new System.Drawing.Size(475, 701);
             this.panelTrainOptions.TabIndex = 7;
             // 
             // panelMTrainOptions
             // 
+            this.panelMTrainOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMTrainOptions.Controls.Add(this.panelMTrainParameterString);
             this.panelMTrainOptions.Controls.Add(this.btnMTrainOptionsOpen);
             this.panelMTrainOptions.Dock = System.Windows.Forms.DockStyle.Left;
@@ -312,7 +314,7 @@
             this.panelMTrainOptions.Location = new System.Drawing.Point(0, 0);
             this.panelMTrainOptions.Margin = new System.Windows.Forms.Padding(0);
             this.panelMTrainOptions.Name = "panelMTrainOptions";
-            this.panelMTrainOptions.Size = new System.Drawing.Size(27, 665);
+            this.panelMTrainOptions.Size = new System.Drawing.Size(27, 701);
             this.panelMTrainOptions.TabIndex = 3;
             this.panelMTrainOptions.VerticalScrollbarBarColor = true;
             this.panelMTrainOptions.VerticalScrollbarHighlightOnWheel = false;
@@ -329,7 +331,7 @@
             this.panelMTrainParameterString.Location = new System.Drawing.Point(0, 21);
             this.panelMTrainParameterString.Margin = new System.Windows.Forms.Padding(0);
             this.panelMTrainParameterString.Name = "panelMTrainParameterString";
-            this.panelMTrainParameterString.Size = new System.Drawing.Size(27, 121);
+            this.panelMTrainParameterString.Size = new System.Drawing.Size(25, 121);
             this.panelMTrainParameterString.TabIndex = 7;
             this.panelMTrainParameterString.VerticalScrollbarBarColor = true;
             this.panelMTrainParameterString.VerticalScrollbarHighlightOnWheel = false;
@@ -343,23 +345,24 @@
             this.btnMTrainOptionsOpen.Location = new System.Drawing.Point(0, 0);
             this.btnMTrainOptionsOpen.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnMTrainOptionsOpen.Name = "btnMTrainOptionsOpen";
-            this.btnMTrainOptionsOpen.Size = new System.Drawing.Size(27, 21);
+            this.btnMTrainOptionsOpen.Size = new System.Drawing.Size(25, 21);
             this.btnMTrainOptionsOpen.TabIndex = 6;
             this.btnMTrainOptionsOpen.UseSelectable = true;
             this.btnMTrainOptionsOpen.Click += new System.EventHandler(this.BtnMTrainOptionsOpenClick);
             // 
             // panelMDataReviewIcon
             // 
+            this.panelMDataReviewIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMDataReviewIcon.Controls.Add(this.panelMDataBaseInfoString);
             this.panelMDataReviewIcon.Controls.Add(this.btnMDataReviewOpen);
             this.panelMDataReviewIcon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelMDataReviewIcon.HorizontalScrollbarBarColor = true;
             this.panelMDataReviewIcon.HorizontalScrollbarHighlightOnWheel = false;
             this.panelMDataReviewIcon.HorizontalScrollbarSize = 10;
-            this.panelMDataReviewIcon.Location = new System.Drawing.Point(984, 0);
+            this.panelMDataReviewIcon.Location = new System.Drawing.Point(930, 0);
             this.panelMDataReviewIcon.Margin = new System.Windows.Forms.Padding(0);
             this.panelMDataReviewIcon.Name = "panelMDataReviewIcon";
-            this.panelMDataReviewIcon.Size = new System.Drawing.Size(27, 665);
+            this.panelMDataReviewIcon.Size = new System.Drawing.Size(27, 701);
             this.panelMDataReviewIcon.TabIndex = 2;
             this.panelMDataReviewIcon.VerticalScrollbarBarColor = true;
             this.panelMDataReviewIcon.VerticalScrollbarHighlightOnWheel = false;
@@ -376,7 +379,7 @@
             this.panelMDataBaseInfoString.Location = new System.Drawing.Point(0, 21);
             this.panelMDataBaseInfoString.Margin = new System.Windows.Forms.Padding(0);
             this.panelMDataBaseInfoString.Name = "panelMDataBaseInfoString";
-            this.panelMDataBaseInfoString.Size = new System.Drawing.Size(27, 106);
+            this.panelMDataBaseInfoString.Size = new System.Drawing.Size(25, 106);
             this.panelMDataBaseInfoString.TabIndex = 8;
             this.panelMDataBaseInfoString.VerticalScrollbarBarColor = true;
             this.panelMDataBaseInfoString.VerticalScrollbarHighlightOnWheel = false;
@@ -390,14 +393,14 @@
             this.btnMDataReviewOpen.Location = new System.Drawing.Point(0, 0);
             this.btnMDataReviewOpen.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnMDataReviewOpen.Name = "btnMDataReviewOpen";
-            this.btnMDataReviewOpen.Size = new System.Drawing.Size(27, 21);
+            this.btnMDataReviewOpen.Size = new System.Drawing.Size(25, 21);
             this.btnMDataReviewOpen.TabIndex = 6;
             this.btnMDataReviewOpen.UseSelectable = true;
             this.btnMDataReviewOpen.Click += new System.EventHandler(this.BtnMDataReviewOpenClick);
             // 
             // panelProjectInfo
             // 
-            this.panelProjectInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelProjectInfo.BackgroundImage")));
+            this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2GR;
             this.panelProjectInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelProjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProjectInfo.HorizontalScrollbarBarColor = true;
@@ -408,7 +411,7 @@
             this.panelProjectInfo.Name = "panelProjectInfo";
             this.panelProjectInfo.Padding = new System.Windows.Forms.Padding(10);
             this.panelProjectInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.panelProjectInfo.Size = new System.Drawing.Size(1011, 106);
+            this.panelProjectInfo.Size = new System.Drawing.Size(957, 106);
             this.panelProjectInfo.TabIndex = 6;
             this.panelProjectInfo.VerticalScrollbarBarColor = true;
             this.panelProjectInfo.VerticalScrollbarHighlightOnWheel = false;
@@ -426,7 +429,7 @@
             this.drawToolToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1038, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(984, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "SynapseNet Learning Studio";
             // 
@@ -597,10 +600,10 @@
             this.panelWorkSpaseIconIN.Controls.Add(this.panelMWorkSpaceString1);
             this.panelWorkSpaseIconIN.Controls.Add(this.btnMWorkSpaseClose);
             this.panelWorkSpaseIconIN.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelWorkSpaseIconIN.Location = new System.Drawing.Point(241, 0);
+            this.panelWorkSpaseIconIN.Location = new System.Drawing.Point(-17, 0);
             this.panelWorkSpaseIconIN.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseIconIN.Name = "panelWorkSpaseIconIN";
-            this.panelWorkSpaseIconIN.Size = new System.Drawing.Size(27, 752);
+            this.panelWorkSpaseIconIN.Size = new System.Drawing.Size(27, 788);
             this.panelWorkSpaseIconIN.TabIndex = 2;
             // 
             // panelMWorkSpaceString1
@@ -643,7 +646,7 @@
             this.panelWorkSpaseButtonIcon.Location = new System.Drawing.Point(0, 0);
             this.panelWorkSpaseButtonIcon.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseButtonIcon.Name = "panelWorkSpaseButtonIcon";
-            this.panelWorkSpaseButtonIcon.Size = new System.Drawing.Size(241, 32);
+            this.panelWorkSpaseButtonIcon.Size = new System.Drawing.Size(0, 32);
             this.panelWorkSpaseButtonIcon.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -659,7 +662,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(241, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(0, 32);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // btnMDeleteWorkSpace
@@ -668,7 +671,7 @@
             this.btnMDeleteWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMDeleteWorkSpace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnMDeleteWorkSpace.FontWeight = MetroFramework.MetroButtonWeight.Light;
-            this.btnMDeleteWorkSpace.Location = new System.Drawing.Point(180, 3);
+            this.btnMDeleteWorkSpace.Location = new System.Drawing.Point(-60, 3);
             this.btnMDeleteWorkSpace.Name = "btnMDeleteWorkSpace";
             this.btnMDeleteWorkSpace.Size = new System.Drawing.Size(26, 26);
             this.btnMDeleteWorkSpace.TabIndex = 1;
@@ -680,7 +683,7 @@
             this.btnMnewWorkSpace.BackgroundImage = global::ProjectAI.Properties.Resources.plus;
             this.btnMnewWorkSpace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnMnewWorkSpace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMnewWorkSpace.Location = new System.Drawing.Point(212, 3);
+            this.btnMnewWorkSpace.Location = new System.Drawing.Point(-28, 3);
             this.btnMnewWorkSpace.Name = "btnMnewWorkSpace";
             this.btnMnewWorkSpace.Size = new System.Drawing.Size(26, 26);
             this.btnMnewWorkSpace.TabIndex = 0;
@@ -696,11 +699,11 @@
             this.panelstatus.Controls.Add(this.lblMwaorkInNumber);
             this.panelstatus.Controls.Add(this.pgbMfileIOstatus);
             this.panelstatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelstatus.Location = new System.Drawing.Point(0, 776);
+            this.panelstatus.Location = new System.Drawing.Point(0, 812);
             this.panelstatus.Margin = new System.Windows.Forms.Padding(0);
             this.panelstatus.Name = "panelstatus";
             this.panelstatus.Padding = new System.Windows.Forms.Padding(1);
-            this.panelstatus.Size = new System.Drawing.Size(1038, 19);
+            this.panelstatus.Size = new System.Drawing.Size(984, 19);
             this.panelstatus.TabIndex = 4;
             // 
             // lblMworkInFileName
@@ -790,7 +793,7 @@
             this.panelMWorkSpase.Location = new System.Drawing.Point(0, 24);
             this.panelMWorkSpase.Margin = new System.Windows.Forms.Padding(0);
             this.panelMWorkSpase.Name = "panelMWorkSpase";
-            this.panelMWorkSpase.Size = new System.Drawing.Size(268, 752);
+            this.panelMWorkSpase.Size = new System.Drawing.Size(10, 788);
             this.panelMWorkSpase.TabIndex = 6;
             this.panelMWorkSpase.VerticalScrollbarBarColor = true;
             this.panelMWorkSpase.VerticalScrollbarHighlightOnWheel = false;
@@ -804,7 +807,7 @@
             this.panelWorkSpaseButton.Margin = new System.Windows.Forms.Padding(0);
             this.panelWorkSpaseButton.Name = "panelWorkSpaseButton";
             this.panelWorkSpaseButton.Padding = new System.Windows.Forms.Padding(2);
-            this.panelWorkSpaseButton.Size = new System.Drawing.Size(241, 720);
+            this.panelWorkSpaseButton.Size = new System.Drawing.Size(0, 756);
             this.panelWorkSpaseButton.TabIndex = 4;
             // 
             // trayIcon
@@ -855,9 +858,8 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1038, 795);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(984, 831);
             this.Controls.Add(this.panelMWorkSpase);
             this.Controls.Add(this.panelstatus);
             this.Controls.Add(this.tableLayoutMainForm);
@@ -866,7 +868,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SynapseNet Deep Learning Studio";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
@@ -918,7 +919,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceProgramExit;
         private System.Windows.Forms.ToolStripMenuItem tsmProjectWorSpaceTestButton;
-        public System.Windows.Forms.Panel panelTrainOptions;
         public MetroFramework.Components.MetroStyleExtender styleExtenderMainForm;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         public MetroFramework.Controls.MetroPanel panelProjectInfo;
@@ -961,5 +961,6 @@
         public System.Windows.Forms.ToolStripMenuItem drawToolToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem drawToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem rectangleToolStripMenuItem;
+        public System.Windows.Forms.Panel panelTrainOptions;
     }
 }

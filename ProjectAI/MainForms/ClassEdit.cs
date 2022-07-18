@@ -35,12 +35,12 @@ namespace ProjectAI.MainForms
         /// <summary>
         /// 선택한 ClassName
         /// </summary>
-        public string selectClassName;
+        public string selectClassName = null;
 
         /// <summary>
         /// 선택한 ClassName, ColorTranslator.ToHtml, ColorTranslator.ToHtml, ColorTranslator.FromHtml
         /// </summary>
-        public string selectClassColor;
+        public string selectClassColor = null;
 
         /// <summary>
         /// 결과 가져오기
@@ -428,10 +428,13 @@ namespace ProjectAI.MainForms
             /*
              * this.selectClassName, this.selectClassColor 가져가서 선택된 데이터에 쓰기
              */
-            this.DialogResult = DialogResult.OK;
-            this.selectDialogResult = DialogResult.OK;
+            if (this.selectClassName != null && this.selectClassColor != null)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.selectDialogResult = DialogResult.OK;
 
-            this.Close();
+                this.Close();
+            }
         }
 
         private void BtnMCancelClick(object sender, EventArgs e)

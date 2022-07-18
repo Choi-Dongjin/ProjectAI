@@ -26,8 +26,8 @@ namespace ProjectAI.MainForms
         /// </summary>
         private FormsManiger formsManiger = FormsManiger.GetInstance();
 
-        private string selectProject; // 가지는 값 예상 = Classification, Segmentation, ObjectDetection
-        private string selectProjectInputDataType; // 가지는 값 = SingleImage, MultiImage
+        private string selectProject = "initial value"; // 가지는 값 예상 = Classification, Segmentation, ObjectDetection
+        private string selectProjectInputDataType = null; // 가지는 값 = SingleImage, MultiImage
 
         /// <summary>
         /// 생성자
@@ -35,6 +35,7 @@ namespace ProjectAI.MainForms
         public DeeplearningProjectSelectForm()
         {
             InitializeComponent();
+            DoubleBuffered = true;
 
             this.StyleManager = this.styleManagerDeeplearningProjectSelectForm;
             FormsManiger.m_formStyleManagerHandler += this.UpdataFormStyleManager;
@@ -58,6 +59,10 @@ namespace ProjectAI.MainForms
         private void DeeplearningProjectSelectFormLoad(object sender, EventArgs e)
         {
             this.ClassificationUserContralSetting(); // Classification User Contral 셋업
+            this.ClassificationButtonClickSetting(); // Classification User Contral 설정
+
+            //this.ObjectDetectionUserContralSetting();
+            //this.SegmentationUserContralSetting();
         }
 
         /// <summary>
@@ -85,14 +90,15 @@ namespace ProjectAI.MainForms
         /// </summary>
         private void ClassificationUserContralSetting()
         {
-            this.selectProject = "Classification"; // Classification 진입
-            this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+            //this.selectProject = "Classification"; // Classification 진입
+            //this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
 
-            this.metroPanel1.Controls.Clear(); // Controls 제거
-            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
-            this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+            //this.metroPanel1.Controls.Clear(); // Controls 제거
+            //this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
+            //this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
 
             #region Classification 컨트롤 설정
+            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
 
             this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
 
@@ -119,18 +125,23 @@ namespace ProjectAI.MainForms
             #endregion Classification 컨트롤 설정
         }
 
+        private void ClassificationButtonClickSetting()
+        {
+            if (!this.selectProject.Equals("Classification"))
+            {
+                this.selectProject = "Classification"; // Classification 진입
+                this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+
+                this.metroPanel1.Controls.Clear(); // Controls 제거
+                this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+            }
+        }
+
         private void SegmentationUserContralSetting()
         {
-            this.selectProject = "Segmentation"; // Classification 진입
-            this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
-
-            this.metroPanel1.Controls.Clear(); // Controls 제거
-
             //===================================================== Segmentation User Contral 생성시 해당 컨트롤로 수정 =============================================================
-            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
-            this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
-
             #region Classification 컨트롤 설정
+            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
 
             this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
 
@@ -157,17 +168,22 @@ namespace ProjectAI.MainForms
             #endregion Classification 컨트롤 설정
         }
 
+        private void SegmentationButtonClickSetting()
+        {
+            if (!this.selectProject.Equals("Segmentation"))
+            {
+                this.selectProject = "Segmentation"; // Classification 진입
+                this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+
+                this.metroPanel1.Controls.Clear(); // Controls 제거
+
+                this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+            }
+        }
+
         private void ObjectDetectionUserContralSetting()
         {
-            this.selectProject = "ObjectDetection"; // Classification 진입
-            this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
-
-            this.metroPanel1.Controls.Clear(); // Controls 제거
-
             //===================================================== ObjectDetection User Contral 생성시 해당 컨트롤로 수정 =============================================================
-            this.classificationUserContral = new UserContral.ProjectSelect.Classification(); // Classification 컨트롤 생성
-            this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
-
             #region Classification 컨트롤 설정
 
             this.metroStyleExtender1.SetApplyMetroTheme(this.classificationUserContral, true); // Metro Style, Theme 적용
@@ -193,6 +209,19 @@ namespace ProjectAI.MainForms
             this.classificationUserContral.TxtNoneClickEvnetHandler += new System.EventHandler(this.ClassificationNoneImageTextboxClick);
 
             #endregion Classification 컨트롤 설정
+        }
+
+        private void ObjectDetectionButtonClickSetting()
+        {
+            if (!this.selectProject.Equals("ObjectDetection"))
+            {
+                this.selectProject = "ObjectDetection"; // Classification 진입
+                this.selectProjectInputDataType = null; // 입역 데이터 타입 초기화
+
+                this.metroPanel1.Controls.Clear(); // Controls 제거
+
+                this.metroPanel1.Controls.Add(this.classificationUserContral); // Classification 컨트롤 추가
+            }
         }
 
         /// <summary>
@@ -262,17 +291,21 @@ namespace ProjectAI.MainForms
         /// <param name="e"></param>
         private void BtnMClassificationClick(object sender, EventArgs e)
         {
-            this.ClassificationUserContralSetting(); // Classification User Contral 셋업
+            this.ClassificationButtonClickSetting(); // Classification User Contral 설정
+            //this.ClassificationUserContralSetting(); // Classification User Contral 셋업
         }
 
         private void BtnMSegmentationClick(object sender, EventArgs e)
         {
-            this.SegmentationUserContralSetting(); // Segmentation User Contral 셋업
+            this.SegmentationButtonClickSetting(); // Segmentation User Contral 설정
+            //this.SegmentationUserContralSetting(); // Segmentation User Contral 셋업
+
         }
 
         private void BtnMObjectDetectionClick(object sender, EventArgs e)
         {
-            this.ObjectDetectionUserContralSetting(); // ObjectDetection User Contral 셋업
+            this.ObjectDetectionButtonClickSetting(); // Segmentation User Contral 설정
+            //this.ObjectDetectionUserContralSetting(); // ObjectDetection User Contral 셋업
         }
 
         #endregion Classification Tesk 설정

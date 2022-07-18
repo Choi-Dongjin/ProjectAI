@@ -205,8 +205,7 @@
             // 
             // DeeplearningProjectSelectForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(885, 549);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);

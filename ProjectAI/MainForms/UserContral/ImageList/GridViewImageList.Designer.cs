@@ -474,8 +474,7 @@
             // 
             // GridViewImageList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.gridImageList);
             this.Controls.Add(this.tableLayoutImageDataManiger);
             this.Controls.Add(this.tableLayoutPanel2);

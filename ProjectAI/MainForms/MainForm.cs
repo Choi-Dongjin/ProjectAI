@@ -248,6 +248,7 @@ namespace ProjectAI.MainForms
         public MainForm()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
 
             this.panelProjectInfo.Controls.Add(this.mainPanelMlogo); // Logo 추가
             this.UpdataFormStyleManager(this.formsManiger.m_StyleManager);
@@ -288,8 +289,10 @@ namespace ProjectAI.MainForms
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameter;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfo;
                 // panel BackgroundImage 변경
-                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
-                this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                //this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2GR;
+                //this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2GR;
+                this.panelProjectInfo.BackgroundImage = null;
+                this.splitContainerImageAndImageList.Panel1.BackgroundImage = null;
                 // Logo 적용
                 this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
 
@@ -297,8 +300,7 @@ namespace ProjectAI.MainForms
                 {
                     if (WorkSpaceData.m_activeProjectMainger.panelLogo != null)
                         WorkSpaceData.m_activeProjectMainger.panelLogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudio;
-
-                    WorkSpaceData.m_activeProjectMainger.m_idelPictureBox.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Brightness;
+                    WorkSpaceData.m_activeProjectMainger.m_idelPictureBox.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2GR;
                 }
             }
             else // Dark로 변경시 진입
@@ -314,8 +316,10 @@ namespace ProjectAI.MainForms
                 this.panelMTrainParameterString.BackgroundImage = global::ProjectAI.Properties.Resources.TrainParameterW;
                 this.panelMDataBaseInfoString.BackgroundImage = global::ProjectAI.Properties.Resources.DatabaseInfoW;
                 // panel BackgroundImage 변경
-                this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
-                this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                //this.panelProjectInfo.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                //this.splitContainerImageAndImageList.Panel1.BackgroundImage = global::ProjectAI.Properties.Resources.imageBackground2Black;
+                this.panelProjectInfo.BackgroundImage = null;
+                this.splitContainerImageAndImageList.Panel1.BackgroundImage = null;
                 // Logo 적용
                 this.mainPanelMlogo.BackgroundImage = global::ProjectAI.Properties.Resources.logoBX2DeepLearningStudioW;
 
@@ -377,7 +381,7 @@ namespace ProjectAI.MainForms
 
             this.panelMWorkSpase.Size = new System.Drawing.Size(400, 100); // WorkSpase 판넬 사이즈 조정
 
-            this.panelTrainOptions.Size = new System.Drawing.Size(500, 100); // panel Train Options 판넬 사이즈 조정
+            this.panelTrainOptions.Size = new System.Drawing.Size(475, 701); // panel Train Options 판넬 사이즈 조정
 
             this.tableLayoutDataReview.Size = new System.Drawing.Size(300, 100); // panel Data Review 판넬 사이즈 조정
 

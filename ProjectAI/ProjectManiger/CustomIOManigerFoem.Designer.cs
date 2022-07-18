@@ -83,8 +83,7 @@
             // 
             // CustomIOManigerFoem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(396, 422);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "CustomIOManigerFoem";
